@@ -1,16 +1,14 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 public class Main {
     public static void main(String[] args) {
-        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "hello-world";
-        cfg.width = 480;
-        cfg.height = 320;
+        Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
+        cfg.setTitle("hello-world");
+        cfg.setWindowedMode(480, 320);
 
-        new LwjglApplication(new HelloWorld(), cfg);
+        new Lwjgl3Application(new HelloWorld(), cfg);
     }
 }
