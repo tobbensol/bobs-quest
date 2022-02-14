@@ -24,6 +24,8 @@ public class GameScreen implements Screen {
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
+        this.font.setColor(Color.RED);
         this.world = new World( new Vector2( 0 , 0 ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
     }
@@ -38,9 +40,8 @@ public class GameScreen implements Screen {
         }
     }
 
-
     private void cameraUpdate() {
-        camera.position.set(new Vector3(0,0,0));
+        camera.position.set(new Vector3(200,200,0));
         camera.update();
     }
 
@@ -59,6 +60,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float v) {
+        this.update();
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
