@@ -20,7 +20,7 @@
 		<maven.compiler.release>17</maven.compiler.release>
 		<libgdx.version>1.10.0</libgdx.version>
 		<!-- FIXME - set to app's main class' -->
-		<main.class>core.Main</main.class>
+		<main.class>core.DesktopLauncher</main.class>
 	</properties>
 
 	<dependencies>
