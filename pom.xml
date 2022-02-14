@@ -6,7 +6,7 @@
 	<!-- FIXME - set group id -->
 	<groupId>inf112.skeleton.app</groupId>
 	<!-- FIXME - set artifact name -->
-	<artifactId>mvn-app</artifactId>
+	<artifactId>gdx-app</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
