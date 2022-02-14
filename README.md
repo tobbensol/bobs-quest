@@ -48,3 +48,9 @@ If you run `mvn package` you get everything bundled up into a `.jar` file + a â€
 * `target/NAME-VERSION-fat.jar` â€“ your JAR file packaged with dependencies
 
 Run Jar files with, for example, `java -jar target/javafx-app-1.0-SNAPSHOT-fat.jar`.
+
+## Eclipse Setup
+
+It's usually smart to change Eclipse's Maven settings so that it'll automatically download Javadocs and the source code for your dependencies:
+
+![Turn on Download Sources and Javadoc](https://git.app.uib.no/inf112/22v/lectures/-/raw/master/img/eclipse-maven.png)
