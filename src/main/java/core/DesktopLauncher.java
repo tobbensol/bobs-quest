@@ -7,6 +7,7 @@ public class DesktopLauncher {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("hello-world");
+        cfg.setIdleFPS(60);
         cfg.setWindowedMode(480, 320);
 
         new Lwjgl3Application(new Boot(), cfg);
