@@ -34,7 +34,7 @@ You should probably edit the `pom.xml` and fill in details such as the project `
 You can run the project from Eclipse, or with Maven using `mvn exec:java`. Change the main class by modifying the `main.class` setting in `pom.xml`:
 
 ```
-		<main.class>inf112.skeleton.app.Main</main.class>
+		<main.class>Main</main.class>
 ```
 
 If you run `mvn package` you'll get a everything bundled up into a JAR file

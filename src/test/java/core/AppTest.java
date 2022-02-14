@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package core;
 
 import static org.junit.jupiter.api.Assertions.*;
 

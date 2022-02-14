@@ -1,17 +1,35 @@
-package inf112.skeleton.app;
+package core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class HelloWorld implements ApplicationListener {
+
+public class GameScreen implements Screen {
     private SpriteBatch batch;
     private BitmapFont font;
+    private OrthographicCamera camera;
+    private World world;
+    private Box2DDebugRenderer box2DDebugRenderer;
 
-    @Override
+    public GameScreen(OrthographicCamera camera) {
+        this.camera = camera;
+        this.batch = new SpriteBatch();
+        this.world = new World( new Vector2( 0 , 0 ), false );
+        this.box2DDebugRenderer = new Box2DDebugRenderer();
+    }
+
+    private void update(){
+
+    }
+
+
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -25,13 +43,19 @@ public class HelloWorld implements ApplicationListener {
     }
 
     @Override
-    public void render() {
+    public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
         font.draw(batch, "Hello World", 200, 200);
         batch.end();
+        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+    }
+
+    @Override
+    public void show() {
+
     }
 
     @Override
@@ -44,5 +68,10 @@ public class HelloWorld implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    @Override
+    public void hide() {
+
     }
 }
