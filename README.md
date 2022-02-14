@@ -1,16 +1,13 @@
 # INF112 Maven template 
-Simple skeleton with libgdx. 
-
-
-## Known bugs
+Simple skeleton with libGDX. 
 
 
 # Maven Setup
-This project comes with a working Maven `pom.xml` file. You should be able to import it into Eclipse using *File → Import → Maven → Existing Maven Projects* (or *Check out Maven Projects from SCM* to do Git cloning as well). You can also build the project from the command line with `mvn compile` and test it with `mvn test`.
+This project comes with a working Maven `pom.xml` file. You should be able to import it into Eclipse using *File → Import → Maven → Existing Maven Projects* (or *Check out Maven Projects from SCM* to do Git cloning as well). You can also build the project from the command line with `mvn clean compile` and test it with `mvn clean test`.
 
 Pay attention to these folders:
 * `src/main/java` – Java source files go here (as usual for Maven)
-* `src/main/resources` – data files go here
+* `src/main/resources` – data files go here, for example in an `assets` sub-folder
 * `src/test/java` – JUnit tests
 * `target/classes` – compiled Java class files
 
@@ -22,7 +19,7 @@ You should probably edit the `pom.xml` and fill in details such as the project `
 	< !-- FIXME - set group id -->
 	<groupId>inf112.skeleton.app</groupId>
 	< !-- FIXME - set artifact name -->
-	<artifactId>mvn-app</artifactId>
+	<artifactId>gdx-app</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -43,39 +40,11 @@ You can run the project from Eclipse, or with Maven using `mvn exec:java`. Chang
 If you run `mvn package` you'll get a everything bundled up into a JAR file
 * `target/*.jar` – your compiled project, packaged in a JAR file
 
-#### POM snippets
-If you're setting up / adding ANTLR4 to your own project, you can cut and paste these lines into your `pom.xml`file.
+## Jar Files
 
-* You should make sure that both the parser generator and the runtime use the same version, so define the version number in `<properties>…</properties>`:
+If you run `mvn package` you get everything bundled up into a `.jar` file + a ‘fat’ Jar file where all the necessary dependencies have been added:
 
-```xml
-		<antlr4.version>4.8-1</antlr4.version>
-```
+* `target/NAME-VERSION.jar` – your compiled project, packaged in a JAR file
+* `target/NAME-VERSION-fat.jar` – your JAR file packaged with dependencies
 
-* The ANTLR4 runtime is needed to run the compiled parser; add it in the `<depencencies>…</dependencies>` section:
-
-```xml
-<!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
-<dependency>
-	<groupId>org.antlr</groupId>
-	<artifactId>antlr4-runtime</artifactId>
-	<version>${antlr4.version}</version>
-</dependency>
-```
-
-* The ANTLR4 maven plugin includes the ANTLR4 tool, and is needed to generate parser during compilation; add it to `<build><plugins>…</plugins></build>`:
-
-```xml
-<plugin>
-	<groupId>org.antlr</groupId>
-	<artifactId>antlr4-maven-plugin</artifactId>
-	<version>${antlr4.version}</version>
-	<executions>
-		<execution>
-			<goals>
-				<goal>antlr4</goal>
-			</goals>
-		</execution>
-	</executions>
-</plugin>
-```
+Run Jar files with, for example, `java -jar target/javafx-app-1.0-SNAPSHOT-fat.jar`.
