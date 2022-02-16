@@ -13,7 +13,9 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import static helper.Constants.PPM;
 
-
+/**
+ * the screen of the game, where everything is rendered onto and where all visual elements reside
+ */
 public class GameScreen implements Screen {
     private SpriteBatch batch;
     private BitmapFont font;
@@ -30,6 +32,9 @@ public class GameScreen implements Screen {
         this.box2DDebugRenderer = new Box2DDebugRenderer();
     }
 
+    /**
+     * the game runs in real time and updating the game often is required for it to run smoothly
+     */
     private void update(){
         world.step(1/60f, 6, 2);
         cameraUpdate();
@@ -40,6 +45,9 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * the camera should follow the player character
+     */
     private void cameraUpdate() {
         camera.position.set(new Vector3(200,200,0));
         camera.update();
