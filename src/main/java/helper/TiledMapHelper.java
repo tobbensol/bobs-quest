@@ -21,7 +21,7 @@ public class TiledMapHelper {
     public OrthogonalTiledMapRenderer setupMap() {
         TmxMapLoader loader = new TmxMapLoader();
         //tiledMap = loader.load("maps/level0.tmx");
-        tiledMap = loader.load("maps/bigTiles.tmx");
+        tiledMap = loader.load("maps/level0.tmx");
         return new OrthogonalTiledMapRenderer(tiledMap, 1/2f);
     }
 
