@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import helper.TiledMapHelper;
 
 import static helper.Constants.PPM;
 
@@ -23,6 +25,9 @@ public class GameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
 
+    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private TiledMapHelper tiledMapHelper;
+
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
@@ -30,6 +35,9 @@ public class GameScreen implements Screen {
         this.font.setColor(Color.RED);
         this.world = new World( new Vector2( 0 , 0 ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
+
+        this.tiledMapHelper = new TiledMapHelper();
+        this.orthogonalTiledMapRenderer = tiledMapHelper.setupMap();
     }
 
     /**
@@ -38,7 +46,9 @@ public class GameScreen implements Screen {
     private void update(){
         world.step(1/60f, 6, 2);
         cameraUpdate();
+
         batch.setProjectionMatrix(camera.combined);
+        orthogonalTiledMapRenderer.setView(camera);
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
@@ -72,6 +82,8 @@ public class GameScreen implements Screen {
 
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+        orthogonalTiledMapRenderer.render();
 
         batch.begin();
         font.draw(batch, "Hello World", 200, 200);
