@@ -1,4 +1,4 @@
-# **Obligatorisk oppgave 1:
+# Obligatorisk oppgave 1:
 Prosjekt Plattformspill - oppstart**
 
 [https://git.app.uib.no/inf112/22v/lectures/-/blob/master/prosjekt/obligatoriskOppgave1.md](https://git.app.uib.no/inf112/22v/lectures/-/blob/master/prosjekt/obligatoriskOppgave1.md)
