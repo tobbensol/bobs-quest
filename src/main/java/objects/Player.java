@@ -9,7 +9,14 @@ public class Player {
     final private Texture texture;
     private Vector2 position;
     private Vector2 velocity;
+//    private boolean facingRight;
+//    private boolean grounded;
 
+    enum State {
+        IDLE,
+        WALKING,
+        JUMPING
+    }
 
     public Player(String name, String texturePath, int positionX, int positionY) {
         this.name = name;

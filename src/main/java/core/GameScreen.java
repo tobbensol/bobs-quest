@@ -4,7 +4,6 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -20,7 +19,6 @@ import objects.Player;
  */
 public class GameScreen implements Screen {
     private SpriteBatch batch;
-    private BitmapFont font;
     private OrthographicCamera camera;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
@@ -36,8 +34,6 @@ public class GameScreen implements Screen {
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.font = new BitmapFont();
-        this.font.setColor(Color.RED);
         this.world = new World( new Vector2( 0 , 0 ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
@@ -88,17 +84,9 @@ public class GameScreen implements Screen {
         camera.update();
     }
 
-
-    public void create() {
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.setColor(Color.RED);
-    }
-
     @Override
     public void dispose() {
         batch.dispose();
-        font.dispose();
     }
 
     @Override
@@ -110,9 +98,10 @@ public class GameScreen implements Screen {
 
         orthogonalTiledMapRenderer.render();
 
-//        batch.begin();
-//        font.draw(batch, "Hello World", 200, 200);
-//        batch.end();
+        batch.begin();
+        //TODO: Render player
+        batch.draw(player1.getTexture(), player1.getPosition().x, player1.getPosition().y);
+        batch.end();
 //        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
