@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -28,6 +29,12 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TiledMapHelper tiledMapHelper;
 
+    private TiledMapTileLayer backgroundLayer;
+    private TiledMapTileLayer playerLayer;
+
+    private Vector2 playerPos;
+    private Vector2 playerVel;
+
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
@@ -38,6 +45,11 @@ public class GameScreen implements Screen {
 
         this.tiledMapHelper = new TiledMapHelper();
         this.orthogonalTiledMapRenderer = tiledMapHelper.setupMap();
+
+        backgroundLayer = tiledMapHelper.getBoardLayer("Background");
+        playerLayer = tiledMapHelper.getBoardLayer("Player");
+        playerPos = new Vector2(0, 0);
+        playerVel = new Vector2(0.1f, 0);
     }
 
     /**
@@ -53,13 +65,18 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            playerPos.x += playerVel.x;
+        }
+
     }
 
     /**
      * the camera should follow the player character
      */
     private void cameraUpdate() {
-        camera.position.set(new Vector3(200,200,0));
+        camera.position.set(new Vector3(playerPos.x,playerPos.y,0));
         camera.update();
     }
 
@@ -80,15 +97,17 @@ public class GameScreen implements Screen {
     public void render(float v) {
         this.update();
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.2f, 0.2f, 0.8f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+        playerLayer.setCell((int) playerPos.x, (int) playerPos.y, this.tiledMapHelper.getPlayerCell());
 
         orthogonalTiledMapRenderer.render();
 
-        batch.begin();
-        font.draw(batch, "Hello World", 200, 200);
-        batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+//        batch.begin();
+//        font.draw(batch, "Hello World", 200, 200);
+//        batch.end();
+//        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
     @Override
