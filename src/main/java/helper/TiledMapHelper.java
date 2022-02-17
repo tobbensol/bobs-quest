@@ -1,12 +1,9 @@
 package helper;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
 
 public class TiledMapHelper {
@@ -14,8 +11,6 @@ public class TiledMapHelper {
     private TiledMap tiledMap;
     private TiledMapTileLayer backgroundLayer;
     private TiledMapTileLayer playerLayer;
-    private Texture player;
-    private TiledMapTileLayer.Cell playerCell;
 
     public TiledMapHelper() {
         tiledMap = new TmxMapLoader().load("maps/level0.tmx");

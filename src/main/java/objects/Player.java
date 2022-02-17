@@ -12,11 +12,11 @@ public class Player {
 //    private boolean facingRight;
 //    private boolean grounded;
 
-    enum State {
-        IDLE,
-        WALKING,
-        JUMPING
-    }
+//    enum State {
+//        IDLE,
+//        WALKING,
+//        JUMPING
+//    }
 
     public Player(String name, String texturePath, int positionX, int positionY) {
         this.name = name;
