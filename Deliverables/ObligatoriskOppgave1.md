@@ -1,4 +1,4 @@
-#Obligatorisk oppgave 1:
+# **Obligatorisk oppgave 1:
 Prosjekt Plattformspill - oppstart**
 
 [https://git.app.uib.no/inf112/22v/lectures/-/blob/master/prosjekt/obligatoriskOppgave1.md](https://git.app.uib.no/inf112/22v/lectures/-/blob/master/prosjekt/obligatoriskOppgave1.md)
@@ -54,12 +54,12 @@ Grunnet hvordan studiehverdagen ser ut, er det viktig at vi kan være fleksible.
 **Møter og hyppighet av dem:**
 
 - Fysisk møte hver mandag 12:15-14:00 (gruppetimen gruppe 1)
-    - Organisere uken, definere og fordele oppgaver osv.
-    - Kan brukes til parprogrammering dersom det første punktet er ferdig
-    - Kan brukes til å diskutere vanskeligere oppgaver
+  - Organisere uken, definere og fordele oppgaver osv.
+  - Kan brukes til parprogrammering dersom det første punktet er ferdig
+  - Kan brukes til å diskutere vanskeligere oppgaver
 - Digitalt møte hver fredag 13:00-13:30
-    - Oppsummering av uken
-        - Oppfølging for å sjekke at alle er i rute
+  - Oppsummering av uken
+    - Oppfølging for å sjekke at alle er i rute
 
 **Kommunikasjon mellom møter:**
 
@@ -82,9 +82,9 @@ Grunnet hvordan studiehverdagen ser ut, er det viktig at vi kan være fleksible.
 
 - GitLab (hovedkilde)
 - Discord
-    - lett til å kjapt dele bilder eller mindre filer siden vi bruker programmet til generell kommunikasjon uansett
+  - lett til å kjapt dele bilder eller mindre filer siden vi bruker programmet til generell kommunikasjon uansett
 - Google docs
-    - Lettere å skrive i samtidig og mer oversiktlig enn en markdown fil
+  - Lettere å skrive i samtidig og mer oversiktlig enn en markdown fil
 
 **Kodekonvensjon:**
 
@@ -95,9 +95,9 @@ Grunnet hvordan studiehverdagen ser ut, er det viktig at vi kan være fleksible.
 **Git arbeidsflyt:**
 
 - Feature branches
-    - Vi tenker det er mindre fare for konflikter og mer oversiktlig med feature branches. Master grenen skal holdes ren og stabil.
+  - Vi tenker det er mindre fare for konflikter og mer oversiktlig med feature branches. Master grenen skal holdes ren og stabil.
 - Commit ofte
-    - Dette gjør det lettere for andre teammedlemmer å se hva som har blitt gjort, og bidrar til bedre dokumentasjon. Naturligvis skal commit-meldingene også være deskriptive, noe som blir lettere dersom commiten ikke er så stor.
+  - Dette gjør det lettere for andre teammedlemmer å se hva som har blitt gjort, og bidrar til bedre dokumentasjon. Naturligvis skal commit-meldingene også være deskriptive, noe som blir lettere dersom commiten ikke er så stor.
 
 **Deloppgave 3: Få oversikt over forventet produkt**
 
@@ -110,32 +110,32 @@ Et 2d platforming spill hvor det er mulig å bevege seg rundt ved å hoppe, løp
 Prioritert - topp til bunn
 
 - Vise et spillebrett
-    - Som spiller trenger jeg en grafisk framstilling av spillverdenen for å kunne navigere den lett.
-    - Som spiller ønsker vi å ha et fungerende level for at spillet skal fungere.
-        - Trenger at spillverdenen er bredere (og evnt høyere) enn selve spillvinduet. Kameraet i spillet må dermed ha muligheten til å flytte på seg i forhold til spilleren.
-        - Spillbrettet kan ha flere dybde nivåer (Foreground, Background 1, Background\_2 , …).
+  - Som spiller trenger jeg en grafisk framstilling av spillverdenen for å kunne navigere den lett.
+  - Som spiller ønsker vi å ha et fungerende level for at spillet skal fungere.
+    - Trenger at spillverdenen er bredere (og evnt høyere) enn selve spillvinduet. Kameraet i spillet må dermed ha muligheten til å flytte på seg i forhold til spilleren.
+    - Spillbrettet kan ha flere dybde nivåer (Foreground, Background 1, Background\_2 , …).
 - Vise spiller på spillebrett
-    - Som spiller ønsker jeg en spiller visualisert på spillebrettet slik at jeg kan se hvor jeg er på spillebrettet og hvor jeg er i forhold til objektene rundt i spillverdenen.
-    - Som programmerer trenger jeg et spiller-objekt for å kunne holde styr på og endre på tilstanden (posisjon, fart, osv.) til spilleren.
-    - Som programmerer trenger jeg en grafisk framstilling av spilleren for å se hvordan spilleren interagerer med spillverdenen.
+  - Som spiller ønsker jeg en spiller visualisert på spillebrettet slik at jeg kan se hvor jeg er på spillebrettet og hvor jeg er i forhold til objektene rundt i spillverdenen.
+  - Som programmerer trenger jeg et spiller-objekt for å kunne holde styr på og endre på tilstanden (posisjon, fart, osv.) til spilleren.
+  - Som programmerer trenger jeg en grafisk framstilling av spilleren for å se hvordan spilleren interagerer med spillverdenen.
 - Flytte spiller (vha. taster e.l.)
-    - Som spiller trenger jeg en måte å kunne bevege meg rundt på spillbrettet, gjerne ved standard kontroller som piltaster eller WASD
+  - Som spiller trenger jeg en måte å kunne bevege meg rundt på spillbrettet, gjerne ved standard kontroller som piltaster eller WASD
 - Spiller interagerer med terreng
-    - Som spiller trenger jeg å kunne interagere med terreng for å bevege meg i forhold til spillverdenen
+  - Som spiller trenger jeg å kunne interagere med terreng for å bevege meg i forhold til spillverdenen
 - Spiller har _poeng_ og interagerer med poeng gjenstander
-    - Som spiller ønsker jeg å ha et mål som jeg kan sikte på når jeg spiller, poeng kan være en god løsning. Om jeg har poeng trenger jeg poeng gjenstander som enten øker eller senker poengsummen min. _Neuron activated_
+  - Som spiller ønsker jeg å ha et mål som jeg kan sikte på når jeg spiller, poeng kan være en god løsning. Om jeg har poeng trenger jeg poeng gjenstander som enten øker eller senker poengsummen min. _Neuron activated_
 - Vise fiender/monstre; de skal interagere med terreng og spiller
-    - I et platformer spill trenger jeg som spiller en utfordring når jeg navigerer meg rundt i verdenen. Jeg ønsker meg derfor fiender/monstre som interagerer med meg og terrenget rundt i spillverden.
+  - I et platformer spill trenger jeg som spiller en utfordring når jeg navigerer meg rundt i verdenen. Jeg ønsker meg derfor fiender/monstre som interagerer med meg og terrenget rundt i spillverden.
 - Spiller kan dø (ved kontakt med fiender, eller ved å falle utenfor skjermen)
-    - Som spiller ønsker jeg noe risiko i spillet. For eksempel ved at jeg har en viss mengde liv, og om jeg tar nok skade fra fiender eller om jeg faller ut av spillverdenen vil jeg dø.
+  - Som spiller ønsker jeg noe risiko i spillet. For eksempel ved at jeg har en viss mengde liv, og om jeg tar nok skade fra fiender eller om jeg faller ut av spillverdenen vil jeg dø.
 - Mål for spillbrett (enten et sted, en mengde poeng, drepe alle fiender e.l.)
-    - Som spiller ønsker jeg et mål jeg kan jobbe mot hvert nivå. Det kan være et mål mot slutten av nivået, at jeg samler en mengde poeng eller dreper alle fiendene som er i nivået.
+  - Som spiller ønsker jeg et mål jeg kan jobbe mot hvert nivå. Det kan være et mål mot slutten av nivået, at jeg samler en mengde poeng eller dreper alle fiendene som er i nivået.
 - Nytt spillbrett når forrige er ferdig
-    - Som spiller vil jeg kjede meg om spillet kun har ett nivå, derfor ønsker jeg meg flere nivåer som jeg kan jobbe mot. Når jeg blir ferdig med et nivå, ønsker jeg å gå videre til et nytt ett.
+  - Som spiller vil jeg kjede meg om spillet kun har ett nivå, derfor ønsker jeg meg flere nivåer som jeg kan jobbe mot. Når jeg blir ferdig med et nivå, ønsker jeg å gå videre til et nytt ett.
 - Start-skjerm ved oppstart / game over
-    - Som spiller ønsker jeg en meny til å navigere mellom nivåene. Jeg ønsker også en startskjerm som gir meg en introduksjon til nivået jeg skal spille og en game over skjerm når om jeg dør.
+  - Som spiller ønsker jeg en meny til å navigere mellom nivåene. Jeg ønsker også en startskjerm som gir meg en introduksjon til nivået jeg skal spille og en game over skjerm når om jeg dør.
 - Støtte flere spillere (enten på samme maskin eller over nettverk)
-    - Som spiller ønsker jeg muligheten til å spille med vennene mine, enten med flere spillere på samme maskin, over LAN eller over nettet.
+  - Som spiller ønsker jeg muligheten til å spille med vennene mine, enten med flere spillere på samme maskin, over LAN eller over nettet.
 
 - For hver brukerhistorie, skal dere ha akseptansekriterier og arbeidsoppgaver, samt beskrivelse av hvilke krav brukerhistoriene oppfyller (dette lager dere kun for historier dere er ferdige med, holder på med, eller skal til å begynne med)
 
