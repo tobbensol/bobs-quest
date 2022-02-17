@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import helper.TiledMapHelper;
 import objects.Player;
 
+import static helper.Constants.PPM;
+
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
  */
@@ -105,7 +107,7 @@ public class GameScreen implements Screen {
         //TODO: Render player
         batch.draw(player1.getTexture(), player1.getPosition().x, player1.getPosition().y);
         batch.end();
-//        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
     @Override

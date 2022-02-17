@@ -30,7 +30,7 @@ public class TiledMapHelper {
         tiledMap = new TmxMapLoader().load("maps/level0.tmx");
 
         parseMapObjects( getMapObjects("Ground") );
-//        parseMapObjects( getMapObjects("Platforms") );
+        parseMapObjects( getMapObjects("Platforms") );
         backgroundLayer = getBoardLayer("Background");
         playerLayer = getBoardLayer("Player");
     }
