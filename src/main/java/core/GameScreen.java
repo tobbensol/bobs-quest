@@ -31,8 +31,7 @@ public class GameScreen implements Screen {
     private TiledMapTileLayer backgroundLayer;
     private TiledMapTileLayer playerLayer;
 
-    private Vector2 playerPos;
-    private Vector2 playerVel;
+    private Player player1;
 
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
@@ -67,7 +66,16 @@ public class GameScreen implements Screen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerPos.x += playerVel.x;
+            player1.setPosition(player1.getPosition().add(new Vector2(2, 0)));
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            player1.setPosition(player1.getPosition().add(new Vector2(-2, 0)));
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            player1.setPosition(player1.getPosition().add(new Vector2(0, -2)));
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            player1.setPosition(player1.getPosition().add(new Vector2(0, 2)));
         }
 
     }
@@ -76,7 +84,7 @@ public class GameScreen implements Screen {
      * the camera should follow the player character
      */
     private void cameraUpdate() {
-        camera.position.set(new Vector3(playerPos.x,playerPos.y,0));
+        camera.position.set(new Vector3(player1.getPosition().x,player1.getPosition().y,0));
         camera.update();
     }
 
@@ -99,8 +107,6 @@ public class GameScreen implements Screen {
 
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.8f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
-        playerLayer.setCell((int) playerPos.x, (int) playerPos.y, this.tiledMapHelper.getPlayerCell());
 
         orthogonalTiledMapRenderer.render();
 
