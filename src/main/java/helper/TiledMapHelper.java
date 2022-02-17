@@ -16,16 +16,10 @@ public class TiledMapHelper {
         tiledMap = new TmxMapLoader().load("maps/level0.tmx");
         backgroundLayer = getBoardLayer("Background");
         playerLayer = getBoardLayer("Player");
-        player = new Texture("player_stick.png");
-        playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(TextureRegion.split(player, 64, 64)[0][0]));
     }
 
     public TiledMapTileLayer getBoardLayer(String layer) {
         return (TiledMapTileLayer) tiledMap.getLayers().get(layer);
-    }
-
-    public TiledMapTileLayer.Cell getPlayerCell() {
-        return playerCell;
     }
 
     public OrthogonalTiledMapRenderer setupMap() {

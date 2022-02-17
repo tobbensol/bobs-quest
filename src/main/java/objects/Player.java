@@ -22,7 +22,9 @@ public class Player {
         this.name = name;
         this.texture = new Texture(texturePath);
         this.position = new Vector2(positionX, positionY);
-        this.velocity = new Vector2(2, 0);
+        this.velocity = new Vector2(2, 2);
+//        facingRight = true;
+//        grounded = true;
     }
 
 
