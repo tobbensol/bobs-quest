@@ -58,6 +58,20 @@
 			<version>${libgdx.version}</version>
 		</dependency>
 
+		<!-- Was included in the tutorial file
+		<dependency>
+			<groupId>com.badlogicgames.box2dlights</groupId>
+			<artifactId>box2dlights</artifactId>
+			<version>${libgdx.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-openal</artifactId>
+			<version>${libgdx.version}</version>
+		</dependency>
+		-->
+
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
