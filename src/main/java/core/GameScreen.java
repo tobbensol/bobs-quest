@@ -36,13 +36,13 @@ public class GameScreen implements Screen {
         this.world = new World( new Vector2( 0 , 0 ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
-        this.tiledMapHelper = new TiledMapHelper();
+        this.tiledMapHelper = new TiledMapHelper(this);
         this.orthogonalTiledMapRenderer = tiledMapHelper.setupMap();
 
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
-        player1 = new Player("Player1", "player_stick.png", 0, 0);
+        player1 = new Player("Player1", "player_stick.png", 50, 385);
 
     }
 
@@ -124,5 +124,9 @@ public class GameScreen implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    public World getWorld() {
+        return world;
     }
 }
