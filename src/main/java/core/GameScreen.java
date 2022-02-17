@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
-        player1 = new Player("Player1", "player_stick.png", 50, 385);
+        player1 = new Player("Player1", "player_stick.png", 0, 128);
 
     }
 
@@ -56,6 +56,11 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
 
+        keyInputs();
+
+    }
+
+    private void keyInputs() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
@@ -72,7 +77,6 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             player1.setPosition(player1.getPosition().add(new Vector2(0, 2)));
         }
-
     }
 
     /**
