@@ -13,8 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import helper.TiledMapHelper;
-
-import static helper.Constants.PPM;
+import objects.Player;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
@@ -48,8 +47,9 @@ public class GameScreen implements Screen {
 
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
-        playerPos = new Vector2(0, 0);
-        playerVel = new Vector2(0.1f, 0);
+
+        player1 = new Player("Player1", "player_stick.png", 0, 0);
+
     }
 
     /**
