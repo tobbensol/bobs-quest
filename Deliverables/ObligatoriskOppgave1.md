@@ -110,16 +110,41 @@ Et 2d platforming spill hvor det er mulig å bevege seg rundt ved å hoppe, løp
 Prioritert - topp til bunn
 
 - Vise et spillebrett
-  - Som spiller trenger jeg en grafisk framstilling av spillverdenen for å kunne navigere den lett.
+  - Som spiller trenger vi en grafisk framstilling av spillverdenen for å kunne navigere den.
   - Som spiller ønsker vi å ha et fungerende level for at spillet skal fungere.
-    - Trenger at spillverdenen er bredere (og evnt høyere) enn selve spillvinduet. Kameraet i spillet må dermed ha muligheten til å flytte på seg i forhold til spilleren.
-    - Spillbrettet kan ha flere dybde nivåer (Foreground, Background 1, Background\_2 , …).
+    - Akseptansekriterier:
+      - Viser vindu med enkelt selvlaget spillbrett.
+    - Arbeidsoppgaver:
+      - Lage eller finne tile brett til å bruke som textures.
+      - Lage kart i Tiled.
+      - Laste kartet inn i programmet.
+      - Oppdatere skjermen (render) slik at man kan se kartet.
 - Vise spiller på spillebrett
   - Som spiller ønsker jeg en spiller visualisert på spillebrettet slik at jeg kan se hvor jeg er på spillebrettet og hvor jeg er i forhold til objektene rundt i spillverdenen.
   - Som programmerer trenger jeg et spiller-objekt for å kunne holde styr på og endre på tilstanden (posisjon, fart, osv.) til spilleren.
   - Som programmerer trenger jeg en grafisk framstilling av spilleren for å se hvordan spilleren interagerer med spillverdenen.
+    - Akseptansekriterier:
+      - Spillefiguren trenger å være 64x64 pixler, slik at det samsvarer med resten av spillverdenen. (nå fungerer bare 64px tiles)
+      - Spillerobjektet må ha en posisjon og "texture"
+      - Spilleren vises på skjermen.
+    - Arbeidsoppgaver:
+      - Lage en enkel spillefigur
+      - Lage et spiller objekt
+      - Laste inn spillerfiguren
+      - Rendere spilleren
 - Flytte spiller (vha. taster e.l.)
   - Som spiller trenger jeg en måte å kunne bevege meg rundt på spillbrettet, gjerne ved standard kontroller som piltaster eller WASD
+    - Akseptansekriterier:
+      - Spilleren må ha en fart
+      - Spillerens posisjon må oppdateres
+      - Spilleren kan flytte seg til venstre/høyre og hoppe (og falle)
+      - Spilleren kan flytte seg fritt uttenfor cellene til spill verden
+      - Spilleren flytter seg i henhold til hvilke taster som blir trykket på
+    - Arbeidsoppgaver:
+      - Legge til kontroller med ulike taster
+        - Tastene indikerer bevegelsesretning
+      - Gi fart til spillerobjektet som vil bevege spilleren i en retning
+      - Oppdatere spillerens posisjon ved å legge til fart
 - Spiller interagerer med terreng
   - Som spiller trenger jeg å kunne interagere med terreng for å bevege meg i forhold til spillverdenen
     - Akseptansekristerier:
@@ -183,21 +208,25 @@ Hva gikk bra:
   - Par/teamprogrammering
     - Spesielt nyttig på vanskeligere oppgaver
     
-
 Ikke som forventet:
   - Code with me i intelliJ Idea
-    - gikk veldig bra og gjorde det veldig lett å jobbe i lag, men alle commitsene blir credited til den som hoster
-  - Ikke mulig å assigne flere brukere til samme "Issue" på GitLab sitt "Issue Board" uten premium versjon.
-    - Dette gjør at vi har implimentert et konvensjon om at vi legger til klammeparanteser med initialene til hvert medlem som har jobbet på samme "issue".
-      - M: Martin
-      - E: Espen
-      - T: Tobias
-      - K: Kristoffer
+    - Gikk stort sett bra og gjorde det veldig lett å jobbe i lag, men alle commitsene blir credited til den som hoster
+      - Her endte vi opp med å skrive i commitmeldingen dersom noen andre enn den som commitet gjorde endringer.
+    - Code With Me kræsjer av og til
+  - Ikke mulig å "assigne" flere brukere til samme "Issue" på GitLab sitt "Issue Board" uten premium versjon.
+  - Dette gjør at vi har implimentert et konvensjon om at vi legger til klammeparanteser med initialene til hvert medlem som har jobbet på samme "Issue".
+    - M: Martin
+    - E: Espen
+    - T: Tobias
+    - K: Kristoffer
   - proiritering av arbeid
     - det var vanskelig å proritere arbeid i starten siden alt var veldig linært, etter hvert som prosjektet går vil det bli meir åpent og vi må jobbe meir med å prioritere "issues"
 
 Ikke bra:
   - Testing (komplett mangel)
-    - vanskelig å teste når man ikkje veit heilt hva som skjer i programmet
-  - si hvem som jobber med hva
+    - Vanskelig å teste når man ikke vet helt hva som skjer i programmet
+  - Si hvem som jobber med hva
+    - Oppstod situasjoner hvor flere team-medlemmer jobbet på det samme, endte med at noens arbeid måtte forkastes
 
+Oppsummering:
+  - Vi er fornøyd med hvordan arbeids prossessen våres har fungert, og vi ønsker å fortsette med vårt Kanban lignene system. I fremtiden, vil vi kunne fokusere meir på testing, prioritering og utdeling av oppgaver.
