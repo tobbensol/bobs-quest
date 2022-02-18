@@ -1,4 +1,4 @@
-# Obligatorisk oppgave 1:
+# **Obligatorisk oppgave 1:**
 Prosjekt Plattformspill - oppstart**
 
 [https://git.app.uib.no/inf112/22v/lectures/-/blob/master/prosjekt/obligatoriskOppgave1.md](https://git.app.uib.no/inf112/22v/lectures/-/blob/master/prosjekt/obligatoriskOppgave1.md)
@@ -161,10 +161,35 @@ Fokuset i starten bør være på å levere et minimum viable product (MVP) så r
 10. Start-skjerm ved oppstart / game over
 11. Støtte flere spillere (enten på samme maskin eller over nettverk)
 
-![](RackMultipart20220217-4-1cvc0k3_html_d31731a9563c7ddb.png)
-
 **Deloppgave 5: Oppsummering**
 
 Utfør et kort prosjekt-retrospektiv og diskuter hva som gikk bra, hva som ikke fungerte helt som forventet, hva (om noe) som ikke virket i det hele tatt, og eventuelle nye aktiviteter eller verktøy som teamet vil prøve ut i løpet av neste obligatoriske oppgave. Diskuter hvorfor ting fungerte eller ikke fungerte. Skriv opp en kort oppsummering av diskusjonen, og last opp til team repo-et.
 
 På slutten av denne oppgaven kan dere gjøre en liten vurdering av hvor bra dere traff på oppgaven. Dette kan dere bruke til å justere hvor mange oppgaver dere tenker å få inn i neste iterasjon, som da leveres med obligatorisk oppgave 2.
+
+
+Hva gikk bra:
+  - Discord kommunikasjon
+  - Lav terskel for å kommunisere
+  - Samarbeid gjennom IntelliJ's Code With Me
+  - Par/teamprogrammering
+    - Spesielt nyttig på vanskeligere oppgaver
+    
+
+Ikke som forventet:
+  - Code with me i intelliJ Idea
+    - gikk veldig bra og gjorde det veldig lett å jobbe i lag, men alle commitsene blir credited til den som hoster
+  - Ikke mulig å assigne flere brukere til samme "Issue" på GitLab sitt "Issue Board" uten premium versjon.
+    - Dette gjør at vi har implimentert et konvensjon om at vi legger til klammeparanteser med initialene til hvert medlem som har jobbet på samme "issue".
+      - M: Martin
+      - E: Espen
+      - T: Tobias
+      - K: Kristoffer
+  - proiritering av arbeid
+    - det var vanskelig å proritere arbeid i starten siden alt var veldig linært, etter hvert som prosjektet går vil det bli meir åpent og vi må jobbe meir med å prioritere "issues"
+
+Ikke bra:
+  - Testing (komplett mangel)
+    - vanskelig å teste når man ikkje veit heilt hva som skjer i programmet
+  - si hvem som jobber med hva
+
