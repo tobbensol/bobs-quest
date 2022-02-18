@@ -2,11 +2,14 @@ package objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public class Player {
 
     final private String name;
     final private Texture texture;
+    private int width;
+    private int height;
     private Vector2 position;
     private Vector2 velocity;
 //    private boolean facingRight;
@@ -18,11 +21,13 @@ public class Player {
 //        JUMPING
 //    }
 
-    public Player(String name, String texturePath, int positionX, int positionY) {
+    public Player(String name, String texturePath, float positionX, float positionY, int width, int height) {
         this.name = name;
         this.texture = new Texture(texturePath);
         this.position = new Vector2(positionX, positionY);
         this.velocity = new Vector2(2, 2);
+        this.width = width;
+        this.height = height;
 //        facingRight = true;
 //        grounded = true;
     }
@@ -47,6 +52,13 @@ public class Player {
         return texture;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
 
     public void setPosition(Vector2 newPosition) {
         position = newPosition;
