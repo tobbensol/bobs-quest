@@ -203,7 +203,7 @@ På slutten av denne oppgaven kan dere gjøre en liten vurdering av hvor bra der
 
 Hva gikk bra:
   - Discord kommunikasjon
-  - Lav terskel for å kommunisere
+    - Lav terskel for å kommunisere
   - Samarbeid gjennom IntelliJ's Code With Me
   - Par/teamprogrammering
     - Spesielt nyttig på vanskeligere oppgaver
