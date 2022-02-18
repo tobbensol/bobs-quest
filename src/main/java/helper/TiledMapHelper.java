@@ -31,7 +31,7 @@ public class TiledMapHelper {
 
         parseMapObjects( getMapObjects("Ground") );
         parseMapObjects( getMapObjects("Platforms") );
-        backgroundLayer = getBoardLayer("Background");
+        backgroundLayer = getBoardLayer("WorldStructures");
         playerLayer = getBoardLayer("Player");
     }
 
@@ -50,7 +50,7 @@ public class TiledMapHelper {
         return new OrthogonalTiledMapRenderer(tiledMap); // TODO: Use proper unit scale
     }
 
-    // Creates a static body for
+    // Creates a static body for map objects
     private void parseMapObjects(MapObjects mapObjects) {
         for( MapObject mapObject : mapObjects ) {
             if( mapObject instanceof PolygonMapObject ) {
@@ -68,19 +68,20 @@ public class TiledMapHelper {
         Body body = gameScreen.getWorld().createBody( bodyDef );
 
         Shape shape = createPolygonShape( polygonMapObject );
-        // Changes the shape of the world object to match the on in the map
+        // Changes the shape of the world object to match the one in the map
         body.createFixture( shape , 1000 );
         shape.dispose();
     }
 
-    //TODO: Add comments
+
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
 
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
         Vector2[] worldVertices = new Vector2[ vertices.length / 2 ];
 
+        // Retrieves all the vertices of the object
         for ( int i = 0 ; i < vertices.length / 2 ; i++ ) {
-            Vector2 current = new Vector2( vertices[i*2] / PPM , vertices[ i * 2 + 1 ] / PPM );
+            Vector2 current = new Vector2( vertices[ i * 2 ] / PPM , vertices[ i * 2 + 1 ] / PPM );
             worldVertices[i] = current;
         }
 
