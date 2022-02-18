@@ -122,6 +122,14 @@ Prioritert - topp til bunn
   - Som spiller trenger jeg en måte å kunne bevege meg rundt på spillbrettet, gjerne ved standard kontroller som piltaster eller WASD
 - Spiller interagerer med terreng
   - Som spiller trenger jeg å kunne interagere med terreng for å bevege meg i forhold til spillverdenen
+    - Akseptansekristerier:
+      - Spilleren kan ikke bevege seg gjennom spillobjekter i verdenen som vi definerer som terreng.
+      - Spilleren har en "hitbox"
+      - Når vi legger til tyngdekraft, vil spilleren stå jevnt på terrenget og ikke falle gjennom det.
+    - Arbeidsoppgaver:
+      - Legge terreng til som objekter i spillverdenen. (Static bodies)
+      - Gjøre spilleren om til et objekt som har en klar størrelse/hitbox. (Dynamic bodies)
+      - Sjekke om spilleren har kollidert med terrenget og bruke dette til å stoppe spilleren fra å falle/gå gjennom det.
 - Spiller har _poeng_ og interagerer med poeng gjenstander
   - Som spiller ønsker jeg å ha et mål som jeg kan sikte på når jeg spiller, poeng kan være en god løsning. Om jeg har poeng trenger jeg poeng gjenstander som enten øker eller senker poengsummen min. _Neuron activated_
 - Vise fiender/monstre; de skal interagere med terreng og spiller
