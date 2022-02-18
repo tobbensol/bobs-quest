@@ -107,6 +107,8 @@ public class GameScreen implements Screen {
         //TODO: Render player
         batch.draw(player1.getTexture(), player1.getPosition().x, player1.getPosition().y);
         batch.end();
+
+        // Debug renderer
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
