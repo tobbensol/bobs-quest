@@ -21,12 +21,12 @@ public class Player {
 //        JUMPING
 //    }
 
-    public Player(String name, String texturePath, int positionX, int positionY) {
+    public Player(String name, String texturePath, int positionX, int positionY, Controller controller) {
         this.name = name;
         this.texture = new Texture(texturePath);
         this.position = new Vector2(positionX, positionY);
         this.velocity = new Vector2(2, 2);
-        this.controller = new Controller(this, Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN);
+        this.controller = controller;
 //        facingRight = true;
 //        grounded = true;
     }
@@ -71,8 +71,8 @@ public class Player {
         velocity = new Vector2(x, y);
     }
 
-    public void controll(){
-        controller.inputListener();
+    public void control(){
+        setPosition(getPosition().add(controller.inputListener()));
     }
 
     public void setAnimation(int animation) {

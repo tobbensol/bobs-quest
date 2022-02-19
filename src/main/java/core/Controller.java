@@ -12,27 +12,28 @@ public class Controller {
     int right;
 
 
-    public Controller(Player player, int left, int right, int up, int down){
-        this.player = player;
+    public Controller(int left, int right, int up, int down){
         this.up = up;
         this.down = down;
         this.left = left;
         this.right = right;
     }
 
-    public void inputListener(){
+    public Vector2 inputListener(){
+        Vector2 direction = new Vector2(0, 0);
         if (Gdx.input.isKeyPressed(right)) {
-            player.setPosition(player.getPosition().add(new Vector2(2, 0)));
+            direction = direction.add(new Vector2(2, 0));
         }
         if (Gdx.input.isKeyPressed(left)) {
-            player.setPosition(player.getPosition().add(new Vector2(-2, 0)));
+            direction = direction.add(new Vector2(-2, 0));
         }
         if (Gdx.input.isKeyPressed(down)) {
-            player.setPosition(player.getPosition().add(new Vector2(0, -2)));
+            direction = direction.add(new Vector2(0, -2));
         }
         if (Gdx.input.isKeyPressed(up)) {
-            player.setPosition(player.getPosition().add(new Vector2(0, 2)));
+            direction = direction.add(new Vector2(0, 2));
         }
+        return direction;
     }
 
 

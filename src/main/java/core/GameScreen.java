@@ -29,6 +29,7 @@ public class GameScreen implements Screen {
     private TiledMapTileLayer playerLayer;
 
     private Player player1;
+    private Player player2;
 
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
@@ -42,7 +43,8 @@ public class GameScreen implements Screen {
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
-        player1 = new Player("Player1", "player_stick.png", 0, 0);
+        player1 = new Player("Player1", "player_stick.png", 0, 0, new Controller(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN));
+        player2 = new Player("Player2", "player_stick.png", 0, 100, new Controller(Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S));
 
     }
 
@@ -60,7 +62,8 @@ public class GameScreen implements Screen {
             Gdx.app.exit();
         }
 
-        player1.controll();
+        player1.control();
+        player2.control();
     }
 
     /**
@@ -88,6 +91,7 @@ public class GameScreen implements Screen {
         batch.begin();
         //TODO: Render player
         batch.draw(player1.getTexture(), player1.getPosition().x, player1.getPosition().y);
+        batch.draw(player2.getTexture(), player2.getPosition().x, player2.getPosition().y);
         batch.end();
 //        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
