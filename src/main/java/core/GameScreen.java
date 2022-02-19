@@ -60,19 +60,7 @@ public class GameScreen implements Screen {
             Gdx.app.exit();
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(2, 0)));
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(-2, 0)));
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(0, -2)));
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(0, 2)));
-        }
-
+        player1.controll();
     }
 
     /**

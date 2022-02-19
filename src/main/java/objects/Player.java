@@ -1,7 +1,9 @@
 package objects;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import core.Controller;
 
 public class Player {
 
@@ -9,6 +11,7 @@ public class Player {
     final private Texture texture;
     private Vector2 position;
     private Vector2 velocity;
+    private Controller controller;
 //    private boolean facingRight;
 //    private boolean grounded;
 
@@ -23,6 +26,7 @@ public class Player {
         this.texture = new Texture(texturePath);
         this.position = new Vector2(positionX, positionY);
         this.velocity = new Vector2(2, 2);
+        this.controller = new Controller(this, Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN);
 //        facingRight = true;
 //        grounded = true;
     }
@@ -67,6 +71,9 @@ public class Player {
         velocity = new Vector2(x, y);
     }
 
+    public void controll(){
+        controller.inputListener();
+    }
 
     public void setAnimation(int animation) {
         // TODO: Implement
