@@ -9,9 +9,9 @@ public class Player {
 
     final private String name;
     final private Texture texture;
+    final private Controller controller;
     private Vector2 position;
     private Vector2 velocity;
-    private Controller controller;
 //    private boolean facingRight;
 //    private boolean grounded;
 
