@@ -59,9 +59,7 @@ public class TiledMapHelper {
         }
     }
 
-
-    private void createStaticBody( PolygonMapObject polygonMapObject ){
-
+    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         // Adds the world object to the map
