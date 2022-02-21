@@ -5,12 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import objects.Player;
 
 public class Controller {
-    Player player;
-    int up;
-    int down;
-    int left;
-    int right;
-
+    private final int up;
+    private final int down;
+    private final int left;
+    private final int right;
+    private final int SPEED = 200;
+    private float delta;
 
     public Controller(int left, int right, int up, int down){
         this.up = up;
@@ -20,22 +20,21 @@ public class Controller {
     }
 
     public Vector2 inputListener(){
+        delta = Gdx.graphics.getDeltaTime();
         Vector2 direction = new Vector2(0, 0);
         if (Gdx.input.isKeyPressed(right)) {
-            direction = direction.add(new Vector2(2, 0));
+            direction = direction.add(new Vector2(SPEED*delta, 0));
         }
         if (Gdx.input.isKeyPressed(left)) {
-            direction = direction.add(new Vector2(-2, 0));
+            direction = direction.add(new Vector2(-SPEED*delta, 0));
         }
         if (Gdx.input.isKeyPressed(down)) {
-            direction = direction.add(new Vector2(0, -2));
+            direction = direction.add(new Vector2(0, -SPEED*delta));
         }
         if (Gdx.input.isKeyPressed(up)) {
-            direction = direction.add(new Vector2(0, 2));
+            direction = direction.add(new Vector2(0, SPEED*delta));
         }
         return direction;
     }
-
-
 
 }
