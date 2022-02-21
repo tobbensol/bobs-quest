@@ -3,6 +3,7 @@ package helper;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -54,21 +55,38 @@ public class TiledMapHelper {
     private void parseMapObjects(MapObjects mapObjects) {
         for( MapObject mapObject : mapObjects ) {
             if( mapObject instanceof PolygonMapObject ) {
-                createStaticBody( (PolygonMapObject) mapObject );
+                createBody(mapObject , BodyDef.BodyType.StaticBody);
             }
+            else if (mapObject instanceof RectangleMapObject) {
+                createBody(mapObject , BodyDef.BodyType.DynamicBody);
+            }
+
         }
     }
 
     private void createBody(MapObject mapObject, BodyDef.BodyType bodyType){
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.type = bodyType;
         // Adds the world object to the map
         Body body = gameScreen.getWorld().createBody( bodyDef );
+        Shape shape;
 
-        Shape shape = createPolygonShape( polygonMapObject );
+        if (bodyType.equals(BodyDef.BodyType.StaticBody)) {
+            shape = createPolygonShape((PolygonMapObject) mapObject);
+        }
+        else if (bodyType.equals(BodyDef.BodyType.DynamicBody)) {
+            shape = createRectangularShape((RectangleMapObject) mapObject);
+        }
+        else{
+            throw new IllegalArgumentException("BodyType must be static or dynamic.");
+        }
         // Changes the shape of the world object to match the one in the map
-        body.createFixture( shape , 1000 );
+        body.createFixture(shape, 1000);
         shape.dispose();
+    }
+
+    private Shape createRectangularShape(RectangleMapObject mapObject) {
+        return null;
     }
 
 
