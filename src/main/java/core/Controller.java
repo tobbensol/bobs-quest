@@ -23,18 +23,20 @@ public class Controller {
         delta = Gdx.graphics.getDeltaTime();
         Vector2 direction = new Vector2(0, 0);
         if (Gdx.input.isKeyPressed(right)) {
-            direction = direction.add(new Vector2(SPEED*delta, 0));
+            player.move(new Vector2(SPEED*delta, 0));
         }
         if (Gdx.input.isKeyPressed(left)) {
-            direction = direction.add(new Vector2(-SPEED*delta, 0));
+            player.move(new Vector2(-SPEED*delta, 0));
         }
         if (Gdx.input.isKeyPressed(down)) {
-            direction = direction.add(new Vector2(0, -SPEED*delta));
+            player.move(new Vector2(0, -SPEED*delta));
         }
         if (Gdx.input.isKeyPressed(up)) {
-            direction = direction.add(new Vector2(0, SPEED*delta));
+            player.move(new Vector2(0, SPEED*delta));
         }
         return direction;
     }
+
+
 
 }

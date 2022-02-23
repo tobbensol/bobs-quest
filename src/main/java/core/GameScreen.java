@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import helper.Constants;
 import helper.TiledMapHelper;
 import objects.Player;
 
@@ -19,6 +20,11 @@ import objects.Player;
 public class GameScreen implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
+
+    public World getWorld() {
+        return world;
+    }
+
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
 
@@ -31,13 +37,14 @@ public class GameScreen implements Screen {
     private Player player1;
     private Player player2;
 
+
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World( new Vector2( 0 , 0 ), false );
+        this.world = new World( new Vector2( 0 , -0.98f ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
-        this.tiledMapHelper = new TiledMapHelper();
+        this.tiledMapHelper = new TiledMapHelper(this);
         this.orthogonalTiledMapRenderer = tiledMapHelper.setupMap();
 
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
@@ -62,8 +69,8 @@ public class GameScreen implements Screen {
             Gdx.app.exit();
         }
 
-        player1.control();
-        player2.control();
+        player1.controll();
+        player2.controll();
     }
 
     /**
@@ -90,10 +97,11 @@ public class GameScreen implements Screen {
 
         batch.begin();
         //TODO: Render player
-        batch.draw(player1.getTexture(), player1.getPosition().x, player1.getPosition().y);
-        batch.draw(player2.getTexture(), player2.getPosition().x, player2.getPosition().y);
+
+        player1.render(batch);
+        player2.render(batch);
         batch.end();
-//        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
     }
 
     @Override
