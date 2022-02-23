@@ -22,16 +22,16 @@ public class Controller {
 
     public void inputListener(){
         if (Gdx.input.isKeyPressed(right)) {
-            player.setPosition(player.getPosition().add(new Vector2(2, 0)));
+            player.move(new Vector2(2, 0));
         }
         if (Gdx.input.isKeyPressed(left)) {
-            player.setPosition(player.getPosition().add(new Vector2(-2, 0)));
+            player.move(new Vector2(-2, 0));
         }
         if (Gdx.input.isKeyPressed(down)) {
-            player.setPosition(player.getPosition().add(new Vector2(0, -2)));
+            player.move(new Vector2(0, -2));
         }
         if (Gdx.input.isKeyPressed(up)) {
-            player.setPosition(player.getPosition().add(new Vector2(0, 2)));
+            player.move(new Vector2(0, 10));
         }
     }
 
