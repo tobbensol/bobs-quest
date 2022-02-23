@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import controls.ArrowController;
+import controls.CustomController;
+import controls.WASDController;
 import helper.Constants;
 import helper.TiledMapHelper;
 import objects.Player;
@@ -50,8 +53,8 @@ public class GameScreen implements Screen {
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
-        player1 = new Player("Player1", "player_stick.png", 0, 0, new Controller(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN));
-        player2 = new Player("Player2", "player_stick.png", 0, 100, new Controller(Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S));
+        player1 = new Player("Player1", "player_stick.png", this, 0, 400, 1, new ArrowController());
+        player2 = new Player("Player2", "player_stick.png", this, 100, 500, 1, new WASDController());
 
     }
 
@@ -69,8 +72,8 @@ public class GameScreen implements Screen {
             Gdx.app.exit();
         }
 
-        player1.controll();
-        player2.controll();
+        player1.update();
+        player2.update();
     }
 
     /**
