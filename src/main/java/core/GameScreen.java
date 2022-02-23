@@ -8,8 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import helper.TiledMapHelper;
 import objects.Player;
 
@@ -30,12 +29,17 @@ public class GameScreen implements Screen {
     private TiledMapTileLayer backgroundLayer;
     private TiledMapTileLayer playerLayer;
 
+    protected Body body;
+    private PolygonShape shape;
+    private FixtureDef fixtureDef;
+    private Fixture fixture;
     private Player player1;
+
 
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World( new Vector2( 0 , 0 ), false );
+        this.world = new World( new Vector2( 0 , -0.98f), true );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
         this.tiledMapHelper = new TiledMapHelper(this);
@@ -44,7 +48,7 @@ public class GameScreen implements Screen {
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
-        player1 = new Player("Player1", "player_stick.png", 0, 128, 100, 100);
+        player1 = new Player("Player1", "player_stick.png", this, 35, 350, 1);
     }
 
     /**
@@ -58,6 +62,7 @@ public class GameScreen implements Screen {
         orthogonalTiledMapRenderer.setView(camera);
 
         keyInputs();
+        player1.update();
 
     }
 
@@ -67,16 +72,16 @@ public class GameScreen implements Screen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(2, 0)));
+            player1.move(new Vector2(2, 0));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(-2, 0)));
+            player1.move(new Vector2(-2, 0));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(0, -2)));
+            player1.move(new Vector2(0, -2));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            player1.setPosition(player1.getPosition().add(new Vector2(0, 2)));
+            player1.move(new Vector2(0, 11));
         }
     }
 
