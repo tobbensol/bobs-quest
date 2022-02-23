@@ -9,74 +9,16 @@ import core.GameScreen;
 import helper.BodyHelper;
 import helper.Constants;
 
-public class Player {
+public class Player extends Object{
 
-    final private String name;
-    final private Texture texture;
-    private int width, height;
-    private Body body;
-    private float x, y, speed, velY;
-
-
-
-//    private boolean facingRight;
-//    private boolean grounded;
-
-//    enum State {
-//        IDLE,
-//        WALKING,
-//        JUMPING
-//    }
 
     public Player(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
-        this.name = name;
-        this.texture = new Texture(texturePath);
-        this.x = x;
-        this.y = y;
-        this.width = texture.getWidth();
-        this.height = texture.getHeight();
-
-        this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameScreen.getWorld());
-//        facingRight = true;
-//        grounded = true;
+        super(name, texturePath, gameScreen, x, y, density);
     }
 
+    @Override
     public void update() {
-        x = body.getPosition().x * Constants.PPM - (width / 2);
-        y = body.getPosition().y * Constants.PPM - (height / 2);
-        //velY = body.getLinearVelocity().len();
-        velY = 0;
+        super.update();
+        // TODO: implement controls?????
     }
-
-
-    public void render(SpriteBatch batch) {
-        batch.draw(texture,x,y,width,height);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-
-    public Vector2 getPosition() {
-        return body.getPosition().scl(Constants.PPM);
-    }
-
-
-    public Vector2 getVelocity() {
-        return body.getLinearVelocity();
-    }
-
-    public Texture getTexture() {
-        return texture;
-    }
-
-    public void setAnimation(int animation) {
-        // TODO: Implement
-    }
-
-    public void move(Vector2 vector2){
-        body.applyForceToCenter(vector2, true);
-    }
-
 }

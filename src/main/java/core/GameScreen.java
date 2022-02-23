@@ -49,6 +49,7 @@ public class GameScreen implements Screen {
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
         player1 = new Player("Player1", "player_stick.png", this, 35, 350, 1);
+
     }
 
     /**
