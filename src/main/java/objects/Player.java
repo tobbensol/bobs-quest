@@ -1,6 +1,7 @@
 package objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -40,6 +41,17 @@ public class Player {
 //        grounded = true;
     }
 
+    public void update() {
+        x = body.getPosition().x * Constants.PPM - (width / 2);
+        y = body.getPosition().y * Constants.PPM - (height / 2);
+        //velY = body.getLinearVelocity().len();
+        velY = 0;
+    }
+
+
+    public void render(SpriteBatch batch) {
+        batch.draw(texture,x,y,width,height);
+    }
 
     public String getName() {
         return name;
