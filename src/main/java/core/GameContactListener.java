@@ -1,6 +1,7 @@
 package core;
 
 import com.badlogic.gdx.physics.box2d.*;
+import helper.Constants;
 import helper.ContactType;
 
 public class GameContactListener implements ContactListener {
@@ -11,41 +12,26 @@ public class GameContactListener implements ContactListener {
         this.gameScreen = gameScreen;
     }
 
+
     @Override
     public void beginContact(Contact contact) {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a == null || b == null) {
+        if (a == null || b == null)
             return;
-        }
-        if (a.getUserData() == null || b.getUserData() == null) {
+        if (a.getUserData() == null || b.getUserData() == null)
             return;
-        }
 
-        if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
 
-            // Contact between PLAYER and GROUND
-            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
+        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
 
-                // TODO: Need to somehow check if the contact between player and ground only happens at the from the up-side of ground
-                //  (side-wise and from the under-side shouldn't count)
-                //  Possible solution: Maybe attaching a sensor under the the foot of the player and hence only checking contact with that.
-                /*
-                if (a.getBody().getPosition().y == b.getBody().getPosition().y) {
-                    System.out.println(a.getBody().getPosition().y);
-                }
-
-                 */
-                // TODO: Need to get access to the player and set isOnGround = true.
-                System.out.println("Contact between a player and ground!");
+            // Contact between foot-sensor of an object and GROUND
+            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
                 boolean value = gameScreen.getPlayer().setOnGround(true);
-                System.out.println(value);
-
+                System.out.println("Is on ground: " + value);
             }
-
         }
-
     }
 
     @Override
@@ -53,20 +39,16 @@ public class GameContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a == null || b == null) {
+        if (a == null || b == null)
             return;
-        }
-        if (a.getUserData() == null || b.getUserData() == null) {
+        if (a.getUserData() == null || b.getUserData() == null)
             return;
-        }
 
-        if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
             // Contact between PLAYER and GROUND
-            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                // TODO: Need to get access to the player and set isOnGround = false.
-                System.out.println("No contact");
+            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
                 boolean value = gameScreen.getPlayer().setOnGround(false);
-                System.out.println(value);
+                System.out.println("Is on ground: " + value);
             }
         }
     }
