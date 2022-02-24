@@ -7,13 +7,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import core.GameScreen;
 import helper.BodyHelper;
 import helper.Constants;
+import helper.ContactType;
 
 public abstract class Object {
     final private String name;
     final private Texture texture;
     private int width, height;
     private Body body;
-    private float x, y, speed, velY;
+    protected float x, y, speed, velY;
     private GameScreen gameScreen;
 
 
@@ -26,7 +27,7 @@ public abstract class Object {
 //        JUMPING
 //    }
 
-    public Object(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
+    public Object(String name, String texturePath, GameScreen gameScreen, float x, float y, int density, ContactType contactType) {
         this.name = name;
         this.texture = new Texture(texturePath);
         this.x = x;
@@ -35,7 +36,7 @@ public abstract class Object {
         this.height = texture.getHeight();
         this.gameScreen = gameScreen;
 
-        this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameScreen.getWorld());
+        this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameScreen.getWorld(), contactType);
 //        facingRight = true;
 //        grounded = true;
     }
@@ -43,8 +44,8 @@ public abstract class Object {
     public void update() {
         x = body.getPosition().x * Constants.PPM - (width / 2);
         y = body.getPosition().y * Constants.PPM - (height / 2);
-        //velY = body.getLinearVelocity().len();
-        velY = 0;
+        velY = body.getLinearVelocity().len();
+        //velY = 0;
     }
 
 

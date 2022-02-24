@@ -10,18 +10,27 @@ import core.Controller;
 import core.GameScreen;
 import helper.BodyHelper;
 import helper.Constants;
+import helper.ContactType;
 
 public class Player extends Object{
     Controller controller;
+    private boolean onGround= false;
 
     public Player(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
-        super(name, texturePath, gameScreen, x, y, density);
-        this.controller= new Controller(this, Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN);
+        super(name, texturePath, gameScreen, x, y, density, ContactType.PLAYER);
+        this.controller= new Controller(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN);
     }
 
     @Override
     public void update() {
+        Vector2 direction = controller.inputListener();
+        move(direction);
         super.update();
-        controller.inputListener();
+    }
+
+
+    public boolean setOnGround(boolean value) {
+        onGround = value;
+        return onGround;
     }
 }
