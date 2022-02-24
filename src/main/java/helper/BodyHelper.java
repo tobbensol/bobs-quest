@@ -12,22 +12,28 @@ public class BodyHelper {
         bodyDef.fixedRotation = true;
         Body body = world.createBody(bodyDef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 / Constants.PPM, height / 2 / Constants.PPM);
+
+
+        // Creating the interacting shape (box or circle) around the object.
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(width/2/Constants.PPM);
+        //PolygonShape shape = new PolygonShape();
+        //shape.setAsBox(width / 2 / Constants.PPM, height / 2 / Constants.PPM);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
+        fixtureDef.shape = circleShape;
         fixtureDef.density = density;
         body.createFixture(fixtureDef).setUserData(contactType);
+        circleShape.dispose();
 
-
-        // Creating foot sensor
-        shape.setAsBox(2/Constants.PPM, 2/Constants.PPM, new Vector2(0,-height/2/Constants.PPM), 0);
-        fixtureDef.shape = shape;
+        // Creating foot sensor located at the bottom of the object.
+        PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(width*0.3f/Constants.PPM, 2/Constants.PPM, new Vector2(0,-height/2/Constants.PPM), 0);
+        fixtureDef.shape = polygonShape;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData("foot");
+        polygonShape.dispose();
 
-        shape.dispose();
         return body;
     }
 }
