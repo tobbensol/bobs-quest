@@ -13,7 +13,7 @@ public abstract class Object {
     final private String name;
     final private Texture texture;
     private int width, height;
-    private Body body;
+    protected Body body;
     protected float x, y, speed, velY;
     private GameScreen gameScreen;
 
@@ -44,6 +44,7 @@ public abstract class Object {
     public void update() {
         x = body.getPosition().x * Constants.PPM - (width / 2);
         y = body.getPosition().y * Constants.PPM - (height / 2);
+
         velY = body.getLinearVelocity().len();
         //velY = 0;
     }

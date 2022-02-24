@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World( new Vector2( 0 , -0.98f ), false );
+        this.world = new World( new Vector2( 0 , -10f ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.gameContactListener = new GameContactListener(this);
         this.world.setContactListener(this.gameContactListener);
