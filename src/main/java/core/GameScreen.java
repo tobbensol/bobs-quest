@@ -27,6 +27,7 @@ public class GameScreen implements Screen {
 
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
+    private GameContactListener gameContactListener;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TiledMapHelper tiledMapHelper;
@@ -42,6 +43,8 @@ public class GameScreen implements Screen {
         this.batch = new SpriteBatch();
         this.world = new World( new Vector2( 0 , -0.98f ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
+        this.gameContactListener = new GameContactListener(this);
+        this.world.setContactListener(this.gameContactListener);
 
         this.tiledMapHelper = new TiledMapHelper(this);
         this.orthogonalTiledMapRenderer = tiledMapHelper.setupMap();
@@ -119,5 +122,10 @@ public class GameScreen implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    // This is just for testing.
+    public Player getPlayer() {
+        return player1;
     }
 }
