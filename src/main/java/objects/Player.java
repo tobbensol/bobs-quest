@@ -1,5 +1,6 @@
 package objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,11 +24,27 @@ public class Player extends Object{
 
     @Override
     public void update() {
+        /*
         Vector2 direction = controller.inputListener();
         move(direction);
+
+         */
+        handleInput();
         super.update();
     }
+    public void handleInput() {
 
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && onGround) {
+            this.body.applyLinearImpulse(new Vector2(0,1.1f), this.body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && this.body.getLinearVelocity().x <= 2) {
+            this.body.applyLinearImpulse(new Vector2(0.35f,0), this.body.getWorldCenter(), true);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && this.body.getLinearVelocity().x >= -2) {
+            this.body.applyLinearImpulse(new Vector2(-0.35f,0), this.body.getWorldCenter(), true);
+        }
+
+    }
 
     public boolean setOnGround(boolean value) {
         onGround = value;
