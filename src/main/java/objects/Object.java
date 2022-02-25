@@ -8,6 +8,7 @@ import core.GameScreen;
 import helper.BodyHelper;
 import helper.Constants;
 import helper.ContactType;
+import org.lwjgl.system.CallbackI;
 
 public abstract class Object {
     final private String name;
@@ -18,14 +19,18 @@ public abstract class Object {
     private GameScreen gameScreen;
 
 
-//    private boolean facingRight;
-//    private boolean grounded;
+    protected boolean facingRight;
+    protected boolean grounded;
 
-//    enum State {
-//        IDLE,
-//        WALKING,
-//        JUMPING
-//    }
+    public enum State {
+        STANDING,
+        WALKING,
+        JUMPING,
+        FALLING
+    }
+    public State currentState;
+    public State previousState;
+
 
     public Object(String name, String texturePath, GameScreen gameScreen, float x, float y, int density, ContactType contactType) {
         this.name = name;
@@ -35,10 +40,12 @@ public abstract class Object {
         this.width = texture.getWidth();
         this.height = texture.getHeight();
         this.gameScreen = gameScreen;
+        currentState = State.STANDING;
+        previousState = State.STANDING;
 
         this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameScreen.getWorld(), contactType);
-//        facingRight = true;
-//        grounded = true;
+        facingRight = true;
+        grounded = false;
     }
 
     public void update() {
@@ -47,11 +54,21 @@ public abstract class Object {
 
         velY = body.getLinearVelocity().len();
         //velY = 0;
+
+
+        previousState = currentState;
+        currentState = getState();
+        //System.out.println(currentState);
     }
 
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture,x,y,width,height);
+        if (!facingRight) {
+            batch.draw(texture,x,y,width,height,0, 0, width, height, true, false);
+        }
+        else {
+            batch.draw(texture,x,y,width,height);
+        }
     }
 
     public String getName() {
@@ -61,6 +78,21 @@ public abstract class Object {
 
     public Vector2 getPosition() {
         return body.getPosition().scl(Constants.PPM);
+    }
+
+    public State getState() {
+        if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+            return State.JUMPING;
+        }
+        else if (body.getLinearVelocity().y < 0) {
+            return State.FALLING;
+        }
+        else if (body.getLinearVelocity().x != 0) {
+            return State.STANDING;
+        }
+        else  {
+            return State.STANDING;
+        }
     }
 
 

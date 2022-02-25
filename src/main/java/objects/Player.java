@@ -13,9 +13,10 @@ import helper.BodyHelper;
 import helper.Constants;
 import helper.ContactType;
 
-public class Player extends Object{
+public class Player extends Object {
     Controller controller;
-    private boolean onGround= false;
+    //private boolean onGround = false;
+
 
     public Player(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
         super(name, texturePath, gameScreen, x, y, density, ContactType.PLAYER);
@@ -34,20 +35,22 @@ public class Player extends Object{
     }
     public void handleInput() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && onGround) {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && grounded) {
             this.body.applyLinearImpulse(new Vector2(0,1.1f), this.body.getWorldCenter(), true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && this.body.getLinearVelocity().x <= 2) {
             this.body.applyLinearImpulse(new Vector2(0.35f,0), this.body.getWorldCenter(), true);
+            facingRight = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && this.body.getLinearVelocity().x >= -2) {
             this.body.applyLinearImpulse(new Vector2(-0.35f,0), this.body.getWorldCenter(), true);
+            facingRight = false;
         }
 
     }
 
-    public boolean setOnGround(boolean value) {
-        onGround = value;
-        return onGround;
+    public boolean setGrounded(boolean value) {
+        grounded = value;
+        return grounded;
     }
 }
