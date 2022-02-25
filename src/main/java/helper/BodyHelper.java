@@ -37,6 +37,20 @@ public class BodyHelper {
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData("head");
 
+        // Creating right side sensor
+        polygonShape.setAsBox(2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, new Vector2(width/2/Constants.PPM, 0), 0);
+        fixtureDef.shape = polygonShape;
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef).setUserData("right");
+
+        // Creating left side sensor
+        polygonShape.setAsBox(2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, new Vector2(-width/2/Constants.PPM, 0), 0);
+        fixtureDef.shape = polygonShape;
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef).setUserData("left");
+
+
+
         circleShape.dispose();
         polygonShape.dispose();
         return body;

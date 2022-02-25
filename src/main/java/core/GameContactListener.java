@@ -35,6 +35,17 @@ public class GameContactListener implements ContactListener {
             if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
                 System.out.println("Collision between head and ground!");
             }
+
+            if (a.getUserData().equals("left") || b.getUserData().equals("left")) {
+                gameScreen.getPlayer().setSideCollision(true);
+                System.out.println("Collision between player and ground!");
+            }
+
+            if (a.getUserData().equals("right") || b.getUserData().equals("right")) {
+                gameScreen.getPlayer().setSideCollision(true);
+                System.out.println("Collision between player and ground!");
+            }
+
         }
     }
 
@@ -54,6 +65,16 @@ public class GameContactListener implements ContactListener {
                 gameScreen.getPlayer().setGrounded(false);
                 //System.out.println("Is on ground: " + value);
             }
+        }
+
+        if (a.getUserData().equals("left") || b.getUserData().equals("left")) {
+            gameScreen.getPlayer().setSideCollision(false);
+            System.out.println("Collision between player and ground!");
+        }
+
+        if (a.getUserData().equals("right") || b.getUserData().equals("right")) {
+            gameScreen.getPlayer().setSideCollision(false);
+            System.out.println("Collision between player and ground!");
         }
     }
 

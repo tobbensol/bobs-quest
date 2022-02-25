@@ -15,12 +15,13 @@ import helper.ContactType;
 
 public class Player extends Object {
     Controller controller;
-    //private boolean onGround = false;
+    private boolean sideCollision;
 
 
     public Player(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
         super(name, texturePath, gameScreen, x, y, density, ContactType.PLAYER);
         this.controller= new Controller(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN);
+        sideCollision = false;
     }
 
     @Override
@@ -35,18 +36,28 @@ public class Player extends Object {
     }
     public void handleInput() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && grounded) {
-            this.body.applyLinearImpulse(new Vector2(0,1.1f), this.body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && grounded && previousState != State.JUMPING) {
+            this.body.applyLinearImpulse(new Vector2(0,1.3f), this.body.getWorldCenter(), true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && this.body.getLinearVelocity().x <= 2) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && this.body.getLinearVelocity().x <= 2  && !checkSideCollisionInAir()) {
             this.body.applyLinearImpulse(new Vector2(0.35f,0), this.body.getWorldCenter(), true);
             facingRight = true;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && this.body.getLinearVelocity().x >= -2) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && this.body.getLinearVelocity().x >= -2 && !checkSideCollisionInAir()) {
             this.body.applyLinearImpulse(new Vector2(-0.35f,0), this.body.getWorldCenter(), true);
             facingRight = false;
         }
 
+    }
+
+
+    private boolean checkSideCollisionInAir()  {
+        return currentState.equals(State.JUMPING) && sideCollision;
+    }
+
+    public boolean setSideCollision(boolean value) {
+        sideCollision = value;
+        return sideCollision;
     }
 
     public boolean setGrounded(boolean value) {
