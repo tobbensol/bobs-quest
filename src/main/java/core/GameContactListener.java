@@ -28,8 +28,12 @@ public class GameContactListener implements ContactListener {
 
             // Contact between foot-sensor of an object and GROUND
             if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-                boolean value = gameScreen.getPlayer().setOnGround(true);
-                System.out.println("Is on ground: " + value);
+                boolean value = gameScreen.getPlayer().setGrounded(true);
+                //System.out.println("Is on ground: " + value);
+            }
+
+            if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
+                System.out.println("Collision between head and ground!");
             }
         }
     }
@@ -47,8 +51,8 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
             // Contact between PLAYER and GROUND
             if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-                boolean value = gameScreen.getPlayer().setOnGround(false);
-                System.out.println("Is on ground: " + value);
+                boolean value = gameScreen.getPlayer().setGrounded(false);
+                //System.out.println("Is on ground: " + value);
             }
         }
     }
