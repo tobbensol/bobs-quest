@@ -1,8 +1,9 @@
 package core;
 
 import com.badlogic.gdx.physics.box2d.*;
-import helper.Constants;
 import helper.ContactType;
+import objects.Player;
+import java.util.List;
 
 public class GameContactListener implements ContactListener {
 
@@ -55,10 +56,42 @@ public class GameContactListener implements ContactListener {
 
     }
 
+    /**
+     * This function should find and return the correct player
+     * involved in a given collision between to Fixtures: a and b.
+     * @param a - The first Fixture involved in the contact.
+     * @param b - The second Fixture involved in the contact.
+     * @return Return the player involved in the contact.
+     */
+    private Player getContactPlayer(Fixture a, Fixture b) {
+        List<Player> players = gameScreen.getPlayers();
+        Fixture p;
+
+        if (a.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) {
+            p = a;
+        }
+        else if (b.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) {
+            p = b;
+        }
+        else {
+            return null;
+        }
+
+        for (Player player : players) {
+            // TODO: find out how to find the correct player.
+            if (player.getBody().equals(p.getBody())) {
+                return player;
+            }
+        }
+        return null;
+        //return gameScreen.getPlayer();
+    }
+
+
     private void groundContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
             if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-                gameScreen.getPlayer().setGrounded(begin);
+                getContactPlayer(a,b).setGrounded(begin);
             }
         }
     }
@@ -80,7 +113,7 @@ public class GameContactListener implements ContactListener {
             direction = "left";
 
         if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
-            gameScreen.getPlayer().setSideCollision(begin);
+            getContactPlayer(a,b).setSideCollision(begin);
             //System.out.println("Collision between player and ground!");
         }
     }

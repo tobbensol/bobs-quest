@@ -91,6 +91,9 @@ public abstract class Object {
         }
     }
 
+    public Body getBody() {
+        return body;
+    }
 
     public Vector2 getVelocity() {
         return body.getLinearVelocity();

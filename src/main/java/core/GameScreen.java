@@ -160,6 +160,10 @@ public class GameScreen implements Screen {
 
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     // This is just for testing.
     public Player getPlayer() {
         return players.get(0);
