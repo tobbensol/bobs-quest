@@ -81,7 +81,7 @@ public class TiledMapHelper {
             throw new IllegalArgumentException("BodyType must be static or dynamic.");
         }
         // Changes the shape of the world object to match the one in the map
-        body.createFixture(shape, 1000);
+        body.createFixture(shape, 1000).setUserData(ContactType.GROUND);
         shape.dispose();
     }
 
