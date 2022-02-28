@@ -12,7 +12,6 @@ public class GameContactListener implements ContactListener {
         this.gameScreen = gameScreen;
     }
 
-
     @Override
     public void beginContact(Contact contact) {
         Fixture a = contact.getFixtureA();
@@ -23,30 +22,11 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == null || b.getUserData() == null)
             return;
 
+        groundContact(a,b,true);
+        headContact(a,b,true);
+        horizontalContact(a,b,true,true); // Right contact
+        horizontalContact(a,b,true,false); // Left contact
 
-        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-
-            // Contact between foot-sensor of an object and GROUND
-            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-                gameScreen.getPlayer().setGrounded(true);
-                //System.out.println("Is on ground: " + value);
-            }
-
-            if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
-                System.out.println("Collision between head and ground!");
-            }
-
-            if (a.getUserData().equals("left") || b.getUserData().equals("left")) {
-                gameScreen.getPlayer().setSideCollision(true);
-                System.out.println("Collision between player and ground!");
-            }
-
-            if (a.getUserData().equals("right") || b.getUserData().equals("right")) {
-                gameScreen.getPlayer().setSideCollision(true);
-                System.out.println("Collision between player and ground!");
-            }
-
-        }
     }
 
     @Override
@@ -59,23 +39,10 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == null || b.getUserData() == null)
             return;
 
-        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-            // Contact between PLAYER and GROUND
-            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-                gameScreen.getPlayer().setGrounded(false);
-                //System.out.println("Is on ground: " + value);
-            }
-        }
-
-        if (a.getUserData().equals("left") || b.getUserData().equals("left")) {
-            gameScreen.getPlayer().setSideCollision(false);
-            System.out.println("Collision between player and ground!");
-        }
-
-        if (a.getUserData().equals("right") || b.getUserData().equals("right")) {
-            gameScreen.getPlayer().setSideCollision(false);
-            System.out.println("Collision between player and ground!");
-        }
+        groundContact(a,b,false);
+        headContact(a,b,false);
+        horizontalContact(a,b,false,true); // Right contact
+        horizontalContact(a,b,false,false); // Left contact
     }
 
     @Override
@@ -87,4 +54,35 @@ public class GameContactListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
 
     }
+
+    private void groundContact(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
+            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
+                gameScreen.getPlayer().setGrounded(begin);
+            }
+        }
+    }
+
+    private void headContact(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
+            if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
+                //System.out.println("Collision between head and ground!");
+                // TODO: implement logic
+            }
+        }
+    }
+
+    private void horizontalContact(Fixture a, Fixture b, boolean begin, boolean right) {
+        String direction;
+        if (right)
+            direction = "right";
+        else
+            direction = "left";
+
+        if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
+            gameScreen.getPlayer().setSideCollision(begin);
+            //System.out.println("Collision between player and ground!");
+        }
+    }
+
 }
