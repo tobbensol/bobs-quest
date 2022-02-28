@@ -24,9 +24,11 @@ public class Player extends Object {
         if (!checkSideCollisionInAir()) {
             if (isRight && this.body.getLinearVelocity().x <= 2) {
                 applyCenterLinearImpulse(delta*X_VELOCITY, 0);
+                facingRight = true;
             }
             else if (!isRight && this.body.getLinearVelocity().x >= -2) {
                 applyCenterLinearImpulse(-delta*X_VELOCITY, 0);
+                facingRight = false;
             }
         }
     }
