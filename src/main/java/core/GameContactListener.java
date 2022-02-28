@@ -112,10 +112,13 @@ public class GameContactListener implements ContactListener {
         else
             direction = "left";
 
-        if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
-            getContactPlayer(a,b).setSideCollision(begin);
-            //System.out.println("Collision between player and ground!");
+        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
+            if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
+                getContactPlayer(a,b).setSideCollision(begin);
+                System.out.println("Collision between player and ground!");
+            }
         }
+
     }
 
 }
