@@ -47,12 +47,11 @@ public class Player extends Object {
             this.body.applyLinearImpulse(new Vector2(-0.35f,0), this.body.getWorldCenter(), true);
             facingRight = false;
         }
-
     }
 
 
     private boolean checkSideCollisionInAir()  {
-        return currentState.equals(State.JUMPING) && sideCollision;
+        return (currentState.equals(State.JUMPING) && sideCollision) || (currentState.equals(State.FALLING) && sideCollision);
     }
 
     public boolean setSideCollision(boolean value) {
