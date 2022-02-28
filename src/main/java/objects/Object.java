@@ -4,21 +4,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import controls.Controller;
 import core.GameScreen;
 import helper.BodyHelper;
 import helper.Constants;
 import helper.ContactType;
-import org.lwjgl.system.CallbackI;
 
 public abstract class Object {
     final private String name;
     final private Texture texture;
     private int width, height;
     protected Body body;
-    protected float x, y, speed, velY;
-    private GameScreen gameScreen;
-
+    protected float x, y, velY;
 
     protected boolean facingRight;
     protected boolean grounded;
@@ -29,8 +25,8 @@ public abstract class Object {
         JUMPING,
         FALLING
     }
-    public State currentState;
-    public State previousState;
+    protected State currentState;
+    protected State previousState;
 
 
     public Object(String name, String texturePath, GameScreen gameScreen, float x, float y, int density, ContactType contactType) {
@@ -40,7 +36,6 @@ public abstract class Object {
         this.y = y;
         this.width = texture.getWidth();
         this.height = texture.getHeight();
-        this.gameScreen = gameScreen;
         currentState = State.STANDING;
         previousState = State.STANDING;
 
