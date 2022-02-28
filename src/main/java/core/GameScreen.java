@@ -56,8 +56,8 @@ public class GameScreen implements Screen {
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
-        player1 = new Player("Player1", "player_stick.png", this, 0, 400, 1, new ArrowController());
-        player2 = new Player("Player2", "player_stick.png", this, 100, 500, 1, new WASDController());
+        player1 = new Player("Player1", "player_stick.png", new ArrowController(), this, 0, 400, 1);
+        player2 = new Player("Player2", "player_stick.png", new WASDController(), this, 100, 500, 1);
 
     }
 

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import core.Controller;
+import controls.Controller;
 import core.GameScreen;
 import helper.BodyHelper;
 import helper.Constants;
@@ -18,20 +18,19 @@ public class Player extends Object {
     private boolean sideCollision;
 
 
-    public Player(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
+    public Player(String name, String texturePath, Controller controller, GameScreen gameScreen, float x, float y, int density) {
         super(name, texturePath, gameScreen, x, y, density, ContactType.PLAYER);
-        this.controller= new Controller(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN);
+        this.controller = controller;
         sideCollision = false;
     }
 
     @Override
     public void update() {
-        /*
+
         Vector2 direction = controller.inputListener();
         move(direction);
 
-         */
-        handleInput();
+//        handleInput();
         super.update();
     }
     public void handleInput() {
