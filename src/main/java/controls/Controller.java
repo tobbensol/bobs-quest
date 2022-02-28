@@ -1,7 +1,7 @@
 package controls;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
+import objects.Player;
 
 public abstract class Controller {
     protected final int up;
@@ -9,7 +9,6 @@ public abstract class Controller {
     protected final int left;
     protected final int right;
     private final int SPEED = 200;
-    private float delta;
 
     public Controller(int left, int right, int up, int down){
         this.up = up;
@@ -18,22 +17,18 @@ public abstract class Controller {
         this.right = right;
     }
 
-    public Vector2 inputListener(){
-        delta = Gdx.graphics.getDeltaTime();
-        Vector2 direction = new Vector2(0, 0);
+    public void inputListener(Player player){
+//        float delta = Gdx.graphics.getDeltaTime();
+        float delta = 1.0f;
         if (Gdx.input.isKeyPressed(right)) {
-            direction.add(new Vector2(SPEED*delta, 0));
+            player.moveHorizontally(delta, true);
         }
         if (Gdx.input.isKeyPressed(left)) {
-            direction.add(new Vector2(-SPEED*delta, 0));
-        }
-        if (Gdx.input.isKeyPressed(down)) {
-            direction.add(new Vector2(0, -SPEED*delta));
+            player.moveHorizontally(delta, false);
         }
         if (Gdx.input.isKeyPressed(up)) {
-            direction.add(new Vector2(0, 3000*delta));
+            player.jump(delta);
         }
-        return direction;
     }
 
 
