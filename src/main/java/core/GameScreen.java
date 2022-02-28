@@ -11,16 +11,20 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import controls.ArrowController;
-import controls.CustomController;
+import controls.Controller;
 import controls.WASDController;
 import helper.Constants;
 import helper.TiledMapHelper;
 import objects.Player;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
  */
 public class GameScreen implements Screen {
+    private final int numPlayers = 2; // TODO: Variable number of players
+    private final int numControllers = 2;
     private SpriteBatch batch;
     private OrthographicCamera camera;
 
@@ -38,8 +42,12 @@ public class GameScreen implements Screen {
     private TiledMapTileLayer backgroundLayer;
     private TiledMapTileLayer playerLayer;
 
-    private Player player1;
-    private Player player2;
+//    private Player player1;
+//    private Player player2;
+    private List<Player> players;
+
+//    private Controller controller;
+    private List<Controller> controllers;
 
 
     public GameScreen(OrthographicCamera camera) {
@@ -53,11 +61,21 @@ public class GameScreen implements Screen {
         this.tiledMapHelper = new TiledMapHelper(this);
         this.orthogonalTiledMapRenderer = tiledMapHelper.setupMap();
 
+//        this.controller = new ArrowController();
+
         backgroundLayer = tiledMapHelper.getBoardLayer("Background");
         playerLayer = tiledMapHelper.getBoardLayer("Player");
 
-        player1 = new Player("Player1", "player_stick.png", new ArrowController(), this, 0, 400, 1);
-        player2 = new Player("Player2", "player_stick.png", new WASDController(), this, 100, 500, 1);
+        players = new ArrayList<>();
+        for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
+            players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
+        }
+        controllers = new ArrayList<>();
+        controllers.add(new ArrowController());
+        controllers.add(new WASDController());
+
+//        player1 = new Player("Player1", "player_stick.png", this, 0, 400, 1);
+//        player2 = new Player("Player2", "player_stick.png", this, 100, 500, 1);
 
     }
 
@@ -75,15 +93,22 @@ public class GameScreen implements Screen {
             Gdx.app.exit();
         }
 
-        player1.update();
-        player2.update();
+        for (int i = 0; i < numPlayers; i++) {
+            controllers.get(i).inputListener(players.get(i));
+        }
+        for (Player player : players) {
+            player.update();
+        }
+//        controller.inputListener(player1);
+//        player1.update();
+//        player2.update();
     }
 
     /**
      * the camera should follow the player character
      */
     private void cameraUpdate() {
-        camera.position.set(new Vector3(player1.getPosition().x,player1.getPosition().y,0));
+        camera.position.set(new Vector3(getPlayer().getPosition().x,getPlayer().getPosition().y,0));
         camera.update();
     }
 
@@ -102,10 +127,13 @@ public class GameScreen implements Screen {
         orthogonalTiledMapRenderer.render();
 
         batch.begin();
-        //TODO: Render player
 
-        player1.render(batch);
-        player2.render(batch);
+        for (Player player : players) {
+            player.render(batch);
+        }
+//        player1.render(batch);
+//        player2.render(batch);
+
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
     }
@@ -134,6 +162,6 @@ public class GameScreen implements Screen {
 
     // This is just for testing.
     public Player getPlayer() {
-        return player1;
+        return players.get(0);
     }
 }
