@@ -13,13 +13,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+import model.GameModel;
 import view.GameScreen;
 
 
 public class TiledMapHelper {
 
     private TiledMap tiledMap;
-    private GameScreen gameScreen;
+    private GameModel gameModel;
     private TiledMapTileLayer backgroundLayer;
     private TiledMapTileLayer playerLayer;
 
@@ -66,7 +67,7 @@ public class TiledMapHelper {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
         // Adds the world object to the map
-        Body body = gameScreen.getWorld().createBody( bodyDef );
+        Body body = gameModel.getWorld().createBody( bodyDef );
         Shape shape;
 
         if (bodyType.equals(BodyDef.BodyType.StaticBody)) {

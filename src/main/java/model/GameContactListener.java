@@ -8,10 +8,10 @@ import java.util.List;
 
 public class GameContactListener implements ContactListener {
 
-    private GameScreen gameScreen;
+    private GameModel gameModel;
 
-    public GameContactListener(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
+    public GameContactListener(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
     @Override
     public void beginContact(Contact contact) {
@@ -64,7 +64,7 @@ public class GameContactListener implements ContactListener {
      * @return Return the player involved in the contact.
      */
     private Player getContactPlayer(Fixture a, Fixture b) {
-        List<Player> players = gameScreen.getPlayers();
+        List<Player> players = gameModel.getPlayers();
         Fixture p;
 
         if (a.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) {
