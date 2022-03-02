@@ -1,4 +1,4 @@
-package helper;
+package model.helper;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -13,21 +13,20 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import core.GameScreen;
-
-import static helper.Constants.PPM;
+import model.GameModel;
+import view.GameScreen;
 
 
 public class TiledMapHelper {
 
     private TiledMap tiledMap;
-    private GameScreen gameScreen;
+    private GameModel gameModel;
     private TiledMapTileLayer backgroundLayer;
     private TiledMapTileLayer playerLayer;
 
 
-    public TiledMapHelper( GameScreen gameScreen ) {
-        this.gameScreen = gameScreen;
+    public TiledMapHelper(GameModel gameModel ) {
+        this.gameModel = gameModel;
         tiledMap = new TmxMapLoader().load("maps/level0.tmx");
 
         parseMapObjects( getMapObjects("Ground") );
@@ -68,7 +67,7 @@ public class TiledMapHelper {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
         // Adds the world object to the map
-        Body body = gameScreen.getWorld().createBody( bodyDef );
+        Body body = gameModel.getWorld().createBody( bodyDef );
         Shape shape;
 
         if (bodyType.equals(BodyDef.BodyType.StaticBody)) {
@@ -97,7 +96,7 @@ public class TiledMapHelper {
 
         // Retrieves all the vertices of the object
         for ( int i = 0 ; i < vertices.length / 2 ; i++ ) {
-            Vector2 current = new Vector2( vertices[ i * 2 ] / PPM , vertices[ i * 2 + 1 ] / PPM );
+            Vector2 current = new Vector2( vertices[ i * 2 ] / Constants.PPM , vertices[ i * 2 + 1 ] / Constants.PPM );
             worldVertices[i] = current;
         }
 

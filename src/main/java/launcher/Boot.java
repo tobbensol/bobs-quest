@@ -1,14 +1,17 @@
-package core;
+package launcher;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import model.GameModel;
+import view.GameScreen;
 
 public class Boot extends Game {
 
     public static Boot INSTANCE;
     private int screenWidth, screenHeight;
     private OrthographicCamera orthographicCamera;
+    private GameModel gameModel;
 
     public Boot() {
         INSTANCE = this;
@@ -20,6 +23,8 @@ public class Boot extends Game {
         this.screenHeight = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
         this.orthographicCamera.setToOrtho(false, screenWidth, screenHeight);
-        setScreen(new GameScreen(orthographicCamera));
+        this.gameModel = new GameModel();
+        // TODO: Set new screens
+        setScreen(new GameScreen(orthographicCamera, gameModel));
     }
 }

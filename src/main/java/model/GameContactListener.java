@@ -1,16 +1,17 @@
-package core;
+package model;
 
 import com.badlogic.gdx.physics.box2d.*;
-import helper.ContactType;
-import objects.Player;
+import view.GameScreen;
+import model.helper.ContactType;
+import model.objects.Player;
 import java.util.List;
 
 public class GameContactListener implements ContactListener {
 
-    private GameScreen gameScreen;
+    private GameModel gameModel;
 
-    public GameContactListener(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
+    public GameContactListener(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
     @Override
@@ -27,7 +28,6 @@ public class GameContactListener implements ContactListener {
         headContact(a,b,true);
         horizontalContact(a,b,true,true); // Right contact
         horizontalContact(a,b,true,false); // Left contact
-
     }
 
     @Override
@@ -64,7 +64,7 @@ public class GameContactListener implements ContactListener {
      * @return Return the player involved in the contact.
      */
     private Player getContactPlayer(Fixture a, Fixture b) {
-        List<Player> players = gameScreen.getPlayers();
+        List<Player> players = gameModel.getPlayers();
         Fixture p;
 
         if (a.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) {
@@ -78,13 +78,11 @@ public class GameContactListener implements ContactListener {
         }
 
         for (Player player : players) {
-            // TODO: find out how to find the correct player.
             if (player.getBody().equals(p.getBody())) {
                 return player;
             }
         }
         return null;
-        //return gameScreen.getPlayer();
     }
 
 
@@ -115,7 +113,7 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
             if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
                 getContactPlayer(a,b).setSideCollision(begin);
-                System.out.println("Collision between player and ground!");
+                //System.out.println("Collision between player and ground!");
             }
         }
 

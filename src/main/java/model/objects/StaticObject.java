@@ -1,15 +1,15 @@
-package objects;
+package model.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import core.GameScreen;
-import helper.BodyHelper;
-import helper.Constants;
-import helper.ContactType;
+import model.GameModel;
+import model.helper.BodyHelper;
+import model.helper.Constants;
+import model.helper.ContactType;
 
-public abstract class Object {
+public abstract class StaticObject {
     final private String name;
     final private Texture texture;
     private int width, height;
@@ -29,7 +29,7 @@ public abstract class Object {
     protected State previousState;
 
 
-    public Object(String name, String texturePath, GameScreen gameScreen, float x, float y, int density, ContactType contactType) {
+    public StaticObject(String name, String texturePath, GameModel gameModel, float x, float y, int density, ContactType contactType) {
         this.name = name;
         this.texture = new Texture(texturePath);
         this.x = x;
@@ -39,7 +39,7 @@ public abstract class Object {
         currentState = State.STANDING;
         previousState = State.STANDING;
 
-        this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameScreen.getWorld(), contactType);
+        this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameModel.getWorld(), contactType);
         facingRight = true;
         grounded = false;
     }
@@ -49,14 +49,10 @@ public abstract class Object {
         y = body.getPosition().y * Constants.PPM - (height / 2);
 
         velY = body.getLinearVelocity().len();
-        //velY = 0;
-
 
         previousState = currentState;
         currentState = getState();
-        //System.out.println(currentState);
     }
-
 
     public void render(SpriteBatch batch) {
         if (!facingRight) {
