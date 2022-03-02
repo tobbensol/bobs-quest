@@ -1,10 +1,14 @@
 package model.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import model.GameModel;
 import model.helper.ContactType;
+
+import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final int MAX_VELOCITY = 2;
@@ -18,13 +22,26 @@ public class Player extends JumpableObject {
     private TextureRegion jumping;
     private TextureRegion falling;
      */
+    //private Animation runningAnimation;
+    //private float stateTimer;
 
     private ArrayList<TextureRegion> frames;
 
     public Player(String name, String texturePath, GameModel gameModel, float x, float y, int density) {
         super(name, texturePath, gameModel, x, y, density, ContactType.PLAYER);
-        frames = new ArrayList<>();
+        //stateTimer = 0;
 
+        /*
+        frames = new ArrayList<>();
+        for (int i = 1; i < 4; i++) {
+            frames.add(new TextureRegion(getTexture(), i*64,0,64,64));
+        }
+        runningAnimation = new Animation(0.1f,frames);
+        frames.clear();
+
+         */
+
+        frames = new ArrayList<>();
         for(int i = 0; i < getTexture().getWidth()/64; i++){
              frames.add(new TextureRegion(getTexture(),i*64,0,64, 64));
         }
@@ -44,8 +61,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        //System.out.println(getState());
-        batch.draw(getFrame(), x, y, width, height);
+        batch.draw(getFrame(gameModel.getDelta()), x, y, width, height);
     }
 
     @Override
@@ -89,15 +105,27 @@ public class Player extends JumpableObject {
      *
      * @return the correct texture-region for the current state the player is in.
      */
-    public TextureRegion getFrame() {
+    public TextureRegion getFrame(float dt) {
         currentState = getState();
 
         // Specify which texture region corresponding to which state.
-        TextureRegion region = switch (currentState) {
-            case STANDING -> frames.get(0);
-            case JUMPING -> frames.get(4);
-            case FALLING -> frames.get(5);
-            case WALKING -> frames.get(3);
+        TextureRegion region;
+        switch (currentState) {
+            case STANDING:
+                region = frames.get(0);
+                break;
+            case JUMPING:
+                region = frames.get(4);
+                break;
+            case FALLING:
+                region = frames.get(5);
+                break;
+            case WALKING:
+                //region = runningAnimation.getKeyFrame(stateTimer, true);
+                region = frames.get(1);
+                break;
+            default:
+                region = frames.get(0);
         };
 
         if ((body.getLinearVelocity().x < 0 || !facingRight) && !region.isFlipX()) {
@@ -111,6 +139,7 @@ public class Player extends JumpableObject {
         else {
             region.flip(false,false);
         }
+        //stateTimer = currentState == previousState ? stateTimer + dt : 0;
 
         return region;
     }

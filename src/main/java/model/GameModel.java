@@ -1,5 +1,6 @@
 package model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -29,7 +30,6 @@ public class GameModel {
         this.gameContactListener = new GameContactListener(this);
         this.world.setContactListener(this.gameContactListener);
         this.tiledMapHelper = new TiledMapHelper(this);
-
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
             //players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
@@ -43,6 +43,10 @@ public class GameModel {
 
     public World getWorld() {
         return world;
+    }
+
+    public float getDelta() {
+        return Gdx.graphics.getDeltaTime();
     }
 
     public List<Player> getPlayers() {

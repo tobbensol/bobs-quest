@@ -15,6 +15,7 @@ public abstract class StaticObject {
     protected int width, height;
     protected Body body;
     protected float x, y, velY;
+    protected GameModel gameModel;
 
     protected boolean facingRight;
     protected boolean grounded;
@@ -33,6 +34,7 @@ public abstract class StaticObject {
     public StaticObject(String name, String texturePath, GameModel gameModel, float x, float y, int density, ContactType contactType) {
         this.name = name;
         this.texture = new Texture(texturePath);
+        this.gameModel = gameModel;
         this.x = x;
         this.y = y;
         //this.width = texture.getWidth();
