@@ -572,7 +572,7 @@
    </data>
   </layer>
  </group>
- <group id="11" name="Objects" visible="0">
+ <group id="11" name="Objects">
   <objectgroup id="13" name="Monsters">
    <object id="76" x="896" y="-64" width="64" height="64"/>
    <object id="77" x="1984" y="-64" width="64" height="64"/>
@@ -593,8 +593,8 @@
   </objectgroup>
   <objectgroup id="10" name="Death">
    <object id="71" name="Line" x="1472" y="512" width="256"/>
-   <object id="73" name="Rectangle" x="-1024" y="512" width="768"/>
-   <object id="74" name="Line" x="-1024" y="576" width="768" height="64"/>
+   <object id="73" name="Line" x="-1024" y="512" width="768"/>
+   <object id="74" name="Rectangle" x="-1024" y="576" width="768" height="64"/>
    <object id="75" name="Rectangle" x="1472" y="576" width="256" height="64"/>
   </objectgroup>
   <objectgroup id="5" name="Ground">
