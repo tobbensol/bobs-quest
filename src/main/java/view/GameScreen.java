@@ -4,21 +4,12 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import controls.ArrowController;
-import controls.Controller;
-import controls.WASDController;
+import model.GameModel;
 import model.helper.Constants;
-import model.helper.TiledMapHelper;
-import model.GameContactListener;
 import model.objects.Player;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
@@ -28,27 +19,8 @@ public class GameScreen implements Screen {
     private final int numControllers = 2;
     private SpriteBatch batch;
     private OrthographicCamera camera;
-
-    public World getWorld() {
-        return world;
-    }
-
-    private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
-    private GameContactListener gameContactListener;
-
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private TiledMapHelper tiledMapHelper;
-
-    private TiledMapTileLayer backgroundLayer;
-    private TiledMapTileLayer playerLayer;
-
-//    private Player player1;
-//    private Player player2;
-    private List<Player> players;
-
-//    private Controller controller;
-    private List<Controller> controllers;
 
 
     public GameScreen(OrthographicCamera camera) {
@@ -56,27 +28,7 @@ public class GameScreen implements Screen {
         this.batch = new SpriteBatch();
         this.world = new World( new Vector2( 0 , -10f ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-        this.gameContactListener = new GameContactListener(this);
-        this.world.setContactListener(this.gameContactListener);
-
-        this.tiledMapHelper = new TiledMapHelper(this);
-        this.orthogonalTiledMapRenderer = tiledMapHelper.setupMap();
-
-//        this.controller = new ArrowController();
-
-        backgroundLayer = tiledMapHelper.getBoardLayer("Background");
-        playerLayer = tiledMapHelper.getBoardLayer("Player");
-
-        players = new ArrayList<>();
-        for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
-            players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
-        }
-        controllers = new ArrayList<>();
-        controllers.add(new ArrowController());
-        controllers.add(new WASDController());
-
-//        player1 = new Player("Player1", "player_stick.png", this, 0, 400, 1);
-//        player2 = new Player("Player2", "player_stick.png", this, 100, 500, 1);
+        this.orthogonalTiledMapRenderer = gameModel.setupMap();
 
     }
 
@@ -84,7 +36,7 @@ public class GameScreen implements Screen {
      * the game runs in real time and updating the game often is required for it to run smoothly
      */
     private void update(){
-        world.step(1/60f, 6, 2);
+        gameModel.update();
         cameraUpdate();
 
         batch.setProjectionMatrix(camera.combined);
