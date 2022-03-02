@@ -1,8 +1,9 @@
-package core;
+package model;
 
 import com.badlogic.gdx.physics.box2d.*;
-import helper.ContactType;
-import objects.Player;
+import view.GameScreen;
+import model.helper.ContactType;
+import model.objects.Player;
 import java.util.List;
 
 public class GameContactListener implements ContactListener {
@@ -12,7 +13,6 @@ public class GameContactListener implements ContactListener {
     public GameContactListener(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
-
     @Override
     public void beginContact(Contact contact) {
         Fixture a = contact.getFixtureA();

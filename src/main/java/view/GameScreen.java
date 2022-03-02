@@ -1,4 +1,4 @@
-package core;
+package view;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
@@ -13,9 +13,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import controls.ArrowController;
 import controls.Controller;
 import controls.WASDController;
-import helper.Constants;
-import helper.TiledMapHelper;
-import objects.Player;
+import model.helper.Constants;
+import model.helper.TiledMapHelper;
+import model.GameContactListener;
+import model.objects.Player;
 import java.util.ArrayList;
 import java.util.List;
 

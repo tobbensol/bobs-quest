@@ -1,8 +1,9 @@
-package core;
+package launcher;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import view.GameScreen;
 
 public class Boot extends Game {
 

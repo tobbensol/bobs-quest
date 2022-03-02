@@ -1,7 +1,7 @@
 package controls;
 
 import com.badlogic.gdx.Gdx;
-import objects.Player;
+import model.objects.Player;
 
 public abstract class Controller {
     protected final int up;

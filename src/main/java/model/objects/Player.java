@@ -1,13 +1,14 @@
-package objects;
+package model.objects;
 
 import com.badlogic.gdx.math.Vector2;
-import core.GameScreen;
-import helper.ContactType;
+import view.GameScreen;
+import model.helper.ContactType;
 
 public class Player extends Object {
+    private static final int MAX_VELOCITY = 2;
     private boolean sideCollision;
-    private final float X_VELOCITY = 0.35f;
-    private final float Y_VELOCITY = 1.3f;
+    private static final float X_VELOCITY = 0.35f;
+    private static final float Y_VELOCITY = 1.3f;
 
     public Player(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
         super(name, texturePath, gameScreen, x, y, density, ContactType.PLAYER);
@@ -22,11 +23,11 @@ public class Player extends Object {
 
     public void moveHorizontally(float delta, boolean isRight) {
         if (!checkSideCollisionInAir()) {
-            if (isRight && this.body.getLinearVelocity().x <= 2) {
+            if (isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
                 applyCenterLinearImpulse(delta*X_VELOCITY, 0);
                 facingRight = true;
             }
-            else if (!isRight && this.body.getLinearVelocity().x >= -2) {
+            else if (!isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
                 applyCenterLinearImpulse(-delta*X_VELOCITY, 0);
                 facingRight = false;
             }
