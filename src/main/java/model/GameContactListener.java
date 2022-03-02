@@ -13,6 +13,7 @@ public class GameContactListener implements ContactListener {
     public GameContactListener(GameModel gameModel) {
         this.gameModel = gameModel;
     }
+
     @Override
     public void beginContact(Contact contact) {
         Fixture a = contact.getFixtureA();
@@ -27,7 +28,6 @@ public class GameContactListener implements ContactListener {
         headContact(a,b,true);
         horizontalContact(a,b,true,true); // Right contact
         horizontalContact(a,b,true,false); // Left contact
-
     }
 
     @Override
@@ -78,13 +78,11 @@ public class GameContactListener implements ContactListener {
         }
 
         for (Player player : players) {
-            // TODO: find out how to find the correct player.
             if (player.getBody().equals(p.getBody())) {
                 return player;
             }
         }
         return null;
-        //return gameScreen.getPlayer();
     }
 
 
@@ -115,7 +113,7 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
             if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
                 getContactPlayer(a,b).setSideCollision(begin);
-                System.out.println("Collision between player and ground!");
+                //System.out.println("Collision between player and ground!");
             }
         }
 

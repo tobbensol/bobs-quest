@@ -10,8 +10,8 @@ public class Player extends JumpableObject {
     private static final float X_VELOCITY = 0.35f;
     private static final float Y_VELOCITY = 1.3f;
 
-    public Player(String name, String texturePath, GameScreen gameScreen, float x, float y, int density) {
-        super(name, texturePath, gameScreen, x, y, density, ContactType.PLAYER);
+    public Player(String name, String texturePath, GameModel gameModel, float x, float y, int density) {
+        super(name, texturePath, gameModel, x, y, density, ContactType.PLAYER);
         sideCollision = false;
     }
 
@@ -50,8 +50,5 @@ public class Player extends JumpableObject {
         return sideCollision;
     }
 
-    public boolean setGrounded(boolean value) {
-        grounded = value;
-        return grounded;
-    }
+
 }

@@ -25,8 +25,8 @@ public class TiledMapHelper {
     private TiledMapTileLayer playerLayer;
 
 
-    public TiledMapHelper( GameScreen gameScreen ) {
-        this.gameScreen = gameScreen;
+    public TiledMapHelper(GameModel gameModel ) {
+        this.gameModel = gameModel;
         tiledMap = new TmxMapLoader().load("maps/level0.tmx");
 
         parseMapObjects( getMapObjects("Ground") );
