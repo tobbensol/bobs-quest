@@ -1,6 +1,7 @@
 package controls;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import model.objects.Player;
 
 public abstract class Controller {
@@ -20,6 +21,9 @@ public abstract class Controller {
     public void inputListener(Player player){
 //        float delta = Gdx.graphics.getDeltaTime();
         float delta = 1.0f;
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+        }
         if (Gdx.input.isKeyPressed(right)) {
             player.moveHorizontally(delta, true);
         }
