@@ -1,10 +1,10 @@
 package model.objects;
 
 import com.badlogic.gdx.math.Vector2;
-import view.GameScreen;
+import model.GameModel;
 import model.helper.ContactType;
 
-public class Player extends Object {
+public class Player extends JumpableObject {
     private static final int MAX_VELOCITY = 2;
     private boolean sideCollision;
     private static final float X_VELOCITY = 0.35f;
@@ -15,12 +15,14 @@ public class Player extends Object {
         sideCollision = false;
     }
 
+    @Override
     public void jump(float delta) {
         if (grounded && previousState != State.JUMPING) {
             applyCenterLinearImpulse(0, delta*Y_VELOCITY);
         }
     }
 
+    @Override
     public void moveHorizontally(float delta, boolean isRight) {
         if (!checkSideCollisionInAir()) {
             if (isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
