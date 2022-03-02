@@ -12,7 +12,7 @@ import model.helper.ContactType;
 public abstract class StaticObject {
     final private String name;
     final private Texture texture;
-    private int width, height;
+    protected int width, height;
     protected Body body;
     protected float x, y, velY;
 
@@ -25,6 +25,7 @@ public abstract class StaticObject {
         JUMPING,
         FALLING
     }
+
     protected State currentState;
     protected State previousState;
 
@@ -34,8 +35,10 @@ public abstract class StaticObject {
         this.texture = new Texture(texturePath);
         this.x = x;
         this.y = y;
-        this.width = texture.getWidth();
-        this.height = texture.getHeight();
+        //this.width = texture.getWidth();
+        //this.height = texture.getHeight();
+        this.width = 64;
+        this.height = 64;
         currentState = State.STANDING;
         previousState = State.STANDING;
 
@@ -57,8 +60,7 @@ public abstract class StaticObject {
     public void render(SpriteBatch batch) {
         if (!facingRight) {
             batch.draw(texture,x,y,width,height,0, 0, width, height, true, false);
-        }
-        else {
+        } else {
             batch.draw(texture,x,y,width,height);
         }
     }
@@ -80,9 +82,9 @@ public abstract class StaticObject {
             return State.FALLING;
         }
         else if (body.getLinearVelocity().x != 0) {
-            return State.STANDING;
+            return State.WALKING;
         }
-        else  {
+        else {
             return State.STANDING;
         }
     }
@@ -103,7 +105,7 @@ public abstract class StaticObject {
         // TODO: Implement
     }
 
-    public void move(Vector2 vector2){
+    public void move(Vector2 vector2) {
         body.applyForceToCenter(vector2, true);
     }
 }

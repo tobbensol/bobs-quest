@@ -32,7 +32,8 @@ public class GameModel {
 
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
-            players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
+            //players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
+            players.add(new Player("Player" + (i+1), "marioSprite.png", this, i*100, 400, 1));
         }
 
         controllers = new ArrayList<>();
