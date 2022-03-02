@@ -1,6 +1,5 @@
 package model.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,6 +15,16 @@ public class Player extends JumpableObject {
     private static final float X_VELOCITY = 0.35f;
     private static final float Y_VELOCITY = 1.3f;
 
+    public enum State {
+        STANDING,
+        WALKING,
+        JUMPING,
+        FALLING
+    }
+
+    protected State currentState;
+    protected State previousState;
+
     /*
     private TextureRegion standing;
     private TextureRegion walking;
@@ -29,6 +38,8 @@ public class Player extends JumpableObject {
 
     public Player(String name, String texturePath, GameModel gameModel, float x, float y, int density) {
         super(name, texturePath, gameModel, x, y, density, ContactType.PLAYER);
+        currentState = State.STANDING;
+        previousState = State.STANDING;
         //stateTimer = 0;
 
         /*
@@ -45,20 +56,15 @@ public class Player extends JumpableObject {
         for(int i = 0; i < getTexture().getWidth()/64; i++){
              frames.add(new TextureRegion(getTexture(),i*64,0,64, 64));
         }
-        //frames.clear();
-
-
-        //standing = new TextureRegion(getTexture(),0,0,64,64);
-        //walking = new TextureRegion(getTexture(),3*64,0,64,64);
-        //jumping = new TextureRegion(getTexture(),4*64,0,64,64);
-        //falling = new TextureRegion(getTexture(),5*64,0,64,64);
-
-        //System.out.println(frames.size);
-        //TextureRegion[][] frames = new TextureRegion(getTexture()).split(64,64);
 
         sideCollision = false;
     }
-
+    @Override
+    public void update() {
+        super.update();
+        previousState = currentState;
+        currentState = getState();
+    }
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(getFrame(gameModel.getDelta()), x, y, width, height);
@@ -89,7 +95,7 @@ public class Player extends JumpableObject {
         this.body.applyLinearImpulse(new Vector2(x,y), this.body.getWorldCenter(), true);
     }
 
-    public boolean checkSideCollisionInAir()  {
+    private boolean checkSideCollisionInAir()  {
         return (currentState.equals(State.JUMPING) && sideCollision) || (currentState.equals(State.FALLING) && sideCollision);
     }
 
@@ -98,9 +104,26 @@ public class Player extends JumpableObject {
         return sideCollision;
     }
 
+    /**
+     * @return the current state of the player.
+     */
+    public State getState() {
+        if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+            return State.JUMPING;
+        }
+        else if (body.getLinearVelocity().y < 0) {
+            return State.FALLING;
+        }
+        else if (body.getLinearVelocity().x != 0) {
+            return State.WALKING;
+        }
+        else {
+            return State.STANDING;
+        }
+    }
 
     /**
-     * This function returns the correct texture-region for the current state the player is in.
+     * This method returns the correct texture-region for the current state the player is in.
      * It also checks wherever it should flip the texture based on the direction of movement of the player.
      *
      * @return the correct texture-region for the current state the player is in.
