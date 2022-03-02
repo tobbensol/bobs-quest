@@ -15,18 +15,18 @@ import model.objects.Player;
  * the screen of the game, where everything is rendered onto and where all visual elements reside
  */
 public class GameScreen implements Screen {
-    private final int numPlayers = 2; // TODO: Variable number of players
-    private final int numControllers = 2;
+
+    private GameModel gameModel;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
 
-    public GameScreen(OrthographicCamera camera) {
+    public GameScreen(OrthographicCamera camera, GameModel gameModel) {
+        this.gameModel = gameModel;
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World( new Vector2( 0 , -10f ), false );
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.orthogonalTiledMapRenderer = gameModel.setupMap();
 
@@ -41,27 +41,13 @@ public class GameScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
-
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-
-        for (int i = 0; i < numPlayers; i++) {
-            controllers.get(i).inputListener(players.get(i));
-        }
-        for (Player player : players) {
-            player.update();
-        }
-//        controller.inputListener(player1);
-//        player1.update();
-//        player2.update();
     }
 
     /**
      * the camera should follow the player character
      */
     private void cameraUpdate() {
-        camera.position.set(new Vector3(getPlayer().getPosition().x,getPlayer().getPosition().y,0));
+        camera.position.set(new Vector3(gameModel.getPlayers().get(0).getPosition().x,gameModel.getPlayers().get(0).getPosition().y,0));
         camera.update();
     }
 
@@ -81,14 +67,12 @@ public class GameScreen implements Screen {
 
         batch.begin();
 
-        for (Player player : players) {
+        for (Player player : gameModel.getPlayers()) {
             player.render(batch);
         }
-//        player1.render(batch);
-//        player2.render(batch);
 
         batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
+        box2DDebugRenderer.render(gameModel.getWorld(), camera.combined.scl(Constants.PPM));
     }
 
     @Override
@@ -113,12 +97,4 @@ public class GameScreen implements Screen {
 
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    // This is just for testing.
-    public Player getPlayer() {
-        return players.get(0);
-    }
 }
