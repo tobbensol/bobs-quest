@@ -150,18 +150,13 @@ public class Player extends JumpableObject {
             default:
                 region = frames.get(0);
         };
+        if (!facingRight && !region.isFlipX()) {
+            region.flip(true,false);
+        }
+        else if (facingRight && region.isFlipX()) {
+            region.flip(true,false);
+        }
 
-        if ((body.getLinearVelocity().x < 0 || !facingRight) && !region.isFlipX()) {
-            region.flip(true, false);
-            facingRight = false;
-        }
-        else if ((body.getLinearVelocity().x > 0 || facingRight) && region.isFlipX()) {
-            region.flip(true, false);
-            facingRight = true;
-        }
-        else {
-            region.flip(false,false);
-        }
         //stateTimer = currentState == previousState ? stateTimer + dt : 0;
 
         return region;
