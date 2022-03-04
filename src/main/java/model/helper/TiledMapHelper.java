@@ -22,16 +22,34 @@ public class TiledMapHelper {
     private GameModel gameModel;
     private TiledMapTileLayer backgroundLayer;
     private TiledMapTileLayer playerLayer;
+    private ArrayList<Vector2> spawnPoints;
 
 
     public TiledMapHelper(GameModel gameModel ) {
         this.gameModel = gameModel;
-        tiledMap = new TmxMapLoader().load("maps/level0.tmx");
+        tiledMap = new TmxMapLoader().load("maps/level1.tmx");
+        spawnPoints = new ArrayList<>();
 
-        parseMapObjects( getMapObjects("Ground") );
-        parseMapObjects( getMapObjects("Platforms") );
-        backgroundLayer = getBoardLayer("WorldStructures");
-        playerLayer = getBoardLayer("Player");
+        // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
+        parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
+        parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
+        // OBS: Points are treated as RectangularMapObject
+        parseSpawnpoint();
+
+//        backgroundLayer = getBoardLayer("WorldStructures");
+//        playerLayer = getBoardLayer("Player");
+
+    }
+
+    private void parseSpawnpoint() {
+        MapObjects spawnPoints = getMapObjects("Spawnpoints");
+
+        for ( MapObject mapObject : spawnPoints ) {
+            RectangleMapObject spawnPoint = (RectangleMapObject) mapObject;
+            float x = spawnPoint.getRectangle().getX();
+            float y = spawnPoint.getRectangle().getY();
+            this.spawnPoints.add( new Vector2(x, y) );
+        }
     }
 
 
@@ -58,7 +76,6 @@ public class TiledMapHelper {
             else if (mapObject instanceof RectangleMapObject) {
                 createBody(mapObject , BodyDef.BodyType.DynamicBody);
             }
-
         }
     }
 

@@ -19,7 +19,7 @@ public class GameModel {
     private GameContactListener gameContactListener;
     private TiledMapHelper tiledMapHelper;
 
-    private final int numPlayers = 2; // TODO: Variable number of players
+    private final int numPlayers = 1; // TODO: Variable number of players
     private final int numControllers = 2;
     private List<Player> players;
     private List<Controller> controllers;
@@ -33,7 +33,8 @@ public class GameModel {
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
             //players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
-            players.add(new Player("Player" + (i+1), "marioSprite.png", this, i*100, 400, 1));
+            Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(0);
+            players.add(new Player("Player" + (i+1), "marioSprite.png", this, spawnPoint.x, spawnPoint.y-10, 1));
         }
 
         controllers = new ArrayList<>();
