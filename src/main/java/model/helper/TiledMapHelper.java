@@ -54,11 +54,16 @@ public class TiledMapHelper {
 
 
     private MapObjects getMapObjects(String objects) {
+        // TODO: Handle exception when objets doesnt exists.
+        // OBS: If objects doesn't exist -> NullPointerException
         return tiledMap.getLayers().get( objects ).getObjects();
     }
 
 
     public TiledMapTileLayer getBoardLayer(String layer) {
+        // TODO: Handle exception when layer doesnt exists.
+        // OBS: If layer is object layer -> ClassCastException
+        // OBS: Do not name a layer the same as an object
         return (TiledMapTileLayer) tiledMap.getLayers().get(layer);
     }
 
@@ -67,19 +72,33 @@ public class TiledMapHelper {
         return new OrthogonalTiledMapRenderer(tiledMap); // TODO: Use proper unit scale
     }
 
-    // Creates a static body for map objects
-    private void parseMapObjects(MapObjects mapObjects) {
+    /**
+     * This method is parsing mapObjects into the game. The mapObjects can either be static or dynamic.
+     * @param mapObjects - an iterable of mapObjects to parse.
+     * @param contactType - the ContactType the mapObjects should have.
+     */
+    private void parseMapObjects(MapObjects mapObjects, ContactType contactType) {
         for( MapObject mapObject : mapObjects ) {
             if( mapObject instanceof PolygonMapObject ) {
-                createBody(mapObject , BodyDef.BodyType.StaticBody);
+                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType);
             }
             else if (mapObject instanceof RectangleMapObject) {
-                createBody(mapObject , BodyDef.BodyType.DynamicBody);
+                createBody(mapObject , BodyDef.BodyType.DynamicBody, contactType);
             }
         }
     }
 
-    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType){
+    /**
+     * This method creates a body for a given mapObject with a given BodyType and ContactType.
+     * The creation of the body depends on the BodyType:
+     * StaticBody -> PolygonShape (PolygonMapObject)
+     * DynamicBody -> RectangularShape (RectangularMapObject)
+     *
+     * @param mapObject - the mapObject.
+     * @param bodyType - The BodyType of the mapObject. Either Static og Dynamic.
+     * @param contactType - The ContactType of the mapObject.
+     */
+    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType, ContactType contactType){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
         // Adds the world object to the map
@@ -96,11 +115,15 @@ public class TiledMapHelper {
             throw new IllegalArgumentException("BodyType must be static or dynamic.");
         }
         // Changes the shape of the world object to match the one in the map
-        body.createFixture(shape, 1000).setUserData(ContactType.GROUND);
+        body.createFixture(shape, 1000).setUserData(contactType);
         shape.dispose();
     }
 
     private Shape createRectangularShape(RectangleMapObject mapObject) {
+        // TODO: Implement
+//        PolygonShape shape = new PolygonShape();
+//        shape.setAsBox(0, 0);
+//        return shape;
         return null;
     }
 
