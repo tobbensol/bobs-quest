@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import model.GameModel;
+import java.util.ArrayList;
 
 
 public class TiledMapHelper {
@@ -50,6 +51,10 @@ public class TiledMapHelper {
             float y = spawnPoint.getRectangle().getY();
             this.spawnPoints.add( new Vector2(x, y) );
         }
+    }
+
+    public ArrayList<Vector2> getSpawnPoints() {
+        return spawnPoints;
     }
 
 
