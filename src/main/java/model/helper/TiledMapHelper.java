@@ -27,6 +27,8 @@ public class TiledMapHelper {
 
 
     public TiledMapHelper(GameModel gameModel ) {
+        // OBS: map cant be infinite
+        // OBS: layers cant be in folders
         this.gameModel = gameModel;
         tiledMap = new TmxMapLoader().load("maps/level1.tmx");
         spawnPoints = new ArrayList<>();
