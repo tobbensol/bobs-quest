@@ -36,6 +36,7 @@ public class TiledMapHelper {
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
         parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
+        parseMapObjects( getMapObjects("Coins"), ContactType.COIN );
         // OBS: Points are treated as RectangularMapObject
         parseSpawnpoint();
 
@@ -127,11 +128,10 @@ public class TiledMapHelper {
     }
 
     private Shape createRectangularShape(RectangleMapObject mapObject) {
-        // TODO: Implement
-//        PolygonShape shape = new PolygonShape();
-//        shape.setAsBox(0, 0);
-//        return shape;
-        return null;
+        // TODO: Implement propperly, this doesnt work as it should right now
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(mapObject.getRectangle().width, mapObject.getRectangle().height);
+        return shape;
     }
 
 
