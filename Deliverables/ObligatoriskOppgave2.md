@@ -62,6 +62,11 @@ Fiender (Vise fiender/monstre; de skal interagere med terreng og spiller):
 Spillerdød (Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor skjermen)):
 - Som spiller ønsker jeg en fare for at spillet avsluttes slik at spillet blir mer interessant
     - Akseptansekriterier:
-        - TODO
+        - Spillerobjektet har helse
+        - Ved kontakt med fiende mister spilleren helse
+        - Ved kontakt med death plane mister spilleren all helse
+        - Ved null (0) helse dør spilleren, kan ikke lenger bevege seg
     - Arbeidsoppgaver:
-        - TODO
+        - Legg til variabel for helse i spillerobjektet
+        - Sjekk kontakt mellom spiller og fiende/death plane, og oppdater spillerhelse
+        - Sjekk om spillerhelse er 0, fjern mulighet for bevegelse
