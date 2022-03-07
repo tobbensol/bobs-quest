@@ -37,15 +37,16 @@ public class TiledMapHelper {
         parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
         parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
         parseMapObjects( getMapObjects("Coins"), ContactType.COIN );
+
         // OBS: Points are treated as RectangularMapObject
-        parseSpawnpoint();
+        parseSpawnPoint();
 
 //        backgroundLayer = getBoardLayer("WorldStructures");
 //        playerLayer = getBoardLayer("Player");
 
     }
 
-    private void parseSpawnpoint() {
+    private void parseSpawnPoint() {
         MapObjects spawnPoints = getMapObjects("Spawnpoints");
 
         for ( MapObject mapObject : spawnPoints ) {
@@ -62,17 +63,32 @@ public class TiledMapHelper {
 
 
     private MapObjects getMapObjects(String objects) {
-        // TODO: Handle exception when objets doesnt exists.
         // OBS: If objects doesn't exist -> NullPointerException
-        return tiledMap.getLayers().get( objects ).getObjects();
+        MapObjects mapObjects = null;
+
+        try {
+            mapObjects = tiledMap.getLayers().get( objects ).getObjects();
+        }
+        catch (NullPointerException e) {
+            throw new NullPointerException("Objects with type '" + objects + "' doesn't exist.");
+        }
+
+        return mapObjects;
     }
 
-
     public TiledMapTileLayer getBoardLayer(String layer) {
-        // TODO: Handle exception when layer doesnt exists.
         // OBS: If layer is object layer -> ClassCastException
         // OBS: Do not name a layer the same as an object
-        return (TiledMapTileLayer) tiledMap.getLayers().get(layer);
+        TiledMapTileLayer boardLayer = null;
+        try {
+            boardLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layer);
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Cannot cast to TiledMapTileLayer because '" + layer + "' is an object layer.");
+        }
+        if (boardLayer == null) {
+            throw new NullPointerException("Layer '" + layer + "' doesn't exist.");
+        }
+        return boardLayer;
     }
 
 
