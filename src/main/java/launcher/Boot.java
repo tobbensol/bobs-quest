@@ -27,4 +27,12 @@ public class Boot extends Game {
         // TODO: Set new screens
         setScreen(new GameScreen(orthographicCamera, gameModel));
     }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
 }

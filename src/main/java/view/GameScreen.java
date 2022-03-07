@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
+import model.Hud;
 import model.helper.Constants;
 import model.objects.Player;
 
@@ -22,6 +23,7 @@ public class GameScreen implements Screen {
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
+    private Hud hud;
 
     public GameScreen(OrthographicCamera camera, GameModel gameModel) {
         this.gameModel = gameModel;
@@ -30,6 +32,7 @@ public class GameScreen implements Screen {
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.orthogonalTiledMapRenderer = gameModel.setupMap();
 
+        hud = new Hud(batch);
     }
 
     /**
@@ -73,6 +76,9 @@ public class GameScreen implements Screen {
 
         batch.end();
         box2DDebugRenderer.render(gameModel.getWorld(), camera.combined.scl(Constants.PPM));
+
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     @Override
