@@ -67,7 +67,7 @@ public class GameContactListener implements ContactListener {
         List<Player> players = gameModel.getPlayers();
         Fixture p;
 
-        if (a.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) {
+        if (a.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) { //TODO: Not good enough
             p = a;
         }
         else if (b.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) {
