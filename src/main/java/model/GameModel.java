@@ -1,11 +1,13 @@
 package model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import controls.ArrowController;
 import controls.Controller;
+import controls.CustomController;
 import controls.WASDController;
 import model.helper.TiledMapHelper;
 import model.objects.Player;
@@ -19,8 +21,8 @@ public class GameModel {
     private GameContactListener gameContactListener;
     private TiledMapHelper tiledMapHelper;
 
-    private final int numPlayers = 2; // TODO: Variable number of players
-    private final int numControllers = 2;
+    private final int numPlayers = 3; // TODO: Variable number of players
+    private final int numControllers = 3;
     private List<Player> players;
     private List<Controller> controllers;
 
@@ -32,13 +34,14 @@ public class GameModel {
         this.tiledMapHelper = new TiledMapHelper(this);
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
-            //players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
-            players.add(new Player("Player" + (i+1), "marioSprite.png", this, i*100, 400, 1));
+            Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
+            players.add(new Player("Player" + (i+1), "marioSprite.png", this, spawnPoint.x, spawnPoint.y-10, 1));
         }
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
         controllers.add(new WASDController());
+        controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
     }
 
     public World getWorld() {
