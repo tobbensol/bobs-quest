@@ -1,7 +1,6 @@
 package model;
 
 import com.badlogic.gdx.physics.box2d.*;
-import view.GameScreen;
 import model.helper.ContactType;
 import model.objects.Player;
 import java.util.List;
@@ -28,6 +27,8 @@ public class GameContactListener implements ContactListener {
         headContact(a,b,true);
         horizontalContact(a,b,true,true); // Right contact
         horizontalContact(a,b,true,false); // Left contact
+
+        coinContact(a,b);
     }
 
     @Override
@@ -85,6 +86,16 @@ public class GameContactListener implements ContactListener {
         return null;
     }
 
+
+    private void coinContact(Fixture a, Fixture b) {
+        if (a.getUserData() == ContactType.COIN || b.getUserData() == ContactType.COIN) {
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                //System.out.println("Contact between player and coin!");
+                // TODO: implement logic for removing coin
+                Hud.addScore(100);
+            }
+        }
+    }
 
     private void groundContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
