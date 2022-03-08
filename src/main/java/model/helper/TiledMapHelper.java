@@ -8,12 +8,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.*;
 import model.GameModel;
+import model.objects.Coin;
+
 import java.util.ArrayList;
 
 
@@ -21,10 +21,12 @@ public class TiledMapHelper {
 
     private TiledMap tiledMap;
     private GameModel gameModel;
-    private TiledMapTileLayer backgroundLayer;
-    private TiledMapTileLayer playerLayer;
     private ArrayList<Vector2> spawnPoints;
+    private static ArrayList<Coin> coins = new ArrayList<>();
 
+    public static ArrayList<Coin> getCoins() {
+        return coins;
+    }
 
     public TiledMapHelper(GameModel gameModel ) {
         // OBS: map cant be infinite
@@ -36,14 +38,10 @@ public class TiledMapHelper {
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
         parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
-        parseMapObjects( getMapObjects("Coins"), ContactType.COIN );
+        parseCoins( getMapObjects("Coins"));
 
         // OBS: Points are treated as RectangularMapObject
         parseSpawnPoint();
-
-//        backgroundLayer = getBoardLayer("WorldStructures");
-//        playerLayer = getBoardLayer("Player");
-
     }
 
     private void parseSpawnPoint() {
@@ -107,8 +105,16 @@ public class TiledMapHelper {
                 createBody(mapObject , BodyDef.BodyType.StaticBody, contactType);
             }
             else if (mapObject instanceof RectangleMapObject) {
-                createBody(mapObject , BodyDef.BodyType.DynamicBody, contactType);
+
             }
+        }
+    }
+
+    private void parseCoins(MapObjects mapObjects) {
+        for (MapObject mapObject : mapObjects) {
+            Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
+            Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle, ContactType.COIN);
+            coins.add(coin);
         }
     }
 
