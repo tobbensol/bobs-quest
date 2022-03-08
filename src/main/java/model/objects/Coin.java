@@ -41,7 +41,8 @@ public class Coin {
     public void onHit() {
         setCategoryFilter(Constants.DESTROYED_BIT);
         removeCell();
-        Hud.addScore(100);
+
+        //Hud.addScore(100);
     }
 
 

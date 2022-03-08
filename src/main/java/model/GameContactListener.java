@@ -89,8 +89,10 @@ public class GameContactListener implements ContactListener {
                 Fixture c = p == a ? b : a;
 
                 for (Coin coin :TiledMapHelper.getCoins()) {
-                    if (coin.getBody().equals(c.getBody()))
+                    if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
+                        gameModel.increaseScore(100);
+                    }
                 }
             }
         }

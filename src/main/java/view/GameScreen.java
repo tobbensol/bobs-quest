@@ -23,16 +23,12 @@ public class GameScreen implements Screen {
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    private Hud hud;
-
     public GameScreen(OrthographicCamera camera, GameModel gameModel) {
         this.gameModel = gameModel;
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.orthogonalTiledMapRenderer = gameModel.setupMap();
-
-        hud = new Hud(batch);
     }
 
     /**
@@ -77,8 +73,8 @@ public class GameScreen implements Screen {
         batch.end();
         box2DDebugRenderer.render(gameModel.getWorld(), camera.combined.scl(Constants.PPM));
 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+        batch.setProjectionMatrix(gameModel.getHud().stage.getCamera().combined);
+        gameModel.getHud().stage.draw();
     }
 
     @Override

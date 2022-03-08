@@ -2,6 +2,7 @@ package model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,6 +22,9 @@ public class GameModel {
     private GameContactListener gameContactListener;
     private TiledMapHelper tiledMapHelper;
 
+    private Hud hud;
+    private Integer score;
+
     private final int numPlayers = 3; // TODO: Variable number of players
     private final int numControllers = 3;
     private List<Player> players;
@@ -32,6 +36,10 @@ public class GameModel {
         this.gameContactListener = new GameContactListener(this);
         this.world.setContactListener(this.gameContactListener);
         this.tiledMapHelper = new TiledMapHelper(this);
+
+        hud = new Hud(new SpriteBatch(), this);
+        score = 0;
+
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
             Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
@@ -42,18 +50,6 @@ public class GameModel {
         controllers.add(new ArrowController());
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
-    }
-
-    public World getWorld() {
-        return world;
-    }
-
-    public float getDelta() {
-        return Gdx.graphics.getDeltaTime();
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -69,5 +65,33 @@ public class GameModel {
         for (Player player : getPlayers()) {
             player.update();
         }
+
+        hud.updateScore();
     }
+
+    public void increaseScore(Integer value) {
+        score += value;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public float getDelta() {
+        return Gdx.graphics.getDeltaTime();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Hud getHud() {
+        return hud;
+    }
+
+
 }

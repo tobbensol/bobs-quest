@@ -14,6 +14,7 @@ import launcher.Boot;
 public class Hud {
     public Stage stage;
     private Viewport viewport;
+    private GameModel gameModel;
 
     private float fontSize;
     private static Integer score;
@@ -24,7 +25,8 @@ public class Hud {
     private Label timerLabel;
     private Label countdownLabel;
 
-    public Hud(SpriteBatch batch) {
+    public Hud(SpriteBatch batch, GameModel gameModel) {
+        this.gameModel = gameModel;
         score = 0;
 
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
@@ -55,10 +57,8 @@ public class Hud {
         stage.addActor(table);
     }
 
-    public static void addScore(int value) {
-        score += value;
+    public void updateScore() {
+        score = gameModel.getScore();
         scoreLabel.setText(String.format("%06d", score));
     }
-
-
 }
