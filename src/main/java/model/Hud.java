@@ -15,6 +15,7 @@ public class Hud {
     public Stage stage;
     private Viewport viewport;
 
+    private float fontSize;
     private static Integer score;
 
     private static Label scoreLabel;
@@ -33,11 +34,23 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
+        fontSize = 2f;
+
         scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("Level 1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        //worldLabel = new Label("Epic game", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
+        scoreLabel.setFontScale(fontSize);
+        levelLabel.setFontScale(fontSize);
+
+        // First row:
         table.add(levelLabel).expandX().padTop(10);
         table.add(scoreLabel).expandX().padTop(10);
+
+        //table.row(); // Use table.row() for starting on a new line
+
+        // Second row:
+        //table.add(worldLabel).expandX().padTop(10);
 
         stage.addActor(table);
     }
