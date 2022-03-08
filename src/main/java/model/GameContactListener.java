@@ -2,6 +2,8 @@ package model;
 
 import com.badlogic.gdx.physics.box2d.*;
 import model.helper.ContactType;
+import model.helper.TiledMapHelper;
+import model.objects.Coin;
 import model.objects.Player;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class GameContactListener implements ContactListener {
             return;
 
         groundContact(a,b,true);
-        headContact(a,b,true);
+        //headContact(a,b,true);
         horizontalContact(a,b,true,true); // Right contact
         horizontalContact(a,b,true,false); // Left contact
 
@@ -42,7 +44,7 @@ public class GameContactListener implements ContactListener {
             return;
 
         groundContact(a,b,false);
-        headContact(a,b,false);
+        //headContact(a,b,false);
         horizontalContact(a,b,false,true); // Right contact
         horizontalContact(a,b,false,false); // Left contact
     }
@@ -66,17 +68,8 @@ public class GameContactListener implements ContactListener {
      */
     private Player getContactPlayer(Fixture a, Fixture b) {
         List<Player> players = gameModel.getPlayers();
-        Fixture p;
 
-        if (a.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) { //TODO: Not good enough
-            p = a;
-        }
-        else if (b.getBody().getType().equals(BodyDef.BodyType.DynamicBody)) {
-            p = b;
-        }
-        else {
-            return null;
-        }
+        Fixture p = a.getUserData() == ContactType.PLAYER ? a : b;
 
         for (Player player : players) {
             if (player.getBody().equals(p.getBody())) {
@@ -90,29 +83,40 @@ public class GameContactListener implements ContactListener {
     private void coinContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.COIN || b.getUserData() == ContactType.COIN) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                //System.out.println("Contact between player and coin!");
-                // TODO: implement logic for removing coin
-                Hud.addScore(100);
+
+                // Finding out which of the fixtures is a Player and Coin.
+                Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
+                Fixture c = p == a ? b : a;
+
+                for (Coin coin :TiledMapHelper.getCoins()) {
+                    if (coin.getBody().equals(c.getBody()))
+                        coin.onHit();
+                }
             }
         }
     }
 
     private void groundContact(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
+        if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
+            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
                 getContactPlayer(a,b).setGrounded(begin);
             }
+            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
+                getContactPlayer(a,b).setGrounded(begin);
+            }
+
         }
     }
-
+/*
     private void headContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
             if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
-                //System.out.println("Collision between head and ground!");
                 // TODO: implement logic
             }
         }
     }
+
+ */
 
     private void horizontalContact(Fixture a, Fixture b, boolean begin, boolean right) {
         String direction;
@@ -124,7 +128,6 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
             if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
                 getContactPlayer(a,b).setSideCollision(begin);
-                //System.out.println("Collision between player and ground!");
             }
         }
 
