@@ -113,7 +113,7 @@ public class TiledMapHelper {
     private void parseCoins(MapObjects mapObjects) {
         for (MapObject mapObject : mapObjects) {
             Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
-            Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle, ContactType.COIN);
+            Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle);
             coins.add(coin);
         }
     }

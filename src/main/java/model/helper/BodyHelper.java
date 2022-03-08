@@ -1,5 +1,6 @@
 package model.helper;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -34,6 +35,30 @@ public class BodyHelper {
 
         return body;
     }
+
+    /*
+    public static Body staticBodyHelper(World world, Rectangle bounds, Fixture fixture, ContactType contactType) {
+        Body body;
+        Fixture fixture;
+        BodyDef bodyDef = new BodyDef();
+        FixtureDef fixtureDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(((bounds.getX() + bounds.getWidth() / 2) / Constants.PPM), ((bounds.getY() + bounds.getHeight() / 2) / Constants.PPM));
+
+        body = world.createBody(bodyDef);
+
+        shape.setAsBox((bounds.getWidth()/2/Constants.PPM), (bounds.getHeight()/2/Constants.PPM));
+        fixtureDef.shape = shape;
+        fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(contactType);
+        shape.dispose();
+
+        return body;
+    }
+
+     */
 
     private static void createSensor(String name, FixtureDef fixtureDef, Body body, float hx, float hy, float x, float y) {
         PolygonShape shape = new PolygonShape();
