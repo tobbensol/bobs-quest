@@ -83,8 +83,10 @@ public class GameContactListener implements ContactListener {
 
     private void deathContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.DEATH || b.getUserData() == ContactType.DEATH) {
-            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-                System.out.println("Player died:(");
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                Player player = getContactPlayer(a,b);
+                player.setDead();
+                System.out.println(player.getCurrentState());
             }
         }
     }
