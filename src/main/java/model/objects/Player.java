@@ -107,10 +107,17 @@ public class Player extends JumpableObject {
         return sideCollision;
     }
 
+    public State getCurrentState() {
+        return currentState;
+    }
+
     /**
      * @return the current state of the player.
      */
     public State getState() {
+        if (previousState == State.DEAD) {
+            return State.DEAD;
+        }
         if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             return State.JUMPING;
         }
