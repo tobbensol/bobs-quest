@@ -21,7 +21,6 @@ public abstract class Controller {
     public void inputListener(Player player){
 
         if (player.isDead()) {
-            System.out.println("You're dead!");
             return;
         }
 
