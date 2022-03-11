@@ -36,6 +36,7 @@ public abstract class InteractableTiledMapObject {
 
         shape.setAsBox((bounds.getWidth()/2/Constants.PPM), (bounds.getHeight()/2/Constants.PPM));
         fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
         fixture = body.createFixture(fixtureDef);
         fixture.setUserData(contactType);
 
