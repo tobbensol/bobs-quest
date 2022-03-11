@@ -19,6 +19,12 @@ public abstract class Controller {
     }
 
     public void inputListener(Player player){
+
+        if (player.isDead()) {
+            System.out.println("You're dead!");
+            return;
+        }
+
 //        float delta = Gdx.graphics.getDeltaTime();
         float delta = 1.0f;
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
