@@ -20,7 +20,8 @@ public class Player extends JumpableObject {
         STANDING,
         WALKING,
         JUMPING,
-        FALLING
+        FALLING,
+        DEAD
     }
 
     protected State currentState;
@@ -39,6 +40,7 @@ public class Player extends JumpableObject {
 
     public Player(String name, String texturePath, GameModel gameModel, float x, float y, int density) {
         super(name, texturePath, gameModel, x, y, density, ContactType.PLAYER);
+        hp = 100;
         currentState = State.STANDING;
         previousState = State.STANDING;
         //stateTimer = 0;
