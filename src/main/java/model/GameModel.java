@@ -69,7 +69,11 @@ public class GameModel {
         world.step(1/60f, 6, 2);
 
         if (checkRestart()){
-            // TODO: Logic for restarting the game
+//           -
+//            for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
+//                Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
+//                players.set(i, new Player("Player" + (i+1), "marioSprite.png", this, spawnPoint.x, spawnPoint.y-10, 1));
+//            }
         }
 
         for (int i = 0; i < getPlayers().size(); i++) {
