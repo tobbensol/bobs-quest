@@ -138,6 +138,7 @@ public class TiledMapHelper {
 
             shape.setAsBox((rectangle.getWidth()/2/Constants.PPM), (rectangle.getHeight()/2/Constants.PPM));
             fixtureDef.shape = shape;
+            fixtureDef.isSensor = true;
             //fixtureDef.filter.categoryBits = Constants.DESTROYED_BIT;
             fixture = body.createFixture(fixtureDef);
             fixture.setUserData(ContactType.DEATH);
