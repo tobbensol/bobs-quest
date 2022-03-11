@@ -14,6 +14,7 @@ public class Player extends JumpableObject {
     private boolean sideCollision;
     private static final float X_VELOCITY = 0.35f;
     private static final float Y_VELOCITY = 1.3f;
+    private int hp;
 
     public enum State {
         STANDING,
@@ -162,8 +163,21 @@ public class Player extends JumpableObject {
         return region;
     }
 
+    public boolean isDead() {
+        return getState() == State.DEAD;
+    }
 
+    public void setDead() {
+        hp = -1;
+        previousState = currentState;
+        currentState = State.DEAD;
+    }
 
-
+    public void takeDamage(int amount){
+        hp -= amount;
+        if (hp <= 0) {
+            setDead();
+        }
+    }
 
 }
