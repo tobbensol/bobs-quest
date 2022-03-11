@@ -23,7 +23,7 @@ public class BodyHelper {
         fixtureDef.shape = circleShape;
         fixtureDef.density = density;
         fixtureDef.filter.categoryBits = Constants.PLAYER_BIT;
-        fixtureDef.filter.maskBits = Constants.DEFAULT_BIT | Constants.COIN_BIT; // What an object can collide with.
+        fixtureDef.filter.maskBits = Constants.DEFAULT_BIT; // What an object can collide with.
         body.createFixture(fixtureDef).setUserData(contactType);
 
         circleShape.dispose();

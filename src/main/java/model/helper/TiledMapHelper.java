@@ -39,6 +39,9 @@ public class TiledMapHelper {
         parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
         parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
         parseCoins( getMapObjects("Coins"));
+        //parseDeathPlane( getMapObjects("Death"));
+        parseMapObjects( getMapObjects("Death"), ContactType.DEATH);
+
 
         // OBS: Points are treated as RectangularMapObject
         parseSpawnPoint();
@@ -102,10 +105,10 @@ public class TiledMapHelper {
     private void parseMapObjects(MapObjects mapObjects, ContactType contactType) {
         for( MapObject mapObject : mapObjects ) {
             if( mapObject instanceof PolygonMapObject ) {
-                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType);
+                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType, true, false);
             }
             else if (mapObject instanceof RectangleMapObject) {
-
+                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType, false, true);
             }
         }
     }
@@ -115,6 +118,31 @@ public class TiledMapHelper {
             Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
             Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle);
             coins.add(coin);
+        }
+    }
+
+    private void parseDeathPlane(MapObjects mapObjects) {
+        for (MapObject mapObject : mapObjects) {
+            Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
+
+            Body body;
+            Fixture fixture;
+            BodyDef bodyDef = new BodyDef();
+            FixtureDef fixtureDef = new FixtureDef();
+            PolygonShape shape = new PolygonShape();
+
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set(((rectangle.getX() + rectangle.getWidth() / 2) / Constants.PPM), ((rectangle.getY() + rectangle.getHeight() / 2) / Constants.PPM));
+
+            body = gameModel.getWorld().createBody(bodyDef);
+
+            shape.setAsBox((rectangle.getWidth()/2/Constants.PPM), (rectangle.getHeight()/2/Constants.PPM));
+            fixtureDef.shape = shape;
+            //fixtureDef.filter.categoryBits = Constants.DESTROYED_BIT;
+            fixture = body.createFixture(fixtureDef);
+            fixture.setUserData(ContactType.DEATH);
+
+            shape.dispose();
         }
     }
 
@@ -128,31 +156,41 @@ public class TiledMapHelper {
      * @param bodyType - The BodyType of the mapObject. Either Static og Dynamic.
      * @param contactType - The ContactType of the mapObject.
      */
-    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType, ContactType contactType){
+    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType, ContactType contactType, boolean polygon, boolean rectangular) {
+        if (polygon == rectangular) {
+            throw new IllegalArgumentException("The shape of the body must either be of type polygon or rectangular. Can not be both.");
+        }
+
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = bodyType;
-        // Adds the world object to the map
+        FixtureDef fixtureDef = new FixtureDef();
         Body body = gameModel.getWorld().createBody( bodyDef );
         Shape shape;
+        Fixture fixture;
 
-        if (bodyType.equals(BodyDef.BodyType.StaticBody)) {
+        bodyDef.type = bodyType;
+
+        if (polygon) {
             shape = createPolygonShape((PolygonMapObject) mapObject);
         }
-        else if (bodyType.equals(BodyDef.BodyType.DynamicBody)) {
-            shape = createRectangularShape((RectangleMapObject) mapObject);
-        }
-        else{
-            throw new IllegalArgumentException("BodyType must be static or dynamic.");
+        else {
+            shape = createRectangularShape((RectangleMapObject) mapObject, bodyDef);
         }
         // Changes the shape of the world object to match the one in the map
-        body.createFixture(shape, 1000).setUserData(contactType);
+
+        fixtureDef.shape = shape;
+        fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(contactType);
         shape.dispose();
     }
 
-    private Shape createRectangularShape(RectangleMapObject mapObject) {
+    private Shape createRectangularShape(RectangleMapObject mapObject, BodyDef bodyDef) {
         // TODO: Implement propperly, this doesnt work as it should right now
+
+        Rectangle rectangle = mapObject.getRectangle();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(mapObject.getRectangle().width, mapObject.getRectangle().height);
+
+        bodyDef.position.set(((rectangle.getX() + rectangle.getWidth() / 2) / Constants.PPM), ((rectangle.getY() + rectangle.getHeight() / 2) / Constants.PPM));
+        shape.setAsBox((rectangle.getWidth()/2/Constants.PPM), (rectangle.getHeight()/2/Constants.PPM));
         return shape;
     }
 

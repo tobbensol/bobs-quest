@@ -1,5 +1,5 @@
 package model.helper;
 
 public enum ContactType {
-    PLAYER, GROUND, PLATFORM, COIN;
+    PLAYER, GROUND, PLATFORM, COIN, DEATH;
 }

@@ -31,6 +31,8 @@ public class GameContactListener implements ContactListener {
         horizontalContact(a,b,true,false); // Left contact
 
         coinContact(a,b);
+
+        deathContact(a,b);
     }
 
     @Override
@@ -79,6 +81,13 @@ public class GameContactListener implements ContactListener {
         return null;
     }
 
+    private void deathContact(Fixture a, Fixture b) {
+        if (a.getUserData() == ContactType.DEATH || b.getUserData() == ContactType.DEATH) {
+            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
+                System.out.println("Player died:(");
+            }
+        }
+    }
 
     private void coinContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.COIN || b.getUserData() == ContactType.COIN) {
