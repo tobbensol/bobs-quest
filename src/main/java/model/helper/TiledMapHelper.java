@@ -39,8 +39,8 @@ public class TiledMapHelper {
         parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
         parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
         parseCoins( getMapObjects("Coins"));
-        //parseDeathPlane( getMapObjects("Death"));
-        parseMapObjects( getMapObjects("Death"), ContactType.DEATH);
+        parseDeathPlane( getMapObjects("Death"));
+        //parseMapObjects( getMapObjects("Death"), ContactType.DEATH);
 
 
         // OBS: Points are treated as RectangularMapObject
