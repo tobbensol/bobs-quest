@@ -56,8 +56,21 @@ public class GameModel {
         return tiledMapHelper.setupMap();
     }
 
+    private boolean checkRestart() {
+        for (Player player : players) {
+            if (!player.isDead()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void update() {
         world.step(1/60f, 6, 2);
+
+        if (checkRestart()){
+            // TODO: Logic for restarting the game
+        }
 
         for (int i = 0; i < getPlayers().size(); i++) {
             controllers.get(i).inputListener(players.get(i));
