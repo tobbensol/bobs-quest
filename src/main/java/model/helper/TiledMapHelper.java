@@ -15,6 +15,7 @@ import model.GameModel;
 import model.objects.Coin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TiledMapHelper {
@@ -114,8 +115,10 @@ public class TiledMapHelper {
     }
 
     private void parseCoins(MapObjects mapObjects) {
+        List<Vector2> coinSpawns = new ArrayList<>();
         for (MapObject mapObject : mapObjects) {
             Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
+            coinSpawns.add(new Vector2(rectangle.x, rectangle.y));
             Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle);
             coins.add(coin);
         }
