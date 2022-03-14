@@ -142,23 +142,15 @@ public class Player extends JumpableObject {
         currentState = getState();
 
         // Specify which texture region corresponding to which state.
-        TextureRegion region;
-        switch (currentState) {
-            case STANDING:
-                region = frames.get(0);
-                break;
-            case JUMPING:
-                region = frames.get(4);
-                break;
-            case FALLING:
-                region = frames.get(5);
-                break;
-            case WALKING:
-                //region = runningAnimation.getKeyFrame(stateTimer, true);
-                region = frames.get(1);
-                break;
-            default:
-                region = frames.get(0);
+        TextureRegion region = switch (currentState) {
+            case JUMPING -> frames.get(4);
+            case FALLING -> frames.get(5);
+            case WALKING ->
+                    //region = runningAnimation.getKeyFrame(stateTimer, true);
+                    frames.get(1);
+            case DEAD -> frames.get(6);
+            // Default -> STANDING
+            default -> frames.get(0);
         };
         if (!facingRight && !region.isFlipX()) {
             region.flip(true,false);
@@ -177,12 +169,21 @@ public class Player extends JumpableObject {
     }
 
     public void setDead() {
+        if (previousState == State.DEAD) {
+            return;
+        }
         hp = -1;
         previousState = currentState;
         currentState = State.DEAD;
+        // Death "animation"
+        jump(2.0f); // TODO: Make player fall through ground as well
     }
 
     public void takeDamage(int amount){
+        // Player doesn't take damage if dead
+        if (currentState == State.DEAD) {
+            return;
+        }
         hp -= amount;
         if (hp <= 0) {
             setDead();
