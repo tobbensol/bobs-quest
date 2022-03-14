@@ -1,6 +1,5 @@
 package model.helper;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -26,7 +25,7 @@ public class BodyHelper {
             fixtureDef.filter.categoryBits = Constants.PLAYER_BIT;
             fixtureDef.filter.maskBits = Constants.DEFAULT_BIT; // What an object can collide with.
         }
-        else if (contactType == ContactType.GOOMBA) {
+        else if (contactType == ContactType.ENEMY) {
             fixtureDef.filter.categoryBits = Constants.DEFAULT_BIT;
         }
         body.createFixture(fixtureDef).setUserData(contactType);

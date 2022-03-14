@@ -119,7 +119,7 @@ public class GameContactListener implements ContactListener {
      * @param b - The second Fixture involved in the contact.
      */
     private void goombaContact(Fixture a, Fixture b) {
-        if (a.getUserData() == ContactType.GOOMBA || b.getUserData() == ContactType.GOOMBA) {
+        if (a.getUserData() == ContactType.ENEMY || b.getUserData() == ContactType.ENEMY) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a, b);
                 player.takeDamage(Goomba.getAttack());
