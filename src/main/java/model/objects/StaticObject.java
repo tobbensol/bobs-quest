@@ -11,17 +11,17 @@ import model.helper.ContactType;
 
 public abstract class StaticObject {
     final private String name;
-    final private Texture texture;
+    Texture texture;
     protected int width, height;
     protected Body body;
     protected float x, y, velY;
     protected GameModel gameModel;
+    String texturePath;
 
     protected boolean facingRight;
 
-    public StaticObject(String name, String texturePath, GameModel gameModel, float x, float y, int density, ContactType contactType) {
+    public StaticObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType) {
         this.name = name;
-        this.texture = new Texture(texturePath);
         this.gameModel = gameModel;
         this.x = x;
         this.y = y;

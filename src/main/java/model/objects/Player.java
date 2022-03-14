@@ -1,5 +1,6 @@
 package model.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -38,8 +39,11 @@ public class Player extends JumpableObject {
 
     private ArrayList<TextureRegion> frames;
 
-    public Player(String name, String texturePath, GameModel gameModel, float x, float y, int density) {
-        super(name, texturePath, gameModel, x, y, density, ContactType.PLAYER);
+    public Player(String name, GameModel gameModel, float x, float y, float density) {
+        super(name + " " + gameModel.getPlayers().size() + 1, gameModel, x, y, density, ContactType.PLAYER);
+        texturePath = "marioSprite.png";
+        texture = new Texture(texturePath);
+
         hp = 100;
         currentState = State.STANDING;
         previousState = State.STANDING;

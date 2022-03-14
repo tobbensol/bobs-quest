@@ -1,5 +1,6 @@
 package model.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -8,12 +9,16 @@ import model.helper.ContactType;
 
 public class Goomba extends MoveableObject {
 
-    private TextureRegion tr = new TextureRegion(getTexture(), 6*64, 0, 64, 64); // TODO: Proper texture
+    private TextureRegion textureRegion;
     private int numMoves;
     private static final int attack = 40;
 
-    public Goomba(String name, String texturePath, GameModel gameModel, float x, float y, int density, ContactType contactType) {
-        super(name, texturePath, gameModel, x, y, density, contactType);
+    public Goomba(String name, GameModel gameModel, float x, float y, int density, ContactType contactType) {
+        super(name, gameModel, x, y, density, contactType);
+        texturePath = "marioSprite.png";
+        texture = new Texture(texturePath);
+        textureRegion = new TextureRegion(getTexture(), 6*64, 0, 64, 64); // TODO: Proper texture
+
         numMoves = 0;
     }
 
@@ -42,7 +47,7 @@ public class Goomba extends MoveableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(tr, x, y, width, height);
+        batch.draw(textureRegion, x, y, width, height);
     }
 
     public static int getAttack() {
