@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import model.helper.ContactType;
 import model.helper.TiledMapHelper;
 import model.objects.Coin;
+import model.objects.Goomba;
 import model.objects.Player;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class GameContactListener implements ContactListener {
         horizontalContact(a,b,true,false); // Left contact
 
         coinContact(a,b);
+        goombaContact(a, b);
 
         deathContact(a,b);
     }
@@ -78,7 +80,7 @@ public class GameContactListener implements ContactListener {
                 return player;
             }
         }
-        return null;
+        return null; // TODO: Handle null player
     }
 
     private void deathContact(Fixture a, Fixture b) {
@@ -99,12 +101,29 @@ public class GameContactListener implements ContactListener {
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
-                for (Coin coin :TiledMapHelper.getCoins()) {
+                for (Coin coin : TiledMapHelper.getCoins()) {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
                         gameModel.increaseScore(100);
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Checks if a contact is between a Player and a Goomba object.
+     * If yes, damages player.
+     *
+     * @param a - The first Fixture involved in the contact.
+     * @param b - The second Fixture involved in the contact.
+     */
+    private void goombaContact(Fixture a, Fixture b) {
+        if (a.getUserData() == ContactType.GOOMBA || b.getUserData() == ContactType.GOOMBA) {
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                Player player = getContactPlayer(a, b);
+                player.takeDamage(Goomba.getAttack());
+                System.out.println(player.hp);
             }
         }
     }
