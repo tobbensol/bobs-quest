@@ -8,10 +8,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
-import model.Hud;
 import model.helper.Constants;
 import model.objects.Goomba;
 import model.objects.Player;
+import model.objects.newCoin;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
@@ -74,6 +74,11 @@ public class GameScreen implements Screen {
         for (Goomba goomba : gameModel.getGoombas()) {
             goomba.render(batch);
         }
+
+        for (newCoin coin : gameModel.getCoins()){
+            coin.render(batch);
+        }
+
 
         batch.end();
         box2DDebugRenderer.render(gameModel.getWorld(), camera.combined.scl(Constants.PPM));
