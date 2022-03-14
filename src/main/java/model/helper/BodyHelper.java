@@ -28,6 +28,9 @@ public class BodyHelper {
         else if (contactType == ContactType.ENEMY) {
             fixtureDef.filter.categoryBits = Constants.DEFAULT_BIT;
         }
+        else if (contactType == ContactType.COIN){
+            fixtureDef.isSensor = true;
+        }
         body.createFixture(fixtureDef).setUserData(contactType);
 
         circleShape.dispose();
@@ -38,6 +41,9 @@ public class BodyHelper {
             createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);
             createSensor("right", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, width/2/Constants.PPM,0);
             createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
+        }
+        else if (contactType == ContactType.COIN){
+            body.setGravityScale(0);
         }
         return body;
     }
