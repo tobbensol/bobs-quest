@@ -45,10 +45,10 @@ public class TiledMapHelper {
 
 
         // OBS: Points are treated as RectangularMapObject
-        spawnPoints = parseSpawnPoint("Player");
+        spawnPoints = getSpawnPoint("Player");
     }
 
-    private ArrayList<Vector2> parseSpawnPoint(String Object) {
+    public ArrayList<Vector2> getSpawnPoint(String Object) {
         ArrayList<Vector2> spawnLocations = new ArrayList<>();
         MapObjects spawnPoints = getMapObjects(Object);
 
@@ -59,10 +59,6 @@ public class TiledMapHelper {
             spawnLocations.add( new Vector2(x, y) );
         }
         return spawnLocations;
-    }
-
-    public ArrayList<Vector2> getSpawnPoints() {
-        return spawnPoints;
     }
 
 

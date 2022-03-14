@@ -45,14 +45,15 @@ public class GameModel {
 
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
-            Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
+            Vector2 spawnPoint = tiledMapHelper.getSpawnPoint("Player").get(i);
             players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y-10, 0.8f));
         }
 
         // Add goomba TODO: Add "all" goombas
         goombas = new ArrayList<>();
-        Vector2 goombaSpawn = tiledMapHelper.getSpawnPoints().get(3);
-        goombas.add(new Goomba("Goomba 1", this, goombaSpawn.x, goombaSpawn.y, 1, ContactType.ENEMY));
+        for (Vector2 v : tiledMapHelper.getSpawnPoint("Goomba")){
+            goombas.add(new Goomba("Goomba 1", this, v.x, v.y, 1, ContactType.ENEMY));
+        }
 
 
         controllers = new ArrayList<>();
