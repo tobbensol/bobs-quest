@@ -10,7 +10,9 @@ import controls.ArrowController;
 import controls.Controller;
 import controls.CustomController;
 import controls.WASDController;
+import model.helper.ContactType;
 import model.helper.TiledMapHelper;
+import model.objects.Goomba;
 import model.objects.Player;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class GameModel {
     private final int numControllers = 3;
     private List<Player> players;
     private List<Controller> controllers;
+    private List<Goomba> goombas;
 
 
     public GameModel() {
@@ -41,10 +44,16 @@ public class GameModel {
         score = 0;
 
         players = new ArrayList<>();
-        for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
+        for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
             Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
             players.add(new Player("Player" + (i+1), "marioSprite.png", this, spawnPoint.x, spawnPoint.y-10, 1));
         }
+
+        // Add goomba TODO: Add "all" goombas
+        goombas = new ArrayList<>();
+        Vector2 goombaSpawn = tiledMapHelper.getSpawnPoints().get(3);
+        goombas.add(new Goomba("Goomba 1", "marioSprite.png", this, goombaSpawn.x, goombaSpawn.y, 1, ContactType.GOOMBA));
+
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
@@ -83,6 +92,10 @@ public class GameModel {
             player.update();
         }
 
+        for (Goomba goomba : getGoombas()) {
+            goomba.update();
+        }
+
         hud.updateScore();
     }
 
@@ -110,5 +123,7 @@ public class GameModel {
         return hud;
     }
 
-
+    public List<Goomba> getGoombas() {
+        return goombas;
+    }
 }
