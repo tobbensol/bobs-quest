@@ -39,24 +39,26 @@ public class TiledMapHelper {
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
         parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
-        parseCoins( getMapObjects("Coins"));
+        parseCoins( getMapObjects("Coin"));
         parseDeathPlane( getMapObjects("Death"));
         //parseMapObjects( getMapObjects("Death"), ContactType.DEATH);
 
 
         // OBS: Points are treated as RectangularMapObject
-        parseSpawnPoint();
+        spawnPoints = parseSpawnPoint("Player");
     }
 
-    private void parseSpawnPoint() {
-        MapObjects spawnPoints = getMapObjects("Spawnpoints");
+    private ArrayList<Vector2> parseSpawnPoint(String Object) {
+        ArrayList<Vector2> spawnLocations = new ArrayList<>();
+        MapObjects spawnPoints = getMapObjects(Object);
 
         for ( MapObject mapObject : spawnPoints ) {
             RectangleMapObject spawnPoint = (RectangleMapObject) mapObject;
             float x = spawnPoint.getRectangle().getX();
             float y = spawnPoint.getRectangle().getY();
-            this.spawnPoints.add( new Vector2(x, y) );
+            spawnLocations.add( new Vector2(x, y) );
         }
+        return spawnLocations;
     }
 
     public ArrayList<Vector2> getSpawnPoints() {

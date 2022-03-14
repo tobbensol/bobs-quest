@@ -10,7 +10,7 @@ import model.helper.ContactType;
 public class Coin extends InteractableTiledMapObject {
 
     public Coin(World world, TiledMap map, Rectangle bounds) { // Make this abstract! All static object
-        super(world,map,bounds,ContactType.COIN, "CoinTex");
+        super(world,map,bounds,ContactType.COIN, "Objects");
     }
 
     public void onHit() {
