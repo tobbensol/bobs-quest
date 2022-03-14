@@ -22,17 +22,24 @@ public class BodyHelper {
 
         fixtureDef.shape = circleShape;
         fixtureDef.density = density;
-        fixtureDef.filter.categoryBits = Constants.PLAYER_BIT;
-        fixtureDef.filter.maskBits = Constants.DEFAULT_BIT; // What an object can collide with.
+        if (contactType == ContactType.PLAYER) {
+            fixtureDef.filter.categoryBits = Constants.PLAYER_BIT;
+            fixtureDef.filter.maskBits = Constants.DEFAULT_BIT; // What an object can collide with.
+        }
+        else if (contactType == ContactType.GOOMBA) {
+            fixtureDef.filter.categoryBits = Constants.DEFAULT_BIT;
+        }
         body.createFixture(fixtureDef).setUserData(contactType);
 
         circleShape.dispose();
 
-        createSensor("foot", fixtureDef,body,(width/2) *0.6f / Constants.PPM, 2/Constants.PPM, 0,-height/2/Constants.PPM);
-        createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);
-        createSensor("right", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, width/2/Constants.PPM,0);
-        createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
-
+        // TODO: Proper check?
+        if (contactType == ContactType.PLAYER) {
+            createSensor("foot", fixtureDef,body,(width/2) *0.6f / Constants.PPM, 2/Constants.PPM, 0,-height/2/Constants.PPM);
+            createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);
+            createSensor("right", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, width/2/Constants.PPM,0);
+            createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
+        }
         return body;
     }
 
