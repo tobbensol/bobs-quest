@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="116" height="116" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="108">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="116" height="116" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="108">
  <tileset firstgid="1" name="Grassland_Terrain_Tileset" tilewidth="64" tileheight="64" tilecount="112" columns="16">
   <image source="../Multi_Platformer_Tileset_v2/GrassLand/Terrain64/Grassland_Terrain_Tileset.png" width="1024" height="448"/>
  </tileset>
  <tileset firstgid="113" source="../Multi_Platformer_Tileset_v2/GrassLand/Background64/GrassLand_Background_1.tsx"/>
  <tileset firstgid="438" source="../Multi_Platformer_Tileset_v2/GrassLand/Background64/GrassLand_Background_2.tsx"/>
  <tileset firstgid="750" source="../Multi_Platformer_Tileset_v2/GrassLand/Background64/GrassLand_Background_3.tsx"/>
- <tileset firstgid="1062" source="../Multi_Platformer_Tileset_v2/coin.tsx"/>
+ <tileset firstgid="1062" source="../Multi_Platformer_Tileset_v2/WorldObjects/coin.tsx"/>
  <layer id="6" name="Sky" width="116" height="116">
   <data encoding="csv">
 32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
