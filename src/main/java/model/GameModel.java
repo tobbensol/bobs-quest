@@ -12,8 +12,7 @@ import controls.CustomController;
 import controls.WASDController;
 import model.helper.ContactType;
 import model.helper.TiledMapHelper;
-import model.objects.Goomba;
-import model.objects.Player;
+import model.objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +28,11 @@ public class GameModel {
 
     private final int numPlayers = 3; // TODO: Variable number of players
     private final int numControllers = 3;
+    private GameObjectFactory factory = new GameObjectFactory(this);
     private List<Player> players;
     private List<Controller> controllers;
     private List<Goomba> goombas;
+    private List<newCoin> coins;
 
 
     public GameModel() {
@@ -46,13 +47,18 @@ public class GameModel {
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
             Vector2 spawnPoint = tiledMapHelper.getSpawnPoint("Player").get(i);
-            players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y-10, 0.8f));
+            players.add(new Player("Player" + (i+1),  this, spawnPoint.x+32, spawnPoint.y+32, 0.8f));
         }
 
         // Add goomba TODO: Add "all" goombas
         goombas = new ArrayList<>();
         for (Vector2 v : tiledMapHelper.getSpawnPoint("Goomba")){
-            goombas.add(new Goomba("Goomba 1", this, v.x, v.y, 1, ContactType.ENEMY));
+            goombas.add(new Goomba("Goomba 1", this, v.x+32, v.y+32, 1, ContactType.ENEMY));
+        }
+
+        coins = new ArrayList<>();
+        for (Vector2 v : tiledMapHelper.getSpawnPoint("Coin")){
+            coins.add(new newCoin("Coin", this, v.x+32, v.y+32, 1, ContactType.COIN));
         }
 
 
@@ -116,15 +122,19 @@ public class GameModel {
         return Gdx.graphics.getDeltaTime();
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public Hud getHud() {
         return hud;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public List<Goomba> getGoombas() {
         return goombas;
+    }
+
+    public List<newCoin> getCoins() {
+        return coins;
     }
 }

@@ -15,7 +15,7 @@ public class GameObjectFactory {
     public StaticObject create(String gameObject, float x, float y) {
         String objectString = gameObject.toUpperCase();
         return switch (objectString) {
-            //case "COIN" -> new Coin();
+            case "COIN" -> new newCoin(objectString, model, x, y, 1, ContactType.COIN);
             case "PLAYER" -> new Player(objectString, model, x, y, 1);
             case "GOOMBA" -> new Goomba(objectString, model, x, y, 1, ContactType.ENEMY);
             default -> null;
