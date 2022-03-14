@@ -123,7 +123,6 @@ public class GameContactListener implements ContactListener {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a, b);
                 player.takeDamage(Goomba.getAttack());
-                System.out.println(player.hp);
             }
         }
     }
