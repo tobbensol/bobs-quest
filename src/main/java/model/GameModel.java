@@ -49,6 +49,7 @@ public class GameModel {
             players.add(new Player("Player" + (i+1), "marioSprite.png", this, spawnPoint.x, spawnPoint.y-10, 1));
         }
 
+
         // Add goomba TODO: Add "all" goombas
         goombas = new ArrayList<>();
         Vector2 goombaSpawn = tiledMapHelper.getSpawnPoints().get(3);
