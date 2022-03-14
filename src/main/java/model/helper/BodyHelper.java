@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class BodyHelper {
 
-    public static Body BodyHelper(float x, float y, float width, float height, int density, World world, ContactType contactType) {
+    public static Body BodyHelper(float x, float y, float width, float height, float density, World world, ContactType contactType) {
 
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
