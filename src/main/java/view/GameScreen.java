@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
 import model.Hud;
 import model.helper.Constants;
+import model.objects.Goomba;
 import model.objects.Player;
 
 /**
@@ -68,6 +69,10 @@ public class GameScreen implements Screen {
 
         for (Player player : gameModel.getPlayers()) {
             player.render(batch);
+        }
+
+        for (Goomba goomba : gameModel.getGoombas()) {
+            goomba.render(batch);
         }
 
         batch.end();
