@@ -76,7 +76,9 @@ public class GameScreen implements Screen {
         }
 
         for (newCoin coin : gameModel.getCoins()){
-            coin.render(batch);
+            if (!coin.isDestroyed()) {
+                coin.render(batch);
+            }
         }
 
 
