@@ -7,6 +7,11 @@ public class Constants {
 
     public static final int TILE_SIZE = 64;
 
+
+    /**
+     * The bit value of each object types.
+     * The bit value has to be a power of 2.
+     */
     public static final short DEFAULT_BIT = 1;
     public static final short PLAYER_BIT = 2;
     public static final short COIN_BIT = 4;
