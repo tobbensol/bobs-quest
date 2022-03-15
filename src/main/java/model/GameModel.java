@@ -11,7 +11,6 @@ import controls.ArrowController;
 import controls.Controller;
 import controls.CustomController;
 import controls.WASDController;
-import model.helper.ContactType;
 import model.helper.TiledMapHelper;
 import model.objects.*;
 
@@ -46,20 +45,25 @@ public class GameModel {
         score = 0;
 
         players = new ArrayList<>();
+        List<Rectangle> playerRectangles = tiledMapHelper.parseMapObjects("Player");
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
-            Rectangle spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
-            players.add(new Player("Player" + (i+1),  this, spawnPoint.x+32, spawnPoint.y+32, 0.8f));
+            Vector2 spawnPoint = playerRectangles.get(i).getCenter(new Vector2());
+            players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y, 0.8f));
         }
 
-        // Add goomba TODO: Add "all" goombas
+        // Add goomba
         goombas = new ArrayList<>();
-        for (Rectangle rectangle : tiledMapHelper.getGoombaRectangles()){
-            goombas.add(new Goomba("Goomba 1", this, rectangle.x+32, rectangle.y+32, 1, ContactType.ENEMY));
+        for (Rectangle rectangle : tiledMapHelper.parseMapObjects("Goomba")){
+            Vector2 center = rectangle.getCenter(new Vector2()); // TODO: Use center here or in TiledMapHelper?
+//            goombas.add(new Goomba("Goomba 1", this, center.x, center.y, 1, ContactType.ENEMY));
+            goombas.add((Goomba) factory.create("Goomba", center.x, center.y));
         }
 
         coins = new ArrayList<>();
-        for (Rectangle rectangle : tiledMapHelper.getCoinRectangles()){
-            coins.add(new newCoin("Coin", this, rectangle.x+32, rectangle.y+32, 1, ContactType.COIN));
+        for (Rectangle rectangle : tiledMapHelper.parseMapObjects("Coin")){
+            Vector2 center = rectangle.getCenter(new Vector2());
+//            coins.add(new newCoin("Coin", this, center.x, center.y, 1, ContactType.COIN));
+            coins.add((newCoin) factory.create("Coin", center.x, center.y));
         }
 
 

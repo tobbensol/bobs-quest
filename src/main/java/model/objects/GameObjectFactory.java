@@ -16,7 +16,7 @@ public class GameObjectFactory {
         String objectString = gameObject.toUpperCase();
         return switch (objectString) {
             case "COIN" -> new newCoin(objectString, model, x, y, 1, ContactType.COIN);
-            case "PLAYER" -> new Player(objectString, model, x, y, 1);
+            case "PLAYER" -> new Player(objectString, model, x, y, 0.8f);
             case "GOOMBA" -> new Goomba(objectString, model, x, y, 1, ContactType.ENEMY);
             default -> null;
         };
