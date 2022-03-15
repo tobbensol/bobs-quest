@@ -3,7 +3,9 @@ package model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import controls.ArrowController;
@@ -45,13 +47,13 @@ public class GameModel {
 
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
-            Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
+            Rectangle spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
             players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y-10, 0.8f));
         }
 
         // Add goomba TODO: Add "all" goombas
         goombas = new ArrayList<>();
-        Vector2 goombaSpawn = tiledMapHelper.getSpawnPoints().get(3);
+        Rectangle goombaSpawn = tiledMapHelper.getSpawnPoints().get(3);
         goombas.add(new Goomba("Goomba 1", this, goombaSpawn.x, goombaSpawn.y, 1, ContactType.ENEMY));
 
 
