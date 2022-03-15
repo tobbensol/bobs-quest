@@ -1,21 +1,38 @@
 package model.objects;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import model.GameModel;
+import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
+public class Coin extends StaticObject {
 
-public class Coin extends InteractableTiledMapObject {
+    private boolean isDestroyed = false;
 
-    public Coin(World world, TiledMap map, Rectangle bounds) { // Make this abstract! All static object
-        super(world,map,bounds,ContactType.COIN, "Objects");
+    public Coin(String name, GameModel gameModel, float x, float y, float density) {
+        super(name, gameModel, x, y, density, ContactType.COIN, Constants.COIN_BIT, Constants.COIN_MASK_BITS, true);
+        texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
     }
 
-    public void onHit() {
-        setCategoryFilter(Constants.DESTROYED_BIT);
-        removeCell();
+    @Override
+    public void update() {
+
     }
 
+    @Override
+    public void render(SpriteBatch batch) {
+        batch.draw(texture, x-32, y-32, width, height);
+    }
+
+    public void onHit() { // TODO: Still registers contact
+        BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
+        isDestroyed = true;
+//        removeCell();
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
 }
