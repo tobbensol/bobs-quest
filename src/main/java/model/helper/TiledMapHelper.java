@@ -22,11 +22,17 @@ public class TiledMapHelper {
 
     private TiledMap tiledMap;
     private GameModel gameModel;
-    private ArrayList<Vector2> spawnPoints;
+    private List<Rectangle> spawnPoints;
     private static ArrayList<Coin> coins = new ArrayList<>();
+    private List<Rectangle> goombaRectangles;
+    private List<Rectangle> coinRectangles;
 
     public static ArrayList<Coin> getCoins() {
         return coins;
+    }
+
+    public List<Rectangle> getGoombaRectangles() {
+        return goombaRectangles;
     }
 
     public TiledMapHelper(GameModel gameModel ) {
@@ -34,20 +40,19 @@ public class TiledMapHelper {
         // OBS: layers cant be in folders
         this.gameModel = gameModel;
         tiledMap = new TmxMapLoader().load("maps/level1.tmx");
-        spawnPoints = new ArrayList<>();
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
-        parseMapObjects( getMapObjects("Ground"), ContactType.GROUND );
-        parseMapObjects( getMapObjects("Platforms"), ContactType.PLATFORM );
-        parseCoins( getMapObjects("Coin"));
-        parseDeathPlane( getMapObjects("Death"));
-        //parseMapObjects( getMapObjects("Death"), ContactType.DEATH);
+        parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND );
+        parseMapEnvironment( getMapObjects("Platforms"), ContactType.PLATFORM );
+        parseDeathPlane( getMapObjects("Death")); // TODO: Make death plane use parseMapEnvironment()
 
-
+        goombaRectangles = parseMapObjects(getMapObjects("Goomba"));
+        coinRectangles = parseMapObjects(getMapObjects("Coin"));
         // OBS: Points are treated as RectangularMapObject
-        spawnPoints = parseSpawnPoint("Player");
+        spawnPoints = parseMapObjects(getMapObjects("Player"));
     }
 
+    // TODO: Remove method
     private ArrayList<Vector2> parseSpawnPoint(String Object) {
         ArrayList<Vector2> spawnLocations = new ArrayList<>();
         MapObjects spawnPoints = getMapObjects(Object);
@@ -61,17 +66,17 @@ public class TiledMapHelper {
         return spawnLocations;
     }
 
-    public ArrayList<Vector2> getSpawnPoints() {
+    public List<Rectangle> getSpawnPoints() {
         return spawnPoints;
     }
 
 
     private MapObjects getMapObjects(String objects) {
         // OBS: If objects doesn't exist -> NullPointerException
-        MapObjects mapObjects = null;
+        MapObjects mapObjects;
 
         try {
-            mapObjects = tiledMap.getLayers().get( objects ).getObjects();
+            mapObjects = tiledMap.getLayers().get(objects).getObjects();
         }
         catch (NullPointerException e) {
             throw new NullPointerException("Objects with type '" + objects + "' doesn't exist.");
@@ -80,6 +85,7 @@ public class TiledMapHelper {
         return mapObjects;
     }
 
+    // TODO: Remove method
     public TiledMapTileLayer getBoardLayer(String layer) {
         // OBS: If layer is object layer -> ClassCastException
         // OBS: Do not name a layer the same as an object
@@ -105,17 +111,38 @@ public class TiledMapHelper {
      * @param mapObjects - an iterable of mapObjects to parse.
      * @param contactType - the ContactType the mapObjects should have.
      */
-    private void parseMapObjects(MapObjects mapObjects, ContactType contactType) {
-        for( MapObject mapObject : mapObjects ) {
+    private void parseMapEnvironment(MapObjects mapObjects, ContactType contactType) {
+        for(MapObject mapObject : mapObjects) {
             if( mapObject instanceof PolygonMapObject ) {
+                // TODO: Use BodyHelper instead of createBody()
                 createBody(mapObject , BodyDef.BodyType.StaticBody, contactType, true, false);
-            }
-            else if (mapObject instanceof RectangleMapObject) {
-                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType, false, true);
             }
         }
     }
 
+    /**
+     * This method is parsing mapObjects into the game.
+     * @param mapObjects - an iterable of mapObjects to parse.
+     * @return
+     */
+    private List<Rectangle> parseMapObjects(MapObjects mapObjects) {
+        List<Rectangle> objectList = new ArrayList<>();
+        for(MapObject mapObject : mapObjects) {
+            if (mapObject instanceof RectangleMapObject) {
+                objectList.add(parseObject((RectangleMapObject) mapObject));
+            }
+            else if (mapObject instanceof PolygonMapObject) {
+                throw new IllegalArgumentException("Objects on map must be RectangleMapObjects, not PolygonMapObject");
+            }
+        }
+        return objectList;
+    }
+
+    private Rectangle parseObject(RectangleMapObject mapObject) {
+        return mapObject.getRectangle();
+    }
+
+    // TODO: Remove method
     private void parseCoins(MapObjects mapObjects) {
         List<Vector2> coinSpawns = new ArrayList<>();
         for (MapObject mapObject : mapObjects) {
@@ -126,6 +153,7 @@ public class TiledMapHelper {
         }
     }
 
+    // TODO: Remove method
     private void parseDeathPlane(MapObjects mapObjects) {
         for (MapObject mapObject : mapObjects) {
             Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
@@ -162,6 +190,7 @@ public class TiledMapHelper {
      * @param bodyType - The BodyType of the mapObject. Either Static og Dynamic.
      * @param contactType - The ContactType of the mapObject.
      */
+    // TODO: Remove method (?) get using BodyHelper
     private void createBody(MapObject mapObject, BodyDef.BodyType bodyType, ContactType contactType, boolean polygon, boolean rectangular) {
         if (polygon == rectangular) {
             throw new IllegalArgumentException("The shape of the body must either be of type polygon or rectangular. Can not be both.");
@@ -189,6 +218,7 @@ public class TiledMapHelper {
         shape.dispose();
     }
 
+    // TODO: Remove method
     private Shape createRectangularShape(RectangleMapObject mapObject, BodyDef bodyDef) {
         // TODO: Implement propperly, this doesnt work as it should right now
 
