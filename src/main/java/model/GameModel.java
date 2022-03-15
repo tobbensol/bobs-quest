@@ -58,8 +58,8 @@ public class GameModel {
         }
 
         coins = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.getSpawnPoint("Coin")){
-            coins.add(new newCoin("Coin", this, v.x+32, v.y+32, 1, ContactType.COIN));
+        for (Rectangle rectangle : tiledMapHelper.getCoinRectangles()){
+            coins.add(new newCoin("Coin", this, rectangle.x+32, rectangle.y+32, 1, ContactType.COIN));
         }
 
 

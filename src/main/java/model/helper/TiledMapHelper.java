@@ -35,6 +35,10 @@ public class TiledMapHelper {
         return goombaRectangles;
     }
 
+    public List<Rectangle> getCoinRectangles() {
+        return coinRectangles;
+    }
+
     public TiledMapHelper(GameModel gameModel ) {
         // OBS: map cant be infinite
         // OBS: layers cant be in folders
