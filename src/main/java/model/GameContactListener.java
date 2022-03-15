@@ -6,6 +6,8 @@ import model.helper.TiledMapHelper;
 import model.objects.Coin;
 import model.objects.Goomba;
 import model.objects.Player;
+import model.objects.newCoin;
+
 import java.util.List;
 
 public class GameContactListener implements ContactListener {
@@ -101,7 +103,7 @@ public class GameContactListener implements ContactListener {
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
-                for (Coin coin : TiledMapHelper.getCoins()) {
+                for (newCoin coin : gameModel.getCoins()) {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
                         gameModel.increaseScore(100);
