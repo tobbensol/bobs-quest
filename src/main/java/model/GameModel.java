@@ -48,8 +48,9 @@ public class GameModel {
         List<Rectangle> playerRectangles = tiledMapHelper.parseMapObjects("Player");
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
             Vector2 spawnPoint = playerRectangles.get(i).getCenter(new Vector2());
-            players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y));
+            players.add(new Player("Player",  this, spawnPoint.x, spawnPoint.y));
         }
+        System.out.println(players);
 
         // Add goomba
         goombas = new ArrayList<>();
@@ -58,6 +59,7 @@ public class GameModel {
 //            goombas.add(new Goomba("Goomba 1", this, center.x, center.y, 1, ContactType.ENEMY));
             goombas.add((Goomba) factory.create("Goomba", center.x, center.y));
         }
+        System.out.println(goombas);
 
         coins = new ArrayList<>();
         for (Rectangle rectangle : tiledMapHelper.parseMapObjects("Coin")){
@@ -65,6 +67,7 @@ public class GameModel {
 //            coins.add(new newCoin("Coin", this, center.x, center.y, 1, ContactType.COIN));
             coins.add((Coin) factory.create("Coin", center.x, center.y));
         }
+        System.out.println(coins);
 
 
         controllers = new ArrayList<>();
@@ -84,6 +87,10 @@ public class GameModel {
             }
         }
         return true;
+    }
+
+    private void restart(){
+        System.out.println(":D");
     }
 
     public void update() {

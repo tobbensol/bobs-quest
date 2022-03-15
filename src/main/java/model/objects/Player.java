@@ -191,7 +191,7 @@ public class Player extends JumpableObject {
         if (hp <= 0) {
             setDead();
         }
-        System.out.println(getName()+ ": " + hp);
+        System.out.println(toString()+ ": " + hp);
     }
 
 }
