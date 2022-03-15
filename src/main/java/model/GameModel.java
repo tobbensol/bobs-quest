@@ -45,27 +45,24 @@ public class GameModel {
         score = 0;
 
         players = new ArrayList<>();
-        List<Rectangle> playerRectangles = tiledMapHelper.parseMapObjects("Player");
+        List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints("Player");
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
-            Vector2 spawnPoint = playerRectangles.get(i).getCenter(new Vector2());
-            players.add(new Player("Player",  this, spawnPoint.x, spawnPoint.y));
+            players.add(new Player("Player",  this, spawnPoints.get(i).x, spawnPoints.get(i).y));
         }
         System.out.println(players);
 
         // Add goomba
         goombas = new ArrayList<>();
-        for (Rectangle rectangle : tiledMapHelper.parseMapObjects("Goomba")){
-            Vector2 center = rectangle.getCenter(new Vector2()); // TODO: Use center here or in TiledMapHelper?
+        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goomba")){
 //            goombas.add(new Goomba("Goomba 1", this, center.x, center.y, 1, ContactType.ENEMY));
-            goombas.add((Goomba) factory.create("Goomba", center.x, center.y));
+            goombas.add((Goomba) factory.create("Goomba", v.x, v.y));
         }
         System.out.println(goombas);
 
         coins = new ArrayList<>();
-        for (Rectangle rectangle : tiledMapHelper.parseMapObjects("Coin")){
-            Vector2 center = rectangle.getCenter(new Vector2());
+        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Coin")){
 //            coins.add(new newCoin("Coin", this, center.x, center.y, 1, ContactType.COIN));
-            coins.add((Coin) factory.create("Coin", center.x, center.y));
+            coins.add((Coin) factory.create("Coin", v.x, v.y));
         }
         System.out.println(coins);
 
@@ -82,11 +79,11 @@ public class GameModel {
 
     private boolean checkRestart() {
         for (Player player : players) {
-            if (!player.isDead()) {
-                return false;
+            if (player.isDead()) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private void restart(){
@@ -94,15 +91,10 @@ public class GameModel {
     }
 
     public void update() {
-        world.step(1/60f, 6, 2);
-
         if (checkRestart()){
-//           -
-//            for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
-//                Vector2 spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
-//                players.set(i, new Player("Player" + (i+1), "marioSprite.png", this, spawnPoint.x, spawnPoint.y-10, 1));
-//            }
+            restart();
         }
+        world.step(1/60f, 6, 2);
 
         for (int i = 0; i < getPlayers().size(); i++) {
             controllers.get(i).inputListener(players.get(i));

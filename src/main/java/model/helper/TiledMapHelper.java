@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import model.GameModel;
-import model.objects.Coin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class TiledMapHelper {
@@ -35,6 +35,11 @@ public class TiledMapHelper {
         parseDeathPlane( getMapObjects("Death")); // TODO: Make death plane use parseMapEnvironment()
     }
 
+    public OrthogonalTiledMapRenderer setupMap() {
+        return new OrthogonalTiledMapRenderer(tiledMap);
+    }
+
+
     private MapObjects getMapObjects(String objects) {
         // OBS: If objects doesn't exist -> NullPointerException
         MapObjects mapObjects;
@@ -47,10 +52,6 @@ public class TiledMapHelper {
         }
 
         return mapObjects;
-    }
-
-    public OrthogonalTiledMapRenderer setupMap() {
-        return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
     /**
@@ -68,11 +69,15 @@ public class TiledMapHelper {
     }
 
     /**
-     * This method is parsing mapObjects into the game.
-     * @param mapObjects - an iterable of mapObjects to parse.
-     * @return
+     * This method is parsing mapObjects into the game by getting the centrer of its object box
+     * @param objectLayer - string with the name of the layer you wish to get the spawnpoints from
+     * @return list of spawnpoints
      */
-    public List<Rectangle> parseMapObjects(String objectLayer) { // TODO: Return list of Rectangle centers?
+    public List<Vector2> parseMapSpawnPoints(String objectLayer) {
+        return parseMapObjects(objectLayer).stream().map(i -> i.getCenter(new Vector2())).collect(Collectors.toList());
+    }
+
+    private List<Rectangle> parseMapObjects(String objectLayer){
         MapObjects mapObjects = getMapObjects(objectLayer);
         List<Rectangle> objectList = new ArrayList<>();
         for(MapObject mapObject : mapObjects) {
