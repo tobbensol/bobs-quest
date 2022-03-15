@@ -18,7 +18,7 @@ public class BodyHelper {
 
         Body body = world.createBody(bodyDef);
 
-        circleShape.setRadius(width/2/Constants.PPM);
+        circleShape.setRadius(width / 2 / Constants.PPM);
 
         fixtureDef.shape = circleShape;
         fixtureDef.density = density;
@@ -32,10 +32,7 @@ public class BodyHelper {
         circleShape.dispose();
 
         if (contactType == ContactType.PLAYER) {
-            createSensor("foot", fixtureDef,body,(width/2) *0.6f / Constants.PPM, 2/Constants.PPM, 0,-height/2/Constants.PPM);
-            createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);
-            createSensor("right", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, width/2/Constants.PPM,0);
-            createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
+            playerSensors(fixtureDef, body, width, height);
         }
 
         return body;
