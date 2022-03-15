@@ -3,7 +3,6 @@ package model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -14,8 +13,7 @@ import controls.CustomController;
 import controls.WASDController;
 import model.helper.ContactType;
 import model.helper.TiledMapHelper;
-import model.objects.Goomba;
-import model.objects.Player;
+import model.objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +29,11 @@ public class GameModel {
 
     private final int numPlayers = 3; // TODO: Variable number of players
     private final int numControllers = 3;
+    private GameObjectFactory factory = new GameObjectFactory(this);
     private List<Player> players;
     private List<Controller> controllers;
     private List<Goomba> goombas;
+    private List<newCoin> coins;
 
 
     public GameModel() {
@@ -48,13 +48,19 @@ public class GameModel {
         players = new ArrayList<>();
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
             Rectangle spawnPoint = tiledMapHelper.getSpawnPoints().get(i);
-            players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y-10, 0.8f));
+            players.add(new Player("Player" + (i+1),  this, spawnPoint.x+32, spawnPoint.y+32, 0.8f));
         }
 
         // Add goomba TODO: Add "all" goombas
         goombas = new ArrayList<>();
-        Rectangle goombaSpawn = tiledMapHelper.getSpawnPoints().get(3);
-        goombas.add(new Goomba("Goomba 1", this, goombaSpawn.x, goombaSpawn.y, 1, ContactType.ENEMY));
+        for (Rectangle rectangle : tiledMapHelper.getGoombaRectangles()){
+            goombas.add(new Goomba("Goomba 1", this, rectangle.x+32, rectangle.y+32, 1, ContactType.ENEMY));
+        }
+
+        coins = new ArrayList<>();
+        for (Vector2 v : tiledMapHelper.getSpawnPoint("Coin")){
+            coins.add(new newCoin("Coin", this, v.x+32, v.y+32, 1, ContactType.COIN));
+        }
 
 
         controllers = new ArrayList<>();
@@ -127,5 +133,9 @@ public class GameModel {
 
     public List<Goomba> getGoombas() {
         return goombas;
+    }
+
+    public List<newCoin> getCoins() {
+        return coins;
     }
 }

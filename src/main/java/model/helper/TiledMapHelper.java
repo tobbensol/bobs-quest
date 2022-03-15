@@ -53,7 +53,7 @@ public class TiledMapHelper {
     }
 
     // TODO: Remove method
-    private ArrayList<Vector2> parseSpawnPoint(String Object) {
+    public ArrayList<Vector2> parseSpawnPoint(String Object) {
         ArrayList<Vector2> spawnLocations = new ArrayList<>();
         MapObjects spawnPoints = getMapObjects(Object);
 

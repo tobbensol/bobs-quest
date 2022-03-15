@@ -180,7 +180,8 @@ public class Player extends JumpableObject {
         previousState = currentState;
         currentState = State.DEAD;
         // Death "animation"
-        jump(2.0f); // TODO: Make player fall through ground as well
+        body.setLinearVelocity(0, 5);
+        //jump(2.0f); // TODO: Make player fall through ground as well
     }
 
     public void takeDamage(int amount){
