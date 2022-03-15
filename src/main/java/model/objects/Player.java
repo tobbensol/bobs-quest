@@ -40,8 +40,8 @@ public class Player extends JumpableObject {
 
     private ArrayList<TextureRegion> frames;
 
-    public Player(String name, GameModel gameModel, float x, float y, float density) {
-        super(name + " " + gameModel.getPlayers().size() + 1, gameModel, x, y, density, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
+    public Player(String name, GameModel gameModel, float x, float y) {
+        super(name + " " + (gameModel.getPlayers().size() + 1), gameModel, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
         texturePath = "Multi_Platformer_Tileset_v2/Players/Small_Mario.png";
         texture = new Texture(texturePath);
 
@@ -191,6 +191,7 @@ public class Player extends JumpableObject {
         if (hp <= 0) {
             setDead();
         }
+        System.out.println(getName()+ ": " + hp);
     }
 
 }

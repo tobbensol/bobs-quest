@@ -11,8 +11,8 @@ public class Coin extends StaticObject {
 
     private boolean isDestroyed = false;
 
-    public Coin(String name, GameModel gameModel, float x, float y, float density) {
-        super(name, gameModel, x, y, density, ContactType.COIN, Constants.COIN_BIT, Constants.COIN_MASK_BITS, true);
+    public Coin(String name, GameModel gameModel, float x, float y) {
+        super(name + " " + (gameModel.getCoins().size() + 1), gameModel, x, y, 0, ContactType.COIN, Constants.COIN_BIT, Constants.COIN_MASK_BITS, true);
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
     }
 
@@ -29,7 +29,6 @@ public class Coin extends StaticObject {
     public void onHit() { // TODO: Still registers contact
         BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
         isDestroyed = true;
-//        removeCell();
     }
 
     public boolean isDestroyed() {
