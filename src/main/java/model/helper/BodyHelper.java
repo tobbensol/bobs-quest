@@ -13,7 +13,12 @@ public class BodyHelper {
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape circleShape = new CircleShape();
 
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        if (contactType == ContactType.COIN){
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+        }
+        else {
+            bodyDef.type = BodyDef.BodyType.DynamicBody;
+        }
         bodyDef.position.set(x/Constants.PPM, y/Constants.PPM);
         bodyDef.fixedRotation = true;
 
@@ -44,9 +49,6 @@ public class BodyHelper {
             createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);
             createSensor("right", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, width/2/Constants.PPM,0);
             createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
-        }
-        else if (contactType == ContactType.COIN){
-            body.setGravityScale(0); // TODO: Coin is StaticObject, should have StaticBody, isn't affected by gravity
         }
         return body;
     }
@@ -84,9 +86,11 @@ public class BodyHelper {
         shape.dispose();
     }
 
-    public static void setCategoryFilter(short filterBit) {
+    public static void setCategoryFilter(Body body, short filterBit) {
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
-        fixture.setFilterData(filter);
+        for (Fixture f : body.getFixtureList()){
+            f.setFilterData(filter);
+        }
     }
 }

@@ -27,7 +27,7 @@ public class newCoin extends StaticObject{
     }
 
     public void onHit() { // TODO: Still registers contact
-        BodyHelper.setCategoryFilter(Constants.DESTROYED_BIT);
+        BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
         isDestroyed = true;
 //        removeCell();
     }
