@@ -22,22 +22,6 @@ public class TiledMapHelper {
 
     private TiledMap tiledMap;
     private GameModel gameModel;
-    private List<Rectangle> spawnPoints;
-    private static ArrayList<Coin> coins = new ArrayList<>();
-    private List<Rectangle> goombaRectangles;
-    private List<Rectangle> coinRectangles;
-
-    public static ArrayList<Coin> getCoins() {
-        return coins;
-    }
-
-    public List<Rectangle> getGoombaRectangles() {
-        return goombaRectangles;
-    }
-
-    public List<Rectangle> getCoinRectangles() {
-        return coinRectangles;
-    }
 
     public TiledMapHelper(GameModel gameModel ) {
         // OBS: map cant be infinite
@@ -49,31 +33,7 @@ public class TiledMapHelper {
         parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND );
         parseMapEnvironment( getMapObjects("Platforms"), ContactType.PLATFORM );
         parseDeathPlane( getMapObjects("Death")); // TODO: Make death plane use parseMapEnvironment()
-
-        goombaRectangles = parseMapObjects(getMapObjects("Goomba"));
-        coinRectangles = parseMapObjects(getMapObjects("Coin"));
-        // OBS: Points are treated as RectangularMapObject
-        spawnPoints = parseMapObjects(getMapObjects("Player"));
     }
-
-    // TODO: Remove method
-    public ArrayList<Vector2> parseSpawnPoint(String Object) {
-        ArrayList<Vector2> spawnLocations = new ArrayList<>();
-        MapObjects spawnPoints = getMapObjects(Object);
-
-        for ( MapObject mapObject : spawnPoints ) {
-            RectangleMapObject spawnPoint = (RectangleMapObject) mapObject;
-            float x = spawnPoint.getRectangle().getX();
-            float y = spawnPoint.getRectangle().getY();
-            spawnLocations.add( new Vector2(x, y) );
-        }
-        return spawnLocations;
-    }
-
-    public List<Rectangle> getSpawnPoints() {
-        return spawnPoints;
-    }
-
 
     private MapObjects getMapObjects(String objects) {
         // OBS: If objects doesn't exist -> NullPointerException
@@ -89,25 +49,8 @@ public class TiledMapHelper {
         return mapObjects;
     }
 
-    // TODO: Remove method
-    public TiledMapTileLayer getBoardLayer(String layer) {
-        // OBS: If layer is object layer -> ClassCastException
-        // OBS: Do not name a layer the same as an object
-        TiledMapTileLayer boardLayer = null;
-        try {
-            boardLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layer);
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Cannot cast to TiledMapTileLayer because '" + layer + "' is an object layer.");
-        }
-        if (boardLayer == null) {
-            throw new NullPointerException("Layer '" + layer + "' doesn't exist.");
-        }
-        return boardLayer;
-    }
-
-
     public OrthogonalTiledMapRenderer setupMap() {
-        return new OrthogonalTiledMapRenderer(tiledMap); // TODO: Use proper unit scale
+        return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
     /**
@@ -129,7 +72,8 @@ public class TiledMapHelper {
      * @param mapObjects - an iterable of mapObjects to parse.
      * @return
      */
-    private List<Rectangle> parseMapObjects(MapObjects mapObjects) {
+    public List<Rectangle> parseMapObjects(String objectLayer) { // TODO: Return list of Rectangle centers?
+        MapObjects mapObjects = getMapObjects(objectLayer);
         List<Rectangle> objectList = new ArrayList<>();
         for(MapObject mapObject : mapObjects) {
             if (mapObject instanceof RectangleMapObject) {
@@ -144,17 +88,6 @@ public class TiledMapHelper {
 
     private Rectangle parseObject(RectangleMapObject mapObject) {
         return mapObject.getRectangle();
-    }
-
-    // TODO: Remove method
-    private void parseCoins(MapObjects mapObjects) {
-        List<Vector2> coinSpawns = new ArrayList<>();
-        for (MapObject mapObject : mapObjects) {
-            Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
-            coinSpawns.add(new Vector2(rectangle.x, rectangle.y));
-            Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle);
-            coins.add(coin);
-        }
     }
 
     // TODO: Remove method
@@ -224,8 +157,6 @@ public class TiledMapHelper {
 
     // TODO: Remove method
     private Shape createRectangularShape(RectangleMapObject mapObject, BodyDef bodyDef) {
-        // TODO: Implement propperly, this doesnt work as it should right now
-
         Rectangle rectangle = mapObject.getRectangle();
         PolygonShape shape = new PolygonShape();
 
@@ -249,5 +180,46 @@ public class TiledMapHelper {
         PolygonShape shape = new PolygonShape();
         shape.set( worldVertices );
         return shape;
+    }
+
+    // TODO: Remove method
+    private void parseCoins(MapObjects mapObjects) {
+        List<Vector2> coinSpawns = new ArrayList<>();
+        for (MapObject mapObject : mapObjects) {
+            Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
+            coinSpawns.add(new Vector2(rectangle.x, rectangle.y));
+            Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle);
+//            coins.add(coin);
+        }
+    }
+
+    // TODO: Remove method
+    public TiledMapTileLayer getBoardLayer(String layer) {
+        // OBS: If layer is object layer -> ClassCastException
+        // OBS: Do not name a layer the same as an object
+        TiledMapTileLayer boardLayer = null;
+        try {
+            boardLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layer);
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Cannot cast to TiledMapTileLayer because '" + layer + "' is an object layer.");
+        }
+        if (boardLayer == null) {
+            throw new NullPointerException("Layer '" + layer + "' doesn't exist.");
+        }
+        return boardLayer;
+    }
+
+    // TODO: Remove method
+    public ArrayList<Vector2> parseSpawnPoint(String Object) {
+        ArrayList<Vector2> spawnLocations = new ArrayList<>();
+        MapObjects spawnPoints = getMapObjects(Object);
+
+        for ( MapObject mapObject : spawnPoints ) {
+            RectangleMapObject spawnPoint = (RectangleMapObject) mapObject;
+            float x = spawnPoint.getRectangle().getX();
+            float y = spawnPoint.getRectangle().getY();
+            spawnLocations.add( new Vector2(x, y) );
+        }
+        return spawnLocations;
     }
 }
