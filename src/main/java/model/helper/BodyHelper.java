@@ -5,21 +5,15 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class BodyHelper {
 
-    private static Fixture fixture;
 
-    public static Body BodyHelper(float x, float y, float width, float height, float density, World world, ContactType contactType) {
+    public static Body BodyHelper(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor) {
 
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape circleShape = new CircleShape();
 
-        if (contactType == ContactType.COIN){
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-        }
-        else {
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
-        }
-        bodyDef.position.set(x/Constants.PPM, y/Constants.PPM);
+        bodyDef.type = bodyType;
+        bodyDef.position.set(x / Constants.PPM, y / Constants.PPM);
         bodyDef.fixedRotation = true;
 
         Body body = world.createBody(bodyDef);
@@ -28,54 +22,33 @@ public class BodyHelper {
 
         fixtureDef.shape = circleShape;
         fixtureDef.density = density;
-        if (contactType == ContactType.PLAYER) {
-            fixtureDef.filter.categoryBits = Constants.PLAYER_BIT;
-            fixtureDef.filter.maskBits = Constants.DEFAULT_BIT; // What an object can collide with.
-        }
-        else if (contactType == ContactType.ENEMY) {
-            fixtureDef.filter.categoryBits = Constants.DEFAULT_BIT;
-        }
-        else if (contactType == ContactType.COIN){
-            fixtureDef.isSensor = true;
-        }
-        fixture = body.createFixture(fixtureDef);
+        fixtureDef.filter.categoryBits = categoryBits;
+        fixtureDef.filter.maskBits = maskBits;
+        fixtureDef.isSensor = isSensor;
+
+        Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(contactType);
 
         circleShape.dispose();
 
-        // TODO: Proper check?
         if (contactType == ContactType.PLAYER) {
             createSensor("foot", fixtureDef,body,(width/2) *0.6f / Constants.PPM, 2/Constants.PPM, 0,-height/2/Constants.PPM);
             createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);
             createSensor("right", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, width/2/Constants.PPM,0);
             createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
         }
-        return body;
-    }
-
-    /*
-    public static Body staticBodyHelper(World world, Rectangle bounds, Fixture fixture, ContactType contactType) {
-        Body body;
-        Fixture fixture;
-        BodyDef bodyDef = new BodyDef();
-        FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(((bounds.getX() + bounds.getWidth() / 2) / Constants.PPM), ((bounds.getY() + bounds.getHeight() / 2) / Constants.PPM));
-
-        body = world.createBody(bodyDef);
-
-        shape.setAsBox((bounds.getWidth()/2/Constants.PPM), (bounds.getHeight()/2/Constants.PPM));
-        fixtureDef.shape = shape;
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(contactType);
-        shape.dispose();
 
         return body;
     }
 
-     */
+
+    private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
+        createSensor("foot", fixtureDef,body,(width/2) *0.6f / Constants.PPM, 2/Constants.PPM, 0,-height/2/Constants.PPM);
+        createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);
+        createSensor("right", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, width/2/Constants.PPM,0);
+        createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
+    }
+
 
     private static void createSensor(String name, FixtureDef fixtureDef, Body body, float hx, float hy, float x, float y) {
         PolygonShape shape = new PolygonShape();
