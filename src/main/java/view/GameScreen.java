@@ -11,7 +11,7 @@ import model.GameModel;
 import model.helper.Constants;
 import model.objects.Goomba;
 import model.objects.Player;
-import model.objects.newCoin;
+import model.objects.Coin;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
@@ -75,7 +75,7 @@ public class GameScreen implements Screen {
             goomba.render(batch);
         }
 
-        for (newCoin coin : gameModel.getCoins()){
+        for (Coin coin : gameModel.getCoins()){
             if (!coin.isDestroyed()) {
                 coin.render(batch);
             }

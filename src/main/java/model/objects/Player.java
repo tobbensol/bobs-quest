@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import model.GameModel;
+import model.helper.Constants;
 import model.helper.ContactType;
 
 import java.util.ArrayList;
@@ -40,8 +41,8 @@ public class Player extends JumpableObject {
     private ArrayList<TextureRegion> frames;
 
     public Player(String name, GameModel gameModel, float x, float y, float density) {
-        super(name + " " + gameModel.getPlayers().size() + 1, gameModel, x, y, density, ContactType.PLAYER);
-        texturePath = "marioSprite.png";
+        super(name + " " + gameModel.getPlayers().size() + 1, gameModel, x, y, density, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
+        texturePath = "Multi_Platformer_Tileset_v2/Players/Small_Mario.png";
         texture = new Texture(texturePath);
 
         hp = 100;
@@ -147,12 +148,10 @@ public class Player extends JumpableObject {
 
         // Specify which texture region corresponding to which state.
         TextureRegion region = switch (currentState) {
-            case JUMPING -> frames.get(4);
-            case FALLING -> frames.get(5);
-            case WALKING ->
-                    //region = runningAnimation.getKeyFrame(stateTimer, true);
-                    frames.get(1);
-            case DEAD -> frames.get(6);
+            case JUMPING -> frames.get(5);
+            case FALLING -> frames.get(7);
+            case WALKING -> frames.get(3);
+            case DEAD -> frames.get(13);
             // Default -> STANDING
             default -> frames.get(0);
         };

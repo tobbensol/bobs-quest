@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import model.GameModel;
+import model.helper.Constants;
 import model.helper.ContactType;
 
 public class Goomba extends MoveableObject {
@@ -13,9 +14,9 @@ public class Goomba extends MoveableObject {
     private int numMoves;
     private static final int attack = 40;
 
-    public Goomba(String name, GameModel gameModel, float x, float y, int density, ContactType contactType) {
-        super(name, gameModel, x, y, density, contactType);
-        texturePath = "marioSprite.png";
+    public Goomba(String name, GameModel gameModel, float x, float y, int density) {
+        super(name, gameModel, x, y, density, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
+        texturePath = "Multi_Platformer_Tileset_v2/Enemies/Goomba.png";
         texture = new Texture(texturePath);
         textureRegion = new TextureRegion(getTexture(), 6*64, 0, 64, 64); // TODO: Proper texture
 

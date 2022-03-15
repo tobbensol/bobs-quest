@@ -1,8 +1,6 @@
 package model.objects;
 
 import model.GameModel;
-import model.helper.ContactType;
-
 
 public class GameObjectFactory {
 
@@ -12,12 +10,12 @@ public class GameObjectFactory {
         this.model = model;
     }
 
-    public StaticObject create(String gameObject, float x, float y) {
+    public GameObject create(String gameObject, float x, float y) {
         String objectString = gameObject.toUpperCase();
         return switch (objectString) {
-            case "COIN" -> new newCoin(objectString, model, x, y, 1, ContactType.COIN);
+            case "COIN" -> new Coin(objectString, model, x, y, 1);
             case "PLAYER" -> new Player(objectString, model, x, y, 0.8f);
-            case "GOOMBA" -> new Goomba(objectString, model, x, y, 1, ContactType.ENEMY);
+            case "GOOMBA" -> new Goomba(objectString, model, x, y, 1);
             default -> null;
         };
     }

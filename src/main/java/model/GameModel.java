@@ -32,7 +32,7 @@ public class GameModel {
     private List<Player> players;
     private List<Controller> controllers;
     private List<Goomba> goombas;
-    private List<newCoin> coins;
+    private List<Coin> coins;
 
 
     public GameModel() {
@@ -63,7 +63,7 @@ public class GameModel {
         for (Rectangle rectangle : tiledMapHelper.parseMapObjects("Coin")){
             Vector2 center = rectangle.getCenter(new Vector2());
 //            coins.add(new newCoin("Coin", this, center.x, center.y, 1, ContactType.COIN));
-            coins.add((newCoin) factory.create("Coin", center.x, center.y));
+            coins.add((Coin) factory.create("Coin", center.x, center.y));
         }
 
 
@@ -139,7 +139,7 @@ public class GameModel {
         return goombas;
     }
 
-    public List<newCoin> getCoins() {
+    public List<Coin> getCoins() {
         return coins;
     }
 }

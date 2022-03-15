@@ -1,13 +1,17 @@
 package model.objects;
 
+import com.badlogic.gdx.math.Vector2;
 import model.GameModel;
 import model.helper.Constants;
 import model.helper.ContactType;
 
-public abstract class MoveableObject extends StaticObject implements Moveable {
+public abstract class MoveableObject extends DynamicObject implements Moveable {
 
-    public MoveableObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType) {
-        super(name, gameModel, x, y, density, contactType);
+    private float velY;
+
+    public MoveableObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType, short categoryBits, short maskBits) {
+        super(name, gameModel, x, y, density, contactType, categoryBits, maskBits);
+        velY = 0;
     }
 
     public void update() {
@@ -15,5 +19,9 @@ public abstract class MoveableObject extends StaticObject implements Moveable {
         y = body.getPosition().y * Constants.PPM - (height / 2);
 
         velY = body.getLinearVelocity().len();
+    }
+
+    public Vector2 getVelocity() {
+        return body.getLinearVelocity();
     }
 }

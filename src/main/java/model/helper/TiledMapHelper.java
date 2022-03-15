@@ -183,17 +183,6 @@ public class TiledMapHelper {
     }
 
     // TODO: Remove method
-    private void parseCoins(MapObjects mapObjects) {
-        List<Vector2> coinSpawns = new ArrayList<>();
-        for (MapObject mapObject : mapObjects) {
-            Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
-            coinSpawns.add(new Vector2(rectangle.x, rectangle.y));
-            Coin coin = new Coin(gameModel.getWorld(),tiledMap,rectangle);
-//            coins.add(coin);
-        }
-    }
-
-    // TODO: Remove method
     public TiledMapTileLayer getBoardLayer(String layer) {
         // OBS: If layer is object layer -> ClassCastException
         // OBS: Do not name a layer the same as an object

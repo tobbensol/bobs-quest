@@ -2,11 +2,9 @@ package model;
 
 import com.badlogic.gdx.physics.box2d.*;
 import model.helper.ContactType;
-import model.helper.TiledMapHelper;
-import model.objects.Coin;
 import model.objects.Goomba;
 import model.objects.Player;
-import model.objects.newCoin;
+import model.objects.Coin;
 
 import java.util.List;
 
@@ -103,7 +101,7 @@ public class GameContactListener implements ContactListener {
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
-                for (newCoin coin : gameModel.getCoins()) {
+                for (Coin coin : gameModel.getCoins()) {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
                         gameModel.increaseScore(100);
