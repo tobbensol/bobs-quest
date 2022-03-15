@@ -6,11 +6,11 @@ import com.badlogic.gdx.physics.box2d.*;
 public class BodyHelper {
 
 
-    public static Body BodyHelper(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor) {
+    public static Body BodyHelper(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
 
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
-        CircleShape circleShape = new CircleShape();
+        Shape shape;
 
         bodyDef.type = bodyType;
         bodyDef.position.set(x / Constants.PPM, y / Constants.PPM);
@@ -18,9 +18,14 @@ public class BodyHelper {
 
         Body body = world.createBody(bodyDef);
 
-        circleShape.setRadius(width / 2 / Constants.PPM);
+        if (polygon) {
+            shape = createPolygonShape(width, height);
+        }
+        else {
+            shape = createCircleShape(width/2);
+        }
 
-        fixtureDef.shape = circleShape;
+        fixtureDef.shape = shape;
         fixtureDef.density = density;
         fixtureDef.filter.categoryBits = categoryBits;
         fixtureDef.filter.maskBits = maskBits;
@@ -29,13 +34,25 @@ public class BodyHelper {
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(contactType);
 
-        circleShape.dispose();
+        shape.dispose();
 
         if (contactType == ContactType.PLAYER) {
             playerSensors(fixtureDef, body, width, height);
         }
 
         return body;
+    }
+
+    private static PolygonShape createPolygonShape(float width, float height) {
+        PolygonShape polygonShape= new PolygonShape();
+        polygonShape.setAsBox(width /2/Constants.PPM, height /2/Constants.PPM);
+        return polygonShape;
+    }
+
+    private static Shape createCircleShape(float radius) {
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(radius/ Constants.PPM);
+        return circleShape;
     }
 
 

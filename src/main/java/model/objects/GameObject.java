@@ -21,7 +21,7 @@ public abstract class GameObject {
 
     protected boolean facingRight;
 
-    public GameObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor) {
+    public GameObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
         this.name = name;
         this.gameModel = gameModel;
         this.x = x;
@@ -29,7 +29,7 @@ public abstract class GameObject {
         this.width = 64;
         this.height = 64;
 
-        this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameModel.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor);
+        this.body = BodyHelper.BodyHelper(x, y, width, height, density, gameModel.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, polygon);
         facingRight = true;
     }
 
