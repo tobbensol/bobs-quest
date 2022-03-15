@@ -48,7 +48,7 @@ public class GameModel {
         List<Rectangle> playerRectangles = tiledMapHelper.parseMapObjects("Player");
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
             Vector2 spawnPoint = playerRectangles.get(i).getCenter(new Vector2());
-            players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y, 0.8f));
+            players.add(new Player("Player" + (i+1),  this, spawnPoint.x, spawnPoint.y));
         }
 
         // Add goomba
