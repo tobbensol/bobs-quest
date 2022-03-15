@@ -5,6 +5,8 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class BodyHelper {
 
+    private static Fixture fixture;
+
     public static Body BodyHelper(float x, float y, float width, float height, float density, World world, ContactType contactType) {
 
         BodyDef bodyDef = new BodyDef();
@@ -31,7 +33,8 @@ public class BodyHelper {
         else if (contactType == ContactType.COIN){
             fixtureDef.isSensor = true;
         }
-        body.createFixture(fixtureDef).setUserData(contactType);
+        fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(contactType);
 
         circleShape.dispose();
 
@@ -43,7 +46,7 @@ public class BodyHelper {
             createSensor("left", fixtureDef,body,2 / Constants.PPM, (width/2)*0.9f / Constants.PPM, -width/2/Constants.PPM,0);
         }
         else if (contactType == ContactType.COIN){
-            body.setGravityScale(0);
+            body.setGravityScale(0); // TODO: Coin is StaticObject, should have StaticBody, isn't affected by gravity
         }
         return body;
     }
@@ -79,5 +82,11 @@ public class BodyHelper {
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData(name);
         shape.dispose();
+    }
+
+    public static void setCategoryFilter(short filterBit) {
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setFilterData(filter);
     }
 }
