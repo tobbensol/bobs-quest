@@ -44,6 +44,15 @@ public class GameModel {
         hud = new Hud(new SpriteBatch(), this);
         score = 0;
 
+        setUpMap();
+
+        controllers = new ArrayList<>();
+        controllers.add(new ArrowController());
+        controllers.add(new WASDController());
+        controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
+    }
+
+    private void setUpMap() {
         players = new ArrayList<>();
         List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints("Player");
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
@@ -65,12 +74,6 @@ public class GameModel {
             coins.add((Coin) factory.create("Coin", v.x, v.y));
         }
         System.out.println(coins);
-
-
-        controllers = new ArrayList<>();
-        controllers.add(new ArrowController());
-        controllers.add(new WASDController());
-        controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
