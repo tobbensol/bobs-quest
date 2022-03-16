@@ -26,7 +26,7 @@ public class Coin extends StaticObject {
         batch.draw(texture, x-32, y-32, width, height);
     }
 
-    public void onHit() { // TODO: Still registers contact
+    public void onHit() {
         BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
         isDestroyed = true;
     }
