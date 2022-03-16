@@ -30,9 +30,9 @@ public class TiledMapHelper {
         tiledMap = new TmxMapLoader().load("maps/level1.tmx");
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
-        parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND );
-        parseMapEnvironment( getMapObjects("Platforms"), ContactType.PLATFORM );
-        parseDeathPlane( getMapObjects("Death")); // TODO: Make death plane use parseMapEnvironment()
+        parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND, false);
+        parseMapEnvironment( getMapObjects("Platforms"), ContactType.PLATFORM , false);
+        parseMapEnvironment( getMapObjects("Death"), ContactType.DEATH , true);
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -59,11 +59,11 @@ public class TiledMapHelper {
      * @param mapObjects - an iterable of mapObjects to parse.
      * @param contactType - the ContactType the mapObjects should have.
      */
-    private void parseMapEnvironment(MapObjects mapObjects, ContactType contactType) {
+    private void parseMapEnvironment(MapObjects mapObjects, ContactType contactType, Boolean isSensor) {
         for(MapObject mapObject : mapObjects) {
             if( mapObject instanceof PolygonMapObject ) {
                 // TODO: Use BodyHelper instead of createBody()
-                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType, true, false);
+                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType, true, false, isSensor);
             }
         }
     }
@@ -99,33 +99,6 @@ public class TiledMapHelper {
         return mapObject.getRectangle();
     }
 
-    // TODO: Remove method
-    private void parseDeathPlane(MapObjects mapObjects) {
-        for (MapObject mapObject : mapObjects) {
-            Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
-
-            Body body;
-            Fixture fixture;
-            BodyDef bodyDef = new BodyDef();
-            FixtureDef fixtureDef = new FixtureDef();
-            PolygonShape shape = new PolygonShape();
-
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set(((rectangle.getX() + rectangle.getWidth() / 2) / Constants.PPM), ((rectangle.getY() + rectangle.getHeight() / 2) / Constants.PPM));
-
-            body = gameModel.getWorld().createBody(bodyDef);
-
-            shape.setAsBox((rectangle.getWidth()/2/Constants.PPM), (rectangle.getHeight()/2/Constants.PPM));
-            fixtureDef.shape = shape;
-            fixtureDef.isSensor = true;
-            //fixtureDef.filter.categoryBits = Constants.DESTROYED_BIT;
-            fixture = body.createFixture(fixtureDef);
-            fixture.setUserData(ContactType.DEATH);
-
-            shape.dispose();
-        }
-    }
-
     /**
      * This method creates a body for a given mapObject with a given BodyType and ContactType.
      * The creation of the body depends on the BodyType:
@@ -137,7 +110,7 @@ public class TiledMapHelper {
      * @param contactType - The ContactType of the mapObject.
      */
     // TODO: Remove method (?) get using BodyHelper
-    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType, ContactType contactType, boolean polygon, boolean rectangular) {
+    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType, ContactType contactType, boolean polygon, boolean rectangular, Boolean isSensor) {
         if (polygon == rectangular) {
             throw new IllegalArgumentException("The shape of the body must either be of type polygon or rectangular. Can not be both.");
         }
@@ -159,8 +132,11 @@ public class TiledMapHelper {
         // Changes the shape of the world object to match the one in the map
 
         fixtureDef.shape = shape;
+        fixtureDef.isSensor = isSensor;
+
         fixture = body.createFixture(fixtureDef);
         fixture.setUserData(contactType);
+
         shape.dispose();
     }
 
