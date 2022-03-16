@@ -74,11 +74,11 @@ public class TiledMapHelper {
      * @return list of spawnpoints
      */
     public List<Vector2> parseMapSpawnPoints(String objectLayer) {
-        List<Vector2> Center = new ArrayList<>();
+        List<Vector2> center = new ArrayList<>();
         for (Rectangle r : parseMapObjects(objectLayer)){
-            Center.add(r.getCenter(new Vector2()));
+            center.add(r.getCenter(new Vector2()));
         }
-        return Center;
+        return center;
     }
 
     private List<Rectangle> parseMapObjects(String objectLayer){
