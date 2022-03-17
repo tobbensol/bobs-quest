@@ -63,7 +63,7 @@ public class TiledMapHelper {
         for(MapObject mapObject : mapObjects) {
             if( mapObject instanceof PolygonMapObject ) {
                 // TODO: Use BodyHelper instead of createBody()
-                createBody(mapObject , BodyDef.BodyType.StaticBody, contactType, true, false, isSensor);
+                createBody(mapObject, contactType, isSensor);
             }
         }
     }
@@ -110,18 +110,14 @@ public class TiledMapHelper {
      * @param contactType - The ContactType of the mapObject.
      */
     // TODO: Remove method (?) get using BodyHelper
-    private void createBody(MapObject mapObject, BodyDef.BodyType bodyType, ContactType contactType, boolean polygon, boolean rectangular, Boolean isSensor) {
-        if (polygon == rectangular) {
-            throw new IllegalArgumentException("The shape of the body must either be of type polygon or rectangular. Can not be both.");
-        }
-
+    private void createBody(MapObject mapObject, ContactType contactType, Boolean isSensor) {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
         Body body = gameModel.getWorld().createBody( bodyDef );
         Shape shape;
         Fixture fixture;
 
-        bodyDef.type = bodyType;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
 
         shape = BodyHelper.createShape((PolygonMapObject) mapObject);
 

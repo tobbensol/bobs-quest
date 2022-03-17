@@ -59,8 +59,7 @@ public class BodyHelper {
 
         // Retrieves all the vertices of the object
         for ( int i = 0 ; i < vertices.length / 2 ; i++ ) {
-            Vector2 current = new Vector2( vertices[ i * 2 ] / Constants.PPM , vertices[ i * 2 + 1 ] / Constants.PPM );
-            worldVertices[i] = current;
+            worldVertices[i] = new Vector2( vertices[ i * 2 ] / Constants.PPM , vertices[ i * 2 + 1 ] / Constants.PPM );
         }
 
         PolygonShape shape = new PolygonShape();
