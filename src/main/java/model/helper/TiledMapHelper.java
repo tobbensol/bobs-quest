@@ -123,13 +123,7 @@ public class TiledMapHelper {
 
         bodyDef.type = bodyType;
 
-        if (polygon) {
-            shape = createPolygonShape((PolygonMapObject) mapObject);
-        }
-        else {
-            shape = createRectangularShape((RectangleMapObject) mapObject, bodyDef);
-        }
-        // Changes the shape of the world object to match the one in the map
+        shape = BodyHelper.createShape((PolygonMapObject) mapObject);
 
         fixtureDef.shape = shape;
         fixtureDef.isSensor = isSensor;
@@ -138,33 +132,6 @@ public class TiledMapHelper {
         fixture.setUserData(contactType);
 
         shape.dispose();
-    }
-
-    // TODO: Remove method
-    private Shape createRectangularShape(RectangleMapObject mapObject, BodyDef bodyDef) {
-        Rectangle rectangle = mapObject.getRectangle();
-        PolygonShape shape = new PolygonShape();
-
-        bodyDef.position.set(((rectangle.getX() + rectangle.getWidth() / 2) / Constants.PPM), ((rectangle.getY() + rectangle.getHeight() / 2) / Constants.PPM));
-        shape.setAsBox((rectangle.getWidth()/2/Constants.PPM), (rectangle.getHeight()/2/Constants.PPM));
-        return shape;
-    }
-
-
-    private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
-
-        float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
-        Vector2[] worldVertices = new Vector2[ vertices.length / 2 ];
-
-        // Retrieves all the vertices of the object
-        for ( int i = 0 ; i < vertices.length / 2 ; i++ ) {
-            Vector2 current = new Vector2( vertices[ i * 2 ] / Constants.PPM , vertices[ i * 2 + 1 ] / Constants.PPM );
-            worldVertices[i] = current;
-        }
-
-        PolygonShape shape = new PolygonShape();
-        shape.set( worldVertices );
-        return shape;
     }
 
     // TODO: Remove method
@@ -181,19 +148,5 @@ public class TiledMapHelper {
             throw new NullPointerException("Layer '" + layer + "' doesn't exist.");
         }
         return boardLayer;
-    }
-
-    // TODO: Remove method
-    public ArrayList<Vector2> parseSpawnPoint(String Object) {
-        ArrayList<Vector2> spawnLocations = new ArrayList<>();
-        MapObjects spawnPoints = getMapObjects(Object);
-
-        for ( MapObject mapObject : spawnPoints ) {
-            RectangleMapObject spawnPoint = (RectangleMapObject) mapObject;
-            float x = spawnPoint.getRectangle().getX();
-            float y = spawnPoint.getRectangle().getY();
-            spawnLocations.add( new Vector2(x, y) );
-        }
-        return spawnLocations;
     }
 }

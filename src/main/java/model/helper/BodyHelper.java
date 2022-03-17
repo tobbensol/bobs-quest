@@ -1,5 +1,6 @@
 package model.helper;
 
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -18,12 +19,7 @@ public class BodyHelper {
 
         Body body = world.createBody(bodyDef);
 
-        if (polygon) {
-            shape = createPolygonShape(width, height);
-        }
-        else {
-            shape = createCircleShape(width/2);
-        }
+        shape = createShape(width, height, polygon);
 
         fixtureDef.shape = shape;
         fixtureDef.density = density;
@@ -43,16 +39,33 @@ public class BodyHelper {
         return body;
     }
 
-    private static PolygonShape createPolygonShape(float width, float height) {
-        PolygonShape polygonShape= new PolygonShape();
-        polygonShape.setAsBox(width /2/Constants.PPM, height /2/Constants.PPM);
-        return polygonShape;
+    public static Shape createShape(float width, float height, boolean polygon){
+        if(polygon){
+            PolygonShape polygonShape= new PolygonShape();
+            polygonShape.setAsBox(width / 2 /Constants.PPM, height / 2 /Constants.PPM);
+            return polygonShape;
+        }
+        else{
+            CircleShape circleShape = new CircleShape();
+            circleShape.setRadius(width / 2 / Constants.PPM);
+            return circleShape;
+        }
     }
 
-    private static Shape createCircleShape(float radius) {
-        CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(radius/ Constants.PPM);
-        return circleShape;
+    public static Shape createShape(PolygonMapObject polygonMapObject) {
+
+        float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
+        Vector2[] worldVertices = new Vector2[ vertices.length / 2 ];
+
+        // Retrieves all the vertices of the object
+        for ( int i = 0 ; i < vertices.length / 2 ; i++ ) {
+            Vector2 current = new Vector2( vertices[ i * 2 ] / Constants.PPM , vertices[ i * 2 + 1 ] / Constants.PPM );
+            worldVertices[i] = current;
+        }
+
+        PolygonShape shape = new PolygonShape();
+        shape.set( worldVertices );
+        return shape;
     }
 
 
