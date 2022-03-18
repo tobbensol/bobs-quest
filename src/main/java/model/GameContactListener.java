@@ -27,9 +27,9 @@ public class GameContactListener implements ContactListener {
             return;
 
         groundContact(a,b,true);
-        //headContact(a,b,true);
-        horizontalContact(a,b,true,true); // Right contact
-        horizontalContact(a,b,true,false); // Left contact
+        leftContact(a, b, true);
+        rightContact(a, b, true);
+        headContact(a, b, true);
 
         coinContact(a,b);
         goombaContact(a, b);
@@ -48,9 +48,9 @@ public class GameContactListener implements ContactListener {
             return;
 
         groundContact(a,b,false);
-        //headContact(a,b,false);
-        horizontalContact(a,b,false,true); // Right contact
-        horizontalContact(a,b,false,false); // Left contact
+        leftContact(a, b, false);
+        rightContact(a, b, false);
+        headContact(a, b, false);
     }
 
     @Override
@@ -135,33 +135,40 @@ public class GameContactListener implements ContactListener {
             if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
                 getContactPlayer(a,b).setGrounded(begin);
             }
-
         }
     }
-/*
+
+    private void leftContact(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData().equals("left") || b.getUserData().equals("left")) {
+            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
+                getContactPlayer(a,b).setLeftCollision(begin);
+            }
+            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
+                getContactPlayer(a,b).setLeftCollision(begin);
+            }
+        }
+    }
+
+    private void rightContact(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData().equals("right") || b.getUserData().equals("right")) {
+            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
+                getContactPlayer(a,b).setRightCollision(begin);
+            }
+            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
+                getContactPlayer(a,b).setRightCollision(begin);
+            }
+        }
+    }
+
     private void headContact(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-            if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
-                // TODO: implement logic
+        if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
+            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
+                getContactPlayer(a,b).setHeadCollision(begin);
+            }
+            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
+                getContactPlayer(a,b).setHeadCollision(begin);
             }
         }
-    }
-
- */
-
-    private void horizontalContact(Fixture a, Fixture b, boolean begin, boolean right) {
-        String direction;
-        if (right)
-            direction = "right";
-        else
-            direction = "left";
-
-        if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-            if (a.getUserData().equals(direction) || b.getUserData().equals(direction)) {
-                getContactPlayer(a,b).setSideCollision(begin);
-            }
-        }
-
     }
 
 }

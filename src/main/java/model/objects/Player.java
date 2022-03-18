@@ -1,7 +1,6 @@
 package model.objects;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,7 +12,10 @@ import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final int MAX_VELOCITY = 2;
-    private boolean sideCollision;
+    private boolean rightCollision = false;
+    private boolean leftCollision = false;
+    private boolean headCollision = false;
+
     private static final float X_VELOCITY = 0.35f;
     private static final float Y_VELOCITY = 1.3f;
     private int hp;
@@ -64,8 +66,6 @@ public class Player extends JumpableObject {
         for(int i = 0; i < getTexture().getWidth()/64; i++){
              frames.add(new TextureRegion(getTexture(),i*64,0,64, 64));
         }
-
-        sideCollision = false;
     }
     @Override
     public void update() {
@@ -87,29 +87,30 @@ public class Player extends JumpableObject {
 
     @Override
     public void moveHorizontally(float delta, boolean isRight) {
-        if (!checkSideCollisionInAir()) {
-            if (isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
+            if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
                 applyCenterLinearImpulse(delta*X_VELOCITY, 0);
                 facingRight = true;
             }
-            else if (!isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
+            else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
                 applyCenterLinearImpulse(-delta*X_VELOCITY, 0);
                 facingRight = false;
             }
-        }
     }
 
     private void applyCenterLinearImpulse(float x, float y) {
         this.body.applyLinearImpulse(new Vector2(x,y), this.body.getWorldCenter(), true);
     }
 
-    private boolean checkSideCollisionInAir()  {
-        return (currentState.equals(State.JUMPING) && sideCollision) || (currentState.equals(State.FALLING) && sideCollision);
+    public void setLeftCollision(boolean value) {
+        this.leftCollision = value;
     }
 
-    public boolean setSideCollision(boolean value) {
-        sideCollision = value;
-        return sideCollision;
+    public void setRightCollision(boolean value) {
+        this.rightCollision = value;
+    }
+
+    public void  setHeadCollision(boolean value){
+        this.headCollision = value;
     }
 
     public State getCurrentState() {
