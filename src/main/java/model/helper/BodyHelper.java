@@ -7,11 +7,9 @@ import com.badlogic.gdx.physics.box2d.*;
 public class BodyHelper {
 
 
-    public static Body createBody(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
+    public static Body createObjectBody(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
 
         BodyDef bodyDef = new BodyDef();
-        FixtureDef fixtureDef = new FixtureDef();
-        Shape shape;
 
         bodyDef.type = bodyType;
         bodyDef.position.set(x / Constants.PPM, y / Constants.PPM);
@@ -19,16 +17,9 @@ public class BodyHelper {
 
         Body body = world.createBody(bodyDef);
 
-        shape = createShape(width, height, polygon);
+        Shape shape = createShape(width, height, polygon);
 
-        fixtureDef.shape = shape;
-        fixtureDef.density = density;
-        fixtureDef.filter.categoryBits = categoryBits;
-        fixtureDef.filter.maskBits = maskBits;
-        fixtureDef.isSensor = isSensor;
-
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(contactType);
+        FixtureDef fixtureDef = setFixture(shape, density, categoryBits, maskBits, isSensor, body, contactType);
 
         shape.dispose();
 
@@ -77,6 +68,20 @@ public class BodyHelper {
         return shape;
     }
 
+    private static FixtureDef setFixture(Shape shape, float density,short categoryBits, short maskBits, boolean isSensor, Body body, ContactType contactType) {
+        FixtureDef fixtureDef = new FixtureDef();
+
+        fixtureDef.shape = shape;
+        fixtureDef.density = density;
+        fixtureDef.filter.categoryBits = categoryBits;
+        fixtureDef.filter.maskBits = maskBits;
+        fixtureDef.isSensor = isSensor;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(contactType);
+
+        return fixtureDef;
+    }
 
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
         createSensor("foot", fixtureDef,body,(width/2) *0.6f / Constants.PPM, 2/Constants.PPM, 0,-height/2/Constants.PPM);
