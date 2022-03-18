@@ -129,20 +129,4 @@ public class TiledMapHelper {
 
         shape.dispose();
     }
-
-    // TODO: Remove method
-    public TiledMapTileLayer getBoardLayer(String layer) {
-        // OBS: If layer is object layer -> ClassCastException
-        // OBS: Do not name a layer the same as an object
-        TiledMapTileLayer boardLayer = null;
-        try {
-            boardLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layer);
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Cannot cast to TiledMapTileLayer because '" + layer + "' is an object layer.");
-        }
-        if (boardLayer == null) {
-            throw new NullPointerException("Layer '" + layer + "' doesn't exist.");
-        }
-        return boardLayer;
-    }
 }
