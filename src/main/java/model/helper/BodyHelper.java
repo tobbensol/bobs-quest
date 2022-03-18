@@ -39,13 +39,23 @@ public class BodyHelper {
         return body;
     }
 
+    public static void createEnvironmentBody(Shape shape, World world,  ContactType contactType, short categoryBits, short maskBits, boolean isSensor) {
+        BodyDef bodyDef = new BodyDef();
+        Body body = world.createBody(bodyDef);
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        setFixture(shape, 1, categoryBits, maskBits, isSensor, body, contactType);
+        shape.dispose();
+    }
+
+
+
     public static Shape createShape(float width, float height, boolean polygon){
-        if(polygon){
+        if (polygon) { // TODO: Change name to rectangle in all classes
             PolygonShape polygonShape= new PolygonShape();
             polygonShape.setAsBox(width / 2 /Constants.PPM, height / 2 /Constants.PPM);
             return polygonShape;
         }
-        else{
+        else {
             CircleShape circleShape = new CircleShape();
             circleShape.setRadius(width / 2 / Constants.PPM);
             return circleShape;
