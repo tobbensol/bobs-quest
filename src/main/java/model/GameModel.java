@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import controls.ArrowController;
@@ -44,7 +43,7 @@ public class GameModel {
         hud = new Hud(new SpriteBatch(), this);
         score = 0;
 
-        setUpMap();
+        createObjects();
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
@@ -52,7 +51,7 @@ public class GameModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
     }
 
-    private void setUpMap() {
+    private void createObjects() {
         players = new ArrayList<>();
         List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints("Player");
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException

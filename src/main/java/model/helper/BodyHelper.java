@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.*;
 public class BodyHelper {
 
 
-    public static Body BodyHelper(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
+    public static Body createBody(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
 
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
