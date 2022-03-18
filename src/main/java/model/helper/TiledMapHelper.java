@@ -30,15 +30,14 @@ public class TiledMapHelper {
         tiledMap = new TmxMapLoader().load("maps/level1.tmx");
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
-        parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND, false);
-        parseMapEnvironment( getMapObjects("Platforms"), ContactType.PLATFORM , false);
-        parseMapEnvironment( getMapObjects("Death"), ContactType.DEATH , true);
+        parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
+        parseMapEnvironment( getMapObjects("Platforms"), ContactType.PLATFORM , Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS,false);
+        parseMapEnvironment( getMapObjects("Death"), ContactType.DEATH , Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, true);
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
-
 
     private MapObjects getMapObjects(String objects) {
         // OBS: If objects doesn't exist -> NullPointerException
@@ -59,7 +58,7 @@ public class TiledMapHelper {
      * @param mapObjects - an iterable of mapObjects to parse.
      * @param contactType - the ContactType the mapObjects should have.
      */
-    private void parseMapEnvironment(MapObjects mapObjects, ContactType contactType, Boolean isSensor) {
+    private void parseMapEnvironment(MapObjects mapObjects, ContactType contactType, short categoryBits, short maskBits, Boolean isSensor) {
         for(MapObject mapObject : mapObjects) {
             if( mapObject instanceof PolygonMapObject ) {
                 // TODO: Use BodyHelper instead of createBody()
@@ -97,36 +96,5 @@ public class TiledMapHelper {
 
     private Rectangle parseObject(RectangleMapObject mapObject) {
         return mapObject.getRectangle();
-    }
-
-    /**
-     * This method creates a body for a given mapObject with a given BodyType and ContactType.
-     * The creation of the body depends on the BodyType:
-     * StaticBody -> PolygonShape (PolygonMapObject)
-     * DynamicBody -> RectangularShape (RectangularMapObject)
-     *
-     * @param mapObject - the mapObject.
-     * @param bodyType - The BodyType of the mapObject. Either Static og Dynamic.
-     * @param contactType - The ContactType of the mapObject.
-     */
-    // TODO: Remove method (?) get using BodyHelper
-    private void createBody(MapObject mapObject, ContactType contactType, Boolean isSensor) {
-        BodyDef bodyDef = new BodyDef();
-        FixtureDef fixtureDef = new FixtureDef();
-        Body body = gameModel.getWorld().createBody( bodyDef );
-        Shape shape;
-        Fixture fixture;
-
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-
-        shape = BodyHelper.createShape((PolygonMapObject) mapObject);
-
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = isSensor;
-
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(contactType);
-
-        shape.dispose();
     }
 }

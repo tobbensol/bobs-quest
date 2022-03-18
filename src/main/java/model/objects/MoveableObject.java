@@ -15,8 +15,8 @@ public abstract class MoveableObject extends DynamicObject implements Moveable {
     }
 
     public void update() {
-        x = body.getPosition().x * Constants.PPM - (width / 2);
-        y = body.getPosition().y * Constants.PPM - (height / 2);
+        x = body.getPosition().x * Constants.PPM - ((float) width / 2);
+        y = body.getPosition().y * Constants.PPM - ((float) height / 2);
 
         velY = body.getLinearVelocity().len();
     }
