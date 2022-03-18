@@ -25,4 +25,5 @@ public class Constants {
     public static short PLAYER_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | COIN_BIT;
     public static short ENEMY_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | ENEMY_BIT;
     public static short COIN_MASK_BITS = PLAYER_BIT;
+    public static short DEFAULT_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | PLAYER_BIT;
 }

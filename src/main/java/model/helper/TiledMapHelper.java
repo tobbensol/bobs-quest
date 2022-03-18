@@ -61,8 +61,8 @@ public class TiledMapHelper {
     private void parseMapEnvironment(MapObjects mapObjects, ContactType contactType, short categoryBits, short maskBits, Boolean isSensor) {
         for(MapObject mapObject : mapObjects) {
             if( mapObject instanceof PolygonMapObject ) {
-                // TODO: Use BodyHelper instead of createBody()
-                createBody(mapObject, contactType, isSensor);
+                Shape shape = BodyHelper.createShape((PolygonMapObject) mapObject);
+                BodyHelper.createEnvironmentBody(shape, gameModel.getWorld(), contactType, categoryBits, maskBits, isSensor);
             }
         }
     }
