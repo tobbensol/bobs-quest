@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final int MAX_VELOCITY = 2;
+
+    //TODO these should be in a parent class
     private boolean rightCollision = false;
     private boolean leftCollision = false;
     private boolean headCollision = false;
@@ -55,7 +57,7 @@ public class Player extends JumpableObject {
         /*
         frames = new ArrayList<>();
         for (int i = 1; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), i*64,0,64,64));
+            frames.add(new TextureRegion(getTexture(), i* Constants.TILE_SIZE , 0 , Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
         runningAnimation = new Animation(0.1f,frames);
         frames.clear();
@@ -63,8 +65,8 @@ public class Player extends JumpableObject {
          */
 
         frames = new ArrayList<>();
-        for(int i = 0; i < getTexture().getWidth()/64; i++){
-             frames.add(new TextureRegion(getTexture(),i*64,0,64, 64));
+        for(int i = 0; i < getTexture().getWidth()/Constants.TILE_SIZE; i++){
+             frames.add(new TextureRegion(getTexture(),i * Constants.TILE_SIZE,0,Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
     }
     @Override

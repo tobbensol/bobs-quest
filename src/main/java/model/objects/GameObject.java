@@ -26,8 +26,8 @@ public abstract class GameObject {
         this.gameModel = gameModel;
         this.x = x;
         this.y = y;
-        this.width = 64;
-        this.height = 64;
+        this.width = Constants.TILE_SIZE;
+        this.height = Constants.TILE_SIZE;
         this.body = BodyHelper.createObjectBody(x, y, width, height, density, gameModel.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, polygon);
         facingRight = true;
     }

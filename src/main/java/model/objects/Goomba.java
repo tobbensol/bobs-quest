@@ -18,7 +18,7 @@ public class Goomba extends MoveableObject {
         super(name + " " + (gameModel.getGoombas().size() + 1), gameModel, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
         texturePath = "Multi_Platformer_Tileset_v2/Enemies/Goomba.png";
         texture = new Texture(texturePath);
-        textureRegion = new TextureRegion(getTexture(), 64, 0, 64, 64);
+        textureRegion = new TextureRegion(getTexture(), Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE);
 
         numMoves = 0;
     }
