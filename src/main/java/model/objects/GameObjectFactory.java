@@ -10,6 +10,14 @@ public class GameObjectFactory {
         this.model = model;
     }
 
+    /**
+     * Return value must be cast to own type //TODO: Write doc
+     *
+     * @param gameObject
+     * @param x
+     * @param y
+     * @return
+     */
     public GameObject create(String gameObject, float x, float y) {
         String objectString = gameObject.toUpperCase();
         return switch (objectString) {
