@@ -21,14 +21,14 @@ public abstract class GameObject {
 
     protected boolean facingRight;
 
-    public GameObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
+    public GameObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean rectangle) {
         this.name = name;
         this.gameModel = gameModel;
         this.x = x;
         this.y = y;
         this.width = Constants.TILE_SIZE;
         this.height = Constants.TILE_SIZE;
-        this.body = BodyHelper.createObjectBody(x, y, width, height, density, gameModel.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, polygon);
+        this.body = BodyHelper.createObjectBody(x, y, width, height, density, gameModel.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
     }
 

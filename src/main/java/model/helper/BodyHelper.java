@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.*;
 public class BodyHelper {
 
 
-    public static Body createObjectBody(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean polygon) {
+    public static Body createObjectBody(float x, float y, float width, float height, float density, World world, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean rectangle) {
 
         BodyDef bodyDef = new BodyDef();
 
@@ -17,7 +17,7 @@ public class BodyHelper {
 
         Body body = world.createBody(bodyDef);
 
-        Shape shape = createShape(width, height, polygon);
+        Shape shape = createShape(width, height, rectangle);
 
         FixtureDef fixtureDef = setFixture(shape, density, categoryBits, maskBits, isSensor, body, contactType);
 
@@ -40,8 +40,8 @@ public class BodyHelper {
 
 
 
-    public static Shape createShape(float width, float height, boolean polygon){
-        if (polygon) { // TODO: Change name to rectangle in all classes
+    public static Shape createShape(float width, float height, boolean rectangle){
+        if (rectangle) { // TODO: Change name to rectangle in all classes
             PolygonShape polygonShape= new PolygonShape();
             polygonShape.setAsBox(width / 2 /Constants.PPM, height / 2 /Constants.PPM);
             return polygonShape;
