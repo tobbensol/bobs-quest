@@ -2,6 +2,7 @@ package model;
 
 import com.badlogic.gdx.physics.box2d.*;
 import model.helper.ContactType;
+import model.objects.Goal;
 import model.objects.Goomba;
 import model.objects.Player;
 import model.objects.Coin;
@@ -33,6 +34,7 @@ public class GameContactListener implements ContactListener {
 
         coinContact(a,b);
         goombaContact(a, b);
+        goalContact(a, b);
 
         deathContact(a,b);
     }
@@ -105,6 +107,24 @@ public class GameContactListener implements ContactListener {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
                         gameModel.increaseScore(100);
+                    }
+                }
+            }
+        }
+    }
+
+    private void goalContact(Fixture a, Fixture b) {
+        if (a.getUserData() == ContactType.GOAL || b.getUserData() == ContactType.GOAL) {
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+
+                // Finding out which of the fixtures is a Player and Coin.
+                Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
+                Fixture c = p == a ? b : a;
+
+                for (Goal goal : gameModel.getGoals()) {
+                    if (goal.getBody().equals(c.getBody())) {
+                        goal.onHit();
+                        gameModel.setFinished(true);
                     }
                 }
             }

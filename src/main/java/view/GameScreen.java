@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
 import model.helper.Constants;
+import model.objects.Goal;
 import model.objects.Goomba;
 import model.objects.Player;
 import model.objects.Coin;
@@ -79,6 +80,9 @@ public class GameScreen implements Screen {
             if (!coin.isDestroyed()) {
                 coin.render(batch);
             }
+        }
+        for(Goal goal : gameModel.getGoals()){
+            goal.render(batch);
         }
 
 
