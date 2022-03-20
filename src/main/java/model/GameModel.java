@@ -39,7 +39,7 @@ public class GameModel {
 
 
     public GameModel() {
-        createWorld("level1");
+        createWorld("slopeTest");
 
         createObjects();
 

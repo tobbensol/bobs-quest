@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 public class TiledMapHelper {
 
     private TiledMap tiledMap;
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     public TiledMapHelper(GameModel gameModel, String level ) {
-        // OBS: map cant be infinite
-        // OBS: layers cant be in folders
+        // OBS: Map can't be infinite
+        // OBS: Layers can't be in folders
         this.gameModel = gameModel;
-        tiledMap = new TmxMapLoader().load("maps/"+ level + ".tmx");
+        tiledMap = new TmxMapLoader().load("maps/" + level + ".tmx");
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
@@ -49,7 +49,7 @@ public class TiledMapHelper {
         catch (NullPointerException e) {
             throw new NullPointerException("Objects with type '" + objects + "' doesn't exist.");
         }
-
+        System.out.println(mapObjects.iterator().hasNext());
         return mapObjects;
     }
 
