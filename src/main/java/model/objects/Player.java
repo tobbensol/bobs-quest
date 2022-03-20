@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import model.GameModel;
+import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
@@ -181,6 +182,7 @@ public class Player extends JumpableObject {
         hp = -1;
         previousState = currentState;
         currentState = State.DEAD;
+        BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
         // Death "animation"
         body.setLinearVelocity(0, 5); //TODO: Make player fall through ground as well
     }
@@ -194,7 +196,7 @@ public class Player extends JumpableObject {
         if (hp <= 0) {
             setDead();
         }
-        System.out.println(toString()+ ": " + hp);
+        System.out.println(toString() + ": " + hp);
     }
 
 }

@@ -99,8 +99,9 @@ public class GameModel {
         return false;
     }
 
+    //TODO delete bodies from the objects after spawning new ones
     private void restart(){
-        System.out.println(":D");
+        createObjects();
     }
 
     public void update() {
