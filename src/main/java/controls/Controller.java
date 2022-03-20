@@ -9,7 +9,6 @@ public abstract class Controller {
     protected final int down;
     protected final int left;
     protected final int right;
-    private final int SPEED = 200;
 
     public Controller(int left, int right, int up, int down){
         this.up = up;
