@@ -24,14 +24,17 @@ public class GameModel {
 
     private Hud hud;
     private Integer score;
+    public boolean isFinished;
 
     private final int numPlayers = 3; // TODO: Variable number of players
     private final int numControllers = 3;
     private GameObjectFactory factory = new GameObjectFactory(this);
-    private List<Player> players;
     private List<Controller> controllers;
+    private List<Player> players;
     private List<Goomba> goombas;
     private List<Coin> coins;
+
+    private List<Goal> goals;
 
 
     public GameModel() {
@@ -73,6 +76,14 @@ public class GameModel {
             coins.add((Coin) factory.create("Coin", v.x, v.y));
         }
         System.out.println(coins);
+
+        goals = new ArrayList<>();
+        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goal")){
+//            coins.add(new newCoin("Coin", this, center.x, center.y, 1, ContactType.COIN));
+            goals.add((Goal) factory.create("Goal", v.x, v.y));
+        }
+        System.out.println(goals);
+
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -116,6 +127,13 @@ public class GameModel {
         score += value;
     }
 
+    public void setFinished(boolean value){
+        if(value){
+            System.out.println("you finished :D");
+        }
+        isFinished = value;
+    }
+
     public Integer getScore() {
         return score;
     }
@@ -142,5 +160,9 @@ public class GameModel {
 
     public List<Coin> getCoins() {
         return coins;
+    }
+
+    public List<Goal> getGoals() {
+        return goals;
     }
 }

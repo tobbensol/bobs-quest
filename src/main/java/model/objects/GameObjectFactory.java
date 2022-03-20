@@ -24,6 +24,7 @@ public class GameObjectFactory {
             case "COIN" -> new Coin(objectString, model, x, y);
             case "PLAYER" -> new Player(objectString, model, x, y);
             case "GOOMBA" -> new Goomba(objectString, model, x, y);
+            case "GOAL" -> new Goal(objectString, model, x, y);
             default -> null;
         };
     }
