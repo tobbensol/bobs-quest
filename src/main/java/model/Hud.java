@@ -25,7 +25,7 @@ public class Hud {
     private Label timerLabel;
     private Label countdownLabel;
 
-    public Hud(SpriteBatch batch, GameModel gameModel) {
+    public Hud(SpriteBatch batch, GameModel gameModel, String level) {
         this.gameModel = gameModel;
         score = 0;
 
@@ -39,7 +39,7 @@ public class Hud {
         fontSize = 2f;
 
         scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("Level 1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(level, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         //worldLabel = new Label("Epic game", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         scoreLabel.setFontScale(fontSize);

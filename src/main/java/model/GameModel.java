@@ -40,7 +40,7 @@ public class GameModel {
     public GameModel() {
         createWorld("level1");
 
-        createHUD();
+        createHUD("level 1");
 
         createObjects();
 
@@ -50,8 +50,8 @@ public class GameModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
     }
 
-    private void createHUD() {
-        hud = new Hud(new SpriteBatch(), this);
+    private void createHUD(String level) {
+        hud = new Hud(new SpriteBatch(), this, level);
         score = 0;
     }
 
@@ -112,6 +112,7 @@ public class GameModel {
         world.dispose();
         createWorld("level2");
         createObjects();
+        createHUD("level 2");
     }
 
     public void update() {
