@@ -1,0 +1,1 @@
+- TiledMaps with the attribute "infinite" will not render, remember to deselect after using it in Tiled
