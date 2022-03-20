@@ -25,6 +25,7 @@ public class GameModel {
     private Hud hud;
     private Integer score;
     public boolean isFinished;
+    private boolean reload = false;
 
     private final int numPlayers = 3; // TODO: Variable number of players
     private final int numControllers = 3;
@@ -40,9 +41,9 @@ public class GameModel {
     public GameModel() {
         createWorld("level1");
 
-        createHUD("level 1");
-
         createObjects();
+
+        createHUD("level 1");
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
@@ -94,10 +95,6 @@ public class GameModel {
 
     }
 
-    public OrthogonalTiledMapRenderer setupMap() {
-        return tiledMapHelper.setupMap();
-    }
-
     private boolean checkRestart() {
         for (Player player : players) {
             if (!player.isDead()) {
@@ -112,7 +109,9 @@ public class GameModel {
         world.dispose();
         createWorld("level2");
         createObjects();
-        createHUD("level 2");
+        hud.updateLevel("level 2");
+        score = 0;
+        reload = true;
     }
 
     public void update() {
@@ -133,6 +132,10 @@ public class GameModel {
         }
 
         hud.updateScore();
+    }
+
+    public OrthogonalTiledMapRenderer setupMap() {
+        return tiledMapHelper.setupMap();
     }
 
     public void increaseScore(Integer value) {
@@ -176,5 +179,13 @@ public class GameModel {
 
     public List<Goal> getGoals() {
         return goals;
+    }
+
+    public boolean getReload(){
+        return reload;
+    }
+
+    public void setReload(Boolean value){
+        reload = value;
     }
 }
