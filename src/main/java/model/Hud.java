@@ -38,7 +38,7 @@ public class Hud {
 
         fontSize = 2f;
 
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label(score + "/" + gameModel.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label(level, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         //worldLabel = new Label("Epic game", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
@@ -59,6 +59,10 @@ public class Hud {
 
     public void updateScore() {
         score = gameModel.getScore();
-        scoreLabel.setText(String.format("%06d", score));
+        scoreLabel.setText(score + "/" + gameModel.getCoins().size());
+    }
+
+    public void updateLevel(String level){
+        levelLabel.setText(level);
     }
 }

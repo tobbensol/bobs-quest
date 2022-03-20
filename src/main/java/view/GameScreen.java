@@ -37,6 +37,11 @@ public class GameScreen implements Screen {
      * the game runs in real time and updating the game often is required for it to run smoothly
      */
     private void update(){
+        //TODO find better way to do this?
+        if (gameModel.getReload()){
+            orthogonalTiledMapRenderer = gameModel.setupMap();
+            gameModel.setReload(false);
+        }
         gameModel.update();
         cameraUpdate();
 

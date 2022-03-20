@@ -106,7 +106,6 @@ public class GameContactListener implements ContactListener {
                 for (Coin coin : gameModel.getCoins()) {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
-                        gameModel.increaseScore(100);
                     }
                 }
             }
