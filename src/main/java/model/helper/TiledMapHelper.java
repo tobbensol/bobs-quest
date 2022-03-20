@@ -23,11 +23,11 @@ public class TiledMapHelper {
     private TiledMap tiledMap;
     private GameModel gameModel;
 
-    public TiledMapHelper(GameModel gameModel ) {
+    public TiledMapHelper(GameModel gameModel, String level ) {
         // OBS: map cant be infinite
         // OBS: layers cant be in folders
         this.gameModel = gameModel;
-        tiledMap = new TmxMapLoader().load("maps/level1.tmx");
+        tiledMap = new TmxMapLoader().load("maps/"+ level + ".tmx");
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);

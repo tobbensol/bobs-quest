@@ -38,13 +38,9 @@ public class GameModel {
 
 
     public GameModel() {
-        this.world = new World( new Vector2( 0 , -10f ), false );
-        this.gameContactListener = new GameContactListener(this);
-        this.world.setContactListener(this.gameContactListener);
-        this.tiledMapHelper = new TiledMapHelper(this);
+        createWorld("level1");
 
-        hud = new Hud(new SpriteBatch(), this);
-        score = 0;
+        createHUD();
 
         createObjects();
 
@@ -52,6 +48,18 @@ public class GameModel {
         controllers.add(new ArrowController());
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
+    }
+
+    private void createHUD() {
+        hud = new Hud(new SpriteBatch(), this);
+        score = 0;
+    }
+
+    private void createWorld(String level) {
+        this.world = new World( new Vector2( 0 , -10f ), false );
+        this.gameContactListener = new GameContactListener(this);
+        this.world.setContactListener(this.gameContactListener);
+        this.tiledMapHelper = new TiledMapHelper(this, level);
     }
 
     private void createObjects() {
@@ -92,15 +100,17 @@ public class GameModel {
 
     private boolean checkRestart() {
         for (Player player : players) {
-            if (player.isDead()) {
-                return true;
+            if (!player.isDead()) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     //TODO delete bodies from the objects after spawning new ones
     private void restart(){
+        world.dispose();
+        createWorld("level2");
         createObjects();
     }
 
