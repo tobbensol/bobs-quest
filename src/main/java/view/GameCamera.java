@@ -17,12 +17,19 @@ public class GameCamera extends OrthographicCamera {
     public void update (){
         float averageX = 0;
         float averageY = 0;
+        int playerCount = 0;
+
         for (Player player : gameModel.getPlayers()) {
-            averageX += player.getPosition().x;
-            averageY += player.getPosition().y;
+            if (!player.isDead()) {
+                averageX += player.getPosition().x;
+                averageY += player.getPosition().y;
+                playerCount += 1;
+            }
         }
-        averageX = averageX/gameModel.getPlayers().size();
-        averageY = averageY/gameModel.getPlayers().size();
+        System.out.println("x: " + averageX + " " + "y: " + averageY);
+
+        averageX = averageX/playerCount;
+        averageY = averageY/playerCount;
 
         position.set(new Vector3(averageX, averageY,0));
         super.update();
