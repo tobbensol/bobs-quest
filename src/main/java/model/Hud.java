@@ -16,7 +16,7 @@ public class Hud {
     private Viewport viewport;
     private GameModel gameModel;
 
-    private float fontSize;
+    private final float fontSize;
     private static Integer score;
 
     private static Label scoreLabel;
@@ -25,7 +25,7 @@ public class Hud {
     private Label timerLabel;
     private Label countdownLabel;
 
-    public Hud(SpriteBatch batch, GameModel gameModel, String level) {
+    public Hud(SpriteBatch batch, GameModel gameModel) {
         this.gameModel = gameModel;
         score = 0;
 
@@ -39,7 +39,7 @@ public class Hud {
         fontSize = 2f;
 
         scoreLabel = new Label(score + "/" + gameModel.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label(level, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(sentenceCase(gameModel.getLevel()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         //worldLabel = new Label("Epic game", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         scoreLabel.setFontScale(fontSize);
@@ -57,12 +57,17 @@ public class Hud {
         stage.addActor(table);
     }
 
-    public void updateScore() {
+    public void update() {
         score = gameModel.getScore();
         scoreLabel.setText(score + "/" + gameModel.getCoins().size());
+        levelLabel.setText(sentenceCase(gameModel.getLevel()));
     }
 
-    public void updateLevel(String level){
-        levelLabel.setText(level);
+    static String sentenceCase(String text) {
+        if (!text.equals("")) {
+            String result = text.replaceAll("([A-Z, 0-9])", " $1");
+            return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
+        }
+        return null;
     }
 }
