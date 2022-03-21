@@ -44,8 +44,9 @@ public class GameModel {
         levels = new ArrayList<>();
         levels.add("Level1");
         levels.add("Level2");
-        levels.add("platformTest");
-        levels.add("slopeTest");
+        levels.add("PlatformTest");
+        levels.add("SlopeTest");
+        levels.add("CameraTest");
 
         createWorld(levels.get(level));
 
