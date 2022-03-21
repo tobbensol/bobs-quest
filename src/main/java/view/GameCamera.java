@@ -31,9 +31,22 @@ public class GameCamera extends OrthographicCamera {
         averageX = averageX/playerCount;
         averageY = averageY/playerCount;
 
-        position.set(new Vector3(averageX, averageY,0));
-        super.update();
+        return new Vector3(averageX, averageY,0);
     }
+
+    public float getZoom() {
+        return zoom;
+    }
+
+    public double getScreenWidth() {
+        return viewportWidth;
+    }
+
+    public double getScreenHeight() {
+        return viewportHeight;
+    }
+
+
 
 
 }
