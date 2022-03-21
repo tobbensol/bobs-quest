@@ -27,16 +27,16 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == null || b.getUserData() == null)
             return;
 
-        groundContact(a,b,true);
+        groundContact(a, b, true);
         leftContact(a, b, true);
         rightContact(a, b, true);
         headContact(a, b, true);
 
-        coinContact(a,b);
+        coinContact(a, b);
         goombaContact(a, b);
         goalContact(a, b);
 
-        deathContact(a,b);
+        deathContact(a, b);
     }
 
     @Override
