@@ -30,6 +30,8 @@ public class GameModel {
     private final int numPlayers = 3; // TODO: Variable number of players
     private final int numControllers = 3;
     private GameObjectFactory factory = new GameObjectFactory(this);
+    private List<String> levels;
+    private int level = 0;
     private List<Controller> controllers;
     private List<Player> players;
     private List<Goomba> goombas;
@@ -39,11 +41,17 @@ public class GameModel {
 
 
     public GameModel() {
-        createWorld("slopeTest");
+        levels = new ArrayList<>();
+        levels.add("Level1");
+        levels.add("Level2");
+        levels.add("platformTest");
+        levels.add("slopeTest");
+
+        createWorld(levels.get(level));
 
         createObjects();
 
-        createHUD("level 1");
+        createHUD(tiledMapHelper.toString());
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
@@ -52,7 +60,7 @@ public class GameModel {
     }
 
     private void createHUD(String level) {
-        hud = new Hud(new SpriteBatch(), this, level);
+        hud = new Hud(new SpriteBatch(), this);
         score = 0;
     }
 
@@ -96,6 +104,9 @@ public class GameModel {
     }
 
     private boolean checkRestart() {
+        if (isFinished){
+            return true;
+        }
         for (Player player : players) {
             if (!player.isDead()) {
                 return false;
@@ -106,10 +117,13 @@ public class GameModel {
 
     //TODO delete bodies from the objects after spawning new ones
     private void restart(){
+        if (isFinished){
+            level++;
+            setFinished(false);
+        }
         world.dispose();
-        createWorld("level2");
+        createWorld(levels.get(level));
         createObjects();
-        hud.updateLevel("level 2");
         score = 0;
         reload = true;
     }
@@ -131,7 +145,7 @@ public class GameModel {
             goomba.update();
         }
 
-        hud.updateScore();
+        hud.update();
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -143,9 +157,6 @@ public class GameModel {
     }
 
     public void setFinished(boolean value){
-        if(value){
-            System.out.println("you finished :D");
-        }
         isFinished = value;
     }
 
@@ -179,6 +190,10 @@ public class GameModel {
 
     public List<Goal> getGoals() {
         return goals;
+    }
+
+    public String getLevel(){
+        return levels.get(level);
     }
 
     public boolean getReload(){

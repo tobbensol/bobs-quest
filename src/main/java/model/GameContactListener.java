@@ -123,7 +123,7 @@ public class GameContactListener implements ContactListener {
                 for (Goal goal : gameModel.getGoals()) {
                     if (goal.getBody().equals(c.getBody())) {
                         goal.onHit();
-                        gameModel.setFinished(true);
+                        //gameModel.setFinished(true);
                     }
                 }
             }
