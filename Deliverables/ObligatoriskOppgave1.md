@@ -14,7 +14,6 @@ Grabbane
 - Espen Lade Kalvatn
 - Martin Andvik Øvsttun
 - Tobias Soltvedt
-
 - Kristoffer Jensvoll-Johnsen
 
 **Kompetanse:**
