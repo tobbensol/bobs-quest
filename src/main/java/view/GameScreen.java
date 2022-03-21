@@ -21,11 +21,11 @@ public class GameScreen implements Screen {
 
     private GameModel gameModel;
     private SpriteBatch batch;
-    private OrthographicCamera camera;
+    private GameCamera camera;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    public GameScreen(OrthographicCamera camera, GameModel gameModel) {
+    public GameScreen(GameCamera camera, GameModel gameModel) {
         this.gameModel = gameModel;
         this.camera = camera;
         this.batch = new SpriteBatch();
@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
             gameModel.setReload(false);
         }
         gameModel.update();
-        cameraUpdate();
+        camera.update();
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
@@ -52,10 +52,6 @@ public class GameScreen implements Screen {
     /**
      * the camera should follow the player character
      */
-    private void cameraUpdate() {
-        camera.position.set(new Vector3(gameModel.getPlayers().get(0).getPosition().x,gameModel.getPlayers().get(0).getPosition().y,0));
-        camera.update();
-    }
 
     @Override
     public void dispose() {
