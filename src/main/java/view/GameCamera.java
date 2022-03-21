@@ -63,7 +63,6 @@ public class GameCamera extends OrthographicCamera {
                 playerCount += 1;
             }
         }
-        System.out.println("x: " + averageX + " " + "y: " + averageY);
 
         averageX = averageX/playerCount;
         averageY = averageY/playerCount;
@@ -82,8 +81,5 @@ public class GameCamera extends OrthographicCamera {
     public double getScreenHeight() {
         return viewportHeight;
     }
-
-
-
 
 }
