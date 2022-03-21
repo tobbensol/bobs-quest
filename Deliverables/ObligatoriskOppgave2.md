@@ -70,3 +70,18 @@ Spillerdød (Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor 
         - Legg til variabel for helse i spillerobjektet
         - Sjekk kontakt mellom spiller og fiende/death plane, og oppdater spillerhelse
         - Sjekk om spillerhelse er 0, fjern mulighet for bevegelse
+
+Mål for spillbrett (enten et sted, en mengde poeng, drepe alle fiender e.l.):
+- TODO:
+
+Nytt spillbrett når forrige er ferdig:
+- Som programmerer vil jeg ha muligheten til å legge til flere spillbrett for at spillet skal bli lengre
+  - Akseptansekriterier:
+    - Ved kontakt med målobjekt skal nytt spillbrett lastes inn
+    - Ved død skal det nåværende spillbrettet lastes inn på nytt (evt. spilleren mister et liv)
+    - Alle objektene kan interageres med på vanlig måte etter lasting
+      - Objekter skal resetes til sin originale tilstand
+    - Score blir oppdatert ved død (satt til null, trukket fra?)
+  - Arbeidsoppgaver:
+    - Lag metode som laster inn et gitt brett, skal både laste inn environment og objekter
+  
