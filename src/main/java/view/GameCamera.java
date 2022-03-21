@@ -3,6 +3,7 @@ package view;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
+import model.objects.Player;
 
 public class GameCamera extends OrthographicCamera {
 
@@ -14,7 +15,16 @@ public class GameCamera extends OrthographicCamera {
 
 
     public void update (){
-        position.set(new Vector3(gameModel.getPlayers().get(0).getPosition().x,gameModel.getPlayers().get(0).getPosition().y,0));
+        float averageX = 0;
+        float averageY = 0;
+        for (Player player : gameModel.getPlayers()) {
+            averageX += player.getPosition().x;
+            averageY += player.getPosition().y;
+        }
+        averageX = averageX/gameModel.getPlayers().size();
+        averageY = averageY/gameModel.getPlayers().size();
+
+        position.set(new Vector3(averageX, averageY,0));
         super.update();
     }
 
