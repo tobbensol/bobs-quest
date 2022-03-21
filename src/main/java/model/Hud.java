@@ -60,9 +60,11 @@ public class Hud {
     public void update() {
         score = gameModel.getScore();
         scoreLabel.setText(score + "/" + gameModel.getCoins().size());
+        // TODO maybe not do this every frame
         levelLabel.setText(sentenceCase(gameModel.getLevel()));
     }
 
+    //from https://dirask.com/posts/Java-convert-camelCase-to-Sentence-Case-jE6PZ1
     static String sentenceCase(String text) {
         if (!text.equals("")) {
             String result = text.replaceAll("([A-Z, 0-9])", " $1");
