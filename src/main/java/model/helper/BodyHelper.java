@@ -41,7 +41,7 @@ public class BodyHelper {
 
 
     public static Shape createShape(float width, float height, boolean rectangle){
-        if (rectangle) { // TODO: Change name to rectangle in all classes
+        if (rectangle) {
             PolygonShape polygonShape= new PolygonShape();
             polygonShape.setAsBox(width / 2 /Constants.PPM, height / 2 /Constants.PPM);
             return polygonShape;
@@ -83,6 +83,13 @@ public class BodyHelper {
         return fixtureDef;
     }
 
+    /**
+     * makes sensors above, below, right and left of an object, currently its only used by the player, but it can be used by other objects in the future
+     * @param fixtureDef the fixture you want to give the sensors, so that they can have the same properties as the body
+     * @param body the body you want to apply the sensors to
+     * @param width the width of the object you want to give a sensor
+     * @param height the height of the object you want to give a sensor
+     */
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
         createSensor("foot", fixtureDef,body,(width/2) *0.6f / Constants.PPM, 2/Constants.PPM, 0,-height/2/Constants.PPM);
         createSensor("head", fixtureDef,body,(width/2) *0.4f / Constants.PPM, 2/Constants.PPM, 0,height/2/Constants.PPM);

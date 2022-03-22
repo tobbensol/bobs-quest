@@ -70,7 +70,7 @@ public class TiledMapHelper {
     /**
      * This method is parsing mapObjects into the game by getting the centrer of its object box
      * @param objectLayer - string with the name of the layer you wish to get the spawnpoints from
-     * @return list of spawnpoints
+     * @return list of spawn-points
      */
     public List<Vector2> parseMapSpawnPoints(String objectLayer) {
         List<Vector2> center = new ArrayList<>();
@@ -80,6 +80,11 @@ public class TiledMapHelper {
         return center;
     }
 
+    /**
+     * gets all the squares of the game objects, not sure if we need this since the only other time its used is to get the center in parse map spawn points
+     * @param objectLayer they name of the layer you want the gameObjects from
+     * @return a list of all the game objects
+     */
     private List<Rectangle> parseMapObjects(String objectLayer){
         MapObjects mapObjects = getMapObjects(objectLayer);
         List<Rectangle> objectList = new ArrayList<>();

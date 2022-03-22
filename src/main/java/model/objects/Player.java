@@ -17,6 +17,7 @@ public class Player extends JumpableObject {
     //TODO these should be in a parent class
     private boolean rightCollision = false;
     private boolean leftCollision = false;
+    //not used yet, but can be useful in the future???
     private boolean headCollision = false;
 
     private static final float X_VELOCITY = 0.35f;
@@ -43,7 +44,7 @@ public class Player extends JumpableObject {
     //private Animation runningAnimation;
     //private float stateTimer;
 
-    private ArrayList<TextureRegion> frames;
+    private final ArrayList<TextureRegion> frames;
 
     public Player(String name, GameModel gameModel, float x, float y) {
         super(name + " " + (gameModel.getPlayers().size() + 1), gameModel, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
