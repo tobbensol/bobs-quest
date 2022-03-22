@@ -13,6 +13,7 @@ We use the game engine [libGDX](https://libgdx.com/) for this project.
 - [Project Description](#project-description)
 - [Requirements](#requirements)
 - [Build Instructions](#build-instructions)
+- [Known Bugs](#known-bugs)
 - [Credits](#credits)
 
 ## Requirements
@@ -21,13 +22,22 @@ An IDE running on either Windows, MacOS or Linux. For example [IntelliJ](https:/
 ## Build Instructions
 
 ### Setup
-1. To run this project, you will need to install [Java (version 17)]().
-2. Install [Maven]()
-3. Clone the project from [Here](https://git.app.uib.no/grabbane/inf112.22v.libgdx-template.git).
+1. To run this project, you will need to install [Java](https://www.oracle.com/java/technologies/downloads/) (version 17 recommended. We cannot assure that older versions work).
+2. Install [Maven](https://maven.apache.org/install.html).
+3. Clone the project from [here](https://git.app.uib.no/grabbane/inf112.22v.libgdx-template.git).
+
 ### Running
+#### Note: The stable version of the project is on the `master` branch.
 1. Locate the file "src/main/java/launcher/DesktopLauncher.java".
 2. Run DesktopLauncher to start the game.
 3. Use "WASD", "Arrow keys" and "IJKL" to control the different players.
 
+## Known Bugs
+Known bugs in the game can be found [here](src/main/resources/BugReplication.md).
+
 ## Credits
-This project is created by Martin Andvik Øvsttun, Tobias Soltvedt, Kristoffer Jensvoll-Johnsen & Espen Lade Kalvatn.
+This project is created by:
+- Martin Andvik Øvsttun
+- Tobias Soltvedt
+- Kristoffer Jensvoll-Johnsen
+- Espen Lade Kalvatn
