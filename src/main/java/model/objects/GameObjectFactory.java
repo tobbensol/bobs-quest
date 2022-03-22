@@ -13,10 +13,10 @@ public class GameObjectFactory {
     /**
      * Return value must be cast to own type //TODO: Write doc
      *
-     * @param gameObject
-     * @param x
-     * @param y
-     * @return
+     * @param gameObject the string of the object you want to make, not case sensetive
+     * @param x the X coordinate of the object
+     * @param y the Y coordinate of the object
+     * @return the object you made
      */
     public GameObject create(String gameObject, float x, float y) {
         String objectString = gameObject.toUpperCase();

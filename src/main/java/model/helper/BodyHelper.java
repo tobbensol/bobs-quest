@@ -41,7 +41,7 @@ public class BodyHelper {
 
 
     public static Shape createShape(float width, float height, boolean rectangle){
-        if (rectangle) { // TODO: Change name to rectangle in all classes
+        if (rectangle) {
             PolygonShape polygonShape= new PolygonShape();
             polygonShape.setAsBox(width / 2 /Constants.PPM, height / 2 /Constants.PPM);
             return polygonShape;
