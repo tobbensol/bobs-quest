@@ -17,14 +17,13 @@ We use the game engine [libGDX](https://libgdx.com/) for this project.
 - [Credits](#credits)
 
 ## Requirements
-An IDE running on either Windows, MacOS or Linux. For example [IntelliJ](https://www.jetbrains.com/idea/) or [Eclipse](https://www.eclipse.org/ide/).
+An IDE running on either Windows or Linux (MacOS probably works, but not tested). You can for example use one of the IDEs [IntelliJ](https://www.jetbrains.com/idea/) or [Eclipse](https://www.eclipse.org/ide/).
 
 ## Build Instructions
 
 ### Setup
 1. To run this project, you will need to install [Java](https://www.oracle.com/java/technologies/downloads/) (version 17 recommended. We cannot assure that older versions work).
-2. Install [Maven](https://maven.apache.org/install.html).
-3. Clone the project from [here](https://git.app.uib.no/grabbane/inf112.22v.libgdx-template.git).
+2. Clone the project from [here](https://git.app.uib.no/grabbane/inf112.22v.libgdx-template.git).
 
 ### Running
 #### Note: The stable version of the project is on the `master` branch.
