@@ -13,17 +13,13 @@ import launcher.Boot;
 
 public class Hud {
     public Stage stage;
-    private Viewport viewport;
-    private GameModel gameModel;
+    private final Viewport viewport;
+    private final GameModel gameModel;
 
-    private final float fontSize;
     private static Integer score;
 
     private static Label scoreLabel;
-    private Label levelLabel;
-    private Label worldLabel;
-    private Label timerLabel;
-    private Label countdownLabel;
+    private final Label levelLabel;
 
     public Hud(SpriteBatch batch, GameModel gameModel) {
         this.gameModel = gameModel;
@@ -36,23 +32,18 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        fontSize = 2f;
-
         scoreLabel = new Label(score + "/" + gameModel.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label(sentenceCase(gameModel.getLevel()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         //worldLabel = new Label("Epic game", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        scoreLabel.setFontScale(fontSize);
-        levelLabel.setFontScale(fontSize);
+        scoreLabel.setFontScale(2f);
+        levelLabel.setFontScale(2f);
 
         // First row:
         table.add(levelLabel).expandX().padTop(10);
         table.add(scoreLabel).expandX().padTop(10);
 
-        //table.row(); // Use table.row() for starting on a new line
-
-        // Second row:
-        //table.add(worldLabel).expandX().padTop(10);
+        // Use table.row() for starting on a new line
 
         stage.addActor(table);
     }

@@ -19,10 +19,10 @@ import model.objects.Coin;
  */
 public class GameScreen implements Screen {
 
-    private GameModel gameModel;
+    private final GameModel gameModel;
     private SpriteBatch batch;
     private GameCamera camera;
-    private Box2DDebugRenderer box2DDebugRenderer;
+    private final Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     public GameScreen(GameCamera camera, GameModel gameModel) {
