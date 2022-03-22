@@ -41,11 +41,11 @@ public class GameModel {
 
 
     public GameModel() {
-        levels = new ArrayList<>();
-        levels.add("Level1");
-        levels.add("Level2");
-        levels.add("PlatformTest");
-        levels.add("SlopeTest");
+        levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
+        levels.add("level1");
+        levels.add("level2");
+        levels.add("platformTest");
+        levels.add("slopeTest");
         levels.add("CameraTest");
 
         createWorld(levels.get(level));
