@@ -13,17 +13,13 @@ import launcher.Boot;
 
 public class Hud {
     public Stage stage;
-    private Viewport viewport;
-    private GameModel gameModel;
+    private final Viewport viewport;
+    private final GameModel gameModel;
 
-    private float fontSize;
     private static Integer score;
 
     private static Label scoreLabel;
-    private Label levelLabel;
-    private Label worldLabel;
-    private Label timerLabel;
-    private Label countdownLabel;
+    private final Label levelLabel;
 
     public Hud(SpriteBatch batch, GameModel gameModel) {
         this.gameModel = gameModel;
@@ -36,29 +32,35 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        fontSize = 2f;
-
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("Level 1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label(score + "/" + gameModel.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(sentenceCase(gameModel.getLevel()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         //worldLabel = new Label("Epic game", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        scoreLabel.setFontScale(fontSize);
-        levelLabel.setFontScale(fontSize);
+        scoreLabel.setFontScale(2f);
+        levelLabel.setFontScale(2f);
 
         // First row:
         table.add(levelLabel).expandX().padTop(10);
         table.add(scoreLabel).expandX().padTop(10);
 
-        //table.row(); // Use table.row() for starting on a new line
-
-        // Second row:
-        //table.add(worldLabel).expandX().padTop(10);
+        // Use table.row() for starting on a new line
 
         stage.addActor(table);
     }
 
-    public void updateScore() {
+    public void update() {
         score = gameModel.getScore();
-        scoreLabel.setText(String.format("%06d", score));
+        scoreLabel.setText(score + "/" + gameModel.getCoins().size());
+        // TODO maybe not do this every frame
+        levelLabel.setText(sentenceCase(gameModel.getLevel()));
+    }
+
+    //from https://dirask.com/posts/Java-convert-camelCase-to-Sentence-Case-jE6PZ1
+    static String sentenceCase(String text) {
+        if (!text.equals("")) {
+            String result = text.replaceAll("([A-Z, 0-9])", " $1");
+            return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
+        }
+        return null;
     }
 }

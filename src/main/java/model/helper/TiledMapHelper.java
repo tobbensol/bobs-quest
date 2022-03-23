@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 public class TiledMapHelper {
 
     private TiledMap tiledMap;
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
-    public TiledMapHelper(GameModel gameModel ) {
-        // OBS: map cant be infinite
-        // OBS: layers cant be in folders
+    public TiledMapHelper(GameModel gameModel, String level ) {
+        // OBS: Map can't be infinite
+        // OBS: Layers can't be in folders
         this.gameModel = gameModel;
-        tiledMap = new TmxMapLoader().load("maps/level1.tmx");
+        tiledMap = new TmxMapLoader().load("maps/" + level + ".tmx");
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapEnvironment( getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
@@ -49,7 +49,7 @@ public class TiledMapHelper {
         catch (NullPointerException e) {
             throw new NullPointerException("Objects with type '" + objects + "' doesn't exist.");
         }
-
+        System.out.println(mapObjects.iterator().hasNext());
         return mapObjects;
     }
 
@@ -70,7 +70,7 @@ public class TiledMapHelper {
     /**
      * This method is parsing mapObjects into the game by getting the centrer of its object box
      * @param objectLayer - string with the name of the layer you wish to get the spawnpoints from
-     * @return list of spawnpoints
+     * @return list of spawn-points
      */
     public List<Vector2> parseMapSpawnPoints(String objectLayer) {
         List<Vector2> center = new ArrayList<>();
@@ -80,6 +80,11 @@ public class TiledMapHelper {
         return center;
     }
 
+    /**
+     * gets all the squares of the game objects, not sure if we need this since the only other time its used is to get the center in parse map spawn points
+     * @param objectLayer they name of the layer you want the gameObjects from
+     * @return a list of all the game objects
+     */
     private List<Rectangle> parseMapObjects(String objectLayer){
         MapObjects mapObjects = getMapObjects(objectLayer);
         List<Rectangle> objectList = new ArrayList<>();

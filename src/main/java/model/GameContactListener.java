@@ -27,16 +27,16 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == null || b.getUserData() == null)
             return;
 
-        groundContact(a,b,true);
+        groundContact(a, b, true);
         leftContact(a, b, true);
         rightContact(a, b, true);
         headContact(a, b, true);
 
-        coinContact(a,b);
+        coinContact(a, b);
         goombaContact(a, b);
         goalContact(a, b);
 
-        deathContact(a,b);
+        deathContact(a, b);
     }
 
     @Override
@@ -106,7 +106,6 @@ public class GameContactListener implements ContactListener {
                 for (Coin coin : gameModel.getCoins()) {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
-                        gameModel.increaseScore(100);
                     }
                 }
             }
@@ -124,7 +123,7 @@ public class GameContactListener implements ContactListener {
                 for (Goal goal : gameModel.getGoals()) {
                     if (goal.getBody().equals(c.getBody())) {
                         goal.onHit();
-                        gameModel.setFinished(true);
+                        //gameModel.setFinished(true);
                     }
                 }
             }
