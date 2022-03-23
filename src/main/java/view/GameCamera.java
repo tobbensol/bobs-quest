@@ -32,6 +32,10 @@ public class GameCamera extends OrthographicCamera {
             }
         }
 
+        if (playerXs.isEmpty()) {
+            return;
+        }
+
         double paddedXWidth = viewportWidth * zoom * 0.68;
 
         float minX = Collections.min( playerXs );
