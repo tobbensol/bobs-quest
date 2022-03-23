@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import model.GameModel;
 import view.GameCamera;
-import view.GameScreen;
+import view.StartScreen;
 
 public class Boot extends Game {
 
@@ -24,8 +24,8 @@ public class Boot extends Game {
         this.gameModel = new GameModel();
         this.camera = new GameCamera(gameModel);
         this.camera.setToOrtho(false, screenWidth, screenHeight);
-        // TODO: Set new screens
-        setScreen(new GameScreen(camera, gameModel));
+
+        setScreen(new StartScreen(gameModel));
     }
 
     public int getScreenWidth() {
@@ -34,5 +34,9 @@ public class Boot extends Game {
 
     public int getScreenHeight() {
         return screenHeight;
+    }
+
+    public GameCamera getCamera() {
+        return camera;
     }
 }
