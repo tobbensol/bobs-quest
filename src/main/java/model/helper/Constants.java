@@ -23,8 +23,8 @@ public class Constants {
      * The bit values that a given body can interact with.
      * TODO: These are not constants! Maybe in the wrong place????????
      */
-    public static short PLAYER_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | COIN_BIT | GOAL_BIT;
-    public static short ENEMY_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | ENEMY_BIT;
-    public static short INTERACTIVE_MASK_BITS = PLAYER_BIT;
-    public static short DEFAULT_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | PLAYER_BIT;
+    public static final short PLAYER_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | COIN_BIT | GOAL_BIT;
+    public static final short ENEMY_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | ENEMY_BIT;
+    public static final short INTERACTIVE_MASK_BITS = PLAYER_BIT;
+    public static final short DEFAULT_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | PLAYER_BIT;
 }

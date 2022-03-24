@@ -26,8 +26,8 @@ public class GameModel {
     public boolean isFinished;
     private boolean reload = false;
 
-    private final int numPlayers = 3; // TODO: Variable number of players
-    private final int numControllers = 3;
+    private static final int numPlayers = 3; // TODO: Variable number of players
+    private static final int numControllers = 3;
     private final GameObjectFactory factory = new GameObjectFactory(this);
     private final List<String> levels;
     private int level = 0;
@@ -167,7 +167,7 @@ public class GameModel {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     public Hud getHud() {
@@ -175,15 +175,15 @@ public class GameModel {
     }
 
     public List<Goomba> getGoombas() {
-        return goombas;
+        return new ArrayList<>(goombas);
     }
 
     public List<Coin> getCoins() {
-        return coins;
+        return new ArrayList<>(coins);
     }
 
     public List<Goal> getGoals() {
-        return goals;
+        return new ArrayList<>(goals);
     }
 
     public String getLevel(){
