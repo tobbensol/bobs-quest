@@ -29,20 +29,12 @@ public class Player extends JumpableObject {
         WALKING,
         JUMPING,
         FALLING,
+        SLIDING,
         DEAD
     }
 
     protected State currentState;
     protected State previousState;
-
-    /*
-    private TextureRegion standing;
-    private TextureRegion walking;
-    private TextureRegion jumping;
-    private TextureRegion falling;
-     */
-    //private Animation runningAnimation;
-    //private float stateTimer;
 
     private final ArrayList<TextureRegion> frames;
 
@@ -54,37 +46,29 @@ public class Player extends JumpableObject {
         hp = 100;
         currentState = State.STANDING;
         previousState = State.STANDING;
-        //stateTimer = 0;
-
-        /*
-        frames = new ArrayList<>();
-        for (int i = 1; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), i* Constants.TILE_SIZE , 0 , Constants.TILE_SIZE, Constants.TILE_SIZE));
-        }
-        runningAnimation = new Animation(0.1f,frames);
-        frames.clear();
-
-         */
 
         frames = new ArrayList<>();
         for(int i = 0; i < getTexture().getWidth()/Constants.TILE_SIZE; i++){
              frames.add(new TextureRegion(getTexture(),i * Constants.TILE_SIZE,0,Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
     }
+
     @Override
     public void update() {
         super.update();
         previousState = currentState;
         currentState = getState();
     }
+
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(getFrame(gameModel.getDelta()), x, y, width, height);
     }
 
+
     @Override
     public void jump(float delta) {
-        if (grounded && previousState != State.JUMPING) {
+        if (grounded && (previousState != State.JUMPING) && (currentState != State.FALLING)) {
             applyCenterLinearImpulse(0, delta*Y_VELOCITY);
         }
     }
@@ -128,18 +112,20 @@ public class Player extends JumpableObject {
         if (previousState == State.DEAD) {
             return State.DEAD;
         }
+        if (body.getLinearVelocity().y < 0  && grounded) {
+            return State.SLIDING;
+        }
         if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             return State.JUMPING;
         }
-        else if (body.getLinearVelocity().y < 0) {
+        if (body.getLinearVelocity().y < 0) {
             return State.FALLING;
         }
-        else if (body.getLinearVelocity().x != 0) {
+        if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
+            grounded = true; // If y = 0 and x != 0, the player must be grounded. "can't jump after slide bug" appears if removed.
             return State.WALKING;
         }
-        else {
-            return State.STANDING;
-        }
+        return State.STANDING;
     }
 
     /**
@@ -154,20 +140,18 @@ public class Player extends JumpableObject {
         // Specify which texture region corresponding to which state.
         TextureRegion region = switch (currentState) {
             case JUMPING -> frames.get(5);
-            case FALLING -> frames.get(7);
+            case FALLING, SLIDING -> frames.get(7);
             case WALKING -> frames.get(3);
             case DEAD -> frames.get(13);
-            // Default -> STANDING
             default -> frames.get(0);
         };
+
         if (!facingRight && !region.isFlipX()) {
             region.flip(true,false);
         }
         else if (facingRight && region.isFlipX()) {
             region.flip(true,false);
         }
-
-        //stateTimer = currentState == previousState ? stateTimer + dt : 0;
 
         return region;
     }
@@ -198,6 +182,19 @@ public class Player extends JumpableObject {
             setDead();
         }
         System.out.println(toString() + ": " + hp);
+    }
+
+    public void increaseHealth(int amount) {
+        if (currentState == State.DEAD) {
+            return;
+        }
+        hp += amount;
+        if (hp > 100) {
+            hp = 100;
+        }
+    }
+    public int getHp() {
+        return hp;
     }
 
 }
