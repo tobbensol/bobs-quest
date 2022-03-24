@@ -13,21 +13,20 @@ import model.helper.ContactType;
 public abstract class GameObject {
     final private String name;
     Texture texture;
-    protected int width, height;
     protected Body body;
-    protected float x, y;
+    protected float x, y, width, height;
     protected GameModel gameModel;
     String texturePath;
 
     protected boolean facingRight;
 
-    public GameObject(String name, GameModel gameModel, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean rectangle) {
+    public GameObject(String name, GameModel gameModel,float width, float height, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean rectangle) {
         this.name = name;
         this.gameModel = gameModel;
         this.x = x;
         this.y = y;
-        this.width = Constants.TILE_SIZE;
-        this.height = Constants.TILE_SIZE;
+        this.width = width;
+        this.height = height;
         this.body = BodyHelper.createObjectBody(x, y, width, height, density, gameModel.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
     }

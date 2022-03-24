@@ -12,7 +12,7 @@ public class Coin extends StaticObject {
     private boolean isDestroyed = false;
 
     public Coin(String name, GameModel gameModel, float x, float y) {
-        super(name + " " + (gameModel.getCoins().size() + 1), gameModel, x, y, 0, ContactType.COIN, Constants.COIN_BIT, Constants.INTERACTIVE_MASK_BITS, true, false);
+        super(name + " " + (gameModel.getCoins().size() + 1), gameModel,Constants.TILE_SIZE, Constants.TILE_SIZE, x, y, 0, ContactType.COIN, Constants.COIN_BIT, Constants.INTERACTIVE_MASK_BITS, true, false);
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
     }
 
