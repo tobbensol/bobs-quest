@@ -24,6 +24,6 @@ public class Goal extends StaticObject{
     }
 
     public void onHit() {
-        gameModel.setFinished(true);
+        gameModel.setLevelCompleted(true);
     }
 }

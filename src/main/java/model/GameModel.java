@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import controls.ArrowController;
-import controls.Controller;
-import controls.CustomController;
-import controls.WASDController;
+import controls.*;
+import launcher.Boot;
 import model.helper.TiledMapHelper;
 import model.objects.*;
+import view.GameOverScreen;
+import view.GameScreen;
+import view.LevelCompletedScreen;
+import view.StartScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class GameModel {
 
     private Hud hud;
     private Integer score;
-    public boolean isFinished;
+    public boolean levelCompleted;
     private boolean reload = false;
 
     private static final int numPlayers = 3; // TODO: Variable number of players
@@ -38,8 +40,14 @@ public class GameModel {
 
     private List<Goal> goals;
 
+    private GameState state;
+    private GameController gameController;
+
+
 
     public GameModel() {
+        state = GameState.STARTUP;
+
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
         levels.add("level1");
         levels.add("level2");
@@ -52,6 +60,8 @@ public class GameModel {
         createObjects();
 
         createHUD();
+
+        gameController = new GameController(this);
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
@@ -98,10 +108,7 @@ public class GameModel {
 
     }
 
-    private boolean checkRestart() {
-        if (isFinished){
-            return true;
-        }
+    private boolean gameOver() {
         for (Player player : players) {
             if (!player.isDead()) {
                 return false;
@@ -111,9 +118,9 @@ public class GameModel {
     }
 
     private void restart(){
-        if (isFinished){
+        if (levelCompleted){
             level++;
-            setFinished(false);
+            setLevelCompleted(false);
         }
         world.dispose();
         createWorld(levels.get(level));
@@ -123,9 +130,19 @@ public class GameModel {
     }
 
     public void update() {
-        if (checkRestart()){
+        gameController.inputListener();
+
+        if (levelCompleted) {
+            state = GameState.NEXT_LEVEL;
+            changeScreen();
             restart();
         }
+        if (gameOver()) {
+            state = GameState.GAME_OVER;
+            changeScreen();
+            restart();
+        }
+
         world.step(1/60f, 6, 2);
 
         for (int i = 0; i < getPlayers().size(); i++) {
@@ -150,8 +167,8 @@ public class GameModel {
         score += value;
     }
 
-    public void setFinished(boolean value){
-        isFinished = value;
+    public void setLevelCompleted(boolean value){
+        levelCompleted = value;
     }
 
     public Integer getScore() {
@@ -197,4 +214,36 @@ public class GameModel {
     public void setReload(Boolean value){
         reload = value;
     }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public void setState(GameState state) {
+        if (state == null) {
+            throw new IllegalArgumentException("Cannot set state to null.");
+        }
+        if (this.state == GameState.STARTUP && (state == GameState.GAME_OVER || state == GameState.NEXT_LEVEL)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.state == GameState.GAME_OVER && (state == GameState.STARTUP || state == GameState.NEXT_LEVEL)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.state == GameState.NEXT_LEVEL && (state == GameState.GAME_OVER || state == GameState.STARTUP)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        this.state = state;
+    }
+
+    public void changeScreen() {
+
+        switch (state) {
+            case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(Boot.INSTANCE.getCamera(), this));
+            case STARTUP -> Boot.INSTANCE.setScreen(new StartScreen(this));
+            case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
+            case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
+        }
+
+    }
+
 }
