@@ -108,6 +108,9 @@ public class GameContactListener implements ContactListener {
                         coin.onHit();
                     }
                 }
+                Player player = getContactPlayer(a,b);
+                player.increaseHealth(10);
+                //System.out.println(player.getHp());
             }
         }
     }
@@ -147,6 +150,7 @@ public class GameContactListener implements ContactListener {
     }
 
     private void groundContact(Fixture a, Fixture b, boolean begin) {
+
         if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
             if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
                 getContactPlayer(a,b).setGrounded(begin);
