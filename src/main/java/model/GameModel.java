@@ -28,7 +28,7 @@ public class GameModel {
     public boolean levelCompleted;
     private boolean reload = false;
 
-    private final int numPlayers = 3; // TODO: Variable number of players
+    private final int numPlayers = 1; // TODO: Variable number of players
     private final int numControllers = 3;
     private final GameObjectFactory factory = new GameObjectFactory(this);
     private final List<String> levels;
@@ -205,6 +205,10 @@ public class GameModel {
 
     public String getLevel(){
         return levels.get(level);
+    }
+
+    public int getLevelIndex() {
+        return level;
     }
 
     public boolean getReload(){
