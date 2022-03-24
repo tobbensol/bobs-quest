@@ -28,7 +28,7 @@ public class GameModel {
     public boolean levelCompleted;
     private boolean reload = false;
 
-    private static final int numPlayers = 3; // TODO: Variable number of players
+    private int numPlayers; // TODO: Variable number of players
     private static final int numControllers = 3;
     private final GameObjectFactory factory = new GameObjectFactory(this);
     private final List<String> levels;
@@ -47,6 +47,7 @@ public class GameModel {
 
     public GameModel() {
         state = GameState.STARTUP;
+        this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
         levels.add("level1");
@@ -67,6 +68,11 @@ public class GameModel {
         controllers.add(new ArrowController());
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
+    }
+
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+        restart();
     }
 
     private void createHUD() {
