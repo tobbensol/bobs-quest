@@ -207,6 +207,10 @@ public class GameModel {
         return levels.get(level);
     }
 
+    public int getLevelIndex() {
+        return level;
+    }
+
     public boolean getReload(){
         return reload;
     }
