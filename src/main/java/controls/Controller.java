@@ -9,14 +9,14 @@ public abstract class Controller {
     protected final int left;
     protected final int right;
 
-    public Controller(int left, int right, int up, int down){
+    public Controller(int left, int right, int up, int down) {
         this.up = up;
         this.down = down;
         this.left = left;
         this.right = right;
     }
 
-    public void inputListener(Player player){
+    public void inputListener(Player player) {
         if (player.isDead()) {
             return;
         }

@@ -10,9 +10,8 @@ public class ArrowController extends Controller {
      * Right - RIGHT-ARROW
      * Up - UP-ARROW
      * Down - DOWN-ARROW
-     *
      */
-    public ArrowController()  {
+    public ArrowController() {
         super(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN);
     }
 

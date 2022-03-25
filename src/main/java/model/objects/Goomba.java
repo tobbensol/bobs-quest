@@ -10,7 +10,7 @@ import model.helper.ContactType;
 
 public class Goomba extends MoveableObject {
 
-    private TextureRegion textureRegion;
+    private final TextureRegion textureRegion;
     private int numMoves;
     private static final int attack = 40;
 
@@ -41,10 +41,9 @@ public class Goomba extends MoveableObject {
     @Override
     public void moveHorizontally(float delta, boolean isRight) {
         if (isRight) {
-            body.applyLinearImpulse(new Vector2(delta*0.3f, 0), body.getWorldCenter(), true);
-        }
-        else {
-            body.applyLinearImpulse(new Vector2(delta*-0.3f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(delta * 0.3f, 0), body.getWorldCenter(), true);
+        } else {
+            body.applyLinearImpulse(new Vector2(delta * -0.3f, 0), body.getWorldCenter(), true);
         }
     }
 

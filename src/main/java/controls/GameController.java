@@ -6,13 +6,13 @@ import model.GameModel;
 import model.GameState;
 
 public class GameController {
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     public GameController(GameModel gameModel) {
         this.gameModel = gameModel;
     }
 
-    public void inputListener(){
+    public void inputListener() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }

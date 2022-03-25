@@ -16,10 +16,10 @@ import launcher.Boot;
 import model.GameModel;
 
 public class GameOverScreen implements Screen {
-    private Viewport viewport;
-    private Stage stage;
+    private final Viewport viewport;
+    private final Stage stage;
 
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     public GameOverScreen(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -54,7 +54,7 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         gameModel.update();
 
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         stage.draw();
     }

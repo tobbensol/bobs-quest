@@ -20,7 +20,7 @@ public abstract class GameObject {
 
     protected boolean facingRight;
 
-    public GameObject(String name, GameModel gameModel,float width, float height, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean rectangle) {
+    public GameObject(String name, GameModel gameModel, float width, float height, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean rectangle) {
         this.name = name;
         this.gameModel = gameModel;
         this.x = x;

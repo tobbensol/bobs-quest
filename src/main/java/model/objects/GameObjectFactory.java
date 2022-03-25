@@ -4,7 +4,7 @@ import model.GameModel;
 
 public class GameObjectFactory {
 
-    private GameModel model;
+    private final GameModel model;
 
     public GameObjectFactory(GameModel model) {
         this.model = model;
@@ -14,8 +14,8 @@ public class GameObjectFactory {
      * Return value must be cast to own type //TODO: Write doc
      *
      * @param gameObject a string with the name of the object (not case sensetive)
-     * @param x the x position of the object
-     * @param y the y position of the object
+     * @param x          the x position of the object
+     * @param y          the y position of the object
      * @return the object in the designated location
      */
     public GameObject create(String gameObject, float x, float y) {

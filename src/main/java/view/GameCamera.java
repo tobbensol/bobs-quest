@@ -12,23 +12,23 @@ public class GameCamera extends OrthographicCamera {
 
     GameModel gameModel;
 
-    public GameCamera (GameModel gameModel){
+    public GameCamera(GameModel gameModel) {
         this.gameModel = gameModel;
     }
 
     public void update() {
 
         manageZoom();
-        position.set( getAveragePlayerPosition() );
+        position.set(getAveragePlayerPosition());
         super.update();
     }
 
-    private void manageZoom (){
+    private void manageZoom() {
         ArrayList<Float> playerXs = new ArrayList<>();
 
         for (Player player : gameModel.getPlayers()) {
-            if ( !player.isDead() ) {
-                playerXs.add( player.getPosition().x );
+            if (!player.isDead()) {
+                playerXs.add(player.getPosition().x);
             }
         }
 
@@ -38,8 +38,8 @@ public class GameCamera extends OrthographicCamera {
 
         double paddedXWidth = viewportWidth * zoom * 0.68;
 
-        float minX = Collections.min( playerXs );
-        float maxX = Collections.max( playerXs );
+        float minX = Collections.min(playerXs);
+        float maxX = Collections.max(playerXs);
         float playersXDifference = maxX - minX;
 
 //        System.out.println("ScreenX: " + paddedXWidth + ", Player Difference: " + playersXDifference );
@@ -47,10 +47,10 @@ public class GameCamera extends OrthographicCamera {
         float minZoom = 1f;
         float maxZoom = 1.45f;
 
-        if ( playersXDifference > paddedXWidth && zoom <= maxZoom ) {
+        if (playersXDifference > paddedXWidth && zoom <= maxZoom) {
             zoom += 0.0016f;
         }
-        if ( playersXDifference < paddedXWidth && zoom >= minZoom ) {
+        if (playersXDifference < paddedXWidth && zoom >= minZoom) {
             zoom -= 0.0016f;
         }
     }
@@ -68,10 +68,10 @@ public class GameCamera extends OrthographicCamera {
             }
         }
 
-        averageX = averageX/playerCount;
-        averageY = averageY/playerCount;
+        averageX = averageX / playerCount;
+        averageY = averageY / playerCount;
 
-        return new Vector3(averageX, averageY,0);
+        return new Vector3(averageX, averageY, 0);
     }
 
     public float getZoom() {

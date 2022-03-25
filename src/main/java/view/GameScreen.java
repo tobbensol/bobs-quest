@@ -1,18 +1,17 @@
 package view;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
 import model.helper.Constants;
+import model.objects.Coin;
 import model.objects.Goal;
 import model.objects.Goomba;
 import model.objects.Player;
-import model.objects.Coin;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
@@ -20,8 +19,8 @@ import model.objects.Coin;
 public class GameScreen implements Screen {
 
     private final GameModel gameModel;
-    private SpriteBatch batch;
-    private GameCamera camera;
+    private final SpriteBatch batch;
+    private final GameCamera camera;
     private final Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
@@ -36,9 +35,9 @@ public class GameScreen implements Screen {
     /**
      * the game runs in real time and updating the game often is required for it to run smoothly
      */
-    private void update(){
+    private void update() {
         //TODO find better way to do this?
-        if (gameModel.getReload()){
+        if (gameModel.getReload()) {
             orthogonalTiledMapRenderer = gameModel.setupMap();
             gameModel.setReload(false);
         }
@@ -77,12 +76,12 @@ public class GameScreen implements Screen {
             goomba.render(batch);
         }
 
-        for (Coin coin : gameModel.getCoins()){
+        for (Coin coin : gameModel.getCoins()) {
             if (!coin.isDestroyed()) {
                 coin.render(batch);
             }
         }
-        for(Goal goal : gameModel.getGoals()){
+        for (Goal goal : gameModel.getGoals()) {
             goal.render(batch);
         }
 

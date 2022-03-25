@@ -48,8 +48,8 @@ public class Player extends JumpableObject {
         previousState = State.STANDING;
 
         frames = new ArrayList<>();
-        for(int i = 0; i < getTexture().getWidth()/Constants.TILE_SIZE; i++){
-             frames.add(new TextureRegion(getTexture(),i * Constants.TILE_SIZE,0,Constants.TILE_SIZE, Constants.TILE_SIZE));
+        for (int i = 0; i < getTexture().getWidth() / Constants.TILE_SIZE; i++) {
+            frames.add(new TextureRegion(getTexture(), i * Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
     }
 
@@ -69,24 +69,23 @@ public class Player extends JumpableObject {
     @Override
     public void jump(float delta) {
         if (grounded && (previousState != State.JUMPING) && (currentState != State.FALLING)) {
-            applyCenterLinearImpulse(0, delta*Y_VELOCITY);
+            applyCenterLinearImpulse(0, delta * Y_VELOCITY);
         }
     }
 
     @Override
     public void moveHorizontally(float delta, boolean isRight) {
-            if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-                applyCenterLinearImpulse(delta*X_VELOCITY, 0);
-                facingRight = true;
-            }
-            else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-                applyCenterLinearImpulse(-delta*X_VELOCITY, 0);
-                facingRight = false;
-            }
+        if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
+            applyCenterLinearImpulse(delta * X_VELOCITY, 0);
+            facingRight = true;
+        } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
+            applyCenterLinearImpulse(-delta * X_VELOCITY, 0);
+            facingRight = false;
+        }
     }
 
     private void applyCenterLinearImpulse(float x, float y) {
-        this.body.applyLinearImpulse(new Vector2(x,y), this.body.getWorldCenter(), true);
+        this.body.applyLinearImpulse(new Vector2(x, y), this.body.getWorldCenter(), true);
     }
 
     public void setLeftCollision(boolean value) {
@@ -97,7 +96,7 @@ public class Player extends JumpableObject {
         this.rightCollision = value;
     }
 
-    public void  setHeadCollision(boolean value){
+    public void setHeadCollision(boolean value) {
         this.headCollision = value;
     }
 
@@ -112,7 +111,7 @@ public class Player extends JumpableObject {
         if (previousState == State.DEAD) {
             return State.DEAD;
         }
-        if (body.getLinearVelocity().y < 0  && grounded) {
+        if (body.getLinearVelocity().y < 0 && grounded) {
             return State.SLIDING;
         }
         if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
@@ -147,10 +146,9 @@ public class Player extends JumpableObject {
         };
 
         if (!facingRight && !region.isFlipX()) {
-            region.flip(true,false);
-        }
-        else if (facingRight && region.isFlipX()) {
-            region.flip(true,false);
+            region.flip(true, false);
+        } else if (facingRight && region.isFlipX()) {
+            region.flip(true, false);
         }
 
         return region;
@@ -172,7 +170,7 @@ public class Player extends JumpableObject {
         body.setLinearVelocity(0, 5); //TODO: Make player fall through ground as well
     }
 
-    public void takeDamage(int amount){
+    public void takeDamage(int amount) {
         // Player doesn't take damage if dead
         if (currentState == State.DEAD) {
             return;
@@ -181,7 +179,7 @@ public class Player extends JumpableObject {
         if (hp <= 0) {
             setDead();
         }
-        System.out.println(toString() + ": " + hp);
+        System.out.println(this + ": " + hp);
     }
 
     public void increaseHealth(int amount) {
@@ -193,6 +191,7 @@ public class Player extends JumpableObject {
             hp = 100;
         }
     }
+
     public int getHp() {
         return hp;
     }

@@ -2,7 +2,7 @@ package controls;
 
 import com.badlogic.gdx.Input;
 
-public class WASDController extends Controller{
+public class WASDController extends Controller {
 
     /**
      * Controller using WASD as key input.

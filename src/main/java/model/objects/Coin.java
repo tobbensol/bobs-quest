@@ -12,7 +12,7 @@ public class Coin extends StaticObject {
     private boolean isDestroyed = false;
 
     public Coin(String name, GameModel gameModel, float x, float y) {
-        super(name + " " + (gameModel.getCoins().size() + 1), gameModel,Constants.TILE_SIZE, Constants.TILE_SIZE, x, y, 0, ContactType.COIN, Constants.COIN_BIT, Constants.INTERACTIVE_MASK_BITS, true, false);
+        super(name + " " + (gameModel.getCoins().size() + 1), gameModel, Constants.TILE_SIZE, Constants.TILE_SIZE, x, y, 0, ContactType.COIN, Constants.COIN_BIT, Constants.INTERACTIVE_MASK_BITS, true, false);
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
     }
 
@@ -23,7 +23,7 @@ public class Coin extends StaticObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x - (float) Constants.TILE_SIZE/2, y - (float) Constants.TILE_SIZE/2, width, height);
+        batch.draw(texture, x - (float) Constants.TILE_SIZE / 2, y - (float) Constants.TILE_SIZE / 2, width, height);
     }
 
     public void onHit() {
