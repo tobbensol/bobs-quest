@@ -1,12 +1,12 @@
-Prosjekt Plattformspill
+#Prosjekt Plattformspill
 
-Referater
+##Referater
 
 Grunnet mangel på informasjon før andre obligatorisk innlevering, har vi ikke tidligere referater fra møter før fredag 18. mars 2022.
 
-Fredag 18. mars 2022
+###Fredag 18. mars 2022
 
-kl 13:00-13:30
+####kl 13:00-13:30
 
 Digitalt oppsummeringsmøte
 
@@ -27,9 +27,9 @@ Videre i møte snakket vi litt om hva vi må gjøre fremover, men dette kommer v
 
 Etter møte jobbet vi sammen med den andre obligatoriske innleveringen.
 
-Mandag 21. mars 2022
+###Mandag 21. mars 2022
 
-kl 12:15-14:00
+####kl 12:15-14:00
 
 Fysisk møte
 
@@ -42,9 +42,9 @@ I dagens møte gikk vi gjennom følgende:
 - Vi diskuterte også kravene til andre oblig. Her trenger vi å skrive en README fil (Espen), skrive utdype en del av brukerhistoriene våre (Martin), lage klassediagram (Martin) og generelt svare på spørsmål i rapporten (alle).
 - Vi diskuterte også hvordan vi skal løse MVP krav 10 (Start/game over skjerm). Dette har Tobias sett litt på over helgen, og fortsetter med dette denne uken. Vi andre vil hjelpe til om nødvendig.
 
-Fredag 25. mars 2022
+###Fredag 25. mars 2022
 
-kl 13:00-13:30
+####kl 13:00-13:30
 
 Digitalt oppsummeringsmøte
 
