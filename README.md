@@ -40,3 +40,7 @@ This project is created by:
 - Tobias Soltvedt
 - Kristoffer Jensvoll-Johnsen
 - Espen Lade Kalvatn
+
+addional credits:
+- tileSet:
+    - Diego del Solar or "Shackhal" for [Multi_Platformer_Tileset_v2](https://shackhal.itch.io/multi-platformer-tileset)
