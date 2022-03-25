@@ -81,6 +81,6 @@ public class StartScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }
