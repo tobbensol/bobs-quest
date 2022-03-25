@@ -1,5 +1,6 @@
-#Obligatorisk oppgave 2:
-###Prosjekt Plattformspill
+# Obligatorisk oppgave 2:
+
+### Prosjekt Plattformspill
 
 ## Team:
 
