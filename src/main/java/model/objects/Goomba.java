@@ -8,7 +8,7 @@ import model.GameModel;
 import model.helper.Constants;
 import model.helper.ContactType;
 
-public class Goomba extends MoveableObject {
+public class Goomba extends MovableObject {
 
     private final TextureRegion textureRegion;
     private int numMoves;

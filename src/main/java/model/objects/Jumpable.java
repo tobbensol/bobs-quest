@@ -1,9 +1,9 @@
 package model.objects;
 
 /**
- * A jumpable object extends moveable and should be able to both move horizontally and vertically (jumping).
+ * A jumpable object extends movable and should be able to both move horizontally and vertically (jumping).
  */
-public interface Jumpable extends Moveable {
+public interface Jumpable extends Movable {
 
     /**
      * This method should make an object jump.
