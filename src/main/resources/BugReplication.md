@@ -1,3 +1,5 @@
+# Bug Replication / Manuel Tests
+
 - TiledMaps with the attribute "infinite" will not render, remember to deselect after using it in Tiled
     - How to replicate:
         - Open one of the "tiledmaps" in tiled, and make the map infinite in map properties

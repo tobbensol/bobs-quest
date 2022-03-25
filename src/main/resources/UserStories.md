@@ -1,7 +1,7 @@
 
-**Brukerhistorier:**
+#Brukerhistorier:
 
-Prosjektstruktur:
+###Prosjektstruktur:
 
 - Som en utvikler ønsker jeg en bedre prosjektstruktur slik at programmet blir lettere å utvide.
 
@@ -19,7 +19,7 @@ Prosjektstruktur:
 
 - Flytte funksjonalitet som ikke har med view å gjøre inn i modellen
 
-Spillerteksturer:
+###Spillerteksturer:
 
 - Som spiller ønsker jeg å ha forskjellige teksturer for forskjellige tilstander spilleren befinner seg i fordi dette vil gi en mer &quot;levende&quot; spillkarakter som gjør at jeg kan leve meg mer inn i spillet.
 
@@ -37,7 +37,7 @@ Spillerteksturer:
 
 - Legge til funksjonalitet for å velge rett tekstur til rett tilstand.
 
-Større spillbrett:
+###Større spillbrett:
 
 - Som utvikler ønsker jeg et større spillbrett for å teste mer funksjonalitet, og utvikle meir interessante spillopplevelser
 
@@ -55,7 +55,7 @@ Større spillbrett:
 
 - Exception handling for lasting av nytt brett
 
-Poeng og poeng gjenstander (Spiller har poeng og interagerer med poeng gjenstander):
+###Poeng og poeng gjenstander (Spiller har poeng og interagerer med poeng gjenstander):
 
 - Som spiller ønsker jeg et poengsystem slik at jeg føler meg belønnet for å spille spillet bra
 
@@ -89,7 +89,7 @@ Poeng og poeng gjenstander (Spiller har poeng og interagerer med poeng gjenstand
 
 - Pass på at poengtelleren oppdateres
 
-Fiender (Vise fiender/monstre; de skal interagere med terreng og spiller):
+###Fiender (Vise fiender/monstre; de skal interagere med terreng og spiller):
 
 - Som spiller ønsker jeg fiender/monstre som jeg må unngå for å få litt spenning/utfordring i spillet
 
@@ -115,7 +115,7 @@ Fiender (Vise fiender/monstre; de skal interagere med terreng og spiller):
 
 - Legg til kontakt mellom spiller og fiende
 
-Spillerdød (Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor skjermen)):
+###Spillerdød (Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor skjermen)):
 
 - Som spiller ønsker jeg en fare for at spillet avsluttes slik at spillet blir mer interessant
 
@@ -137,7 +137,7 @@ Spillerdød (Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor 
 
 - Sjekk om spiller helse er mindre eller lik 0, fjern mulighet for bevegelse
 
-Mål for spillbrett (enten et sted, en mengde poeng, drepe alle fiender e.l.):
+###Mål for spillbrett (enten et sted, en mengde poeng, drepe alle fiender e.l.):
 
 - Som spiller ønsker jeg et mål i spillet for å ha noe å jobbe mot når jeg spiller
     - Akseptansekriterier:
@@ -149,7 +149,7 @@ Mål for spillbrett (enten et sted, en mengde poeng, drepe alle fiender e.l.):
         - legg Goal objektet inn i brettet
         - sett brettet inn i en &quot;finished state&quot; når en spiller treffer goal objektet
 
-Nytt spillbrett når forrige er ferdig:
+###Nytt spillbrett når forrige er ferdig:
 
 - Som programmerer vil jeg ha muligheten til å legge til flere spillbrett for at spillet skal bli lengre.
 - Som spiller vil muligheten å bytte mellom flere spillbrett føre til meir interessante og varierte spillopplevelser.
@@ -166,7 +166,7 @@ Nytt spillbrett når forrige er ferdig:
         - Lag metode som gjør dette når man ønsker å laste nytt brett
         - Bruk ny metode til å laste neste level når brettet er i &quot;finished state&quot; og samme level dersom alle spillere dør
 
-Bedre kamera:
+###Bedre kamera:
 
 - Som spillere ønsker vi et kamera som følger alle spillere slik at alle som spiller kan se hva som skjer på skjermen fordi da kan alle spillerne spille sammen
     - Akseptansekriterier:
@@ -178,7 +178,7 @@ Bedre kamera:
         - Lag metode(r) for å regne ut kameraposisjon
         - Lag sjekk og håndter kameraposisjon når spillerne er døde
 
-Start-skjerm ved oppstart / game over
+###Start-skjerm ved oppstart / game over
 
 - Som utvikler ønsker jeg muligheten for å sette en start- og game over skjerm slik at jeg har mer kontroll over spillerens opplevelse og kan til en viss grad kontrollere tempoet i spillet
     - Akseptansekriterier:
