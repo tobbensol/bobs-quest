@@ -20,7 +20,6 @@ public abstract class Controller {
         if (player.isDead()) {
             return;
         }
-//        float delta = Gdx.graphics.getDeltaTime();
         float delta = 1.0f;
         if (Gdx.input.isKeyPressed(right)) {
             player.moveHorizontally(delta, true);
