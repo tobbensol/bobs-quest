@@ -3,7 +3,7 @@ package model.objects;
 import model.GameModel;
 import model.helper.ContactType;
 
-public abstract class JumpableObject extends MoveableObject implements Jumpable {
+public abstract class JumpableObject extends MovableObject implements Jumpable {
 
     protected Boolean grounded;
 

@@ -42,8 +42,6 @@ public class GameCamera extends OrthographicCamera {
         float maxX = Collections.max(playerXs);
         float playersXDifference = maxX - minX;
 
-//        System.out.println("ScreenX: " + paddedXWidth + ", Player Difference: " + playersXDifference );
-
         float minZoom = 1f;
         float maxZoom = 1.45f;
 
@@ -73,17 +71,4 @@ public class GameCamera extends OrthographicCamera {
 
         return new Vector3(averageX, averageY, 0);
     }
-
-    public float getZoom() {
-        return zoom;
-    }
-
-    public double getScreenWidth() {
-        return viewportWidth;
-    }
-
-    public double getScreenHeight() {
-        return viewportHeight;
-    }
-
 }

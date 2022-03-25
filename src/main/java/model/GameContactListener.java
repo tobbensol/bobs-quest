@@ -111,7 +111,6 @@ public class GameContactListener implements ContactListener {
                 }
                 Player player = getContactPlayer(a, b);
                 player.increaseHealth(10);
-                //System.out.println(player.getHp());
             }
         }
     }
@@ -121,13 +120,13 @@ public class GameContactListener implements ContactListener {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
 
                 // Finding out which of the fixtures is a Player and Coin.
+                // TODO: Extract method
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
                 for (Goal goal : gameModel.getGoals()) {
                     if (goal.getBody().equals(c.getBody())) {
                         goal.onHit();
-                        //gameModel.setFinished(true);
                     }
                 }
             }
