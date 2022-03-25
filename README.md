@@ -43,4 +43,4 @@ This project is created by:
 
 addional credits:
 - tileSet:
-    - Diego del Solar or "Shackhal" for [Multi_Platformer_Tileset_v2](https://shackhal.itch.io/multi-platformer-tileset)
+    - Diego del Solar/"Shackhal" for [Multi_Platformer_Tileset_v2](https://shackhal.itch.io/multi-platformer-tileset)
