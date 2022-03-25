@@ -31,7 +31,7 @@ Gruppe 1
 
 - Vi ikke visste at å lage referat var noe vi skulle gjøre før oblig 2, 3 og 4 ble lagt ut, så vi har derfor ikke lagd referater til møter annet enn tilfeldige ting vi har skrevet i discord chatten vår.
 
-LEGG TIL MØTEREFERAT
+  Link til [møte referater](src/main/resources/meetingReports.md).
 
 - Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt? (se spørsmål 2)
 
@@ -126,7 +126,7 @@ Det er også deler av prosjektet som tar mye tid, men som kanskje ikke er like n
 
 - For hvert krav dere jobber med, må dere lage 1) ordentlige brukerhistorier, 2) akseptansekriterier og 3) arbeidsoppgaver. Husk at akseptansekriterier ofte skrives mer eller mindre som tester
 
-LEGG TIL BRUKERHISTORIER
+Klikk her for å se [brukerhistoriene](src/main/resources/UserStories.md).
 
 - Vi har skrevet en del brukerhistorier, må skrive til siste MVP punkter
 
@@ -146,16 +146,19 @@ Evt. tekst / kommentarer til koden kan dere putte i en egen ## Kode-seksjon i De
 
 - Commitmeldingene har blitt mer beskrivende/utfyllende
 - Nytteverdien til brukerhistoriene har blitt oppdatert
-- Lagt til noen manuelle tester
-- Laget README som inneholder dokumentasjon om prosjektoppsett
+- Lagt til noen [manuelle tester](src/main/resources/BugReplication.md)
+- Laget [README](README.md) som inneholder dokumentasjon om prosjektoppsett
 
-- Lag og lever et[klassediagram](https://en.wikipedia.org/wiki/Class_diagram). (Hvis det er veldig mange klasser, lager dere for de viktigste.) Det er ikke nødvendig å ta med alle metoder og feltvariabler med mindre dere anser dem som viktige for helheten. (Eclipse har[forskjellige verktøy for dette](https://marketplace.eclipse.org/category/free-tagging/class-diagram).)
+- Lag og lever et klassediagram. (Hvis det er veldig mange klasser, lager dere for de viktigste.) Det er ikke nødvendig å ta med alle metoder og feltvariabler med mindre dere anser dem som viktige for helheten. (Eclipse har forskjellige verktøy for dette)
+  
+  Link til [klassdiagram](src/main/resources/ClassDiagram.uml).
+ 
 - Kodekvalitet og testdekning vektlegges. Dersom dere ikke har automatiske tester for GUI-et, lager dere manuelle tester som gruppelederne kan kjøre basert på akseptansekriteriene.
 
-- Har skrevet manuelle tester.
+- Har skrevet [manuelle tester](src/main/resources/BugReplication.md).
 - Har også fokusert mye på kodekvalitet
 
-- Statiske analyseverktøy som[SpotBugs](https://spotbugs.github.io/) eller[SonarQube](https://www.sonarqube.org/) kan hjelpe med å finne feil dere ikke tenker på. Hvis dere prøver det, skriv en kort oppsummering av hva dere fant / om det var nyttig.
+- Statiske analyseverktøy som SpotBugs eller SonarQube kan hjelpe med å finne feil dere ikke tenker på. Hvis dere prøver det, skriv en kort oppsummering av hva dere fant / om det var nyttig.
 
 - Vi har sett på SpotBugs, men vi har ikke hatt tid til å se ordentlig på det enda. Vi tenker å se på det i fremtiden
 
