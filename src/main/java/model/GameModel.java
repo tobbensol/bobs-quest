@@ -123,7 +123,7 @@ public class GameModel {
         return true;
     }
 
-    private void restart(){
+    public void restart(){
         if (levelCompleted){
             level++;
             setLevelCompleted(false);

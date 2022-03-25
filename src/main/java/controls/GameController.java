@@ -17,6 +17,10 @@ public class GameController {
             Gdx.app.exit();
         }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            gameModel.restart();
+        }
+
         if (gameModel.getState() == GameState.STARTUP) {
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
                 gameModel.setNumPlayers(1);
