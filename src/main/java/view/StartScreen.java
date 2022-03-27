@@ -33,12 +33,16 @@ public class StartScreen implements Screen {
         table.setFillParent(true);
 
         Label welcomeLabel = new Label("PLATFORM GAME", font);
+        Label playerLabel = new Label("Choose Number of Players (1-3)", font);
         Label playLabel = new Label("Click SPACE to Play", font);
 
         welcomeLabel.setFontScale(4f);
+        playerLabel.setFontScale(2f);
         playLabel.setFontScale(2f);
 
         table.add(welcomeLabel).expandX();
+        table.row();
+        table.add(playerLabel).expandX().padTop(10f);
         table.row();
         table.add(playLabel).expandX().padTop(10f);
 

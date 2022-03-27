@@ -18,7 +18,7 @@ import view.StartScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel {
+public class GameModel implements ControllableModel{
 
     private World world;
     private TiledMapHelper tiledMapHelper;
@@ -28,12 +28,12 @@ public class GameModel {
     public boolean levelCompleted;
     private boolean reload = false;
 
-    private static final int numPlayers = 3; // TODO: Variable number of players
+    private int numPlayers;
     private static final int numControllers = 3;
     private final GameObjectFactory factory = new GameObjectFactory(this);
     private final List<String> levels;
     private int level = 0;
-    private final List<Controller> controllers;
+    private List<Controller> controllers;
     private List<Player> players;
     private List<Goomba> goombas;
     private List<Coin> coins;
@@ -41,11 +41,13 @@ public class GameModel {
     private List<Goal> goals;
 
     private GameState state;
-    private final GameController gameController;
+    private GameController gameController;
+
 
 
     public GameModel() {
         state = GameState.STARTUP;
+        this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
         levels.add("level1");
@@ -74,7 +76,7 @@ public class GameModel {
     }
 
     private void createWorld(String level) {
-        this.world = new World(new Vector2(0, -10f), false);
+        this.world = new World( new Vector2( 0 , -10f ), false );
         this.world.setContactListener(new GameContactListener(this));
         this.tiledMapHelper = new TiledMapHelper(this, level);
     }
@@ -83,24 +85,24 @@ public class GameModel {
         players = new ArrayList<>();
         List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints("Player");
         for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
-            players.add(new Player("Player", this, spawnPoints.get(i).x, spawnPoints.get(i).y));
+            players.add(new Player("Player",  this, spawnPoints.get(i).x, spawnPoints.get(i).y));
         }
         System.out.println(players);
 
         goombas = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goomba")) {
+        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goomba")){
             goombas.add((Goomba) factory.create("Goomba", v.x, v.y));
         }
         System.out.println(goombas);
 
         coins = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Coin")) {
+        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Coin")){
             coins.add((Coin) factory.create("Coin", v.x, v.y));
         }
         System.out.println(coins);
 
         goals = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goal")) {
+        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goal")){
             goals.add((Goal) factory.create("Goal", v.x, v.y));
         }
         System.out.println(goals);
@@ -114,18 +116,6 @@ public class GameModel {
             }
         }
         return true;
-    }
-
-    private void restart() {
-        if (levelCompleted) {
-            level++;
-            setLevelCompleted(false);
-        }
-        world.dispose();
-        createWorld(levels.get(level));
-        createObjects();
-        score = 0;
-        reload = true;
     }
 
     public void update() {
@@ -142,7 +132,7 @@ public class GameModel {
             restart();
         }
 
-        world.step(1 / 60f, 6, 2);
+        world.step(1/60f, 6, 2);
 
         for (int i = 0; i < getPlayers().size(); i++) {
             controllers.get(i).inputListener(players.get(i));
@@ -166,7 +156,7 @@ public class GameModel {
         score += value;
     }
 
-    public void setLevelCompleted(boolean value) {
+    public void setLevelCompleted(boolean value){
         levelCompleted = value;
     }
 
@@ -202,26 +192,43 @@ public class GameModel {
         return new ArrayList<>(goals);
     }
 
-    public String getLevel() {
+    public String getLevel(){
         return levels.get(level);
     }
 
-    public int getLevelIndex() {
-        return level;
-    }
-
-    public boolean getReload() {
+    public boolean getReload(){
         return reload;
     }
 
-    public void setReload(Boolean value) {
+    public void setReload(Boolean value){
         reload = value;
     }
 
+    @Override
+    public void restart(){
+        if (levelCompleted){
+            level++;
+            setLevelCompleted(false);
+        }
+        world.dispose();
+        createWorld(levels.get(level));
+        createObjects();
+        score = 0;
+        reload = true;
+    }
+
+    @Override
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+        restart();
+    }
+
+    @Override
     public GameState getState() {
         return state;
     }
 
+    @Override
     public void setState(GameState state) {
         if (state == null) {
             throw new IllegalArgumentException("Cannot set state to null.");
@@ -238,6 +245,7 @@ public class GameModel {
         this.state = state;
     }
 
+    @Override
     public void changeScreen() {
 
         switch (state) {
