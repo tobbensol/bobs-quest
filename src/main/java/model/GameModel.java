@@ -18,7 +18,7 @@ import view.StartScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel {
+public class GameModel implements ControllableModel{
 
     private World world;
     private TiledMapHelper tiledMapHelper;
@@ -28,7 +28,7 @@ public class GameModel {
     public boolean levelCompleted;
     private boolean reload = false;
 
-    private int numPlayers; // TODO: Variable number of players
+    private int numPlayers;
     private static final int numControllers = 3;
     private final GameObjectFactory factory = new GameObjectFactory(this);
     private final List<String> levels;
@@ -68,11 +68,6 @@ public class GameModel {
         controllers.add(new ArrowController());
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
-    }
-
-    public void setNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
-        restart();
     }
 
     private void createHUD() {
@@ -121,18 +116,6 @@ public class GameModel {
             }
         }
         return true;
-    }
-
-    public void restart(){
-        if (levelCompleted){
-            level++;
-            setLevelCompleted(false);
-        }
-        world.dispose();
-        createWorld(levels.get(level));
-        createObjects();
-        score = 0;
-        reload = true;
     }
 
     public void update() {
@@ -213,10 +196,6 @@ public class GameModel {
         return levels.get(level);
     }
 
-    public int getLevelIndex() {
-        return level;
-    }
-
     public boolean getReload(){
         return reload;
     }
@@ -225,10 +204,31 @@ public class GameModel {
         reload = value;
     }
 
+    @Override
+    public void restart(){
+        if (levelCompleted){
+            level++;
+            setLevelCompleted(false);
+        }
+        world.dispose();
+        createWorld(levels.get(level));
+        createObjects();
+        score = 0;
+        reload = true;
+    }
+
+    @Override
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+        restart();
+    }
+
+    @Override
     public GameState getState() {
         return state;
     }
 
+    @Override
     public void setState(GameState state) {
         if (state == null) {
             throw new IllegalArgumentException("Cannot set state to null.");
@@ -245,6 +245,7 @@ public class GameModel {
         this.state = state;
     }
 
+    @Override
     public void changeScreen() {
 
         switch (state) {

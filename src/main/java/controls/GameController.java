@@ -2,14 +2,15 @@ package controls;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import model.ControllableModel;
 import model.GameModel;
 import model.GameState;
 
 public class GameController {
-    private GameModel gameModel;
+    private ControllableModel model;
 
-    public GameController(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public GameController(ControllableModel model) {
+        this.model = model;
     }
 
     public void inputListener(){
@@ -18,29 +19,29 @@ public class GameController {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            gameModel.restart();
+            model.restart();
         }
 
-        if (gameModel.getState() == GameState.STARTUP) {
+        if (model.getState() == GameState.STARTUP) {
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-                gameModel.setNumPlayers(1);
+                model.setNumPlayers(1);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-                gameModel.setNumPlayers(2);
+                model.setNumPlayers(2);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
-                gameModel.setNumPlayers(3);
+                model.setNumPlayers(3);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                gameModel.setState(GameState.ACTIVE);
-                gameModel.changeScreen();
+                model.setState(GameState.ACTIVE);
+                model.changeScreen();
             }
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (gameModel.getState() == GameState.GAME_OVER || gameModel.getState() == GameState.NEXT_LEVEL) {
-                gameModel.setState(GameState.ACTIVE);
-                gameModel.changeScreen();
+            if (model.getState() == GameState.GAME_OVER || model.getState() == GameState.NEXT_LEVEL) {
+                model.setState(GameState.ACTIVE);
+                model.changeScreen();
             }
         }
 
