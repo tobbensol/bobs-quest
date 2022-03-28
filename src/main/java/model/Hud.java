@@ -14,15 +14,15 @@ import launcher.Boot;
 public class Hud {
     public Stage stage;
     private final Viewport viewport;
-    private final GameModel gameModel;
+    private final Level level;
 
     private static Integer score;
 
     private static Label scoreLabel;
     private final Label levelLabel;
 
-    public Hud(SpriteBatch batch, GameModel gameModel) {
-        this.gameModel = gameModel;
+    public Hud(SpriteBatch batch, Level level) {
+        this.level = level;
         score = 0;
 
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
@@ -32,8 +32,8 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        scoreLabel = new Label(score + "/" + gameModel.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label(sentenceCase(gameModel.getLevel()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label(score + "/" + level.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(sentenceCase(level.getLevelName()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         scoreLabel.setFontScale(2f);
         levelLabel.setFontScale(2f);
@@ -48,10 +48,10 @@ public class Hud {
     }
 
     public void update() {
-        score = gameModel.getScore();
-        scoreLabel.setText(score + "/" + gameModel.getCoins().size());
+        score = level.getScore();
+        scoreLabel.setText(score + "/" + level.getCoins().size());
         // TODO maybe not do this every frame
-        levelLabel.setText(sentenceCase(gameModel.getLevel()));
+        levelLabel.setText(sentenceCase(level.getLevelName()));
     }
 
     //from https://dirask.com/posts/Java-convert-camelCase-to-Sentence-Case-jE6PZ1

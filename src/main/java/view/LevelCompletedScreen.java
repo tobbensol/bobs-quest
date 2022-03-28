@@ -32,7 +32,7 @@ public class LevelCompletedScreen implements Screen {
         table.center();
         table.setFillParent(true);
 
-        String level = gameModel.getLevel().replaceAll("([A-Z, 0-9])", " $1").toUpperCase();
+        String level = gameModel.getLevel().getLevelName().replaceAll("([A-Z, 0-9])", " $1").toUpperCase();
         Label gameCompletedLabel = new Label(level + " COMPLETED!", font);
         Label nextLevelLabel = new Label("Click SPACE to Play Next Level", font);
 
