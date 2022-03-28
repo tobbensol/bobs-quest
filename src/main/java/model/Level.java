@@ -1,5 +1,6 @@
 package model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,7 @@ import java.util.List;
 public class Level {
 
     private World world;
+    private String levelName;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
     private GameModel model;
@@ -21,32 +23,29 @@ public class Level {
     private List<Goomba> goombas;
     private List<Coin> coins;
     private List<Goal> goals;
-    private Integer score;
-    private final String levelName;
-    private Hud hud;
+    private Integer score = 0;
 
 
     public Level(String levelName, GameModel model) {
         this.model = model;
-        factory = new GameObjectFactory(model);
-        this.levelName = levelName;
+        factory = new GameObjectFactory(this);
+        this.levelName = CameltoSentance(levelName);
 
-        createWorld(this.levelName);
+        createWorld(levelName);
         createObjects();
-        createHUD();
     }
 
     private void createWorld(String level) {
         this.world = new World(new Vector2( 0 , -10f ), false);
-        this.world.setContactListener(new GameContactListener(model));
-        this.tiledMapHelper = new TiledMapHelper(model, level);
+        this.world.setContactListener(new GameContactListener(this));
+        this.tiledMapHelper = new TiledMapHelper(this, level);
     }
 
     private void createObjects() {
         players = new ArrayList<>();
         List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints("Player");
-        for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
-            players.add(new Player("Player",  model, spawnPoints.get(i).x, spawnPoints.get(i).y));
+        for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) { // TODO: Might produce IndexOutOfBoundsException
+            players.add(new Player("Player",  this, spawnPoints.get(i).x, spawnPoints.get(i).y));
         }
         System.out.println(players);
 
@@ -67,14 +66,6 @@ public class Level {
             goals.add((Goal) factory.create("Goal", v.x, v.y));
         }
         System.out.println(goals);
-    }
-
-    private void createHUD() {
-        hud = new Hud(new SpriteBatch(), this);
-    }
-
-    public void updateHUD() {
-        hud.update();
     }
 
     public List<Goomba> getGoombas() {
@@ -101,10 +92,6 @@ public class Level {
         return score;
     }
 
-    public String getLevelName() {
-        return levelName;
-    }
-
     public void setLevelCompleted(boolean value){
         levelCompleted = value;
     }
@@ -120,5 +107,23 @@ public class Level {
 
     public void increaseScore(int value) {
         score += value;
+    }
+
+    public float getDelta() {
+        return model.getDelta();
+    }
+
+    //from https://dirask.com/posts/Java-convert-camelCase-to-Sentence-Case-jE6PZ1
+    private String CameltoSentance(String text){
+        if (!text.equals("")) {
+            String result = text.replaceAll("([A-Z, 0-9])", " $1");
+            return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return levelName;
     }
 }

@@ -3,12 +3,8 @@ package model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import controls.*;
 import launcher.Boot;
-import model.helper.TiledMapHelper;
 import model.objects.*;
 import view.GameOverScreen;
 import view.GameScreen;
@@ -24,13 +20,15 @@ public class GameModel implements ControllableModel{
 
     private boolean reload = false;
 
-    private final List<Level> levels;
-    private int level = 0;
+    private final List<String> levels;
+    private int levelNR = 0;
+    Level level;
     private List<Controller> controllers;
     private int numPlayers;
     private int numControllers;
     private GameState state;
     private GameController gameController;
+    private Hud hud;
 
 
 
@@ -39,11 +37,11 @@ public class GameModel implements ControllableModel{
         this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
-        levels.add(new Level("level1", this));
-//        levels.add("level2");
-//        levels.add("platformTest");
-//        levels.add("slopeTest");
-//        levels.add("CameraTest");
+        levels.add("level1");
+        levels.add("level2");
+        levels.add("platformTest");
+        levels.add("slopeTest");
+        levels.add("CameraTest");
 
         gameController = new GameController(this);
 
@@ -52,6 +50,10 @@ public class GameModel implements ControllableModel{
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
+
+        level = new Level(levels.get(levelNR), this);
+
+        createHUD();
     }
 
     private boolean gameOver() {
@@ -90,15 +92,15 @@ public class GameModel implements ControllableModel{
             goomba.update();
         }
 
-        getLevel().updateHUD();
+        hud.update();
+    }
+
+    private void createHUD() {
+        hud = new Hud(new SpriteBatch(), level);
     }
 
     public float getDelta() {
         return Gdx.graphics.getDeltaTime();
-    }
-
-    public Level getLevel(){
-        return levels.get(level);
     }
 
     public boolean getReload(){
@@ -111,15 +113,10 @@ public class GameModel implements ControllableModel{
 
     @Override
     public void restart(){
-        if (levelCompleted){
-            level++;
-            setLevelCompleted(false);
+        if (getLevel().isCompleted()){
+            levelNR++;
         }
-        world.dispose();
-        createWorld(levels.get(level));
-        createObjects();
-        score = 0;
-        reload = true;
+        level = new Level(levels.get(levelNR), this);
     }
 
     @Override
@@ -162,4 +159,18 @@ public class GameModel implements ControllableModel{
 
     }
 
+    public Level getLevel(){
+        return level;
+    }
+
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
+    public int getNumControllers() {
+        return numControllers;
+    }
+    public Hud getHud() {
+        return hud;
+    }
 }
