@@ -54,7 +54,10 @@ public class GameModel implements ControllableModel{
         levels.add("level2");
         levels.add("platformTest");
         levels.add("slopeTest");
-        levels.add("CameraTest");
+        levels.add("cameraTest");
+        levels.add("goombaTest");
+        levels.add("coinTest");
+        levels.add("sizeTest");
 
         createWorld(levels.get(level));
 
