@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
-import model.GameModel;
+import model.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.List;
 public class TiledMapHelper {
 
     private final TiledMap tiledMap;
-    private final GameModel gameModel;
+    private final Level level;
 
-    public TiledMapHelper(GameModel gameModel, String level) {
+    public TiledMapHelper(Level level, String levelID) {
         // OBS: Map can't be infinite
         // OBS: Layers can't be in folders
-        this.gameModel = gameModel;
-        tiledMap = new TmxMapLoader().load("maps/" + level + ".tmx");
+        this.level = level;
+        tiledMap = new TmxMapLoader().load("maps/" + levelID + ".tmx");
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapEnvironment(getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
@@ -46,7 +46,6 @@ public class TiledMapHelper {
         } catch (NullPointerException e) {
             throw new NullPointerException("Objects with type '" + objects + "' doesn't exist.");
         }
-        System.out.println(mapObjects.iterator().hasNext());
         return mapObjects;
     }
 
@@ -60,7 +59,7 @@ public class TiledMapHelper {
         for (MapObject mapObject : mapObjects) {
             if (mapObject instanceof PolygonMapObject) {
                 Shape shape = BodyHelper.createShape((PolygonMapObject) mapObject);
-                BodyHelper.createEnvironmentBody(shape, gameModel.getWorld(), contactType, categoryBits, maskBits, isSensor);
+                BodyHelper.createEnvironmentBody(shape, level.getWorld(), contactType, categoryBits, maskBits, isSensor);
             }
         }
     }

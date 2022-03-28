@@ -3,6 +3,7 @@ package model.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import model.GameModel;
+import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
@@ -11,8 +12,8 @@ public class Coin extends StaticObject {
 
     private boolean isDestroyed = false;
 
-    public Coin(String name, GameModel gameModel, float x, float y) {
-        super(name + " " + (gameModel.getCoins().size() + 1), gameModel, Constants.TILE_SIZE, Constants.TILE_SIZE, x, y, 0, ContactType.COIN, Constants.COIN_BIT, Constants.INTERACTIVE_MASK_BITS, true, false);
+    public Coin(String name, Level level, float x, float y) {
+        super(name + " " + (level.getCoins().size() + 1), level, Constants.TILE_SIZE, Constants.TILE_SIZE, x, y, 0, ContactType.COIN, Constants.COIN_BIT, Constants.INTERACTIVE_MASK_BITS, true, false);
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
     }
 
@@ -27,7 +28,7 @@ public class Coin extends StaticObject {
     }
 
     public void onHit() {
-        gameModel.getLevel().increaseScore(1);
+        level.increaseScore(1);
         BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
         isDestroyed = true;
     }

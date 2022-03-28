@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import model.GameModel;
+import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
@@ -38,8 +39,8 @@ public class Player extends JumpableObject {
 
     private final ArrayList<TextureRegion> frames;
 
-    public Player(String name, GameModel gameModel, float x, float y) {
-        super(name + " " + (gameModel.getPlayers().size() + 1), gameModel, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
+    public Player(String name, Level level, float x, float y) {
+        super(name + " " + (level.getPlayers().size() + 1), level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
         texturePath = "Multi_Platformer_Tileset_v2/Players/Small_Mario.png";
         texture = new Texture(texturePath);
 
@@ -62,7 +63,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(gameModel.getDelta()), x, y, width, height);
+        batch.draw(getFrame(level.getDelta()), x, y, width, height);
     }
 
 
