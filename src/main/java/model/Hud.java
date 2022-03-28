@@ -12,14 +12,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 
 public class Hud {
-    public Stage stage;
+    private static Integer score;
+    private static Label scoreLabel;
     private final Viewport viewport;
     private final Level level;
-
-    private static Integer score;
-
-    private static Label scoreLabel;
     private final Label levelLabel;
+    public Stage stage;
 
     public Hud(SpriteBatch batch, Level level) {
         this.level = level;

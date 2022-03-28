@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import model.GameModel;
 import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
@@ -14,30 +13,17 @@ import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final int MAX_VELOCITY = 2;
-
+    private static final float X_VELOCITY = 0.35f;
+    private static final float Y_VELOCITY = 1.3f;
+    private final ArrayList<TextureRegion> frames;
+    protected State currentState;
+    protected State previousState;
     //TODO these should be in a parent class
     private boolean rightCollision = false;
     private boolean leftCollision = false;
     //not used yet, but can be useful in the future???
     private boolean headCollision = false;
-
-    private static final float X_VELOCITY = 0.35f;
-    private static final float Y_VELOCITY = 1.3f;
     private int hp;
-
-    public enum State {
-        STANDING,
-        WALKING,
-        JUMPING,
-        FALLING,
-        SLIDING,
-        DEAD
-    }
-
-    protected State currentState;
-    protected State previousState;
-
-    private final ArrayList<TextureRegion> frames;
 
     public Player(String name, Level level, float x, float y) {
         super(name + " " + (level.getPlayers().size() + 1), level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
@@ -65,7 +51,6 @@ public class Player extends JumpableObject {
     public void render(SpriteBatch batch) {
         batch.draw(getFrame(level.getDelta()), x, y, width, height);
     }
-
 
     @Override
     public void jump(float delta) {
@@ -195,6 +180,15 @@ public class Player extends JumpableObject {
 
     public int getHp() {
         return hp;
+    }
+
+    public enum State {
+        STANDING,
+        WALKING,
+        JUMPING,
+        FALLING,
+        SLIDING,
+        DEAD
     }
 
 }

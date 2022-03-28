@@ -5,7 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import controls.*;
 import launcher.Boot;
-import model.objects.*;
+import model.objects.Goomba;
+import model.objects.Player;
 import view.GameOverScreen;
 import view.GameScreen;
 import view.LevelCompletedScreen;
@@ -14,22 +15,19 @@ import view.StartScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel implements ControllableModel{
+public class GameModel implements ControllableModel {
 
-
-
-    private boolean reload = false;
 
     private final List<String> levels;
-    private int levelNR = 0;
+    private final List<Controller> controllers;
+    private final int numControllers;
+    private final GameController gameController;
     Level level;
-    private List<Controller> controllers;
+    private boolean reload = false;
+    private int levelNR = 0;
     private int numPlayers;
-    private int numControllers;
     private GameState state;
-    private GameController gameController;
     private Hud hud;
-
 
 
     public GameModel() {
@@ -79,7 +77,7 @@ public class GameModel implements ControllableModel{
             restart();
         }
 
-        getLevel().getWorld().step(1/60f, 6, 2);
+        getLevel().getWorld().step(1 / 60f, 6, 2);
 
         for (int i = 0; i < getLevel().getPlayers().size(); i++) {
             controllers.get(i).inputListener(getLevel().getPlayers().get(i));
@@ -103,26 +101,20 @@ public class GameModel implements ControllableModel{
         return Gdx.graphics.getDeltaTime();
     }
 
-    public boolean getReload(){
+    public boolean getReload() {
         return reload;
     }
 
-    public void setReload(Boolean value){
+    public void setReload(Boolean value) {
         reload = value;
     }
 
     @Override
-    public void restart(){
-        if (getLevel().isCompleted()){
+    public void restart() {
+        if (getLevel().isCompleted()) {
             levelNR++;
         }
         level = new Level(levels.get(levelNR), this);
-    }
-
-    @Override
-    public void setNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
-        restart();
     }
 
     @Override
@@ -159,7 +151,7 @@ public class GameModel implements ControllableModel{
 
     }
 
-    public Level getLevel(){
+    public Level getLevel() {
         return level;
     }
 
@@ -167,9 +159,16 @@ public class GameModel implements ControllableModel{
         return numPlayers;
     }
 
+    @Override
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+        restart();
+    }
+
     public int getNumControllers() {
         return numControllers;
     }
+
     public Hud getHud() {
         return hud;
     }

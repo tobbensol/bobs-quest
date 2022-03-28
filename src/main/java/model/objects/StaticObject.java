@@ -2,7 +2,6 @@ package model.objects;
 
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import model.GameModel;
 import model.Level;
 import model.helper.ContactType;
 

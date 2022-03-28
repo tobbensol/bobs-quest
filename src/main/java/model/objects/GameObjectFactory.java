@@ -1,6 +1,5 @@
 package model.objects;
 
-import model.GameModel;
 import model.Level;
 
 public class GameObjectFactory {
@@ -22,7 +21,7 @@ public class GameObjectFactory {
     public GameObject create(String gameObject, float x, float y) {
         String objectString = gameObject.toUpperCase();
         return switch (objectString) {
-            case "COIN" -> new Coin(objectString, level , x, y);
+            case "COIN" -> new Coin(objectString, level, x, y);
             case "PLAYER" -> new Player(objectString, level, x, y);
             case "GOOMBA" -> new Goomba(objectString, level, x, y);
             case "GOAL" -> new Goal(objectString, level, x, y);

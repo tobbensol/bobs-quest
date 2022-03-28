@@ -4,16 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import model.GameModel;
 import model.Level;
 import model.helper.Constants;
 import model.helper.ContactType;
 
 public class Goomba extends MovableObject {
 
+    private static final int attack = 40;
     private final TextureRegion textureRegion;
     private int numMoves;
-    private static final int attack = 40;
 
     public Goomba(String name, Level level, float x, float y) {
         super(name + " " + (level.getGoombas().size() + 1), level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
@@ -22,6 +21,10 @@ public class Goomba extends MovableObject {
         textureRegion = new TextureRegion(getTexture(), Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE);
 
         numMoves = 0;
+    }
+
+    public static int getAttack() {
+        return attack;
     }
 
     @Override
@@ -51,9 +54,5 @@ public class Goomba extends MovableObject {
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(textureRegion, x, y, width, height);
-    }
-
-    public static int getAttack() {
-        return attack;
     }
 }

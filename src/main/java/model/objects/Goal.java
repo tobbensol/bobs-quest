@@ -2,7 +2,6 @@ package model.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import model.GameModel;
 import model.Level;
 import model.helper.Constants;
 import model.helper.ContactType;

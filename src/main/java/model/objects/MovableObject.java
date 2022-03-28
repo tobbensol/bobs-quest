@@ -1,6 +1,5 @@
 package model.objects;
 
-import model.GameModel;
 import model.Level;
 import model.helper.Constants;
 import model.helper.ContactType;
