@@ -33,7 +33,7 @@ public class Hud {
         table.setFillParent(true);
 
         scoreLabel = new Label(score + "/" + level.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label(sentenceCase(level.getLevelName()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(level.toString(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         scoreLabel.setFontScale(2f);
         levelLabel.setFontScale(2f);
@@ -51,15 +51,6 @@ public class Hud {
         score = level.getScore();
         scoreLabel.setText(score + "/" + level.getCoins().size());
         // TODO maybe not do this every frame
-        levelLabel.setText(sentenceCase(level.getLevelName()));
-    }
-
-    //from https://dirask.com/posts/Java-convert-camelCase-to-Sentence-Case-jE6PZ1
-    static String sentenceCase(String text) {
-        if (!text.equals("")) {
-            String result = text.replaceAll("([A-Z, 0-9])", " $1");
-            return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
-        }
-        return null;
+        levelLabel.setText(level.toString());
     }
 }
