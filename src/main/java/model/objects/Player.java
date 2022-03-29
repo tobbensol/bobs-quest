@@ -49,7 +49,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(level.getDelta()), x, y, width, height);
+        batch.draw(getFrame(), x, y, width, height);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class Player extends JumpableObject {
      *
      * @return the correct texture-region for the current state the player is in.
      */
-    public TextureRegion getFrame(float dt) {
+    public TextureRegion getFrame() {
         currentState = getState();
 
         // Specify which texture region corresponding to which state.

@@ -1,5 +1,6 @@
 package model;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,6 +16,7 @@ public class Level {
     private final GameModel model;
     private final GameObjectFactory factory;
     private World world;
+    private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
     private List<Player> players;
@@ -25,12 +27,13 @@ public class Level {
 
 
     public Level(String levelName, GameModel model) {
+        this.levelName = camelToSentence(levelName);
         this.model = model;
         factory = new GameObjectFactory(this);
-        this.levelName = CameltoSentance(levelName);
 
         createWorld(levelName);
         createObjects();
+        createHUD();
     }
 
     private void createWorld(String level) {
@@ -66,6 +69,18 @@ public class Level {
         System.out.println(goals);
     }
 
+    private void createHUD() {
+        hud = new Hud(new SpriteBatch(), this);
+    }
+
+    public void updateHUD() {
+        hud.update();
+    }
+
+    public Hud getHud() {
+        return hud;
+    }
+
     public List<Goomba> getGoombas() {
         return new ArrayList<>(goombas);
     }
@@ -98,7 +113,6 @@ public class Level {
         return tiledMapHelper.setupMap();
     }
 
-
     public boolean isCompleted() {
         return levelCompleted;
     }
@@ -107,12 +121,8 @@ public class Level {
         score += value;
     }
 
-    public float getDelta() {
-        return model.getDelta();
-    }
-
     //from https://dirask.com/posts/Java-convert-camelCase-to-Sentence-Case-jE6PZ1
-    private String CameltoSentance(String text) {
+    private String camelToSentence(String text) {
         if (!text.equals("")) {
             String result = text.replaceAll("([A-Z, 0-9])", " $1");
             return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();

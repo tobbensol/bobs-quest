@@ -89,8 +89,8 @@ public class GameScreen implements Screen {
         batch.end();
         box2DDebugRenderer.render(gameModel.getLevel().getWorld(), camera.combined.scl(Constants.PPM));
 
-        batch.setProjectionMatrix(gameModel.getHud().stage.getCamera().combined);
-        gameModel.getHud().stage.draw();
+        batch.setProjectionMatrix(gameModel.getLevel().getHud().stage.getCamera().combined);
+        gameModel.getLevel().getHud().stage.draw();
     }
 
     @Override

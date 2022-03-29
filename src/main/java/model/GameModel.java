@@ -27,8 +27,6 @@ public class GameModel implements ControllableModel {
     private int levelNR = 0;
     private int numPlayers;
     private GameState state;
-    private Hud hud;
-
 
     public GameModel() {
         state = GameState.STARTUP;
@@ -50,8 +48,6 @@ public class GameModel implements ControllableModel {
         numControllers = controllers.size();
 
         level = new Level(levels.get(levelNR), this);
-
-        createHUD();
     }
 
     private boolean gameOver() {
@@ -90,15 +86,7 @@ public class GameModel implements ControllableModel {
             goomba.update();
         }
 
-        hud.update();
-    }
-
-    private void createHUD() {
-        hud = new Hud(new SpriteBatch(), level);
-    }
-
-    public float getDelta() {
-        return Gdx.graphics.getDeltaTime();
+        getLevel().updateHUD();
     }
 
     public boolean getReload() {
@@ -167,9 +155,5 @@ public class GameModel implements ControllableModel {
 
     public int getNumControllers() {
         return numControllers;
-    }
-
-    public Hud getHud() {
-        return hud;
     }
 }
