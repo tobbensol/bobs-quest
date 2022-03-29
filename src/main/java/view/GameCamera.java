@@ -23,6 +23,26 @@ public class GameCamera extends OrthographicCamera {
         super.update();
     }
 
+    private boolean checkXOutOfBounds() {
+        float mapLeftX = gameModel.getLevel().getTopLeft().x;
+        float mapRightX = gameModel.getLevel().getBottomRight().x;
+        Vector3 nextPosition = getAveragePlayerPosition();
+        float screenLeftX = nextPosition.x - viewportWidth * zoom / 2;
+        float screenRightX = nextPosition.x + viewportWidth * zoom / 2;
+
+        return screenLeftX < mapLeftX || screenRightX  > mapRightX;
+    }
+
+private boolean checkYOutOfBounds() {
+        float mapTopY = gameModel.getLevel().getTopLeft().y;
+        float mapBottomY = gameModel.getLevel().getBottomRight().y;
+        Vector3 nextPosition = getAveragePlayerPosition();
+        float screenTopY = nextPosition.y + viewportHeight * zoom / 2;
+        float screenBottomY = nextPosition.y - viewportHeight * zoom / 2;
+
+        return screenTopY > mapTopY || screenBottomY < mapBottomY;
+}
+
     private void manageZoom() {
         ArrayList<Float> playerXs = new ArrayList<>();
 
