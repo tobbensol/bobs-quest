@@ -19,6 +19,7 @@ public class Player extends JumpableObject {
     private boolean leftCollision = false;
     //not used yet, but can be useful in the future???
     private boolean headCollision = false;
+    private boolean onPlatform = false;
 
     private static final float X_VELOCITY = 0.35f;
     private static final float Y_VELOCITY = 1.3f;
@@ -58,6 +59,25 @@ public class Player extends JumpableObject {
         super.update();
         previousState = currentState;
         currentState = getState();
+
+        handlePlatform();
+    }
+
+    private void handlePlatform() {
+        if (body.getLinearVelocity().y > 0) {
+            playerCanGoThroughPlatforms(true);
+        }
+        if (body.getLinearVelocity().y < 0 && !onPlatform && previousState != State.FALLING) {
+            playerCanGoThroughPlatforms(false);
+        }
+    }
+
+    private void playerCanGoThroughPlatforms(boolean value) {
+        if (value) {
+            BodyHelper.setCategoryFilter(body, Constants.PLAYER_NO_PLATFORM_BIT);
+        } else {
+            BodyHelper.setCategoryFilter(body, Constants.PLAYER_BIT);
+        }
     }
 
     @Override
@@ -71,6 +91,15 @@ public class Player extends JumpableObject {
         if (grounded && (previousState != State.JUMPING) && (currentState != State.FALLING)) {
             applyCenterLinearImpulse(0, delta * Y_VELOCITY);
         }
+    }
+
+    public void drop() {
+        if (onPlatform) {
+            playerCanGoThroughPlatforms(true);
+        }
+        currentState = State.FALLING;
+        this.body.applyForceToCenter(0,-Y_VELOCITY*10    , true);
+
     }
 
     @Override
@@ -98,6 +127,10 @@ public class Player extends JumpableObject {
 
     public void setHeadCollision(boolean value) {
         this.headCollision = value;
+    }
+
+    public void setOnPlatform(boolean value) {
+        this.onPlatform = value;
     }
 
     public State getCurrentState() {

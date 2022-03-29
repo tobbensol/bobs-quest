@@ -1,6 +1,7 @@
 package controls;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import model.objects.Player;
 
 public abstract class Controller {
@@ -29,6 +30,9 @@ public abstract class Controller {
         }
         if (Gdx.input.isKeyPressed(up)) {
             player.jump(delta);
+        }
+        if (Gdx.input.isKeyPressed(down)) {
+            player.drop();
         }
     }
 
