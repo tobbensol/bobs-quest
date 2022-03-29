@@ -31,6 +31,7 @@ public class GameContactListener implements ContactListener {
         leftContact(a, b, true);
         rightContact(a, b, true);
         headContact(a, b, true);
+        platformContact(a,b,true);
 
         coinContact(a, b);
         goombaContact(a, b);
@@ -53,6 +54,7 @@ public class GameContactListener implements ContactListener {
         leftContact(a, b, false);
         rightContact(a, b, false);
         headContact(a, b, false);
+        platformContact(a,b,false);
     }
 
     @Override
@@ -190,6 +192,15 @@ public class GameContactListener implements ContactListener {
             }
             if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
                 getContactPlayer(a, b).setHeadCollision(begin);
+            }
+        }
+    }
+
+    private void platformContact(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
+            Player player = getContactPlayer(a, b);
+            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
+                player.setOnPlatform(begin);
             }
         }
     }
