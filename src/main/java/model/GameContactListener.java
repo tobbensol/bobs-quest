@@ -11,10 +11,10 @@ import java.util.List;
 
 public class GameContactListener implements ContactListener {
 
-    private final GameModel gameModel;
+    private final Level level;
 
-    public GameContactListener(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public GameContactListener(Level level) {
+        this.level = level;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GameContactListener implements ContactListener {
      * @return Return the player involved in the contact.
      */
     private Player getContactPlayer(Fixture a, Fixture b) {
-        List<Player> players = gameModel.getPlayers();
+        List<Player> players = level.getPlayers();
 
         Fixture p = a.getUserData() == ContactType.PLAYER ? a : b;
 
@@ -104,7 +104,7 @@ public class GameContactListener implements ContactListener {
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
-                for (Coin coin : gameModel.getCoins()) {
+                for (Coin coin : level.getCoins()) {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
                     }
@@ -124,7 +124,7 @@ public class GameContactListener implements ContactListener {
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
-                for (Goal goal : gameModel.getGoals()) {
+                for (Goal goal : level.getGoals()) {
                     if (goal.getBody().equals(c.getBody())) {
                         goal.onHit();
                     }

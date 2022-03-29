@@ -3,17 +3,16 @@ package controls;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import model.ControllableModel;
-import model.GameModel;
 import model.GameState;
 
 public class GameController {
-    private ControllableModel model;
+    private final ControllableModel model;
 
     public GameController(ControllableModel model) {
         this.model = model;
     }
 
-    public void inputListener(){
+    public void inputListener() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }

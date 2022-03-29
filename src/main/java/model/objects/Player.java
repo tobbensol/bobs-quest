@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import model.GameModel;
+import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
@@ -13,33 +13,20 @@ import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final int MAX_VELOCITY = 2;
-
+    private static final float X_VELOCITY = 0.35f;
+    private static final float Y_VELOCITY = 1.3f;
+    private final ArrayList<TextureRegion> frames;
+    protected State currentState;
+    protected State previousState;
     //TODO these should be in a parent class
     private boolean rightCollision = false;
     private boolean leftCollision = false;
     //not used yet, but can be useful in the future???
     private boolean headCollision = false;
-
-    private static final float X_VELOCITY = 0.35f;
-    private static final float Y_VELOCITY = 1.3f;
     private int hp;
 
-    public enum State {
-        STANDING,
-        WALKING,
-        JUMPING,
-        FALLING,
-        SLIDING,
-        DEAD
-    }
-
-    protected State currentState;
-    protected State previousState;
-
-    private final ArrayList<TextureRegion> frames;
-
-    public Player(String name, GameModel gameModel, float x, float y) {
-        super(name + " " + (gameModel.getPlayers().size() + 1), gameModel, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
+    public Player(String name, Level level, float x, float y) {
+        super(name + " " + (level.getPlayers().size() + 1), level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
         texturePath = "Multi_Platformer_Tileset_v2/Players/Small_Mario.png";
         texture = new Texture(texturePath);
 
@@ -62,9 +49,8 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(gameModel.getDelta()), x, y, width, height);
+        batch.draw(getFrame(), x, y, width, height);
     }
-
 
     @Override
     public void jump(float delta) {
@@ -133,7 +119,7 @@ public class Player extends JumpableObject {
      *
      * @return the correct texture-region for the current state the player is in.
      */
-    public TextureRegion getFrame(float dt) {
+    public TextureRegion getFrame() {
         currentState = getState();
 
         // Specify which texture region corresponding to which state.
@@ -194,6 +180,15 @@ public class Player extends JumpableObject {
 
     public int getHp() {
         return hp;
+    }
+
+    public enum State {
+        STANDING,
+        WALKING,
+        JUMPING,
+        FALLING,
+        SLIDING,
+        DEAD
     }
 
 }

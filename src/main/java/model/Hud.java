@@ -12,17 +12,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 
 public class Hud {
-    public Stage stage;
-    private final Viewport viewport;
-    private final GameModel gameModel;
-
     private static Integer score;
-
     private static Label scoreLabel;
+    private final Viewport viewport;
+    private final Level level;
     private final Label levelLabel;
+    public Stage stage;
 
-    public Hud(SpriteBatch batch, GameModel gameModel) {
-        this.gameModel = gameModel;
+    public Hud(SpriteBatch batch, Level level) {
+        this.level = level;
         score = 0;
 
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
@@ -32,8 +30,8 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        scoreLabel = new Label(score + "/" + gameModel.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label(sentenceCase(gameModel.getLevel()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label(score + "/" + level.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(level.toString(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         scoreLabel.setFontScale(2f);
         levelLabel.setFontScale(2f);
@@ -48,18 +46,9 @@ public class Hud {
     }
 
     public void update() {
-        score = gameModel.getScore();
-        scoreLabel.setText(score + "/" + gameModel.getCoins().size());
+        score = level.getScore();
+        scoreLabel.setText(score + "/" + level.getCoins().size());
         // TODO maybe not do this every frame
-        levelLabel.setText(sentenceCase(gameModel.getLevel()));
-    }
-
-    //from https://dirask.com/posts/Java-convert-camelCase-to-Sentence-Case-jE6PZ1
-    static String sentenceCase(String text) {
-        if (!text.equals("")) {
-            String result = text.replaceAll("([A-Z, 0-9])", " $1");
-            return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
-        }
-        return null;
+        levelLabel.setText(level.toString());
     }
 }

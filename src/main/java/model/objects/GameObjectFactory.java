@@ -1,13 +1,13 @@
 package model.objects;
 
-import model.GameModel;
+import model.Level;
 
 public class GameObjectFactory {
 
-    private final GameModel model;
+    private final Level level;
 
-    public GameObjectFactory(GameModel model) {
-        this.model = model;
+    public GameObjectFactory(Level level) {
+        this.level = level;
     }
 
     /**
@@ -21,10 +21,10 @@ public class GameObjectFactory {
     public GameObject create(String gameObject, float x, float y) {
         String objectString = gameObject.toUpperCase();
         return switch (objectString) {
-            case "COIN" -> new Coin(objectString, model, x, y);
-            case "PLAYER" -> new Player(objectString, model, x, y);
-            case "GOOMBA" -> new Goomba(objectString, model, x, y);
-            case "GOAL" -> new Goal(objectString, model, x, y);
+            case "COIN" -> new Coin(objectString, level, x, y);
+            case "PLAYER" -> new Player(objectString, level, x, y);
+            case "GOOMBA" -> new Goomba(objectString, level, x, y);
+            case "GOAL" -> new Goal(objectString, level, x, y);
             default -> null;
         };
     }

@@ -3,13 +3,10 @@ package model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import controls.*;
 import launcher.Boot;
-import model.helper.TiledMapHelper;
-import model.objects.*;
+import model.objects.Goomba;
+import model.objects.Player;
 import view.GameOverScreen;
 import view.GameScreen;
 import view.LevelCompletedScreen;
@@ -18,32 +15,18 @@ import view.StartScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel implements ControllableModel{
+public class GameModel implements ControllableModel {
 
-    private World world;
-    private TiledMapHelper tiledMapHelper;
 
-    private Hud hud;
-    private Integer score;
-    public boolean levelCompleted;
-    private boolean reload = false;
-
-    private int numPlayers;
-    private static final int numControllers = 3;
-    private final GameObjectFactory factory = new GameObjectFactory(this);
     private final List<String> levels;
-    private int level = 0;
-    private List<Controller> controllers;
-    private List<Player> players;
-    private List<Goomba> goombas;
-    private List<Coin> coins;
-
-    private List<Goal> goals;
-
+    private final List<Controller> controllers;
+    private final int numControllers;
+    private final GameController gameController;
+    Level level;
+    private boolean reload = false;
+    private int levelNR = 0;
+    private int numPlayers;
     private GameState state;
-    private GameController gameController;
-
-
 
     public GameModel() {
         state = GameState.STARTUP;
@@ -59,61 +42,19 @@ public class GameModel implements ControllableModel{
         levels.add("coinTest");
         levels.add("sizeTest");
 
-        createWorld(levels.get(level));
-
-        createObjects();
-
-        createHUD();
-
         gameController = new GameController(this);
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
-    }
+        numControllers = controllers.size();
 
-    private void createHUD() {
-        hud = new Hud(new SpriteBatch(), this);
-        score = 0;
-    }
-
-    private void createWorld(String level) {
-        this.world = new World( new Vector2( 0 , -10f ), false );
-        this.world.setContactListener(new GameContactListener(this));
-        this.tiledMapHelper = new TiledMapHelper(this, level);
-    }
-
-    private void createObjects() {
-        players = new ArrayList<>();
-        List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints("Player");
-        for (int i = 0; i < Math.min(numPlayers, numControllers); i++) { // TODO: Might produce IndexOutOfBoundsException
-            players.add(new Player("Player",  this, spawnPoints.get(i).x, spawnPoints.get(i).y));
-        }
-        System.out.println(players);
-
-        goombas = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goomba")){
-            goombas.add((Goomba) factory.create("Goomba", v.x, v.y));
-        }
-        System.out.println(goombas);
-
-        coins = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Coin")){
-            coins.add((Coin) factory.create("Coin", v.x, v.y));
-        }
-        System.out.println(coins);
-
-        goals = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goal")){
-            goals.add((Goal) factory.create("Goal", v.x, v.y));
-        }
-        System.out.println(goals);
-
+        level = new Level(levels.get(levelNR), this);
     }
 
     private boolean gameOver() {
-        for (Player player : players) {
+        for (Player player : getLevel().getPlayers()) {
             if (!player.isDead()) {
                 return false;
             }
@@ -124,7 +65,7 @@ public class GameModel implements ControllableModel{
     public void update() {
         gameController.inputListener();
 
-        if (levelCompleted) {
+        if (getLevel().isCompleted()) {
             state = GameState.NEXT_LEVEL;
             changeScreen();
             restart();
@@ -135,95 +76,36 @@ public class GameModel implements ControllableModel{
             restart();
         }
 
-        world.step(1/60f, 6, 2);
+        getLevel().getWorld().step(1 / 60f, 6, 2);
 
-        for (int i = 0; i < getPlayers().size(); i++) {
-            controllers.get(i).inputListener(players.get(i));
+        for (int i = 0; i < getLevel().getPlayers().size(); i++) {
+            controllers.get(i).inputListener(getLevel().getPlayers().get(i));
         }
-        for (Player player : getPlayers()) {
+        for (Player player : getLevel().getPlayers()) {
             player.update();
         }
 
-        for (Goomba goomba : getGoombas()) {
+        for (Goomba goomba : getLevel().getGoombas()) {
             goomba.update();
         }
 
-        hud.update();
+        getLevel().updateHUD();
     }
 
-    public OrthogonalTiledMapRenderer setupMap() {
-        return tiledMapHelper.setupMap();
-    }
-
-    public void increaseScore(Integer value) {
-        score += value;
-    }
-
-    public void setLevelCompleted(boolean value){
-        levelCompleted = value;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public World getWorld() {
-        return world;
-    }
-
-    public float getDelta() {
-        return Gdx.graphics.getDeltaTime();
-    }
-
-    public List<Player> getPlayers() {
-        return new ArrayList<>(players);
-    }
-
-    public Hud getHud() {
-        return hud;
-    }
-
-    public List<Goomba> getGoombas() {
-        return new ArrayList<>(goombas);
-    }
-
-    public List<Coin> getCoins() {
-        return new ArrayList<>(coins);
-    }
-
-    public List<Goal> getGoals() {
-        return new ArrayList<>(goals);
-    }
-
-    public String getLevel(){
-        return levels.get(level);
-    }
-
-    public boolean getReload(){
+    public boolean getReload() {
         return reload;
     }
 
-    public void setReload(Boolean value){
+    public void setReload(Boolean value) {
         reload = value;
     }
 
     @Override
-    public void restart(){
-        if (levelCompleted){
-            level++;
-            setLevelCompleted(false);
+    public void restart() {
+        if (getLevel().isCompleted()) {
+            levelNR++;
         }
-        world.dispose();
-        createWorld(levels.get(level));
-        createObjects();
-        score = 0;
-        reload = true;
-    }
-
-    @Override
-    public void setNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
-        restart();
+        level = new Level(levels.get(levelNR), this);
     }
 
     @Override
@@ -260,4 +142,21 @@ public class GameModel implements ControllableModel{
 
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
+    @Override
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+        restart();
+    }
+
+    public int getNumControllers() {
+        return numControllers;
+    }
 }

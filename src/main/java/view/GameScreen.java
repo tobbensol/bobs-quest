@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-        this.orthogonalTiledMapRenderer = gameModel.setupMap();
+        this.orthogonalTiledMapRenderer = gameModel.getLevel().setupMap();
     }
 
     /**
@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
     private void update() {
         //TODO find better way to do this?
         if (gameModel.getReload()) {
-            orthogonalTiledMapRenderer = gameModel.setupMap();
+            orthogonalTiledMapRenderer = gameModel.getLevel().setupMap();
             gameModel.setReload(false);
         }
         gameModel.update();
@@ -68,29 +68,29 @@ public class GameScreen implements Screen {
 
         batch.begin();
 
-        for (Player player : gameModel.getPlayers()) {
+        for (Player player : gameModel.getLevel().getPlayers()) {
             player.render(batch);
         }
 
-        for (Goomba goomba : gameModel.getGoombas()) {
+        for (Goomba goomba : gameModel.getLevel().getGoombas()) {
             goomba.render(batch);
         }
 
-        for (Coin coin : gameModel.getCoins()) {
+        for (Coin coin : gameModel.getLevel().getCoins()) {
             if (!coin.isDestroyed()) {
                 coin.render(batch);
             }
         }
-        for (Goal goal : gameModel.getGoals()) {
+        for (Goal goal : gameModel.getLevel().getGoals()) {
             goal.render(batch);
         }
 
 
         batch.end();
-        box2DDebugRenderer.render(gameModel.getWorld(), camera.combined.scl(Constants.PPM));
+        box2DDebugRenderer.render(gameModel.getLevel().getWorld(), camera.combined.scl(Constants.PPM));
 
-        batch.setProjectionMatrix(gameModel.getHud().stage.getCamera().combined);
-        gameModel.getHud().stage.draw();
+        batch.setProjectionMatrix(gameModel.getLevel().getHud().stage.getCamera().combined);
+        gameModel.getLevel().getHud().stage.draw();
     }
 
     @Override

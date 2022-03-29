@@ -26,7 +26,7 @@ public class GameCamera extends OrthographicCamera {
     private void manageZoom() {
         ArrayList<Float> playerXs = new ArrayList<>();
 
-        for (Player player : gameModel.getPlayers()) {
+        for (Player player : gameModel.getLevel().getPlayers()) {
             if (!player.isDead()) {
                 playerXs.add(player.getPosition().x);
             }
@@ -58,7 +58,7 @@ public class GameCamera extends OrthographicCamera {
         float averageY = 0;
         int playerCount = 0;
 
-        for (Player player : gameModel.getPlayers()) {
+        for (Player player : gameModel.getLevel().getPlayers()) {
             if (!player.isDead()) {
                 averageX += player.getPosition().x;
                 averageY += player.getPosition().y;
