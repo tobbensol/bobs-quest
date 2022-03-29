@@ -8,6 +8,7 @@ import model.helper.TiledMapHelper;
 import model.objects.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Level {
@@ -19,10 +20,7 @@ public class Level {
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
-    private List<Player> players;
-    private List<Goomba> goombas;
-    private List<Coin> coins;
-    private List<Goal> goals;
+    private HashMap<String, ArrayList<GameObject>> objectMap;
     private Integer score = 0;
 
 
@@ -30,6 +28,13 @@ public class Level {
         this.levelName = camelToSentence(levelName);
         this.model = model;
         factory = new GameObjectFactory(this);
+
+        objectMap = new HashMap<>();
+
+        objectMap.put("Player", new ArrayList<>());
+        objectMap.put("Goomba", new ArrayList<>());
+        objectMap.put("Coin", new ArrayList<>());
+        objectMap.put("Goal", new ArrayList<>());
 
         createWorld(levelName);
         createObjects();
@@ -43,30 +48,20 @@ public class Level {
     }
 
     private void createObjects() {
-        players = new ArrayList<>();
-        List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints("Player");
-        for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) { // TODO: Might produce IndexOutOfBoundsException
-            players.add(new Player("Player", this, spawnPoints.get(i).x, spawnPoints.get(i).y));
-        }
-        System.out.println(players);
+        for(String object : objectMap.keySet()){
+            if(object.equalsIgnoreCase("Player")){
+                List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints(object);
+                for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) { // TODO: Might produce IndexOutOfBoundsException
+                    objectMap.get(object).add(factory.create(object, spawnPoints.get(i).x, spawnPoints.get(i).y));
+                }
+            }
+            else{
+                for (Vector2 v : tiledMapHelper.parseMapSpawnPoints(object)) {
+                    objectMap.get(object).add(factory.create(object, v.x, v.y));
+                }
+            }
 
-        goombas = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goomba")) {
-            goombas.add((Goomba) factory.create("Goomba", v.x, v.y));
         }
-        System.out.println(goombas);
-
-        coins = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Coin")) {
-            coins.add((Coin) factory.create("Coin", v.x, v.y));
-        }
-        System.out.println(coins);
-
-        goals = new ArrayList<>();
-        for (Vector2 v : tiledMapHelper.parseMapSpawnPoints("Goal")) {
-            goals.add((Goal) factory.create("Goal", v.x, v.y));
-        }
-        System.out.println(goals);
     }
 
     private void createHUD() {
@@ -82,19 +77,35 @@ public class Level {
     }
 
     public List<Goomba> getGoombas() {
-        return new ArrayList<>(goombas);
+        List<Goomba> goombaList = new ArrayList<>();
+        for(GameObject o : objectMap.get("Goomba")){
+            goombaList.add((Goomba) o);
+        }
+        return goombaList;
     }
 
     public List<Coin> getCoins() {
-        return new ArrayList<>(coins);
+        List<Coin> coinList = new ArrayList<>();
+        for(GameObject o : objectMap.get("Coin")){
+            coinList.add((Coin) o);
+        }
+        return coinList;
     }
 
     public List<Goal> getGoals() {
-        return new ArrayList<>(goals);
+        List<Goal> goalList = new ArrayList<>();
+        for(GameObject o : objectMap.get("Goal")){
+            goalList.add((Goal) o);
+        }
+        return goalList;
     }
 
     public List<Player> getPlayers() {
-        return new ArrayList<>(players);
+        List<Player> playerList = new ArrayList<>();
+        for(GameObject o : objectMap.get("Player")){
+            playerList.add((Player) o);
+        }
+        return playerList;
     }
 
     public World getWorld() {
