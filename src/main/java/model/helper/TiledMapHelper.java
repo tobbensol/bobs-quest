@@ -29,7 +29,7 @@ public class TiledMapHelper {
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapEnvironment(getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
-        parseMapEnvironment(getMapObjects("Platforms"), ContactType.PLATFORM, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
+        parseMapEnvironment(getMapObjects("Platforms"), ContactType.PLATFORM, Constants.PLATFORM_BIT, Constants.PLATFORM_MASK_BITS, false);
         parseMapEnvironment(getMapObjects("Death"), ContactType.DEATH, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, true);
     }
 

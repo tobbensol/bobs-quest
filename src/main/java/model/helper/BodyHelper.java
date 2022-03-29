@@ -106,9 +106,9 @@ public class BodyHelper {
         shape.dispose();
     }
 
-    public static void setCategoryFilter(Body body, short filterBit) {
+    public static void setCategoryFilter(Body body, short categoryBit) {
         Filter filter = new Filter();
-        filter.categoryBits = filterBit;
+        filter.categoryBits = categoryBit;
         for (Fixture f : body.getFixtureList()) {
             f.setFilterData(filter);
         }
