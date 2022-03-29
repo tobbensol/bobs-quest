@@ -121,6 +121,14 @@ public class Level {
         return score;
     }
 
+    public Vector2 getTopLeft() {
+        return topLeft;
+    }
+
+    public Vector2 getBottomRight() {
+        return bottomRight;
+    }
+
     public void setLevelCompleted(boolean value) {
         levelCompleted = value;
     }
