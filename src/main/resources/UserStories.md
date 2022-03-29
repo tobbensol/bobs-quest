@@ -210,3 +210,15 @@
       - La GameController sette antall spillere i GameModel klassen.
         - Sette antall spillere i GameModel til en standardverdi (1 spiller).
         - Lage en metode som endrer denne verdien.
+
+### Muligheten for at spillere kan hoppe opp gjennom og droppe ned gjennom plattformer:
+
+- Som spiller ønsker jeg muligheten for å kunne hoppe opp gjennom og droppe ned gjennom plattformer for å gi spilleren flere muligheter for å bevege seg i spillet.
+  - Akseptansekriterier:
+    - Spillere skal kunne hopppe opp gjennom plattformer uten å kollidere med plattformens sin body. Spilleren må kunne hoppe upåvirket gjennom platformen.
+    - Når spilleren står oppå plattformen, skal den ved hjelp av å trykke på en knapp kunne droppe ned gjennom plattformen. Det er kun når spilleren trykker på knappen at spilleren skal ha muligheten til dette.
+    - Funksjonaliteten skal virke individuelt på de ulike spillerne, så dersom flere spillere står oppå plattformen, så skal bare spilleren som trykker på knappen droppe ned gjennom plattformen.
+  - Arbeidsoppgaver:
+    - Sjekke kollisjon mellom spillerens fot og plattformer, og deretter sette en variabel i Player klassen for å indikere at spilleren befinner seg på en plattform.
+    - Lage en ny Category Bit for spiller som ikke kolliderer med Mask Bits-ene til Platform.
+    - Lage en metode for å ta seg av logikken når man trykker på knapp ned. (Bruk setCategoryFilter() metoden fra BodyHelper klassen til å implementere logikken)

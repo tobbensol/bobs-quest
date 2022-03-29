@@ -64,6 +64,41 @@
     - Status:
         - Fixed
         - Feleted all the bodies in the world when reloading the level.
+        
+## Manuel Tests
+
+- Player can jump up through platforms
+  - How to replicate:
+    - Move a player underneath a platform and jump (press up).
+    - The player should jump up through the platform (and not collide).
+    - The player should be able to stand at the top of the platform without falling down through the platform. Platform should feel solid.
+  - Reasons it might not work:
+    - When trying to change the Category Bit (on/off switch that lets the player move through the platform without colliding), it might not change the Category Bit to the desired Bit or the Mask Bits for the different objects are wrong.
+  - Status:
+    - It works.
 
 
-- 
+- Player can drop down through platforms
+    - How to replicate:
+        - Move a player on top of a platform. The player should stand at the top of the platform without falling down through the platform. Platform should feel solid.
+        - Press down.
+        - The player should now drop through the platform and land on the surface underneath. 
+        - Move the player on top of the platform again and try again.
+    - Reasons it might not work:
+        - When trying to change the Category Bit (on/off switch that lets the player move through the platform without colliding), it might not change the Category Bit to the desired Bit or the Mask Bits for the different objects are wrong.
+    - Status:
+        - It works.
+
+
+- A player jumping/dropping through a platform should not affect other players on/or off the same platform.
+    - How to replicate:
+        - Spawn multiple players (two or three) when starting the game.
+        - Move all the players on top of a platform player on top of a platform. Make sure that the platform feel solid (not falling through).
+        - Press down with one of the players. This should just affect the player performing the action. The rest should stand on top of the players.
+        - For the player dropping underneath. Try jumping back up. The player should be able to jump through the platform while the other players are still standing at the platform.
+        - Repeat this with the other players.
+    - Reasons it might not work:
+        - When changing the Category Bit for a player (on/off switch that lets the player move through the platform without colliding), it might set the Category Bit for all players. 
+    - Status:
+        - It works.
+  
