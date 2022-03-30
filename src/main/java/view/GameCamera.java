@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
+import model.objects.CameraWall;
 import model.objects.Player;
 
 import java.util.ArrayList;
@@ -22,6 +23,15 @@ public class GameCamera extends OrthographicCamera {
         manageZoom();
         position.set(getNextCameraPosition(getAveragePlayerPosition()));
         super.update();
+        moveCameraWalls();
+    }
+
+    private void moveCameraWalls() {
+        CameraWall wall1 = gameModel.getLevel().getCameraWalls().get(0);
+        CameraWall wall2 = gameModel.getLevel().getCameraWalls().get(1);
+
+        wall1.setPosition((position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2) / 100, position.y / 100);
+        wall2.setPosition((position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2) / 100, position.y / 100);
     }
 
     private Vector3 getNextCameraPosition(Vector3 position) {
