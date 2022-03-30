@@ -17,8 +17,9 @@ public class Constants {
     public static final short GOAL_BIT = 16;
     public static final short PLATFORM_BIT = 32;
     public static final short PLAYER_PASSING_THROUGH_PLATFORM_BIT = 64;
-    public static final short DESTROYED_BIT = 128;
-    public static final short CAMERA_WALL_BIT = 256;
+    public static final short CAMERA_WALL_BIT = 128;
+    public static final short DESTROYED_BIT = 256;
+
 
     /**
      * The bit values that a given body can interact with.
