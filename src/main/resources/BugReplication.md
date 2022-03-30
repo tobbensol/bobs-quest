@@ -63,7 +63,30 @@
           anymore
     - Status:
         - Fixed
-        - Feleted all the bodies in the world when reloading the level.
+        - Deleted all the bodies in the world when reloading the level.
 
 
-- 
+- zoom not working when at the edges of the map:
+  - how to replicate:
+    - walk to the edge of the map with all the characters
+    - walk away with one of the players
+    - the camera doesn't zoom out anymore
+    - alternative:
+      - walk away from the edge of the map with your characters
+      - move all except one until the camera hits the edge of the map
+      - move the last one to the edge of the map
+      - the camera stays zoomed out
+  - reason:
+    - unknown
+  - status:
+    - still a bug
+
+- players start colliding with each other after a bit of time:
+  - how to replicate:
+    - walk around for a few seconds with your players
+    - after around 10 seconds, the players should start colliding with each other.
+  - reason:
+    - the mask bits is also changed when changing category bits
+    - we need to change both at the same time
+  - status:
+    - still a bug
