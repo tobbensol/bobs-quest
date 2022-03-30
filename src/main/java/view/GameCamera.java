@@ -89,6 +89,10 @@ public class GameCamera extends OrthographicCamera {
             }
         }
 
+        if (playerCount == 0) {
+            return position;
+        }
+
         averageX = averageX / playerCount;
         averageY = averageY / playerCount;
 
