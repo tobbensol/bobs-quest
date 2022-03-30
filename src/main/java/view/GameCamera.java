@@ -11,19 +11,13 @@ import java.util.Collections;
 public class GameCamera extends OrthographicCamera {
 
     private GameModel gameModel;
-    private boolean startPositionIsSet;
 
     public GameCamera(GameModel gameModel) {
         this.gameModel = gameModel;
-        this.startPositionIsSet = false;
+        position.set(getAveragePlayerPosition());
     }
 
     public void update() {
-
-        if (!startPositionIsSet) {
-            position.set(getAveragePlayerPosition());
-            startPositionIsSet = true;
-        }
 
         if (checkXOutOfBounds() && checkYOutOfBounds()) { }
         else if (checkXOutOfBounds()) {
