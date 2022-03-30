@@ -34,6 +34,10 @@ public abstract class GameObject {
 
     public abstract void render(SpriteBatch batch);
 
+    public void setPosition(float x, float y){
+        body.setTransform(x, y, body.getAngle());
+    }
+
     @Override
     public String toString() {
         return name;
@@ -49,5 +53,9 @@ public abstract class GameObject {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public float getWidth() {
+        return width;
     }
 }
