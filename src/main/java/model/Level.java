@@ -123,6 +123,10 @@ public class Level {
         return new ArrayList<>(players);
     }
 
+    public List<CameraWall> getCameraWalls() {
+        return cameraWalls;
+    }
+
     public World getWorld() {
         return world;
     }
