@@ -66,7 +66,7 @@ public class Player extends JumpableObject {
 
     private void playerCanGoThroughPlatforms(boolean value) {
         if (value) {
-            BodyHelper.setCategoryFilter(body, Constants.PLAYER_NO_PLATFORM_BIT);
+            BodyHelper.setCategoryFilter(body, Constants.PLAYER_PASSING_THROUGH_PLATFORM_BIT);
         } else {
             BodyHelper.setCategoryFilter(body, Constants.PLAYER_BIT);
         }
