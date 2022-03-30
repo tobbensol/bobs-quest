@@ -1,6 +1,7 @@
 package view;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
 import model.objects.Player;
@@ -10,7 +11,7 @@ import java.util.Collections;
 
 public class GameCamera extends OrthographicCamera {
 
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     public GameCamera(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -18,41 +19,32 @@ public class GameCamera extends OrthographicCamera {
     }
 
     public void update() {
-
-        if (checkXOutOfBounds() && checkYOutOfBounds()) { }
-        else if (checkXOutOfBounds()) {
-            position.set(this.position.x, getAveragePlayerPosition().y, 0);
-        }
-        else if (checkYOutOfBounds()) {
-            position.set(getAveragePlayerPosition().x, this.position.y, 0);
-        }
-        else {
-            manageZoom();
-            position.set(getAveragePlayerPosition());
-        }
-
+        manageZoom();
+        position.set(getNextCameraPosition(getAveragePlayerPosition()));
         super.update();
     }
 
-    private boolean checkXOutOfBounds() {
-        float mapLeftX = gameModel.getLevel().getTopLeft().x;
-        float mapRightX = gameModel.getLevel().getBottomRight().x;
-        Vector3 nextPosition = getAveragePlayerPosition();
-        float screenLeftX = nextPosition.x - viewportWidth * zoom / 2;
-        float screenRightX = nextPosition.x + viewportWidth * zoom / 2;
+    private Vector3 getNextCameraPosition(Vector3 position) {
+        Vector2 mapTopLeft = gameModel.getLevel().getTopLeft();
+        Vector2 mapBottomRight = gameModel.getLevel().getBottomRight();
+        Vector2 screenTopLeft = new Vector2(position.x - viewportWidth * zoom / 2, position.y + viewportHeight * zoom / 2);
+        Vector2 screenBottomRight = new Vector2(position.x + viewportWidth * zoom / 2, position.y - viewportHeight * zoom / 2);
 
-        return screenLeftX < mapLeftX || screenRightX  > mapRightX;
+        if (screenTopLeft.x <= mapTopLeft.x) {
+            position.x = mapTopLeft.x + viewportWidth * zoom / 2;
+        }
+        if (screenBottomRight.x >= mapBottomRight.x) {
+            position.x = mapBottomRight.x - viewportWidth * zoom / 2;
+        }
+        if (screenTopLeft.y >= mapTopLeft.y) {
+            position.y = mapTopLeft.y - viewportHeight * zoom / 2;
+        }
+        if (screenBottomRight.y <= mapBottomRight.y) {
+            position.y = mapBottomRight.y + viewportHeight * zoom / 2;
+        }
+
+        return position;
     }
-
-private boolean checkYOutOfBounds() {
-        float mapTopY = gameModel.getLevel().getTopLeft().y;
-        float mapBottomY = gameModel.getLevel().getBottomRight().y;
-        Vector3 nextPosition = getAveragePlayerPosition();
-        float screenTopY = nextPosition.y + viewportHeight * zoom / 2;
-        float screenBottomY = nextPosition.y - viewportHeight * zoom / 2;
-
-        return screenTopY > mapTopY || screenBottomY < mapBottomY;
-}
 
     private void manageZoom() {
         ArrayList<Float> playerXs = new ArrayList<>();
