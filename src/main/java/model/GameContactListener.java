@@ -1,5 +1,6 @@
 package model;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import model.helper.ContactType;
 import model.objects.Coin;
@@ -35,6 +36,7 @@ public class GameContactListener implements ContactListener {
 
         coinContact(a, b);
         goombaContact(a, b);
+        goombaRadar(a,b,true);
         goalContact(a, b);
 
         deathContact(a, b);
@@ -55,6 +57,8 @@ public class GameContactListener implements ContactListener {
         rightContact(a, b, false);
         headContact(a, b, false);
         platformContact(a,b,false);
+
+        goombaRadar(a,b,false);
     }
 
     @Override
@@ -88,12 +92,25 @@ public class GameContactListener implements ContactListener {
         return null; // TODO: Handle null player
     }
 
+    private Goomba getContactGoomba(Fixture a, Fixture b) {
+        List<Goomba> goombas = level.getGoombas();
+
+        Fixture g = a.getUserData() == ContactType.ENEMY ? a : b;
+
+        for (Goomba goomba : goombas) {
+            if (goomba.getBody().equals(g.getBody())) {
+                return goomba;
+            }
+        }
+        return null;
+
+    }
+
     private void deathContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.DEATH || b.getUserData() == ContactType.DEATH) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a, b);
                 player.setDead();
-                System.out.println(player.getCurrentState());
             }
         }
     }
@@ -144,12 +161,35 @@ public class GameContactListener implements ContactListener {
      */
     private void goombaContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.ENEMY || b.getUserData() == ContactType.ENEMY) {
+            Goomba goomba = getContactGoomba(a,b);
+
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a, b);
-                player.takeDamage(Goomba.getAttack());
+
+                if (player.getState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
+                    goomba.setDead();
+                } else {
+                    player.takeDamage(Goomba.getAttack());
+                }
+
             }
         }
     }
+
+
+    private void goombaRadar(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData().equals("goombaRadar") || b.getUserData().equals("goombaRadar")) {
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                Goomba goomba = getContactGoomba(a,b);
+                Player player = getContactPlayer(a,b);
+
+                Vector2 playerPosition = player.getPosition();
+                goomba.setPlayerPostion(playerPosition); // TODO: Maybe make list/pq and remove when end contact? what is best?
+                goomba.setPlayerNearby(begin);
+            }
+        }
+    }
+
 
     private void groundContact(Fixture a, Fixture b, boolean begin) {
 
