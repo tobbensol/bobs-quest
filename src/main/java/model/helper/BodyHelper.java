@@ -26,9 +26,14 @@ public class BodyHelper {
         if (contactType == ContactType.PLAYER) {
             playerSensors(fixtureDef, body, width, height);
         }
+        if (contactType == ContactType.ENEMY) {
+            goombaSensors(fixtureDef, body, width, height);
+        }
 
         return body;
     }
+
+
 
     public static void createEnvironmentBody(Shape shape, World world, ContactType contactType, short categoryBits, short maskBits, boolean isSensor) {
         BodyDef bodyDef = new BodyDef();
@@ -90,12 +95,26 @@ public class BodyHelper {
      * @param height     the height of the object you want to give a sensor
      */
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
-        createSensor("foot", fixtureDef, body, (width / 2) * 0.6f / Constants.PPM, 2 / Constants.PPM, 0, -height / 2 / Constants.PPM);
+        createSensor("foot", fixtureDef, body, (width / 2) * 0.8f / Constants.PPM, 2 / Constants.PPM, 0, -height / 2 / Constants.PPM);
         createSensor("head", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 2 / Constants.PPM, 0, height / 2 / Constants.PPM);
         createSensor("right", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, width / 2 / Constants.PPM, 0);
         createSensor("left", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
     }
 
+    private static void goombaSensors(FixtureDef fixtureDef, Body body, float width, float height) {
+        createCircleSensor("goombaRadar", fixtureDef,body,width*5 / Constants.PPM,0,0);
+    }
+
+
+    private static void createCircleSensor(String name, FixtureDef fixtureDef, Body body, float radius, float x, float y) {
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
+        shape.setPosition(new Vector2(x,y));
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef).setUserData(name);
+        shape.dispose();
+    }
 
     private static void createSensor(String name, FixtureDef fixtureDef, Body body, float hx, float hy, float x, float y) {
         PolygonShape shape = new PolygonShape();
