@@ -37,21 +37,10 @@ public class GameCamera extends OrthographicCamera {
     private Vector3 getNextCameraPosition(Vector3 position) {
         Vector2 mapTopLeft = gameModel.getLevel().getTopLeft();
         Vector2 mapBottomRight = gameModel.getLevel().getBottomRight();
-        Vector2 screenTopLeft = new Vector2(position.x - viewportWidth * zoom / 2, position.y + viewportHeight * zoom / 2);
-        Vector2 screenBottomRight = new Vector2(position.x + viewportWidth * zoom / 2, position.y - viewportHeight * zoom / 2);
 
-        if (screenTopLeft.x <= mapTopLeft.x) {
-            position.x = mapTopLeft.x + viewportWidth * zoom / 2;
-        }
-        if (screenBottomRight.x >= mapBottomRight.x) {
-            position.x = mapBottomRight.x - viewportWidth * zoom / 2;
-        }
-        if (screenTopLeft.y >= mapTopLeft.y) {
-            position.y = mapTopLeft.y - viewportHeight * zoom / 2;
-        }
-        if (screenBottomRight.y <= mapBottomRight.y) {
-            position.y = mapBottomRight.y + viewportHeight * zoom / 2;
-        }
+        //limits the camera position between the rightmost and leftmost point of the map
+        position.x = Math.min(Math.max(position.x, mapTopLeft.x + viewportWidth * zoom / 2), mapBottomRight.x - viewportWidth * zoom / 2);
+        position.y = Math.min(Math.max(position.y, mapBottomRight.y + viewportHeight * zoom / 2), mapTopLeft.y - viewportHeight * zoom / 2);
 
         return position;
     }
