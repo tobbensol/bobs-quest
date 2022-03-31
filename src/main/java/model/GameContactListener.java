@@ -89,9 +89,9 @@ public class GameContactListener implements ContactListener {
                 return player;
             }
         }
-        return null; // TODO: Handle null player
+        throw new NullPointerException("No such player found.");
     }
-
+    // TODO: Generalize to getContactObject() method when level holds a single list of objects.
     private Goomba getContactGoomba(Fixture a, Fixture b) {
         List<Goomba> goombas = level.getGoombas();
 
@@ -102,8 +102,7 @@ public class GameContactListener implements ContactListener {
                 return goomba;
             }
         }
-        return null;
-
+        throw new NullPointerException("No such goomba found.");
     }
 
     private void deathContact(Fixture a, Fixture b) {
@@ -138,7 +137,6 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == ContactType.GOAL || b.getUserData() == ContactType.GOAL) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
 
-                // Finding out which of the fixtures is a Player and Coin.
                 // TODO: Extract method
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
@@ -184,7 +182,7 @@ public class GameContactListener implements ContactListener {
                 Player player = getContactPlayer(a,b);
 
                 Vector2 playerPosition = player.getPosition();
-                goomba.setPlayerPostion(playerPosition); // TODO: Maybe make list/pq and remove when end contact? what is best?
+                goomba.setPlayerPostion(playerPosition);
                 goomba.setPlayerNearby(begin);
             }
         }
