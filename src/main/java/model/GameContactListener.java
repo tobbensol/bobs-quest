@@ -1,5 +1,6 @@
 package model;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import model.helper.ContactType;
 import model.objects.Coin;
@@ -35,6 +36,7 @@ public class GameContactListener implements ContactListener {
 
         coinContact(a, b);
         goombaContact(a, b);
+        goombaRadar(a,b,true);
         goalContact(a, b);
 
         deathContact(a, b);
@@ -55,6 +57,8 @@ public class GameContactListener implements ContactListener {
         rightContact(a, b, false);
         headContact(a, b, false);
         platformContact(a,b,false);
+
+        goombaRadar(a,b,false);
     }
 
     @Override
@@ -85,7 +89,20 @@ public class GameContactListener implements ContactListener {
                 return player;
             }
         }
-        return null; // TODO: Handle null player
+        throw new NullPointerException("No such player found.");
+    }
+    // TODO: Generalize to getContactObject() method when level holds a single list of objects.
+    private Goomba getContactGoomba(Fixture a, Fixture b) {
+        List<Goomba> goombas = level.getGoombas();
+
+        Fixture g = a.getUserData() == ContactType.ENEMY ? a : b;
+
+        for (Goomba goomba : goombas) {
+            if (goomba.getBody().equals(g.getBody())) {
+                return goomba;
+            }
+        }
+        throw new NullPointerException("No such goomba found.");
     }
 
     private void deathContact(Fixture a, Fixture b) {
@@ -93,7 +110,6 @@ public class GameContactListener implements ContactListener {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a, b);
                 player.setDead();
-                System.out.println(player.getCurrentState());
             }
         }
     }
@@ -121,7 +137,6 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == ContactType.GOAL || b.getUserData() == ContactType.GOAL) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
 
-                // Finding out which of the fixtures is a Player and Coin.
                 // TODO: Extract method
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
@@ -144,12 +159,35 @@ public class GameContactListener implements ContactListener {
      */
     private void goombaContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.ENEMY || b.getUserData() == ContactType.ENEMY) {
+            Goomba goomba = getContactGoomba(a,b);
+
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a, b);
-                player.takeDamage(Goomba.getAttack());
+
+                if (player.getState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
+                    goomba.setDead();
+                } else {
+                    player.takeDamage(Goomba.getAttack());
+                }
+
             }
         }
     }
+
+
+    private void goombaRadar(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData().equals("goombaRadar") || b.getUserData().equals("goombaRadar")) {
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                Goomba goomba = getContactGoomba(a,b);
+                Player player = getContactPlayer(a,b);
+
+                Vector2 playerPosition = player.getPosition();
+                goomba.setPlayerPostion(playerPosition);
+                goomba.setPlayerNearby(begin);
+            }
+        }
+    }
+
 
     private void groundContact(Fixture a, Fixture b, boolean begin) {
 

@@ -21,7 +21,6 @@ public class Constants {
 
     /**
      * The bit values that a given body can interact with.
-     * TODO: These are not constants! Maybe in the wrong place?
      */
     public static final short PLAYER_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | COIN_BIT | GOAL_BIT | PLATFORM_BIT;
     public static final short ENEMY_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | PLAYER_NO_PLATFORM_BIT | ENEMY_BIT;
