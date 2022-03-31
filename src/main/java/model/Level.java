@@ -38,7 +38,6 @@ public class Level {
         createObjects();
         createHUD();
         parseMapEndPoints();
-        createCameraWalls();
     }
 
     private void createWorld(String level) {
@@ -72,12 +71,10 @@ public class Level {
             goals.add((Goal) factory.create("Goal", v.x, v.y));
         }
         System.out.println(goals);
-    }
 
-    private void createCameraWalls() {
         cameraWalls = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            cameraWalls.add((CameraWall) factory.create("CameraWall", 0, 0));
+        for (Vector2 v :tiledMapHelper.parseMapSpawnPoints("MapEndPoints")) {
+            cameraWalls.add((CameraWall) factory.create("CameraWall", v.x, v.y));
         }
         System.out.println(cameraWalls);
     }
