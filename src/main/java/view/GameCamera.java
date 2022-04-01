@@ -55,7 +55,7 @@ public class GameCamera extends OrthographicCamera {
             }
         }
 
-        if (playerXs.isEmpty()) {
+        if (playerXs.isEmpty() || playerXs.size() == 1) {
             return;
         }
 
@@ -69,10 +69,10 @@ public class GameCamera extends OrthographicCamera {
         float maxZoom = 1.45f;
 
         if (playersXDifference > paddedXWidth && zoom <= maxZoom) {
-            zoom += 0.0016f;
+            zoom += 0.0016f * playersXDifference / paddedXWidth;
         }
         if (playersXDifference < paddedXWidth && zoom >= minZoom) {
-            zoom -= 0.0016f;
+            zoom -= 0.0016f * paddedXWidth / playersXDifference;
         }
     }
 
