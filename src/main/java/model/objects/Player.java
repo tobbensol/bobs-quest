@@ -190,7 +190,7 @@ public class Player extends JumpableObject {
         hp = -1;
         previousState = currentState;
         currentState = State.DEAD;
-        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DEFAULT_MASK_BITS);
+        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
         // Death "animation"
         body.setLinearVelocity(0, 5); //TODO: Make player fall through ground as well
     }

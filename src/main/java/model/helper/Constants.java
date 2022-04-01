@@ -29,5 +29,6 @@ public class Constants {
     public static final short INTERACTIVE_MASK_BITS = PLAYER_BIT | PLAYER_PASSING_THROUGH_PLATFORM_BIT;
     public static final short PLATFORM_MASK_BITS = PLAYER_BIT | ENEMY_BIT;
     public static final short DEFAULT_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | PLAYER_BIT | PLAYER_PASSING_THROUGH_PLATFORM_BIT;
+    public static final short DESTROYED_MASK_BITS = 0;
     public static final short CAMERA_WALL_MASK_BITS = PLAYER_BIT | PLAYER_PASSING_THROUGH_PLATFORM_BIT;
 }

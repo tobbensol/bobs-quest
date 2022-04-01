@@ -93,6 +93,6 @@ public class Goomba extends MovableObject {
     }
 
     public void setDead() {
-        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DEFAULT_MASK_BITS);
+        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
     }
 }
