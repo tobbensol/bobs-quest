@@ -77,20 +77,20 @@
         - Still a bug
 
 
-- zoom not working when at the edges of the map:
-    - how to replicate:
-        - walk to the edge of the map with all the characters
-        - walk away with one of the players
-        - the camera doesn't zoom out anymore
-        - alternative:
-            - walk away from the edge of the map with your characters
-            - move all except one until the camera hits the edge of the map
-            - move the last one to the edge of the map
-            - the camera stays zoomed out
-    - reason:
-        - unknown
-    - status:
-        - still a bug
+- Zoom not working when at the edges of the map:
+    - How to replicate:
+        - Walk to the edge of the map with all the characters
+        - Walk away with one of the players
+        - The camera doesn't zoom out anymore
+        - Alternative:
+            - Walk away from the edge of the map with your characters
+            - Move all except one until the camera hits the edge of the map
+            - Move the last one to the edge of the map
+            - The camera stays zoomed out
+    - Reason:
+        - Unknown
+    - Status:
+        - Still a bug
 
 
 - goomba moves while on start screen
@@ -176,3 +176,21 @@
         - It works.
   
 
+- Goomba moves towards a player if the player is within range of the Goomba.
+  - How to replicate:
+    - Move a player towards a Goomba. The Goomba radar is clearly visible by a circle surrounding the Goomba.
+    - Move the player inside of this sensor, and see if the Goomba starts to move towards you.
+    - Try to step in and out of the sensor to see it works properly.
+    - When no player is within range, see if the Goomba objects is walking back and forth.
+  - Status: 
+    - It works.
+
+
+- Player can kill Goombas.
+  - How to replicate:
+    - Move a player towards a Goomba object.
+    - Jump up and press down over the Goomba, such that the player hits the top of the Goomba.
+    - See that the Goomba object dies.
+    - Check that the HP of the player remains the same.
+  - Status:
+    - It works.
