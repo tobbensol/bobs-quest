@@ -37,7 +37,7 @@ public class Level {
         objectMap.put("Goomba", new ArrayList<>());
         objectMap.put("Coin", new ArrayList<>());
         objectMap.put("Goal", new ArrayList<>());
-        objectMap.put("CameraWalls", new ArrayList<>());
+        objectMap.put("MapEndPoints", new ArrayList<>());
 
         createWorld(levelName);
         createObjects();
@@ -131,6 +131,14 @@ public class Level {
             playerList.add((Player) o);
         }
         return playerList;
+    }
+
+    public List<CameraWall> getCameraWalls() {
+        List<CameraWall> cameraWallList = new ArrayList<>();
+        for(GameObject o : objectMap.get("MapEndPoints")){
+            cameraWallList.add((CameraWall) o);
+        }
+        return cameraWallList;
     }
 
     public World getWorld() {
