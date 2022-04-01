@@ -54,7 +54,7 @@ public class GameModel implements ControllableModel {
     }
 
     private boolean gameOver() {
-        for (Player player : getLevel().getPlayers()) {
+        for (Player player : getLevel().getGameObjects(Player.class)) {
             if (!player.isDead()) {
                 return false;
             }
@@ -79,8 +79,9 @@ public class GameModel implements ControllableModel {
 
         getLevel().getWorld().step(1 / 60f, 6, 2);
 
-        for (int i = 0; i < getLevel().getPlayers().size(); i++) {
-            controllers.get(i).inputListener(getLevel().getPlayers().get(i));
+        List<Player> players = getLevel().getGameObjects(Player.class);
+        for (int i = 0; i < players.size(); i++) {
+            controllers.get(i).inputListener(players.get(i));
         }
         for (GameObject object : getLevel().getGameObjects()) {
             object.update();

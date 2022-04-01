@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
-import model.objects.CameraWall;
+import model.objects.MapEndPoints;
 import model.objects.Player;
 
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class GameCamera extends OrthographicCamera {
     }
 
     private void moveCameraWalls() {
-        CameraWall wall1 = gameModel.getLevel().getCameraWalls().get(0);
-        CameraWall wall2 = gameModel.getLevel().getCameraWalls().get(1);
+        MapEndPoints wall1 = gameModel.getLevel().getGameObjects(MapEndPoints.class).get(0);
+        MapEndPoints wall2 = gameModel.getLevel().getGameObjects(MapEndPoints.class).get(1);
 
         wall1.setPosition((position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2) / 100, position.y / 100);
         wall2.setPosition((position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2) / 100, position.y / 100);
@@ -49,7 +49,7 @@ public class GameCamera extends OrthographicCamera {
     private void manageZoom() {
         ArrayList<Float> playerXs = new ArrayList<>();
 
-        for (Player player : gameModel.getLevel().getPlayers()) {
+        for (Player player : gameModel.getLevel().getGameObjects(Player.class)) {
             if (!player.isDead()) {
                 playerXs.add(player.getPosition().x);
             }
@@ -77,7 +77,7 @@ public class GameCamera extends OrthographicCamera {
     }
 
     private Vector3 getAveragePlayerPosition() {
-        List<Player> players = gameModel.getLevel().getPlayers();
+        List<Player> players = gameModel.getLevel().getGameObjects(Player.class);
 
         if (players.size() == 0) {
             return position;

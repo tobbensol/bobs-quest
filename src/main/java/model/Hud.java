@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
+import model.objects.Coin;
 
 public class Hud {
     private static Integer score;
@@ -30,7 +31,7 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        scoreLabel = new Label(score + "/" + level.getCoins().size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label(score + "/" + level.getGameObjects(Coin.class).size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label(level.toString(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         scoreLabel.setFontScale(2f);
@@ -47,7 +48,7 @@ public class Hud {
 
     public void update() {
         score = level.getScore();
-        scoreLabel.setText(score + "/" + level.getCoins().size());
+        scoreLabel.setText(score + "/" + level.getGameObjects(Coin.class).size());
         // TODO maybe not do this every frame
         levelLabel.setText(level.toString());
     }

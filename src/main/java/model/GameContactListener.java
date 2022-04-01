@@ -79,7 +79,7 @@ public class GameContactListener implements ContactListener {
      * @return Return the player involved in the contact.
      */
     private Player getContactPlayer(Fixture a, Fixture b) {
-        List<Player> players = level.getPlayers();
+        List<Player> players = level.getGameObjects(Player.class);
 
         Fixture p = a.getUserData() == ContactType.PLAYER ? a : b;
 
@@ -92,7 +92,7 @@ public class GameContactListener implements ContactListener {
     }
     // TODO: Generalize to getContactObject() method when level holds a single list of objects.
     private Goomba getContactGoomba(Fixture a, Fixture b) {
-        List<Goomba> goombas = level.getGoombas();
+        List<Goomba> goombas = level.getGameObjects(Goomba.class);
 
         Fixture g = a.getUserData() == ContactType.ENEMY ? a : b;
 
@@ -104,12 +104,12 @@ public class GameContactListener implements ContactListener {
         throw new NullPointerException("No such goomba found.");
     }
 
-    private CameraWall getCameraWall(Fixture a, Fixture b) {
-        List<CameraWall> walls = level.getCameraWalls();
+    private MapEndPoints getCameraWall(Fixture a, Fixture b) {
+        List<MapEndPoints> walls = level.getGameObjects(MapEndPoints.class);
 
         Fixture c = a.getUserData() == ContactType.CAMERA_WALL ? a : b;
 
-        for (CameraWall wall : walls) {
+        for (MapEndPoints wall : walls) {
             if (wall.getBody().equals(c.getBody())) {
                 return wall;
             }
@@ -135,7 +135,7 @@ public class GameContactListener implements ContactListener {
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
-                for (Coin coin : level.getCoins()) {
+                for (Coin coin : level.getGameObjects(Coin.class)) {
                     if (coin.getBody().equals(c.getBody())) {
                         coin.onHit();
                     }
@@ -155,7 +155,7 @@ public class GameContactListener implements ContactListener {
                 Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
                 Fixture c = p == a ? b : a;
 
-                for (Goal goal : level.getGoals()) {
+                for (Goal goal : level.getGameObjects(Goal.class)) {
                     if (goal.getBody().equals(c.getBody())) {
                         goal.onHit();
                     }
@@ -241,7 +241,7 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == ContactType.CAMERA_WALL || b.getUserData() == ContactType.CAMERA_WALL) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a,b);
-                CameraWall wall = getCameraWall(a,b);
+                MapEndPoints wall = getCameraWall(a,b);
 
                 if (player.getPosition().x > wall.getPosition().x) {
                     player.setLeftCollision(begin);

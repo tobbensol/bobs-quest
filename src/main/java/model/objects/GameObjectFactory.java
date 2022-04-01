@@ -25,7 +25,7 @@ public class GameObjectFactory {
             case "PLAYER" -> new Player(objectString, level, x, y);
             case "GOOMBA" -> new Goomba(objectString, level, x, y);
             case "GOAL" -> new Goal(objectString, level, x, y);
-            case "MAPENDPOINTS" -> new CameraWall(objectString, level, x, y);
+            case "MAPENDPOINTS" -> new MapEndPoints(objectString, level, x, y);
             default -> null;
         };
     }
