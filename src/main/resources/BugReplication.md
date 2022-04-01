@@ -92,6 +92,51 @@
     - Status:
         - Still a bug
 
+
+- goomba moves while on start screen
+    - how to replicate:
+        - wait for a while before pressing space to start the game
+        - see that the first goomba has moved to the left
+        - see that the player has lost health
+        - if two players, the goomba will launch both players off the map
+            - causes game over from start screen
+            - model keeps updating, causing repeated game overs
+    - reason:
+        - likely that the model starts updating after launching, before the player starts the game 
+    - status:
+        - still a bug
+
+
+- low jumps on platforms
+    - how to replicate:
+        - stand on a platform
+        - try jumping
+        - see that the player jumps lower than usual
+    - reason:
+        - unknown
+    - status:
+        - still a bug
+
+
+- player flickers left and right when jumping up platforms
+    - how to replicate:
+        - try jumping up to a platform from below
+        - see that the player flickers left and right for a bit before settling
+    - reason:
+        - unknown
+    - status:
+        - still a bug
+
+
+- player is alive with -1 hp when dropping
+    - how to replicate:
+        - hold down to drop (while on ground)
+        - touch goomba 3 times until hp == -1
+        - see that player cannot interact with coins, platforms or goal
+    - reason:
+        - likely related to how players are set to dead, and that drop() messes with it
+    - status:
+        - still a bug
         
 ## Manuel Tests
 
