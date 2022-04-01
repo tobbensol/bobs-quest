@@ -1,7 +1,6 @@
 package controls;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import model.objects.Player;
 
 public abstract class Controller {

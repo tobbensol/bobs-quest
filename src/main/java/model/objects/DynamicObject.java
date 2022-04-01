@@ -3,7 +3,6 @@ package model.objects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import model.Level;
-import model.helper.Constants;
 import model.helper.ContactType;
 
 public abstract class DynamicObject extends GameObject {
