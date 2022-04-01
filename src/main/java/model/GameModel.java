@@ -24,7 +24,7 @@ public class GameModel implements ControllableModel {
     private final GameController gameController;
     Level level;
     private boolean reload = false;
-    private int levelNR = 0;
+    private int levelNR = 4;
     private int numPlayers;
     private GameState state;
 
@@ -93,6 +93,8 @@ public class GameModel implements ControllableModel {
         }
 
         getLevel().updateHUD();
+
+        System.out.println(Gdx.graphics.getDeltaTime());
     }
 
     public boolean getReload() {
