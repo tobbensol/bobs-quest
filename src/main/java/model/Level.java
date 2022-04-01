@@ -76,6 +76,18 @@ public class Level {
         return hud;
     }
 
+    public List<GameObject> getGameObjects() {
+        List<GameObject> objectList = new ArrayList<>();
+        for (String object : objectMap.keySet()) {
+            objectList.addAll(objectMap.get(object));
+        }
+        return objectList;
+    }
+
+    public <T extends GameObject> List<T> getGameObjects(String object, Class<T> type) {
+        return (List<T>) objectMap.get(object);
+    }
+
     public List<Goomba> getGoombas() {
         return objectMap.get("Goomba").stream().map(i -> (Goomba) i ).toList();
     }
