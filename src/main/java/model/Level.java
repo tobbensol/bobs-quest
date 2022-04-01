@@ -77,11 +77,7 @@ public class Level {
     }
 
     public List<Goomba> getGoombas() {
-        List<Goomba> goombaList = new ArrayList<>();
-        for(GameObject o : objectMap.get("Goomba")){
-            goombaList.add((Goomba) o);
-        }
-        return goombaList;
+        return objectMap.get("Goomba").stream().map(i -> (Goomba) i ).toList();
     }
 
     public List<Coin> getCoins() {
