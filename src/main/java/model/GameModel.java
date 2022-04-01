@@ -93,8 +93,6 @@ public class GameModel implements ControllableModel {
         }
 
         getLevel().updateHUD();
-
-        System.out.println(Gdx.graphics.getDeltaTime());
     }
 
     public boolean getReload() {

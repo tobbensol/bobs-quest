@@ -15,7 +15,7 @@ public class Player extends JumpableObject {
 //    private static final int MAX_VELOCITY = 2;
     private static final float X_VELOCITY = 50f;
 //    private static final float X_VELOCITY = 0.35f;
-    private static final float Y_VELOCITY = 200f;
+    private static final float Y_VELOCITY = 300f;
 //    private static final float Y_VELOCITY = 1.3f;
 
     private final ArrayList<TextureRegion> frames;
@@ -56,7 +56,7 @@ public class Player extends JumpableObject {
 
         handlePlatform();
 
-        this.body.setLinearDamping(1);
+        this.body.setLinearDamping(1f);
     }
 
     private void handlePlatform() {
