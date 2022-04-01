@@ -42,6 +42,7 @@ public class GameModel implements ControllableModel {
         levels.add("coinTest");
         levels.add("valleyAndSpikeTest");
         levels.add("sizeTest");
+        levels.add("goombaCollisionTest");
 
         gameController = new GameController(this);
 
