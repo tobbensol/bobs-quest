@@ -1,8 +1,10 @@
 package model.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
@@ -11,12 +13,11 @@ import model.helper.ContactType;
 import java.util.ArrayList;
 
 public class Player extends JumpableObject {
-    private static final int MAX_VELOCITY = 6;
-//    private static final int MAX_VELOCITY = 2;
-    private static final float X_VELOCITY = 30f;
-//    private static final float X_VELOCITY = 0.35f;
-    private static final float Y_VELOCITY = 300f;
-//    private static final float Y_VELOCITY = 1.3f;
+    private static final int MAX_VELOCITY = 3;
+    private static final float X_VELOCITY = 6f;
+    private static final float Y_VELOCITY = 80f;
+    private final float DROPPING_SCALE = 0.2f;
+    private final float DAMPING_SCALE = 0.9f;
 
     private final ArrayList<TextureRegion> frames;
 
@@ -53,10 +54,19 @@ public class Player extends JumpableObject {
         super.update();
         previousState = currentState;
         currentState = getState();
-
         handlePlatform();
+        damping();
+        System.out.println(currentState);
+        System.out.println(body.getLinearVelocity().y);
 
-        this.body.setLinearDamping(1f);
+    }
+
+
+    private void damping() {
+        if (grounded) {
+            Vector2 currentSpeed = this.body.getLinearVelocity();
+            this.body.applyForceToCenter(-currentSpeed.x * DAMPING_SCALE, 0, true);
+        }
     }
 
     private void handlePlatform() {
@@ -84,7 +94,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void jump() {
-        if (grounded && (previousState != State.JUMPING) && (currentState != State.FALLING)) {
+        if (grounded && (previousState != State.JUMPING) && (previousState != State.FALLING) && (currentState != State.FALLING)) {
             applyForceToCenter(0, Y_VELOCITY);
         }
     }
@@ -94,9 +104,7 @@ public class Player extends JumpableObject {
             playerCanGoThroughPlatforms(true);
         }
         currentState = State.FALLING;
-        this.body.applyForceToCenter(0,-Y_VELOCITY*10    , true);
-        applyForceToCenter(0 , -Y_VELOCITY*2);
-
+        this.body.applyForceToCenter(0,-Y_VELOCITY * DROPPING_SCALE, true);
     }
 
     @Override
@@ -141,13 +149,13 @@ public class Player extends JumpableObject {
         if (previousState == State.DEAD) {
             return State.DEAD;
         }
-        if (body.getLinearVelocity().y < 0 && grounded) {
+        if (body.getLinearVelocity().y < -0.001 && grounded) {
             return State.SLIDING;
         }
-        if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+        if (body.getLinearVelocity().y > 0.001 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             return State.JUMPING;
         }
-        if (body.getLinearVelocity().y < 0) {
+        if (body.getLinearVelocity().y < -0.5) {
             return State.FALLING;
         }
         if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
