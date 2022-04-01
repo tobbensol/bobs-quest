@@ -46,14 +46,12 @@ public class Goomba extends MovableObject {
     private void goombaMovement() {
         if (playerNearby) {
             if (playerPosition.x > body.getPosition().x) {
-                moveHorizontally(1,true);
+                moveHorizontally(true);
             }
             if (playerPosition.x < body.getPosition().x) {
                 moveHorizontally(false);
             }
-        }
-        else {
-
+        } else {
             int range = 150;
             if (numMoves > 0 && numMoves < range) {
                 moveHorizontally(false);

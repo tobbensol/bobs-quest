@@ -55,6 +55,8 @@ public class Player extends JumpableObject {
         currentState = getState();
 
         handlePlatform();
+
+        this.body.setLinearDamping(1);
     }
 
     private void handlePlatform() {
