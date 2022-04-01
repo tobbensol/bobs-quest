@@ -1,26 +1,49 @@
 package view;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
+import model.objects.CameraWall;
 import model.objects.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class GameCamera extends OrthographicCamera {
 
-    GameModel gameModel;
+    private final GameModel gameModel;
 
     public GameCamera(GameModel gameModel) {
         this.gameModel = gameModel;
+        position.set(getAveragePlayerPosition());
     }
 
     public void update() {
-
         manageZoom();
-        position.set(getAveragePlayerPosition());
+        position.set(getNextCameraPosition(getAveragePlayerPosition()));
         super.update();
+        moveCameraWalls();
+    }
+
+    private void moveCameraWalls() {
+        CameraWall wall1 = gameModel.getLevel().getCameraWalls().get(0);
+        CameraWall wall2 = gameModel.getLevel().getCameraWalls().get(1);
+
+        wall1.setPosition((position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2) / 100, position.y / 100);
+        wall2.setPosition((position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2) / 100, position.y / 100);
+    }
+
+    private Vector3 getNextCameraPosition(Vector3 position) {
+        Vector2 mapTopLeft = gameModel.getLevel().getTopLeft();
+        Vector2 mapBottomRight = gameModel.getLevel().getBottomRight();
+
+        //limits the camera position between the rightmost and leftmost point of the map
+        position.x = Math.min(Math.max(position.x, mapTopLeft.x + viewportWidth * zoom / 2), mapBottomRight.x - viewportWidth * zoom / 2);
+        position.y = Math.min(Math.max(position.y, mapBottomRight.y + viewportHeight * zoom / 2), mapTopLeft.y - viewportHeight * zoom / 2);
+
+        return position;
     }
 
     private void manageZoom() {
@@ -32,7 +55,7 @@ public class GameCamera extends OrthographicCamera {
             }
         }
 
-        if (playerXs.isEmpty()) {
+        if (playerXs.isEmpty() || playerXs.size() == 1) {
             return;
         }
 
@@ -46,29 +69,34 @@ public class GameCamera extends OrthographicCamera {
         float maxZoom = 1.45f;
 
         if (playersXDifference > paddedXWidth && zoom <= maxZoom) {
-            zoom += 0.0016f;
+            zoom += 0.0016f * playersXDifference / paddedXWidth;
         }
         if (playersXDifference < paddedXWidth && zoom >= minZoom) {
-            zoom -= 0.0016f;
+            zoom -= 0.0016f * paddedXWidth / playersXDifference;
         }
     }
 
     private Vector3 getAveragePlayerPosition() {
-        float averageX = 0;
-        float averageY = 0;
-        int playerCount = 0;
+        List<Player> players = gameModel.getLevel().getPlayers();
 
-        for (Player player : gameModel.getLevel().getPlayers()) {
+        if (players.size() == 0) {
+            return position;
+        }
+
+        float maxX = 0;
+        float minX = 1000000;
+        float maxY = 0;
+        float minY = 1000000;
+
+        for (Player player : players) {
             if (!player.isDead()) {
-                averageX += player.getPosition().x;
-                averageY += player.getPosition().y;
-                playerCount += 1;
+                maxX = Math.max(maxX, player.getPosition().x);
+                minX = Math.min(minX, player.getPosition().x);
+                maxY = Math.max(maxY, player.getPosition().y);
+                minY = Math.min(minY, player.getPosition().y);
             }
         }
 
-        averageX = averageX / playerCount;
-        averageY = averageY / playerCount;
-
-        return new Vector3(averageX, averageY, 0);
+        return new Vector3((minX+maxX)/2, (minY+maxY)/2, 0);
     }
 }

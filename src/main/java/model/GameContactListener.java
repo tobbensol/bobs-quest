@@ -1,11 +1,9 @@
 package model;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import model.helper.ContactType;
-import model.objects.Coin;
-import model.objects.Goal;
-import model.objects.Goomba;
-import model.objects.Player;
+import model.objects.*;
 
 import java.util.List;
 
@@ -32,9 +30,11 @@ public class GameContactListener implements ContactListener {
         rightContact(a, b, true);
         headContact(a, b, true);
         platformContact(a,b,true);
+        cameraWallContact(a,b,true);
 
         coinContact(a, b);
         goombaContact(a, b);
+        goombaRadar(a,b,true);
         goalContact(a, b);
 
         deathContact(a, b);
@@ -55,6 +55,9 @@ public class GameContactListener implements ContactListener {
         rightContact(a, b, false);
         headContact(a, b, false);
         platformContact(a,b,false);
+
+        goombaRadar(a,b,false);
+        cameraWallContact(a,b,false);
     }
 
     @Override
@@ -85,7 +88,33 @@ public class GameContactListener implements ContactListener {
                 return player;
             }
         }
-        return null; // TODO: Handle null player
+        throw new NullPointerException("No such player found.");
+    }
+    // TODO: Generalize to getContactObject() method when level holds a single list of objects.
+    private Goomba getContactGoomba(Fixture a, Fixture b) {
+        List<Goomba> goombas = level.getGoombas();
+
+        Fixture g = a.getUserData() == ContactType.ENEMY ? a : b;
+
+        for (Goomba goomba : goombas) {
+            if (goomba.getBody().equals(g.getBody())) {
+                return goomba;
+            }
+        }
+        throw new NullPointerException("No such goomba found.");
+    }
+
+    private CameraWall getCameraWall(Fixture a, Fixture b) {
+        List<CameraWall> walls = level.getCameraWalls();
+
+        Fixture c = a.getUserData() == ContactType.CAMERA_WALL ? a : b;
+
+        for (CameraWall wall : walls) {
+            if (wall.getBody().equals(c.getBody())) {
+                return wall;
+            }
+        }
+        throw new NullPointerException("No such camera wall found.");
     }
 
     private void deathContact(Fixture a, Fixture b) {
@@ -144,12 +173,35 @@ public class GameContactListener implements ContactListener {
      */
     private void goombaContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.ENEMY || b.getUserData() == ContactType.ENEMY) {
+            Goomba goomba = getContactGoomba(a,b);
+
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
                 Player player = getContactPlayer(a, b);
-                player.takeDamage(Goomba.getAttack());
+
+                if (player.getState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
+                    goomba.setDead();
+                } else {
+                    player.takeDamage(Goomba.getAttack());
+                }
+
             }
         }
     }
+
+
+    private void goombaRadar(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData().equals("goombaRadar") || b.getUserData().equals("goombaRadar")) {
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                Goomba goomba = getContactGoomba(a,b);
+                Player player = getContactPlayer(a,b);
+
+                Vector2 playerPosition = player.getPosition();
+                goomba.setPlayerPostion(playerPosition);
+                goomba.setPlayerNearby(begin);
+            }
+        }
+    }
+
 
     private void groundContact(Fixture a, Fixture b, boolean begin) {
 
@@ -184,6 +236,23 @@ public class GameContactListener implements ContactListener {
             }
         }
     }
+
+    private void cameraWallContact(Fixture a, Fixture b, boolean begin) {
+        if (a.getUserData() == ContactType.CAMERA_WALL || b.getUserData() == ContactType.CAMERA_WALL) {
+            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                Player player = getContactPlayer(a,b);
+                CameraWall wall = getCameraWall(a,b);
+
+                if (player.getPosition().x > wall.getPosition().x) {
+                    player.setLeftCollision(begin);
+                } else {
+                    player.setRightCollision(begin);
+                }
+            }
+        }
+    }
+
+
 
     private void headContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData().equals("head") || b.getUserData().equals("head")) {

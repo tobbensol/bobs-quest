@@ -26,9 +26,14 @@ public class BodyHelper {
         if (contactType == ContactType.PLAYER) {
             playerSensors(fixtureDef, body, width, height);
         }
+        if (contactType == ContactType.ENEMY) {
+            goombaSensors(fixtureDef, body, width, height);
+        }
 
         return body;
     }
+
+
 
     public static void createEnvironmentBody(Shape shape, World world, ContactType contactType, short categoryBits, short maskBits, boolean isSensor) {
         BodyDef bodyDef = new BodyDef();
@@ -82,7 +87,7 @@ public class BodyHelper {
     }
 
     /**
-     * makes sensors above, below, right and left of an object, currently its only used by the player, but it can be used by other objects in the future
+     * Makes sensors above, below, right and left of an object, currently its only used by the player, but it can be used by other objects in the future
      *
      * @param fixtureDef the fixture you want to give the sensors, so that they can have the same properties as the body
      * @param body       the body you want to apply the sensors to
@@ -90,12 +95,26 @@ public class BodyHelper {
      * @param height     the height of the object you want to give a sensor
      */
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
-        createSensor("foot", fixtureDef, body, (width / 2) * 0.6f / Constants.PPM, 2 / Constants.PPM, 0, -height / 2 / Constants.PPM);
+        createSensor("foot", fixtureDef, body, (width / 2) * 0.8f / Constants.PPM, 2 / Constants.PPM, 0, -height / 2 / Constants.PPM);
         createSensor("head", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 2 / Constants.PPM, 0, height / 2 / Constants.PPM);
         createSensor("right", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, width / 2 / Constants.PPM, 0);
         createSensor("left", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
     }
 
+    private static void goombaSensors(FixtureDef fixtureDef, Body body, float width, float height) {
+        createCircleSensor("goombaRadar", fixtureDef,body,width*5 / Constants.PPM,0,0);
+    }
+
+
+    private static void createCircleSensor(String name, FixtureDef fixtureDef, Body body, float radius, float x, float y) {
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
+        shape.setPosition(new Vector2(x,y));
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef).setUserData(name);
+        shape.dispose();
+    }
 
     private static void createSensor(String name, FixtureDef fixtureDef, Body body, float hx, float hy, float x, float y) {
         PolygonShape shape = new PolygonShape();
@@ -106,11 +125,43 @@ public class BodyHelper {
         shape.dispose();
     }
 
-    public static void setCategoryFilter(Body body, short categoryBit) {
+    /**
+     * This method lets you change the filter data of a given body, by changing the categoryBits and maskBits.
+     * Both categoryBits and maskBits can be found in the Constants class.
+     *
+     * All bodies have a categoryBit and a maskBit. The categoryBit is used to separate different types of objets,
+     * and the maskBits are used to determine which bodies a body can interact/collide with.
+     *
+     * @param body - the body which the changes should be made on.
+     * @param categoryBits - bit value that determines if the given body can collide with which other bodies.
+     * @param maskBits - bit value that determines what categoryBits the body can collide with.
+     */
+    public static void changeFilterData(Body body, short categoryBits, short maskBits) {
         Filter filter = new Filter();
-        filter.categoryBits = categoryBit;
+        filter.categoryBits = categoryBits;
+        filter.maskBits = maskBits;
         for (Fixture f : body.getFixtureList()) {
             f.setFilterData(filter);
         }
     }
+
+    /**
+     * This method lets you change the filter data of a given body, by changing the categoryBits.
+     * The maskBits will remain the same as before.
+     * Both categoryBits and maskBits can be found in the Constants class.
+     *
+     * All bodies have a categoryBit and a maskBit. The categoryBit is used to separate different types of objets,
+     * and the maskBits are used to determine which bodies a body can interact/collide with.
+     *
+     * @param body - the body which the changes should be made on.
+     * @param categoryBits - bit value that determines if the given body can collide with which other bodies.
+     */
+    public static void changeFilterData(Body body, short categoryBits) {
+        short maskBits = Constants.DEFAULT_MASK_BITS;
+        for (Fixture f : body.getFixtureList()) {
+            maskBits = f.getFilterData().maskBits;
+        }
+        changeFilterData(body, categoryBits, maskBits);
+    }
+
 }

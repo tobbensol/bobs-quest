@@ -66,9 +66,9 @@ public class Player extends JumpableObject {
 
     private void playerCanGoThroughPlatforms(boolean value) {
         if (value) {
-            BodyHelper.setCategoryFilter(body, Constants.PLAYER_NO_PLATFORM_BIT);
+            BodyHelper.changeFilterData(body, Constants.PLAYER_PASSING_THROUGH_PLATFORM_BIT);
         } else {
-            BodyHelper.setCategoryFilter(body, Constants.PLAYER_BIT);
+            BodyHelper.changeFilterData(body, Constants.PLAYER_BIT);
         }
     }
 
@@ -190,7 +190,7 @@ public class Player extends JumpableObject {
         hp = -1;
         previousState = currentState;
         currentState = State.DEAD;
-        BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
+        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
         // Death "animation"
         body.setLinearVelocity(0, 5); //TODO: Make player fall through ground as well
     }

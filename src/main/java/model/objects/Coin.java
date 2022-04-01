@@ -28,7 +28,7 @@ public class Coin extends StaticObject {
 
     public void onHit() {
         level.increaseScore(1);
-        BodyHelper.setCategoryFilter(body, Constants.DESTROYED_BIT);
+        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT);
         isDestroyed = true;
     }
 
