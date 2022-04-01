@@ -3,7 +3,6 @@ package model.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
@@ -12,9 +11,12 @@ import model.helper.ContactType;
 import java.util.ArrayList;
 
 public class Player extends JumpableObject {
-    private static final int MAX_VELOCITY = 2;
-    private static final float X_VELOCITY = 0.35f;
-    private static final float Y_VELOCITY = 1.3f;
+    private static final int MAX_VELOCITY = 6;
+//    private static final int MAX_VELOCITY = 2;
+    private static final float X_VELOCITY = 50f;
+//    private static final float X_VELOCITY = 0.35f;
+    private static final float Y_VELOCITY = 200f;
+//    private static final float Y_VELOCITY = 1.3f;
 
     private final ArrayList<TextureRegion> frames;
 
@@ -79,9 +81,9 @@ public class Player extends JumpableObject {
 
 
     @Override
-    public void jump(float delta) {
+    public void jump() {
         if (grounded && (previousState != State.JUMPING) && (currentState != State.FALLING)) {
-            applyCenterLinearImpulse(0, delta * Y_VELOCITY);
+            applyForceToCenter(0, Y_VELOCITY);
         }
     }
 
@@ -91,22 +93,23 @@ public class Player extends JumpableObject {
         }
         currentState = State.FALLING;
         this.body.applyForceToCenter(0,-Y_VELOCITY*10    , true);
+        applyForceToCenter(0 , -Y_VELOCITY*2);
 
     }
 
     @Override
-    public void moveHorizontally(float delta, boolean isRight) {
+    public void moveHorizontally(boolean isRight) {
         if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-            applyCenterLinearImpulse(delta * X_VELOCITY, 0);
+            applyForceToCenter(X_VELOCITY, 0);
             facingRight = true;
         } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-            applyCenterLinearImpulse(-delta * X_VELOCITY, 0);
+            applyForceToCenter(-X_VELOCITY, 0);
             facingRight = false;
         }
     }
 
-    private void applyCenterLinearImpulse(float x, float y) {
-        this.body.applyLinearImpulse(new Vector2(x, y), this.body.getWorldCenter(), true);
+    private void applyForceToCenter(float x, float y) {
+        this.body.applyForceToCenter(x, y, true);
     }
 
     public void setLeftCollision(boolean value) {

@@ -49,32 +49,32 @@ public class Goomba extends MovableObject {
                 moveHorizontally(1,true);
             }
             if (playerPosition.x < body.getPosition().x) {
-                moveHorizontally(1,false);
+                moveHorizontally(false);
             }
         }
         else {
 
             int range = 150;
             if (numMoves > 0 && numMoves < range) {
-                moveHorizontally(1, false);
+                moveHorizontally(false);
             }
             if (numMoves == range) {
                 numMoves = -range;
             }
             if (numMoves < 0) {
-                moveHorizontally(1,true);
+                moveHorizontally(true);
             }
             numMoves++;
         }
     }
 
     @Override
-    public void moveHorizontally(float delta, boolean isRight) {
+    public void moveHorizontally(boolean isRight) {
         if (isRight) {
-            body.applyLinearImpulse(new Vector2(delta * 1.5f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(1.5f, 0), body.getWorldCenter(), true);
             facingRight = true;
         } else {
-            body.applyLinearImpulse(new Vector2(delta * -1.5f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(-1.5f, 0), body.getWorldCenter(), true);
             facingRight = false;
         }
     }
