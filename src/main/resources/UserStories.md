@@ -222,3 +222,28 @@
     - Sjekke kollisjon mellom spillerens fot og plattformer, og deretter sette en variabel i Player klassen for å indikere at spilleren befinner seg på en plattform.
     - Lage en ny Category Bit for spiller som ikke kolliderer med Mask Bits-ene til Platform.
     - Lage en metode for å ta seg av logikken når man trykker på knapp ned. (Bruk setCategoryFilter() metoden fra BodyHelper klassen til å implementere logikken)
+
+
+### Bedre Goomba bevegelse:
+
+- Som spiller ønsker jeg at fiender i spillet skal kunne bevege seg bedre og smartere for at spillet skal være morsommere og mer utfordrende å spille.
+  - Akseptansekriterier:
+    - Goomba objekter skal kunne se etter spillere og bevege seg mot dem (angripe) om de er innenfor en viss rekkevidde.
+    - Ellers skal Goomba objekter bevege seg frem og tilbake.
+  - Arbeidsoppgaver:
+    - Lage en rekkevidde sensor til Goomba objekter.
+    - Sjekke kollisjon mellom rekkevidde sensoren og spillere.
+    - Finne posisjonen til spilleren som Goomba objektet skal angripe og implementer logikk for å bevege seg i den retningen.
+    - Implementer bevegelses logikk når det ikke er spillere innenfor rekkevidden.
+
+
+### Muligheten for at spillere kan drepe Goomba objekter:
+
+- Som spiller ønsker jeg muligheten for å kunne drepe fiendeobjekter (Goomba) slik at spillere har flere funksjonaliteter og gjør spillet morsommere.
+    - Akseptansekristerier:
+      - En spiller skal kunne drepe Goomba objekter med å hoppe over de og trykke ned.
+      - Spilleren skal ikke miste HP under et slikt angrep.
+      - Goomba objektet dør etter et slikt angrep og kan ikke lenger interagere med andre spillere.
+    - Arbeidsoppgaver:
+      - Sjekke/skille for kollisjonstilfellene i når en spiller kan drepe en Goomba og når den selv skal ta skade av Goomba.
+      - Ta hånd om Goomba når den skal dø. Lag en setDead() metode i Goomba klassen. Endre categoryBits og maskBits f.eks.
