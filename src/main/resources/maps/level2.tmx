@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="116" height="116" tilewidth="64" tileheight="64" infinite="0" nextlayerid="18" nextobjectid="119">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="116" height="116" tilewidth="64" tileheight="64" infinite="0" nextlayerid="19" nextobjectid="121">
  <tileset firstgid="1" name="Grassland_Terrain_Tileset" tilewidth="64" tileheight="64" tilecount="112" columns="16">
   <image source="../Multi_Platformer_Tileset_v2/GrassLand/Terrain64/Grassland_Terrain_Tileset.png" width="1024" height="448"/>
  </tileset>
@@ -612,6 +612,14 @@
  <objectgroup id="17" name="Goal">
   <object id="115" x="4480" y="960" width="64" height="64"/>
   <object id="118" x="640" y="960" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="18" name="MapEndPoints">
+  <object id="119" x="0" y="0">
+   <point/>
+  </object>
+  <object id="120" x="5120" y="2048">
+   <point/>
+  </object>
  </objectgroup>
  <objectgroup id="13" name="Goomba">
   <object id="76" x="1920" y="960" width="64" height="64"/>
