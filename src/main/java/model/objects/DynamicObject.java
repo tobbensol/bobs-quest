@@ -8,8 +8,8 @@ import model.helper.ContactType;
 
 public abstract class DynamicObject extends GameObject {
 
-    public DynamicObject(String name, Level level, float x, float y, float density, ContactType contactType, short categoryBits, short maskBits) {
-        super(name, level, Constants.TILE_SIZE, Constants.TILE_SIZE, x, y, density, contactType, BodyDef.BodyType.DynamicBody, categoryBits, maskBits, false, false);
+    public DynamicObject(String name, Level level, float width, float height, float x, float y, float density, ContactType contactType, short categoryBits, short maskBits, boolean rectangle) {
+        super(name, level, width, height, x, y, density, contactType, BodyDef.BodyType.DynamicBody, categoryBits, maskBits, false, rectangle);
     }
 
     @Override

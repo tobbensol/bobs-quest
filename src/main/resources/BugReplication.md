@@ -63,7 +63,35 @@
           anymore
     - Status:
         - Fixed
-        - Feleted all the bodies in the world when reloading the level.
+        - Deleted all the bodies in the world when reloading the level.
+
+
+- Players start colliding with each other after a bit of time:
+    - How to replicate:
+        - Walk around for a few seconds with your players
+        - After around 10 seconds, the players should start colliding with each other.
+    - Reason:
+        - The mask bits is also changed when changing category bits
+        - We need to change both at the same time
+    - Status:
+        - Still a bug
+
+
+- zoom not working when at the edges of the map:
+    - how to replicate:
+        - walk to the edge of the map with all the characters
+        - walk away with one of the players
+        - the camera doesn't zoom out anymore
+        - alternative:
+            - walk away from the edge of the map with your characters
+            - move all except one until the camera hits the edge of the map
+            - move the last one to the edge of the map
+            - the camera stays zoomed out
+    - reason:
+        - unknown
+    - status:
+        - still a bug
+
         
 ## Manuel Tests
 
@@ -77,7 +105,7 @@
   - Status:
     - It works.
 
-
+    
 - Player can drop down through platforms
     - How to replicate:
         - Move a player on top of a platform. The player should stand at the top of the platform without falling down through the platform. Platform should feel solid.
@@ -102,3 +130,4 @@
     - Status:
         - It works.
   
+

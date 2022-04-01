@@ -23,7 +23,10 @@ public class Level {
     private List<Goomba> goombas;
     private List<Coin> coins;
     private List<Goal> goals;
+    private List<CameraWall> cameraWalls;
     private Integer score = 0;
+    private Vector2 topLeft;
+    private Vector2 bottomRight;
 
 
     public Level(String levelName, GameModel model) {
@@ -34,6 +37,7 @@ public class Level {
         createWorld(levelName);
         createObjects();
         createHUD();
+        parseMapEndPoints();
     }
 
     private void createWorld(String level) {
@@ -67,6 +71,25 @@ public class Level {
             goals.add((Goal) factory.create("Goal", v.x, v.y));
         }
         System.out.println(goals);
+
+        cameraWalls = new ArrayList<>();
+        for (Vector2 v :tiledMapHelper.parseMapSpawnPoints("MapEndPoints")) {
+            cameraWalls.add((CameraWall) factory.create("CameraWall", v.x, v.y));
+        }
+        System.out.println(cameraWalls);
+    }
+
+    private void parseMapEndPoints() {
+        List<Vector2> mapEndPoints = tiledMapHelper.parseMapSpawnPoints("MapEndPoints");
+
+        if (mapEndPoints.get(0).x < mapEndPoints.get(1).x ) {
+            topLeft = mapEndPoints.get(0);
+            bottomRight = mapEndPoints.get(1);
+        }
+        else {
+            topLeft = mapEndPoints.get(1);
+            bottomRight = mapEndPoints.get(0);
+        }
     }
 
     private void createHUD() {
@@ -97,12 +120,24 @@ public class Level {
         return new ArrayList<>(players);
     }
 
+    public List<CameraWall> getCameraWalls() {
+        return cameraWalls;
+    }
+
     public World getWorld() {
         return world;
     }
 
     public Integer getScore() {
         return score;
+    }
+
+    public Vector2 getTopLeft() {
+        return topLeft;
+    }
+
+    public Vector2 getBottomRight() {
+        return bottomRight;
     }
 
     public void setLevelCompleted(boolean value) {

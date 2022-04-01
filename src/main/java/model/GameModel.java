@@ -72,6 +72,7 @@ public class GameModel implements ControllableModel {
             restart();
         }
         if (gameOver()) {
+            //TODO: Add some delay after all players are dead, an animation for 3 sec or something
             state = GameState.GAME_OVER;
             changeScreen();
             restart();

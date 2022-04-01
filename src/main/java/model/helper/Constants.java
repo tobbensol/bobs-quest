@@ -16,15 +16,18 @@ public class Constants {
     public static final short ENEMY_BIT = 8;
     public static final short GOAL_BIT = 16;
     public static final short PLATFORM_BIT = 32;
-    public static final short PLAYER_NO_PLATFORM_BIT = 64;
-    public static final short DESTROYED_BIT = 128;
+    public static final short PLAYER_PASSING_THROUGH_PLATFORM_BIT = 64;
+    public static final short CAMERA_WALL_BIT = 128;
+    public static final short DESTROYED_BIT = 256;
+
 
     /**
      * The bit values that a given body can interact with.
      */
-    public static final short PLAYER_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | COIN_BIT | GOAL_BIT | PLATFORM_BIT;
-    public static final short ENEMY_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | PLAYER_NO_PLATFORM_BIT | ENEMY_BIT;
-    public static final short INTERACTIVE_MASK_BITS = PLAYER_BIT | PLAYER_NO_PLATFORM_BIT;
+    public static final short PLAYER_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | COIN_BIT | GOAL_BIT | PLATFORM_BIT | CAMERA_WALL_BIT;
+    public static final short ENEMY_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | PLAYER_PASSING_THROUGH_PLATFORM_BIT | ENEMY_BIT;
+    public static final short INTERACTIVE_MASK_BITS = PLAYER_BIT | PLAYER_PASSING_THROUGH_PLATFORM_BIT;
     public static final short PLATFORM_MASK_BITS = PLAYER_BIT | ENEMY_BIT;
-    public static final short DEFAULT_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | PLAYER_BIT | PLAYER_NO_PLATFORM_BIT;
+    public static final short DEFAULT_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | PLAYER_BIT | PLAYER_PASSING_THROUGH_PLATFORM_BIT;
+    public static final short CAMERA_WALL_MASK_BITS = PLAYER_BIT | PLAYER_PASSING_THROUGH_PLATFORM_BIT;
 }

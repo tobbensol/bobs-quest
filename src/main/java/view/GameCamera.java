@@ -1,8 +1,10 @@
 package view;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
+import model.objects.CameraWall;
 import model.objects.Player;
 
 import java.util.ArrayList;
@@ -10,17 +12,37 @@ import java.util.Collections;
 
 public class GameCamera extends OrthographicCamera {
 
-    GameModel gameModel;
+    private final GameModel gameModel;
 
     public GameCamera(GameModel gameModel) {
         this.gameModel = gameModel;
+        position.set(getAveragePlayerPosition());
     }
 
     public void update() {
-
         manageZoom();
-        position.set(getAveragePlayerPosition());
+        position.set(getNextCameraPosition(getAveragePlayerPosition()));
         super.update();
+        moveCameraWalls();
+    }
+
+    private void moveCameraWalls() {
+        CameraWall wall1 = gameModel.getLevel().getCameraWalls().get(0);
+        CameraWall wall2 = gameModel.getLevel().getCameraWalls().get(1);
+
+        wall1.setPosition((position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2) / 100, position.y / 100);
+        wall2.setPosition((position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2) / 100, position.y / 100);
+    }
+
+    private Vector3 getNextCameraPosition(Vector3 position) {
+        Vector2 mapTopLeft = gameModel.getLevel().getTopLeft();
+        Vector2 mapBottomRight = gameModel.getLevel().getBottomRight();
+
+        //limits the camera position between the rightmost and leftmost point of the map
+        position.x = Math.min(Math.max(position.x, mapTopLeft.x + viewportWidth * zoom / 2), mapBottomRight.x - viewportWidth * zoom / 2);
+        position.y = Math.min(Math.max(position.y, mapBottomRight.y + viewportHeight * zoom / 2), mapTopLeft.y - viewportHeight * zoom / 2);
+
+        return position;
     }
 
     private void manageZoom() {
@@ -64,6 +86,10 @@ public class GameCamera extends OrthographicCamera {
                 averageY += player.getPosition().y;
                 playerCount += 1;
             }
+        }
+
+        if (playerCount == 0) {
+            return position;
         }
 
         averageX = averageX / playerCount;
