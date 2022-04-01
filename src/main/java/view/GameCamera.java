@@ -9,6 +9,7 @@ import model.objects.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class GameCamera extends OrthographicCamera {
 
@@ -76,25 +77,26 @@ public class GameCamera extends OrthographicCamera {
     }
 
     private Vector3 getAveragePlayerPosition() {
-        float averageX = 0;
-        float averageY = 0;
-        int playerCount = 0;
+        List<Player> players = gameModel.getLevel().getPlayers();
 
-        for (Player player : gameModel.getLevel().getPlayers()) {
-            if (!player.isDead()) {
-                averageX += player.getPosition().x;
-                averageY += player.getPosition().y;
-                playerCount += 1;
-            }
-        }
-
-        if (playerCount == 0) {
+        if (players.size() == 0) {
             return position;
         }
 
-        averageX = averageX / playerCount;
-        averageY = averageY / playerCount;
+        float maxX = 0;
+        float minX = 1000000;
+        float maxY = 0;
+        float minY = 1000000;
 
-        return new Vector3(averageX, averageY, 0);
+        for (Player player : players) {
+            if (!player.isDead()) {
+                maxX = Math.max(maxX, player.getPosition().x);
+                minX = Math.min(minX, player.getPosition().x);
+                maxY = Math.max(maxY, player.getPosition().y);
+                minY = Math.min(minY, player.getPosition().y);
+            }
+        }
+
+        return new Vector3((minX+maxX)/2, (minY+maxY)/2, 0);
     }
 }
