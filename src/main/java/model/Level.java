@@ -101,8 +101,12 @@ public class Level {
         return objectList;
     }
 
-    public <T extends GameObject> List<T> getGameObjects(String object, Class<T> type) {
-        return (List<T>) objectMap.get(object);
+    public <T extends GameObject> List<T> getGameObjects(Class<T> type) {
+        return (List<T>) objectMap.get(getClassName(type));
+    }
+
+    private <T extends GameObject> String getClassName(Class<T> type) {
+        return type.toString().substring(type.toString().lastIndexOf('.') + 1);
     }
 
     public List<Goomba> getGoombas() {
