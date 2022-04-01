@@ -9,9 +9,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
 import model.helper.Constants;
 import model.objects.Coin;
-import model.objects.Goal;
-import model.objects.Goomba;
-import model.objects.Player;
+import model.objects.GameObject;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
@@ -68,23 +66,16 @@ public class GameScreen implements Screen {
 
         batch.begin();
 
-        for (Player player : gameModel.getLevel().getPlayers()) {
-            player.render(batch);
-        }
-
-        for (Goomba goomba : gameModel.getLevel().getGoombas()) {
-            goomba.render(batch);
-        }
-
-        for (Coin coin : gameModel.getLevel().getCoins()) {
-            if (!coin.isDestroyed()) {
-                coin.render(batch);
+        for (GameObject object : gameModel.getLevel().getGameObjects()) {
+            // TODO: Add isDestroyed() for all GameObjects
+            if (object instanceof Coin) {
+                Coin coin = (Coin) object;
+                if (coin.isDestroyed()) {
+                    continue;
+                }
             }
+            object.render(batch);
         }
-        for (Goal goal : gameModel.getLevel().getGoals()) {
-            goal.render(batch);
-        }
-
 
         batch.end();
         box2DDebugRenderer.render(gameModel.getLevel().getWorld(), camera.combined.scl(Constants.PPM));

@@ -1,11 +1,9 @@
 package model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import controls.*;
 import launcher.Boot;
-import model.objects.Goomba;
+import model.objects.GameObject;
 import model.objects.Player;
 import view.GameOverScreen;
 import view.GameScreen;
@@ -84,12 +82,8 @@ public class GameModel implements ControllableModel {
         for (int i = 0; i < getLevel().getPlayers().size(); i++) {
             controllers.get(i).inputListener(getLevel().getPlayers().get(i));
         }
-        for (Player player : getLevel().getPlayers()) {
-            player.update();
-        }
-
-        for (Goomba goomba : getLevel().getGoombas()) {
-            goomba.update();
+        for (GameObject object : getLevel().getGameObjects()) {
+            object.update();
         }
 
         getLevel().updateHUD();
