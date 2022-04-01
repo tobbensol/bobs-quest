@@ -109,42 +109,6 @@ public class Level {
         return type.toString().substring(type.toString().lastIndexOf('.') + 1);
     }
 
-    public List<Goomba> getGoombas() {
-        return objectMap.get("Goomba").stream().map(i -> (Goomba) i ).toList();
-    }
-
-    public List<Coin> getCoins() {
-        List<Coin> coinList = new ArrayList<>();
-        for(GameObject o : objectMap.get("Coin")){
-            coinList.add((Coin) o);
-        }
-        return coinList;
-    }
-
-    public List<Goal> getGoals() {
-        List<Goal> goalList = new ArrayList<>();
-        for(GameObject o : objectMap.get("Goal")){
-            goalList.add((Goal) o);
-        }
-        return goalList;
-    }
-
-    public List<Player> getPlayers() {
-        List<Player> playerList = new ArrayList<>();
-        for(GameObject o : objectMap.get("Player")){
-            playerList.add((Player) o);
-        }
-        return playerList;
-    }
-
-    public List<CameraWall> getCameraWalls() {
-        List<CameraWall> cameraWallList = new ArrayList<>();
-        for(GameObject o : objectMap.get("MapEndPoints")){
-            cameraWallList.add((CameraWall) o);
-        }
-        return cameraWallList;
-    }
-
     public World getWorld() {
         return world;
     }
