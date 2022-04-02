@@ -71,56 +71,49 @@ public class GameContactListener implements ContactListener {
     }
 
     /**
-     * This function should find and return the correct player
-     * involved in a given collision between to Fixtures: a and b.
+     * This method finds and return the correct contactObject of a given type involved
+     * in a given collision between Fixture a and Fixture b.
      *
      * @param a - The first Fixture involved in the contact.
      * @param b - The second Fixture involved in the contact.
+     * @param type - The class of what contactObject you want. Need it on this format: ClassName.class
+     * @param <T> - Generic type that extends from GameObject.
      * @return Return the player involved in the contact.
      */
-    private Player getContactPlayer(Fixture a, Fixture b) {
-        List<Player> players = level.getGameObjects(Player.class);
+    private <T extends GameObject> T getContactObject(Fixture a, Fixture b, Class<T> type) {
+        List<T> objects = level.getGameObjects(type);
 
-        Fixture p = a.getUserData() == ContactType.PLAYER ? a : b;
+        ContactType contactType; // TODO: Find some way to get ContactType from the generic input "type".
 
-        for (Player player : players) {
-            if (player.getBody().equals(p.getBody())) {
-                return player;
+        if (type.isAssignableFrom(Player.class)) {
+            contactType = ContactType.PLAYER;
+        } else if (type.isAssignableFrom(Goomba.class)) {
+            contactType = ContactType.ENEMY;
+        } else if (type.isAssignableFrom(MapEndPoints.class)) {
+            contactType = ContactType.CAMERA_WALL;
+        } else if (type.isAssignableFrom(Coin.class)) {
+            contactType = ContactType.COIN;
+        } else if (type.isAssignableFrom(Goal.class)) {
+            contactType = ContactType.GOAL;
+        }else {
+            throw new NullPointerException("Class " + type + " not valid.");
+        }
+
+        Fixture objectFixture = a.getUserData() == contactType ? a : b;
+
+        for (T object : objects) {
+            if (object.getBody().equals(objectFixture.getBody())) {
+                return object;
             }
         }
-        throw new NullPointerException("No such player found.");
-    }
-    // TODO: Generalize to getContactObject() method when level holds a single list of objects.
-    private Goomba getContactGoomba(Fixture a, Fixture b) {
-        List<Goomba> goombas = level.getGameObjects(Goomba.class);
 
-        Fixture g = a.getUserData() == ContactType.ENEMY ? a : b;
-
-        for (Goomba goomba : goombas) {
-            if (goomba.getBody().equals(g.getBody())) {
-                return goomba;
-            }
-        }
-        throw new NullPointerException("No such goomba found.");
-    }
-
-    private MapEndPoints getCameraWall(Fixture a, Fixture b) {
-        List<MapEndPoints> walls = level.getGameObjects(MapEndPoints.class);
-
-        Fixture c = a.getUserData() == ContactType.CAMERA_WALL ? a : b;
-
-        for (MapEndPoints wall : walls) {
-            if (wall.getBody().equals(c.getBody())) {
-                return wall;
-            }
-        }
-        throw new NullPointerException("No such camera wall found.");
+        throw new NullPointerException("No such " + type + " found.");
     }
 
     private void deathContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.DEATH || b.getUserData() == ContactType.DEATH) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Player player = getContactPlayer(a, b);
+                Player player = getContactObject(a, b,Player.class);
                 player.setDead();
                 System.out.println(player.getCurrentState());
             }
@@ -130,17 +123,10 @@ public class GameContactListener implements ContactListener {
     private void coinContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.COIN || b.getUserData() == ContactType.COIN) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
+                Coin coin = getContactObject(a,b,Coin.class);
+                Player player = getContactObject(a,b,Player.class);
 
-                // Finding out which of the fixtures is a Player and Coin.
-                Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
-                Fixture c = p == a ? b : a;
-
-                for (Coin coin : level.getGameObjects(Coin.class)) {
-                    if (coin.getBody().equals(c.getBody())) {
-                        coin.onHit();
-                    }
-                }
-                Player player = getContactPlayer(a, b);
+                coin.onHit();
                 player.increaseHealth(10);
             }
         }
@@ -149,17 +135,8 @@ public class GameContactListener implements ContactListener {
     private void goalContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.GOAL || b.getUserData() == ContactType.GOAL) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-
-                // Finding out which of the fixtures is a Player and Coin.
-                // TODO: Extract method
-                Fixture p = a.getUserData() == ContactType.PLAYER ? a : b; // Use the sane for players! ^^^
-                Fixture c = p == a ? b : a;
-
-                for (Goal goal : level.getGameObjects(Goal.class)) {
-                    if (goal.getBody().equals(c.getBody())) {
-                        goal.onHit();
-                    }
-                }
+                Goal goal = getContactObject(a,b,Goal.class);
+                goal.onHit();
             }
         }
     }
@@ -173,10 +150,10 @@ public class GameContactListener implements ContactListener {
      */
     private void goombaContact(Fixture a, Fixture b) {
         if (a.getUserData() == ContactType.ENEMY || b.getUserData() == ContactType.ENEMY) {
-            Goomba goomba = getContactGoomba(a,b);
+            Goomba goomba = getContactObject(a,b,Goomba.class);
 
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Player player = getContactPlayer(a, b);
+                Player player = getContactObject(a,b,Player.class);
 
                 if (player.getState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
                     goomba.setDead();
@@ -192,8 +169,8 @@ public class GameContactListener implements ContactListener {
     private void goombaRadar(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData().equals("goombaRadar") || b.getUserData().equals("goombaRadar")) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Goomba goomba = getContactGoomba(a,b);
-                Player player = getContactPlayer(a,b);
+                Goomba goomba = getContactObject(a,b,Goomba.class);
+                Player player = getContactObject(a,b,Player.class);
 
                 Vector2 playerPosition = player.getPosition();
                 goomba.setPlayerPostion(playerPosition);
@@ -207,10 +184,10 @@ public class GameContactListener implements ContactListener {
 
         if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
             if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactPlayer(a, b).setGrounded(begin);
+                getContactObject(a,b,Player.class).setGrounded(begin);
             }
             if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactPlayer(a, b).setGrounded(begin);
+                getContactObject(a,b,Player.class).setGrounded(begin);
             }
         }
     }
@@ -218,10 +195,10 @@ public class GameContactListener implements ContactListener {
     private void leftContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData().equals("left") || b.getUserData().equals("left")) {
             if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactPlayer(a, b).setLeftCollision(begin);
+                getContactObject(a,b,Player.class).setLeftCollision(begin);
             }
             if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactPlayer(a, b).setLeftCollision(begin);
+                getContactObject(a,b,Player.class).setLeftCollision(begin);
             }
         }
     }
@@ -229,10 +206,10 @@ public class GameContactListener implements ContactListener {
     private void rightContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData().equals("right") || b.getUserData().equals("right")) {
             if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactPlayer(a, b).setRightCollision(begin);
+                getContactObject(a,b,Player.class).setRightCollision(begin);
             }
             if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactPlayer(a, b).setRightCollision(begin);
+                getContactObject(a,b,Player.class).setRightCollision(begin);
             }
         }
     }
@@ -240,8 +217,8 @@ public class GameContactListener implements ContactListener {
     private void cameraWallContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData() == ContactType.CAMERA_WALL || b.getUserData() == ContactType.CAMERA_WALL) {
             if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Player player = getContactPlayer(a,b);
-                MapEndPoints wall = getCameraWall(a,b);
+                Player player = getContactObject(a,b,Player.class);
+                MapEndPoints wall = getContactObject(a,b,MapEndPoints.class);
 
                 if (player.getPosition().x > wall.getPosition().x) {
                     player.setLeftCollision(begin);
@@ -257,17 +234,18 @@ public class GameContactListener implements ContactListener {
     private void headContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
             if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactPlayer(a, b).setHeadCollision(begin);
+                getContactObject(a,b,Player.class).setHeadCollision(begin);
             }
             if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactPlayer(a, b).setHeadCollision(begin);
+                getContactObject(a,b,Player.class).setHeadCollision(begin);
             }
         }
     }
 
     private void platformContact(Fixture a, Fixture b, boolean begin) {
         if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-            Player player = getContactPlayer(a, b);
+            //Player player = getContactPlayer(a, b);
+            Player player = getContactObject(a,b,Player.class);
             if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
                 player.setOnPlatform(begin);
             }
