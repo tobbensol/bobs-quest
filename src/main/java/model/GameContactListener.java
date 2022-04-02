@@ -110,34 +110,48 @@ public class GameContactListener implements ContactListener {
         throw new NullPointerException("No such " + type + " found.");
     }
 
+    /**
+     * This method checks if one of the fixtures has the given ContactType.
+     * @param a - Fixture
+     * @param b - Fixture
+     * @param contactType - The ContactType to we're checking for.
+     * @return - Returns true if one of the fixtures have the given ContactType.
+     */
+    private boolean checkContactType(Fixture a, Fixture b, ContactType contactType) {
+        return (a.getUserData() == contactType || b.getUserData() == contactType);
+    }
+
+    /**
+     * This method checks if one of the fixtures has the given Sensor.
+     * @param a - Fixture
+     * @param b - Fixture
+     * @param sensorName - The Sensor to we're checking for.
+     * @return - Returns true if one of the fixtures have the given Sensor.
+     */
+    private boolean checkContactSensor(Fixture a, Fixture b, String sensorName) {
+        return (a.getUserData().equals(sensorName) || b.getUserData().equals(sensorName));
+    }
+
     private void deathContact(Fixture a, Fixture b) {
-        if (a.getUserData() == ContactType.DEATH || b.getUserData() == ContactType.DEATH) {
-            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Player player = getContactObject(a, b,Player.class);
-                player.setDead();
-                System.out.println(player.getCurrentState());
-            }
+        if (checkContactType(a,b,ContactType.DEATH) && checkContactType(a,b,ContactType.PLAYER)) {
+            Player player = getContactObject(a, b,Player.class);
+            player.setDead();
         }
     }
 
     private void coinContact(Fixture a, Fixture b) {
-        if (a.getUserData() == ContactType.COIN || b.getUserData() == ContactType.COIN) {
-            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Coin coin = getContactObject(a,b,Coin.class);
-                Player player = getContactObject(a,b,Player.class);
-
-                coin.onHit();
-                player.increaseHealth(10);
-            }
+        if (checkContactType(a,b,ContactType.COIN) && checkContactType(a,b,ContactType.PLAYER)) {
+            Coin coin = getContactObject(a,b,Coin.class);
+            Player player = getContactObject(a,b,Player.class);
+            coin.onHit();
+            player.increaseHealth(10);
         }
     }
 
     private void goalContact(Fixture a, Fixture b) {
-        if (a.getUserData() == ContactType.GOAL || b.getUserData() == ContactType.GOAL) {
-            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Goal goal = getContactObject(a,b,Goal.class);
-                goal.onHit();
-            }
+        if (checkContactType(a,b,ContactType.GOAL) && checkContactType(a,b,ContactType.PLAYER)) {
+            Goal goal = getContactObject(a,b,Goal.class);
+            goal.onHit();
         }
     }
 
@@ -149,106 +163,73 @@ public class GameContactListener implements ContactListener {
      * @param b - The second Fixture involved in the contact.
      */
     private void goombaContact(Fixture a, Fixture b) {
-        if (a.getUserData() == ContactType.ENEMY || b.getUserData() == ContactType.ENEMY) {
+        if (checkContactType(a,b,ContactType.ENEMY) && checkContactType(a,b,ContactType.PLAYER)) {
             Goomba goomba = getContactObject(a,b,Goomba.class);
+            Player player = getContactObject(a,b,Player.class);
 
-            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Player player = getContactObject(a,b,Player.class);
-
-                if (player.getState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
-                    goomba.setDead();
-                } else {
-                    player.takeDamage(Goomba.getAttack());
-                }
-
+            if (player.getState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
+                goomba.setDead();
+            } else {
+                player.takeDamage(Goomba.getAttack());
             }
         }
     }
-
 
     private void goombaRadar(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData().equals("goombaRadar") || b.getUserData().equals("goombaRadar")) {
-            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Goomba goomba = getContactObject(a,b,Goomba.class);
-                Player player = getContactObject(a,b,Player.class);
-
-                Vector2 playerPosition = player.getPosition();
-                goomba.setPlayerPostion(playerPosition);
-                goomba.setPlayerNearby(begin);
-            }
+        if (checkContactSensor(a,b,"goombaRadar") && checkContactType(a,b,ContactType.PLAYER)) {
+            Goomba goomba = getContactObject(a,b,Goomba.class);
+            Player player = getContactObject(a,b,Player.class);
+            Vector2 playerPosition = player.getPosition();
+            goomba.setPlayerPostion(playerPosition);
+            goomba.setPlayerNearby(begin);
         }
     }
 
-
     private void groundContact(Fixture a, Fixture b, boolean begin) {
-
-        if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactObject(a,b,Player.class).setGrounded(begin);
-            }
-            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactObject(a,b,Player.class).setGrounded(begin);
-            }
+        if (checkContactSensor(a,b,"foot") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
+            Player player = getContactObject(a,b,Player.class);
+            player.setGrounded(begin);
         }
     }
 
     private void leftContact(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData().equals("left") || b.getUserData().equals("left")) {
-            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactObject(a,b,Player.class).setLeftCollision(begin);
-            }
-            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactObject(a,b,Player.class).setLeftCollision(begin);
-            }
+        if (checkContactSensor(a,b,"right") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
+            Player player = getContactObject(a,b,Player.class);
+            player.setLeftCollision(begin);
         }
     }
 
     private void rightContact(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData().equals("right") || b.getUserData().equals("right")) {
-            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactObject(a,b,Player.class).setRightCollision(begin);
-            }
-            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactObject(a,b,Player.class).setRightCollision(begin);
-            }
+        if (checkContactSensor(a,b,"right") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
+            Player player = getContactObject(a,b,Player.class);
+            player.setRightCollision(begin);
         }
     }
 
     private void cameraWallContact(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData() == ContactType.CAMERA_WALL || b.getUserData() == ContactType.CAMERA_WALL) {
-            if (a.getUserData() == ContactType.PLAYER || b.getUserData() == ContactType.PLAYER) {
-                Player player = getContactObject(a,b,Player.class);
-                MapEndPoints wall = getContactObject(a,b,MapEndPoints.class);
+        if (checkContactType(a,b,ContactType.CAMERA_WALL) && checkContactType(a,b,ContactType.PLAYER)) {
+            Player player = getContactObject(a,b,Player.class);
+            MapEndPoints wall = getContactObject(a,b,MapEndPoints.class);
 
-                if (player.getPosition().x > wall.getPosition().x) {
-                    player.setLeftCollision(begin);
-                } else {
-                    player.setRightCollision(begin);
-                }
+            if (player.getPosition().x > wall.getPosition().x) {
+                player.setLeftCollision(begin);
+            } else {
+                player.setRightCollision(begin);
             }
         }
     }
 
-
-
     private void headContact(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData().equals("head") || b.getUserData().equals("head")) {
-            if (a.getUserData() == ContactType.GROUND || b.getUserData() == ContactType.GROUND) {
-                getContactObject(a,b,Player.class).setHeadCollision(begin);
-            }
-            if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-                getContactObject(a,b,Player.class).setHeadCollision(begin);
-            }
+        if ( checkContactSensor(a,b,"head") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM) ) ) {
+            Player player = getContactObject(a,b,Player.class);
+            player.setHeadCollision(begin);
         }
     }
 
     private void platformContact(Fixture a, Fixture b, boolean begin) {
-        if (a.getUserData() == ContactType.PLATFORM || b.getUserData() == ContactType.PLATFORM) {
-            //Player player = getContactPlayer(a, b);
+        if (checkContactType(a,b,ContactType.PLATFORM) && checkContactSensor(a,b,"foot")) {
             Player player = getContactObject(a,b,Player.class);
-            if (a.getUserData().equals("foot") || b.getUserData().equals("foot")) {
-                player.setOnPlatform(begin);
-            }
+            player.setOnPlatform(begin);
         }
     }
 
