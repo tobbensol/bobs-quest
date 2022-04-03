@@ -1,6 +1,5 @@
 package model.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -31,6 +30,8 @@ public class Player extends JumpableObject {
     private boolean headCollision = false;
     private boolean onPlatform = false;
 
+    private Vector2 acceleration = new Vector2(0,0);
+
 
     private int hp;
 
@@ -56,24 +57,37 @@ public class Player extends JumpableObject {
         currentState = getState();
         handlePlatform();
         damping();
-        System.out.println(currentState);
-        System.out.println(body.getLinearVelocity().y);
+        //System.out.println(currentState);
+        //System.out.println(grounded);
+        //System.out.println(body.getLinearVelocity().y);
+        System.out.println(grounded);
+        /*
+        if (acceleration.x > 0 || acceleration.y > 0)
+            System.out.println(acceleration);
+
+
+         */
+        this.body.applyForceToCenter(acceleration,true);
+        acceleration.scl(0);
 
     }
 
 
     private void damping() {
+        Vector2 currentSpeed = this.body.getLinearVelocity();
         if (grounded) {
-            Vector2 currentSpeed = this.body.getLinearVelocity();
-            this.body.applyForceToCenter(-currentSpeed.x * DAMPING_SCALE, 0, true);
+            acceleration.add(-currentSpeed.x * DAMPING_SCALE, 0);
+            //this.body.applyForceToCenter(-currentSpeed.x * DAMPING_SCALE, 0, true);
         }
+
+
     }
 
     private void handlePlatform() {
-        if (body.getLinearVelocity().y > 0) {
+        if (body.getLinearVelocity().y > 0.5) {
             playerCanGoThroughPlatforms(true);
         }
-        if (body.getLinearVelocity().y < 0 && !onPlatform && previousState != State.FALLING) {
+        if (body.getLinearVelocity().y < -0.5 && !onPlatform && previousState != State.FALLING) {
             playerCanGoThroughPlatforms(false);
         }
     }
@@ -95,7 +109,9 @@ public class Player extends JumpableObject {
     @Override
     public void jump() {
         if (grounded && (previousState != State.JUMPING) && (previousState != State.FALLING) && (currentState != State.FALLING)) {
-            applyForceToCenter(0, Y_VELOCITY);
+            System.out.println("Jump and " + grounded);
+            //applyForceToCenter(0, Y_VELOCITY);
+            acceleration.add(0,Y_VELOCITY);
         }
     }
 
@@ -104,16 +120,19 @@ public class Player extends JumpableObject {
             playerCanGoThroughPlatforms(true);
         }
         currentState = State.FALLING;
-        this.body.applyForceToCenter(0,-Y_VELOCITY * DROPPING_SCALE, true);
+        //this.body.applyForceToCenter(0,-Y_VELOCITY * DROPPING_SCALE, true);
+        acceleration.add(0,-Y_VELOCITY * DROPPING_SCALE);
     }
 
     @Override
     public void moveHorizontally(boolean isRight) {
         if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-            applyForceToCenter(X_VELOCITY, 0);
+            //applyForceToCenter(X_VELOCITY, 0);
+            acceleration.add(X_VELOCITY,0);
             facingRight = true;
         } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-            applyForceToCenter(-X_VELOCITY, 0);
+            //applyForceToCenter(-X_VELOCITY, 0);
+            acceleration.add(-X_VELOCITY,0);
             facingRight = false;
         }
     }
@@ -149,10 +168,30 @@ public class Player extends JumpableObject {
         if (previousState == State.DEAD) {
             return State.DEAD;
         }
-        if (body.getLinearVelocity().y < -0.001 && grounded) {
+        if (body.getLinearVelocity().y < -0.5 && grounded) {
+            return State.SLIDING; // Seperate Sliding from walking? drop to slide????
+        }
+        if (body.getLinearVelocity().y > 0.5 && grounded) {
+            return State.WALKING;
+        }
+        if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+            return State.JUMPING;
+        }
+        if (body.getLinearVelocity().y < -0.5) {
+            System.out.println(previousState);
+            System.out.println(body.getLinearVelocity());
+            return State.FALLING;
+        }
+        if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
+            grounded = true; // If y = 0 and x != 0, the player must be grounded. "can't jump after slide bug" appears if removed.
+            return State.WALKING;
+        }
+        return State.STANDING;
+        /*
+        if (body.getLinearVelocity().y < -0.5 && grounded) {
             return State.SLIDING;
         }
-        if (body.getLinearVelocity().y > 0.001 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+        if ((body.getLinearVelocity().y > 0.5) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             return State.JUMPING;
         }
         if (body.getLinearVelocity().y < -0.5) {
@@ -163,6 +202,8 @@ public class Player extends JumpableObject {
             return State.WALKING;
         }
         return State.STANDING;
+
+         */
     }
 
     /**
@@ -171,7 +212,7 @@ public class Player extends JumpableObject {
      *
      * @return the correct texture-region for the current state the player is in.
      */
-    public TextureRegion getFrame() {
+    private TextureRegion getFrame() {
         currentState = getState();
 
         // Specify which texture region corresponding to which state.
