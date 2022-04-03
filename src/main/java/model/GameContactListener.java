@@ -193,7 +193,7 @@ public class GameContactListener implements ContactListener {
     }
 
     private void leftContact(Fixture a, Fixture b, boolean begin) {
-        if (checkContactSensor(a,b,"right") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
+        if (checkContactSensor(a,b,"left") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
             Player player = getContactObject(a,b,Player.class);
             player.setLeftCollision(begin);
         }
