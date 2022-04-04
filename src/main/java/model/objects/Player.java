@@ -122,6 +122,9 @@ public class Player extends JumpableObject {
     }
 
     public void drop() {
+        if (currentState == State.DEAD) {
+            return;
+        }
         if (onPlatform) {
             playerCanGoThroughPlatforms(true);
         }

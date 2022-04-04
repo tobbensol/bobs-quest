@@ -7,7 +7,7 @@ public class DesktopLauncher {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("incredibly epic game");
-        cfg.setIdleFPS(60);
+        cfg.setForegroundFPS(60);
         cfg.setWindowedMode(1600, 900);
 
         new Lwjgl3Application(new Boot(), cfg);
