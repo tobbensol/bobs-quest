@@ -32,7 +32,7 @@ public class Player extends JumpableObject {
     private boolean headCollision = false;
     private boolean onPlatform = false;
 
-    private Vector2 acceleration = new Vector2(0,0);
+    private Vector2 cumulativeForces = new Vector2(0,0);
 
 
     private int hp;
@@ -60,40 +60,29 @@ public class Player extends JumpableObject {
         handlePlatform();
         groundedDamping();
         jumpDamping();
-        //System.out.println(currentState);
-        //System.out.println(grounded);
-        //System.out.println(body.getLinearVelocity().y);
-        //System.out.println(grounded);
 
-        if (acceleration.x > X_VELOCITY) {
-            acceleration.x = X_VELOCITY;
+        if (cumulativeForces.x > X_VELOCITY) {
+            cumulativeForces.x = X_VELOCITY;
         }
-        if (acceleration.y > Y_VELOCITY) {
-            acceleration.y = Y_VELOCITY;
+        if (cumulativeForces.y > Y_VELOCITY) {
+            cumulativeForces.y = Y_VELOCITY;
         }
 
-
-        if (acceleration.y > 0)
-            System.out.println(acceleration);
-
-
-
-        this.body.applyForceToCenter(acceleration,true); // Same force applied every time, Some times different heights, only when we use deltatime.... Should we use deltatime anyway here?
-        acceleration.scl(0);
-
+        this.body.applyForceToCenter(cumulativeForces,true);
+        cumulativeForces.scl(0);
     }
 
 
     private void groundedDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
         if (grounded) {
-            acceleration.add(-currentSpeed.x * X_DAMPING_SCALE, 0);
+            cumulativeForces.add(-currentSpeed.x * X_DAMPING_SCALE, 0);
         }
     }
     private void jumpDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
         if (!grounded) {
-            acceleration.add(-currentSpeed.x * JUMP_X_DAMPING_SCALE, -currentSpeed.y * Y_DAMPING_SCALE);
+            cumulativeForces.add(-currentSpeed.x * JUMP_X_DAMPING_SCALE, -currentSpeed.y * Y_DAMPING_SCALE);
         }
     }
 
@@ -123,7 +112,7 @@ public class Player extends JumpableObject {
     @Override
     public void jump() {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
-            acceleration.add(0,Y_VELOCITY); // Jump from ground takes two iterations.
+            cumulativeForces.add(0,Y_VELOCITY);
             grounded = false;
         }
     }
@@ -138,24 +127,18 @@ public class Player extends JumpableObject {
         currentState = State.FALLING;
 
         this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
-        acceleration.add(0,-Y_VELOCITY * DROPPING_SCALE);
+        cumulativeForces.add(0,-Y_VELOCITY * DROPPING_SCALE);
     }
 
     @Override
     public void moveHorizontally(boolean isRight) {
         if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-            //applyForceToCenter(X_VELOCITY, 0);
-            acceleration.add(X_VELOCITY,0);
+            cumulativeForces.add(X_VELOCITY,0);
             facingRight = true;
         } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-            //applyForceToCenter(-X_VELOCITY, 0);
-            acceleration.add(-X_VELOCITY,0);
+            cumulativeForces.add(-X_VELOCITY,0);
             facingRight = false;
         }
-    }
-
-    private void applyForceToCenter(float x, float y) {
-        this.body.applyForceToCenter(x, y, true);
     }
 
     public void setLeftCollision(boolean value) {
@@ -186,7 +169,7 @@ public class Player extends JumpableObject {
             return State.DEAD;
         }
         if (body.getLinearVelocity().y < -0.5 && grounded) {
-            return State.SLIDING; // Seperate Sliding from walking? drop to slide????
+            return State.SLIDING;
         }
         if (body.getLinearVelocity().y > 0.5 && grounded) {
             return State.WALKING;
