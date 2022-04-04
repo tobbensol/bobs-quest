@@ -157,23 +157,4 @@ public class GameModel implements ControllableModel {
     public int getNumControllers() {
         return numControllers;
     }
-
-
-    // For testing
-    public GameModel(boolean testing) {
-        this.world = new World( new Vector2( 0 , -10f ), false );
-        this.gameContactListener = new GameContactListener(this);
-        this.world.setContactListener(this.gameContactListener);
-//        this.tiledMapHelper = new TiledMapHelper(this);
-        players = new ArrayList<>();
-//        for (int i = 0; i < Math.min(numPlayers, numControllers); i++) {
-            //players.add(new Player("Player" + (i+1), "player_stick.png", this, i*100, 400, 1));
-        players.add(new Player("Player" + (1), "marioSprite.png", this, 0, 0, 1));
-//        }
-
-        controllers = new ArrayList<>();
-        controllers.add(new ArrowController());
-//        controllers.add(new WASDController());
-    }
-
 }
