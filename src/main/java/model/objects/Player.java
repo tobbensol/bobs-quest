@@ -83,7 +83,7 @@ public class Player extends JumpableObject {
 
     private void damping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
-        if (grounded || (inSlope && currentState == State.SLIDING)) {
+        if (grounded) {
             acceleration.add(-currentSpeed.x * DAMPING_SCALE, 0);
         }
 
