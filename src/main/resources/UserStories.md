@@ -240,10 +240,25 @@
 ### Muligheten for at spillere kan drepe Goomba objekter:
 
 - Som spiller ønsker jeg muligheten for å kunne drepe fiendeobjekter (Goomba) slik at spillere har flere funksjonaliteter og gjør spillet morsommere.
-    - Akseptansekristerier:
+    - Akseptansekriterier:
       - En spiller skal kunne drepe Goomba objekter med å hoppe over de og trykke ned.
       - Spilleren skal ikke miste HP under et slikt angrep.
       - Goomba objektet dør etter et slikt angrep og kan ikke lenger interagere med andre spillere.
     - Arbeidsoppgaver:
       - Sjekke/skille for kollisjonstilfellene i når en spiller kan drepe en Goomba og når den selv skal ta skade av Goomba.
       - Ta hånd om Goomba når den skal dø. Lag en setDead() metode i Goomba klassen. Endre categoryBits og maskBits f.eks.
+
+
+### Flytte informasjon om level fra GameModel til egen klasse:
+
+- Som prosjektdesigner ønsker jeg at informasjon og logikk om levels ligger i en egen klasse for å bedre følge single-responsibility principle og gjøre GameModel mer leselig.
+  - Akseptansekriterier:
+    - Pakken model inneholder en klasse Level
+    - Klassen Level inneholder feltvariabler og metoder for å holde styr på spillverdenen og -objekter
+    - Når et Level instantiseres opprettes en verden, alle objekter levelet skal inneholde og HUD ut fra gitt TiledMap
+    - Klasser som kun var avhengige av levelinformasjonen i GameModel bruker Level i stedet
+  - Arbeidsoppgaver:
+    - Opprett klassen Level
+    - Flytt relevant kode fra GameModel til Level
+    - Bruk Level i GameModel
+    - Bruk Level alle steder spesifisert av akseptansekriterie
