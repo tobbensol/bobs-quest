@@ -16,15 +16,17 @@ public class Level {
     private final GameModel model;
     private final GameObjectFactory factory;
     private World world;
-    private static final float gravity = -10f;
+    private static final float gravity = -40f;
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
+
     private List<Player> players;
     private List<Goomba> goombas;
     private List<Coin> coins;
     private List<Goal> goals;
     private List<CameraWall> cameraWalls;
+
     private Integer score = 0;
     private Vector2 topLeft;
     private Vector2 bottomRight;

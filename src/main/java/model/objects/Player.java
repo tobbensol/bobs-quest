@@ -13,10 +13,10 @@ import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final int MAX_VELOCITY = 4;
-    private static final float X_VELOCITY = 5f;
-    private static final float Y_VELOCITY = 150f;
-    private final float DROPPING_SCALE = 0.2f;
-    private final float DAMPING_SCALE = 1.2f;
+    private static final float X_VELOCITY = 20f;
+    private static final float Y_VELOCITY = 250f;
+    private static final float DROPPING_SCALE = 0.1f;
+    private static final float X_DAMPING_SCALE = 1.5f;
 
     private final ArrayList<TextureRegion> frames;
 
@@ -84,7 +84,7 @@ public class Player extends JumpableObject {
     private void damping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
         if (grounded) {
-            acceleration.add(-currentSpeed.x * DAMPING_SCALE, 0);
+            acceleration.add(-currentSpeed.x * X_DAMPING_SCALE, 0);
         }
 
 
