@@ -77,7 +77,7 @@ public class GameModel implements ControllableModel {
             restart();
         }
 
-        getLevel().getWorld().step(1 / 60f, 6, 2);
+        getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);
 
         List<Player> players = getLevel().getGameObjects(Player.class);
         for (int i = 0; i < players.size(); i++) {

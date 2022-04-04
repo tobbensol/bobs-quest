@@ -17,6 +17,7 @@ public class Level {
     private final GameModel model;
     private final GameObjectFactory factory;
     private World world;
+    private static final float gravity = -26f;
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
@@ -46,7 +47,7 @@ public class Level {
     }
 
     private void createWorld(String level) {
-        this.world = new World(new Vector2(0, -10f), false);
+        this.world = new World(new Vector2(0, gravity), false);
         this.world.setContactListener(new GameContactListener(this));
         this.tiledMapHelper = new TiledMapHelper(this, level);
     }

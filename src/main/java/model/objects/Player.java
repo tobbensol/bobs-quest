@@ -12,9 +12,13 @@ import model.helper.ContactType;
 import java.util.ArrayList;
 
 public class Player extends JumpableObject {
-    private static final int MAX_VELOCITY = 2;
-    private static final float X_VELOCITY = 0.35f;
-    private static final float Y_VELOCITY = 1.3f;
+    private static final float MAX_VELOCITY = 4.2f;
+    private static final float X_VELOCITY = 15f;
+    private static final float Y_VELOCITY = 250f;
+    private static final float DROPPING_SCALE = 0.1f;
+    private static final float X_DAMPING_SCALE = 1f;
+    private static final float JUMP_X_DAMPING_SCALE = 0.2f;
+    private static final float Y_DAMPING_SCALE = 0.27f;
 
     private final ArrayList<TextureRegion> frames;
 
@@ -27,6 +31,8 @@ public class Player extends JumpableObject {
 
     private boolean headCollision = false;
     private boolean onPlatform = false;
+
+    private Vector2 cumulativeForces = new Vector2(0,0);
 
 
     private int hp;
@@ -51,15 +57,40 @@ public class Player extends JumpableObject {
         super.update();
         previousState = currentState;
         currentState = getState();
-
         handlePlatform();
+        groundedDamping();
+        jumpDamping();
+
+        if (cumulativeForces.x > X_VELOCITY) {
+            cumulativeForces.x = X_VELOCITY;
+        }
+        if (cumulativeForces.y > Y_VELOCITY) {
+            cumulativeForces.y = Y_VELOCITY;
+        }
+
+        this.body.applyForceToCenter(cumulativeForces,true);
+        cumulativeForces.scl(0);
+    }
+
+
+    private void groundedDamping() {
+        Vector2 currentSpeed = this.body.getLinearVelocity();
+        if (grounded) {
+            cumulativeForces.add(-currentSpeed.x * X_DAMPING_SCALE, 0);
+        }
+    }
+    private void jumpDamping() {
+        Vector2 currentSpeed = this.body.getLinearVelocity();
+        if (!grounded) {
+            cumulativeForces.add(-currentSpeed.x * JUMP_X_DAMPING_SCALE, -currentSpeed.y * Y_DAMPING_SCALE);
+        }
     }
 
     private void handlePlatform() {
-        if (body.getLinearVelocity().y > 0) {
+        if (body.getLinearVelocity().y > 0.5) {
             playerCanGoThroughPlatforms(true);
         }
-        if (body.getLinearVelocity().y < 0 && !onPlatform && previousState != State.FALLING) {
+        if (body.getLinearVelocity().y < -0.5 && !onPlatform && previousState != State.FALLING) {
             playerCanGoThroughPlatforms(false);
         }
     }
@@ -79,34 +110,35 @@ public class Player extends JumpableObject {
 
 
     @Override
-    public void jump(float delta) {
-        if (grounded && (previousState != State.JUMPING) && (currentState != State.FALLING)) {
-            applyCenterLinearImpulse(0, delta * Y_VELOCITY);
+    public void jump() {
+        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
+            cumulativeForces.add(0,Y_VELOCITY);
+            grounded = false;
         }
     }
 
     public void drop() {
+        if (currentState == State.DEAD) {
+            return;
+        }
         if (onPlatform) {
             playerCanGoThroughPlatforms(true);
         }
         currentState = State.FALLING;
-        this.body.applyForceToCenter(0,-Y_VELOCITY*10    , true);
 
+        this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
+        cumulativeForces.add(0,-Y_VELOCITY * DROPPING_SCALE);
     }
 
     @Override
-    public void moveHorizontally(float delta, boolean isRight) {
+    public void moveHorizontally(boolean isRight) {
         if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-            applyCenterLinearImpulse(delta * X_VELOCITY, 0);
+            cumulativeForces.add(X_VELOCITY,0);
             facingRight = true;
         } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-            applyCenterLinearImpulse(-delta * X_VELOCITY, 0);
+            cumulativeForces.add(-X_VELOCITY,0);
             facingRight = false;
         }
-    }
-
-    private void applyCenterLinearImpulse(float x, float y) {
-        this.body.applyLinearImpulse(new Vector2(x, y), this.body.getWorldCenter(), true);
     }
 
     public void setLeftCollision(boolean value) {
@@ -136,17 +168,19 @@ public class Player extends JumpableObject {
         if (previousState == State.DEAD) {
             return State.DEAD;
         }
-        if (body.getLinearVelocity().y < 0 && grounded) {
+        if (body.getLinearVelocity().y < -0.5 && grounded) {
             return State.SLIDING;
         }
-        if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+        if (body.getLinearVelocity().y > 0.5 && grounded) {
+            return State.WALKING;
+        }
+        if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             return State.JUMPING;
         }
-        if (body.getLinearVelocity().y < 0) {
+        if (body.getLinearVelocity().y < -0.5) {
             return State.FALLING;
         }
         if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
-            grounded = true; // If y = 0 and x != 0, the player must be grounded. "can't jump after slide bug" appears if removed.
             return State.WALKING;
         }
         return State.STANDING;
@@ -158,7 +192,7 @@ public class Player extends JumpableObject {
      *
      * @return the correct texture-region for the current state the player is in.
      */
-    public TextureRegion getFrame() {
+    private TextureRegion getFrame() {
         currentState = getState();
 
         // Specify which texture region corresponding to which state.
