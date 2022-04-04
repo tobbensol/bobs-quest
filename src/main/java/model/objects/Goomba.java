@@ -11,6 +11,7 @@ import model.helper.ContactType;
 
 public class Goomba extends MovableObject {
 
+    private static final float X_VELOCITY = 3.2f;
     private static final int attack = 40;
     private final TextureRegion textureRegion;
     private int numMoves;
@@ -69,10 +70,10 @@ public class Goomba extends MovableObject {
     @Override
     public void moveHorizontally(boolean isRight) {
         if (isRight) {
-            body.applyLinearImpulse(new Vector2(1.5f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(X_VELOCITY, 0), body.getWorldCenter(), true);
             facingRight = true;
         } else {
-            body.applyLinearImpulse(new Vector2(-1.5f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(-X_VELOCITY, 0), body.getWorldCenter(), true);
             facingRight = false;
         }
     }

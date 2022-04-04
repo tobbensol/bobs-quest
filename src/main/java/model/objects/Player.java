@@ -12,11 +12,13 @@ import model.helper.ContactType;
 import java.util.ArrayList;
 
 public class Player extends JumpableObject {
-    private static final int MAX_VELOCITY = 4;
-    private static final float X_VELOCITY = 20f;
+    private static final float MAX_VELOCITY = 4.2f;
+    private static final float X_VELOCITY = 15f;
     private static final float Y_VELOCITY = 250f;
     private static final float DROPPING_SCALE = 0.1f;
-    private static final float X_DAMPING_SCALE = 1.5f;
+    private static final float X_DAMPING_SCALE = 1f;
+    private static final float JUMP_X_DAMPING_SCALE = 0.2f;
+    private static final float Y_DAMPING_SCALE = 0.27f;
 
     private final ArrayList<TextureRegion> frames;
 
@@ -56,7 +58,8 @@ public class Player extends JumpableObject {
         previousState = currentState;
         currentState = getState();
         handlePlatform();
-        damping();
+        groundedDamping();
+        jumpDamping();
         //System.out.println(currentState);
         //System.out.println(grounded);
         //System.out.println(body.getLinearVelocity().y);
@@ -81,13 +84,17 @@ public class Player extends JumpableObject {
     }
 
 
-    private void damping() {
+    private void groundedDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
         if (grounded) {
             acceleration.add(-currentSpeed.x * X_DAMPING_SCALE, 0);
         }
-
-
+    }
+    private void jumpDamping() {
+        Vector2 currentSpeed = this.body.getLinearVelocity();
+        if (!grounded) {
+            acceleration.add(-currentSpeed.x * JUMP_X_DAMPING_SCALE, -currentSpeed.y * Y_DAMPING_SCALE);
+        }
     }
 
     private void handlePlatform() {

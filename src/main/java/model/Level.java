@@ -16,7 +16,7 @@ public class Level {
     private final GameModel model;
     private final GameObjectFactory factory;
     private World world;
-    private static final float gravity = -40f;
+    private static final float gravity = -26f;
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
