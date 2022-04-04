@@ -1,5 +1,6 @@
 package model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import controls.*;
 import launcher.Boot;
