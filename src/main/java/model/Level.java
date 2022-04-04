@@ -101,6 +101,7 @@ public class Level {
         return objectList;
     }
 
+    // Source: https://stackoverflow.com/a/19254882
     public <T extends GameObject> List<T> getGameObjects(Class<T> type) {
         return (List<T>) objectMap.get(getClassName(type));
     }
