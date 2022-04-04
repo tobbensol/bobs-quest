@@ -129,6 +129,8 @@ public class Player extends JumpableObject {
             playerCanGoThroughPlatforms(true);
         }
         currentState = State.FALLING;
+
+        this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
         acceleration.add(0,-Y_VELOCITY * DROPPING_SCALE);
     }
 
