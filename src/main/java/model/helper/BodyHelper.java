@@ -95,7 +95,7 @@ public class BodyHelper {
      * @param height     the height of the object you want to give a sensor
      */
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
-        createSensor("foot", fixtureDef, body, (width / 2) * 0.8f / Constants.PPM, 2 / Constants.PPM, 0, -height / 2 / Constants.PPM);
+        createSensor("foot", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 1.2f / Constants.PPM, 0, -height / 2 / Constants.PPM);
         createSensor("head", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 2 / Constants.PPM, 0, height / 2 / Constants.PPM);
         createSensor("right", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, width / 2 / Constants.PPM, 0);
         createSensor("left", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
