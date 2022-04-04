@@ -12,11 +12,11 @@ import model.helper.ContactType;
 import java.util.ArrayList;
 
 public class Player extends JumpableObject {
-    private static final int MAX_VELOCITY = 3;
-    private static final float X_VELOCITY = 6f;
-    private static final float Y_VELOCITY = 80f;
+    private static final int MAX_VELOCITY = 4;
+    private static final float X_VELOCITY = 5f;
+    private static final float Y_VELOCITY = 150f;
     private final float DROPPING_SCALE = 0.2f;
-    private final float DAMPING_SCALE = 0.9f;
+    private final float DAMPING_SCALE = 1.2f;
 
     private final ArrayList<TextureRegion> frames;
 
@@ -60,14 +60,22 @@ public class Player extends JumpableObject {
         //System.out.println(currentState);
         //System.out.println(grounded);
         //System.out.println(body.getLinearVelocity().y);
-        System.out.println(grounded);
-        /*
-        if (acceleration.x > 0 || acceleration.y > 0)
+        //System.out.println(grounded);
+
+        if (acceleration.x > X_VELOCITY) {
+            acceleration.x = X_VELOCITY;
+        }
+        if (acceleration.y > Y_VELOCITY) {
+            acceleration.y = Y_VELOCITY;
+        }
+
+
+        if (acceleration.y > 0)
             System.out.println(acceleration);
 
 
-         */
-        this.body.applyForceToCenter(acceleration,true);
+
+        this.body.applyForceToCenter(acceleration,true); // Same force applied every time, Some times different heights, only when we use deltatime.... Should we use deltatime anyway here?
         acceleration.scl(0);
 
     }
@@ -75,9 +83,8 @@ public class Player extends JumpableObject {
 
     private void damping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
-        if (grounded) {
+        if (grounded || (inSlope && currentState == State.SLIDING)) {
             acceleration.add(-currentSpeed.x * DAMPING_SCALE, 0);
-            //this.body.applyForceToCenter(-currentSpeed.x * DAMPING_SCALE, 0, true);
         }
 
 
@@ -108,10 +115,9 @@ public class Player extends JumpableObject {
 
     @Override
     public void jump() {
-        if (grounded && (previousState != State.JUMPING) && (previousState != State.FALLING) && (currentState != State.FALLING)) {
-            System.out.println("Jump and " + grounded);
-            //applyForceToCenter(0, Y_VELOCITY);
-            acceleration.add(0,Y_VELOCITY);
+        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
+            acceleration.add(0,Y_VELOCITY); // Jump from ground takes two iterations.
+            grounded = false;
         }
     }
 
@@ -120,7 +126,6 @@ public class Player extends JumpableObject {
             playerCanGoThroughPlatforms(true);
         }
         currentState = State.FALLING;
-        //this.body.applyForceToCenter(0,-Y_VELOCITY * DROPPING_SCALE, true);
         acceleration.add(0,-Y_VELOCITY * DROPPING_SCALE);
     }
 
@@ -178,32 +183,12 @@ public class Player extends JumpableObject {
             return State.JUMPING;
         }
         if (body.getLinearVelocity().y < -0.5) {
-            System.out.println(previousState);
-            System.out.println(body.getLinearVelocity());
             return State.FALLING;
         }
         if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
-            grounded = true; // If y = 0 and x != 0, the player must be grounded. "can't jump after slide bug" appears if removed.
             return State.WALKING;
         }
         return State.STANDING;
-        /*
-        if (body.getLinearVelocity().y < -0.5 && grounded) {
-            return State.SLIDING;
-        }
-        if ((body.getLinearVelocity().y > 0.5) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
-            return State.JUMPING;
-        }
-        if (body.getLinearVelocity().y < -0.5) {
-            return State.FALLING;
-        }
-        if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
-            grounded = true; // If y = 0 and x != 0, the player must be grounded. "can't jump after slide bug" appears if removed.
-            return State.WALKING;
-        }
-        return State.STANDING;
-
-         */
     }
 
     /**
