@@ -175,6 +175,7 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    //todo make work with different enemies
     private void goombaRadar(Fixture a, Fixture b, boolean begin) {
         if (checkContactSensor(a,b,"goombaRadar") && checkContactType(a,b,ContactType.PLAYER)) {
             Goomba goomba = getContactObject(a,b,Goomba.class);

@@ -38,6 +38,7 @@ public class Level {
         objectMap.put("Goomba", new ArrayList<>());
         objectMap.put("Coin", new ArrayList<>());
         objectMap.put("Goal", new ArrayList<>());
+        objectMap.put("Floater", new ArrayList<>());
         objectMap.put("MapEndPoints", new ArrayList<>());
 
         createWorld(levelName);
