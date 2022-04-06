@@ -125,7 +125,7 @@ public class Player extends JumpableObject {
     }
 
     public void drop() {
-        if (currentState == State.DEAD) {
+        if (currentState == State.DEAD || currentState == State.TEMPDEAD) {
             return;
         }
         if (onPlatform) {
@@ -175,6 +175,9 @@ public class Player extends JumpableObject {
         if (previousState == State.DEAD) {
             return State.DEAD;
         }
+        if (previousState == State.TEMPDEAD) {
+            return State.TEMPDEAD;
+        }
         if (body.getLinearVelocity().y < -0.5 && grounded) {
             return State.SLIDING;
         }
@@ -207,7 +210,7 @@ public class Player extends JumpableObject {
             case JUMPING -> frames.get(5);
             case FALLING, SLIDING -> frames.get(7);
             case WALKING -> frames.get(3);
-            case DEAD -> frames.get(13);
+            case TEMPDEAD, DEAD -> frames.get(13);
             default -> frames.get(0);
         };
 
@@ -221,24 +224,36 @@ public class Player extends JumpableObject {
     }
 
     public boolean isDead() {
-        return getState() == State.DEAD;
+        System.out.println(getCurrentState());
+        return getCurrentState() == State.TEMPDEAD;
+    }
+
+    public boolean actuallyDonzoFR() {
+        return getCurrentState() == State.DEAD;
     }
 
     public void setDead() {
-        if (previousState == State.DEAD) {
+        if (previousState == State.TEMPDEAD || previousState == State.DEAD) {
             return;
         }
         hp = -1;
         previousState = currentState;
-        currentState = State.DEAD;
+        currentState = State.TEMPDEAD;
         BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
         // Death "animation"
         body.setLinearVelocity(0, 5); //TODO: Make player fall through ground as well
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                currentState = State.DEAD;
+                previousState = State.DEAD;
+            }
+        }, 3f);
     }
 
     public void takeDamage(int amount) {
         // Player doesn't take damage if dead
-        if (currentState == State.DEAD) {
+        if (currentState == State.DEAD || currentState == State.TEMPDEAD) {
             return;
         }
         hp -= amount;
@@ -249,7 +264,7 @@ public class Player extends JumpableObject {
     }
 
     public void increaseHealth(int amount) {
-        if (currentState == State.DEAD) {
+        if (currentState == State.DEAD || currentState == State.TEMPDEAD) {
             return;
         }
         hp += amount;
@@ -268,7 +283,8 @@ public class Player extends JumpableObject {
         JUMPING,
         FALLING,
         SLIDING,
-        DEAD
+        DEAD,
+        TEMPDEAD
     }
 
 }
