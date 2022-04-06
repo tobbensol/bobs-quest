@@ -7,6 +7,7 @@ import model.GameState;
 
 public class GameController {
     private final ControllableModel model;
+    private boolean pauseHelper;
 
     public GameController(ControllableModel model) {
         this.model = model;
@@ -15,6 +16,23 @@ public class GameController {
     public void inputListener() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.P) && model.getState() == GameState.ACTIVE) {
+            // Use a helper so that a held-down button does not continuously switch between states with every tick
+            if (pauseHelper) {
+                if (model.isPaused()) {
+                    model.resumeGame();
+                    System.out.println("Game Resumed");
+                }
+                else {
+                    model.pauseGame();
+                    System.out.println("Game Paused");
+                }
+                pauseHelper = false;
+            }
+        }
+        else {
+            pauseHelper = true;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
