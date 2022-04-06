@@ -44,8 +44,6 @@ public class Hud {
         stage.addActor(gamePausedTable);
     }
 
-
-
     public void update() {
         score = level.getScore();
         scoreLabel.setText(score + "/" + level.getGameObjects(Coin.class).size());
