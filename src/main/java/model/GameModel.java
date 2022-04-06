@@ -26,6 +26,7 @@ public class GameModel implements ControllableModel {
     private int levelNR = 0;
     private int numPlayers;
     private GameState state;
+    private boolean pause = false;
 
     public GameModel() {
         state = GameState.STARTUP;
@@ -65,6 +66,14 @@ public class GameModel implements ControllableModel {
 
     public void update() {
         gameController.inputListener();
+
+        if (isPaused()) {
+            getLevel().getHud().pause();
+            getLevel().updateHUD();
+            return;
+        } else {
+            getLevel().getHud().resume();
+        }
 
         if (getLevel().isCompleted()) {
             state = GameState.NEXT_LEVEL;
@@ -153,6 +162,21 @@ public class GameModel implements ControllableModel {
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
         restart();
+    }
+
+    @Override
+    public void pauseGame() {
+        pause = true;
+    }
+
+    @Override
+    public void resumeGame() {
+        pause = false;
+    }
+
+    @Override
+    public boolean isPaused() {
+        return pause;
     }
 
     public int getNumControllers() {

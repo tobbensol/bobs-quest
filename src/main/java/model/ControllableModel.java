@@ -40,4 +40,9 @@ public interface ControllableModel {
      */
     void setNumPlayers(int numPlayers);
 
+    void pauseGame();
+
+    void resumeGame();
+
+    boolean isPaused();
 }
