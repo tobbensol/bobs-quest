@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
@@ -19,7 +20,10 @@ public class GameModelTest {
 
     @Test
     void modelTest() {
-        fail();
+        assertEquals(model.getNumPlayers(), 1);
+        model.setNumPlayers(3);
+        assertEquals(model.getNumPlayers(), 3);
+        assertEquals(model.getNumControllers(), 3);
     }
 }
 

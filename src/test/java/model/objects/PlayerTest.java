@@ -21,11 +21,12 @@ public class PlayerTest {
 
     private Player player;
     private World world;
+    private Level level;
 
     @BeforeEach
     void setup() {
         world = new World(new Vector2(0, 0), false);
-        Level level = mock(Level.class);
+        level = mock(Level.class);
         when(level.getWorld()).thenReturn(world);
         player = new Player(level, 0, 0);
 
@@ -118,6 +119,14 @@ public class PlayerTest {
 
         player.update();
         assertEquals(Player.State.DEAD, player.getCurrentState());
+    }
+
+    @Test
+    void testTeleport() {
+        assertEquals(player.getPosition(), new Vector2(0, 0));
+        player.setPosition(10, 10);
+        assertEquals(player.getPosition(), new Vector2(10 * Constants.PPM, 10 * Constants.PPM));
+        assertEquals(player.body.getAngle(), 0);
     }
 
     private void doStep() {
