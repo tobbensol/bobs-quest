@@ -17,7 +17,7 @@ public class GameController {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.P) && model.getState() == GameState.ACTIVE) {
             // Use a helper so that a held-down button does not continuously switch between states with every tick
             if (pauseHelper) {
                 if (model.isPaused()) {

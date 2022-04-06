@@ -68,9 +68,11 @@ public class GameModel implements ControllableModel {
         gameController.inputListener();
 
         if (isPaused()) {
-            //getLevel().getHud().pause();
-            //getLevel().updateHUD();
+            getLevel().getHud().pause();
+            getLevel().updateHUD();
             return;
+        } else {
+            getLevel().getHud().resume();
         }
 
         if (getLevel().isCompleted()) {

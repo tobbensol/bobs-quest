@@ -13,16 +13,21 @@ import launcher.Boot;
 import model.objects.Coin;
 
 public class Hud {
-    private static Integer score;
-    private static Label scoreLabel;
     private final Viewport viewport;
-    private final Level level;
-    private final Label levelLabel;
     public Stage stage;
+
+    private final Level level;
+    private static Integer score;
+
+    private static Label scoreLabel;
+    private final Label levelLabel;
+    private final Label pausedLabel;
+    private final Label pauseInfoLabel;
 
     public Hud(SpriteBatch batch, Level level) {
         this.level = level;
         score = 0;
+
 
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, batch);
@@ -43,7 +48,21 @@ public class Hud {
 
         // Use table.row() for starting on a new line
 
+        Table gamePausedTable = new Table();
+        gamePausedTable.center();
+        gamePausedTable.setFillParent(true);
+        pausedLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        pauseInfoLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        pausedLabel.setFontScale(5f);
+        pauseInfoLabel.setFontScale(2f);
+
+        gamePausedTable.add(pausedLabel).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(pauseInfoLabel).expandX();
+
         stage.addActor(table);
+        stage.addActor(gamePausedTable);
     }
 
     public void update() {
@@ -51,5 +70,16 @@ public class Hud {
         scoreLabel.setText(score + "/" + level.getGameObjects(Coin.class).size());
         // TODO maybe not do this every frame
         levelLabel.setText(level.toString());
+
+    }
+
+    public void pause() {
+        pausedLabel.setText("GAME PAUSED");
+        pauseInfoLabel.setText("Press P To Resume");
+    }
+
+    public void resume() {
+        pausedLabel.setText("");
+        pauseInfoLabel.setText("");
     }
 }
