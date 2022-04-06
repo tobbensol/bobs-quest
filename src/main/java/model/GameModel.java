@@ -52,7 +52,8 @@ public class GameModel implements ControllableModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
 
-        level = new Level("setupMap", this);
+        level = new Level(levels.get(levelNR), this);
+        pauseGame();
     }
 
     private boolean gameOver() {
@@ -78,11 +79,15 @@ public class GameModel implements ControllableModel {
         if (getLevel().isCompleted()) {
             state = GameState.NEXT_LEVEL;
             changeScreen();
+            restart();
+            pauseGame();
         }
         if (gameOver()) {
             //TODO: Add some delay after all players are dead, an animation for 3 sec or something
             state = GameState.GAME_OVER;
             changeScreen();
+            restart();
+            pauseGame();
         }
 
         getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);
@@ -160,6 +165,8 @@ public class GameModel implements ControllableModel {
     @Override
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
+        restart();
+        pauseGame();
     }
 
     @Override

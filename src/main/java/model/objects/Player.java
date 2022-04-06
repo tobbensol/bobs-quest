@@ -248,7 +248,7 @@ public class Player extends JumpableObject {
                 currentState = State.DEAD;
                 previousState = State.DEAD;
             }
-        }, 3f);
+        }, 1.2f);
     }
 
     public void takeDamage(int amount) {
