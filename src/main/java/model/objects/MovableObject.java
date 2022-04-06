@@ -7,7 +7,7 @@ import model.helper.ContactType;
 public abstract class MovableObject extends DynamicObject implements Movable {
 
     public MovableObject(String name, Level level, float x, float y, float density, ContactType contactType, short categoryBits, short maskBits) {
-        super(name, level, Constants.TILE_SIZE, Constants.TILE_SIZE, x, y, density, contactType, categoryBits, maskBits, false);
+        super(name, level, Constants.TILE_SIZE*0.9f, Constants.TILE_SIZE*0.9f, x, y, density, contactType, categoryBits, maskBits, false);
     }
 
     public void update() {
