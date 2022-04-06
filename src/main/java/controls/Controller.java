@@ -20,15 +20,14 @@ public abstract class Controller {
         if (player.isDead()) {
             return;
         }
-        float delta = 1.0f;
         if (Gdx.input.isKeyPressed(right)) {
-            player.moveHorizontally(delta, true);
+            player.moveHorizontally( true);
         }
         if (Gdx.input.isKeyPressed(left)) {
-            player.moveHorizontally(delta, false);
+            player.moveHorizontally(false);
         }
         if (Gdx.input.isKeyPressed(up)) {
-            player.jump(delta);
+            player.jump();
         }
         if (Gdx.input.isKeyPressed(down)) {
             player.drop();
