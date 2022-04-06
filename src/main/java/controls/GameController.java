@@ -34,6 +34,7 @@ public class GameController {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 model.setState(GameState.ACTIVE);
                 model.changeScreen();
+                model.restart();
             }
         }
 
@@ -41,6 +42,7 @@ public class GameController {
             if (model.getState() == GameState.GAME_OVER || model.getState() == GameState.NEXT_LEVEL) {
                 model.setState(GameState.ACTIVE);
                 model.changeScreen();
+                model.restart();
             }
         }
 
