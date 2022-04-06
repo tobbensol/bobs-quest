@@ -167,7 +167,7 @@ public class GameContactListener implements ContactListener {
             Goomba goomba = getContactObject(a,b,Goomba.class);
             Player player = getContactObject(a,b,Player.class);
 
-            if (player.getState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
+            if (player.getCurrentState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
                 goomba.setDead();
             } else {
                 player.takeDamage(Goomba.getAttack());
