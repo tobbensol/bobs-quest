@@ -6,6 +6,7 @@ import model.helper.ContactType;
 public abstract class JumpableObject extends MovableObject implements Jumpable {
 
     protected int groundedcount = 0;
+    protected boolean canJump = true;
     protected boolean grounded;
 
     public JumpableObject(String name, Level level, float x, float y, float density, ContactType contactType, short categoryBits, short maskBits) {

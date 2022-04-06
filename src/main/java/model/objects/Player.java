@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
@@ -111,9 +112,15 @@ public class Player extends JumpableObject {
 
     @Override
     public void jump() {
-        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
+        if (grounded && canJump && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0,Y_VELOCITY);
-            grounded = false;
+            canJump = false;
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    canJump = true;
+                }
+            }, 0.1f);
         }
     }
 
