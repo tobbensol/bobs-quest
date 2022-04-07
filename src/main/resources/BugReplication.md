@@ -221,3 +221,13 @@
     - Check that the HP of the player remains the same.
   - Status:
     - It works.
+
+
+- Pause/Resume works in game.
+  - How to replicate:
+    - Start a game, press P to pause.
+    - Check that the game is paused.
+    - Press P again to resume.
+    - Check that game resumes.
+  - Status:
+    - It works.

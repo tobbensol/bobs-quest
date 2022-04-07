@@ -283,3 +283,21 @@
 - Arbeidsoppgaver:
   - Legg til en "Timer.Schedule" i set-dead som aktiverer en bool.
   - Bruk denne bool-en til å finne når det er game over.
+
+
+### Mulighet for å pause spillet:
+
+- Som spiller ønsker jeg muligheten for å kunne sette spillet på pause for å få en bedre opplevelse i spillet.
+  - Akseptansekriterier:
+    - Når spilleren trykker på tast P, skal spillet settes på pause.
+    - Det skal være tydelig at spillet er satt på pause. Viktig at det visuelle er tydelig på at spillet er satt på pause.
+      - God og tydelig tekst. Teksten skal også forklare spilleren hvordan man starter spillet igjen.
+      - Legge til et filter over skjermen som gjør at spillets farger dempes.
+    - Når spilleren trykker på P mens spillet er i pause, skal spillet startes opp igjen.
+    - Når spillet starter oppatt, skal spillet være i samme tilstand som da spilleren trykket på pause.
+    - Brukeren skal ikke ha muligheten til å sette spillet i pause når spilleren er i startmeny, gameover meny eller i nextLevel meny.
+  - Arbeidsoppgaver:
+    - Legge til tabeller i HUD klassen som holdes skjult så lenge spillet ikke er satt til pause.
+    - Legge til filter i HUD klassen som holdes skjult så lenge spillet ikke er satt til pause.
+    - Legge til funksjonalitet i GameController klassen som sjekker om tast P er trykket inn (og i en lovlig tilstand) og implementer logikk i GameModel for å håndtere dette.
+    - Visuelt se at tekst og filter er tydelige nok til at en spiller vet at spillet er satt til pause og hvordan man kan fortsette spillet.
