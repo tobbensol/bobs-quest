@@ -93,9 +93,9 @@
             - Move the last one to the edge of the map
             - The camera stays zoomed out
     - Reason:
-        - Unknown
+        - The method to stop the camera when reaching the end of the map did not handle zoom properly as it would have zoomed outside the map
     - Status:
-        - Still a bug
+        - Fixed
 
 
 - Goomba moves while on start screen
