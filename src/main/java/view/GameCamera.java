@@ -63,7 +63,8 @@ public class GameCamera extends OrthographicCamera {
 
 
     /**
-     * If the distance between the two outermost players is less than or exceeds a certain percent of the screen scaled with the current zoom, decrease or increase the zoom level.
+     * If the distance between the two outermost players is greater or less than a certain percent of the screen scaled with the current zoom, increase or decrease the zoom level.
+     * The zoom must be between the minZoom and the maxZoom.
      * The further the players are from each other, the faster the zoom increases.
      * The closer the players are from each other, the faster the zoom decreases.
      */
@@ -84,13 +85,13 @@ public class GameCamera extends OrthographicCamera {
 
         float minX = Collections.min(playerXs);
         float maxX = Collections.max(playerXs);
-        float playersXDifference = maxX - minX;
+        float playersXDifferenceWidth = maxX - minX;
 
-        if (playersXDifference > zoomTriggerWidth && zoom <= maxZoom) {
-            zoom += zoomIncreaseAmount * playersXDifference / zoomTriggerWidth;
+        if (playersXDifferenceWidth > zoomTriggerWidth && zoom <= maxZoom) {
+            zoom += zoomIncreaseAmount * playersXDifferenceWidth / zoomTriggerWidth;
         }
-        if (playersXDifference < zoomTriggerWidth && zoom >= minZoom) {
-            zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifference;
+        if (playersXDifferenceWidth < zoomTriggerWidth && zoom >= minZoom) {
+            zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifferenceWidth;
         }
     }
 
