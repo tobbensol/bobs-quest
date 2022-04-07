@@ -60,13 +60,14 @@ public class Level {
                     objectMap.get(object).add(factory.create(object, spawnPoints.get(i).x, spawnPoints.get(i).y));
                 }
             }
-            else{
+            else {
                 for (Vector2 v : tiledMapHelper.parseMapSpawnPoints(object)) {
                     objectMap.get(object).add(factory.create(object, v.x, v.y));
                 }
             }
-
         }
+        objectMap.put("Enemy", objectMap.get("Goomba"));
+
     }
 
     private void parseMapEndPoints() {
@@ -97,17 +98,20 @@ public class Level {
     public List<GameObject> getGameObjects() {
         List<GameObject> objectList = new ArrayList<>();
         for (String object : objectMap.keySet()) {
+            if (object.equals("Enemy")) { // We do not want to add enemy objects twice.
+                continue;
+            }
             objectList.addAll(objectMap.get(object));
         }
         return objectList;
     }
 
     // Source: https://stackoverflow.com/a/19254882
-    public <T extends GameObject> List<T> getGameObjects(Class<T> type) {
+    public <T extends IGameObject> List<T> getGameObjects(Class<T> type) {
         return (List<T>) objectMap.get(getClassName(type));
     }
 
-    private <T extends GameObject> String getClassName(Class<T> type) {
+    <T extends IGameObject> String getClassName(Class<T> type) {
         return type.toString().substring(type.toString().lastIndexOf('.') + 1);
     }
 

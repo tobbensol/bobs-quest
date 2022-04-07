@@ -27,7 +27,7 @@ public class BodyHelper {
             playerSensors(fixtureDef, body, width, height);
         }
         if (contactType == ContactType.ENEMY) {
-            goombaSensors(fixtureDef, body, width, height);
+            enemySensors(fixtureDef, body, width, height);
         }
 
         return body;
@@ -101,8 +101,8 @@ public class BodyHelper {
         createSensor("left", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
     }
 
-    private static void goombaSensors(FixtureDef fixtureDef, Body body, float width, float height) {
-        createCircleSensor("goombaRadar", fixtureDef,body,width*5 / Constants.PPM,0,0);
+    private static void enemySensors(FixtureDef fixtureDef, Body body, float width, float height) {
+        createCircleSensor("enemyRadar", fixtureDef,body,width*5 / Constants.PPM,0,0);
     }
 
 

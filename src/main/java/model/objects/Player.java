@@ -39,7 +39,7 @@ public class Player extends JumpableObject {
     private int hp;
 
     public Player(String name, Level level, float x, float y) {
-        super(name + " " + (level.getGameObjects(Player.class).size() + 1), level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
+        super(name + " " + (level.getGameObjects(Player.class).size() + 1), level, x, y, 1.1f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
         texturePath = "Multi_Platformer_Tileset_v2/Players/Small_Mario.png";
         texture = new Texture(texturePath);
 

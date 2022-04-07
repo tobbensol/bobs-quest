@@ -9,7 +9,7 @@ import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
-public class Goomba extends MovableObject {
+public class Goomba extends MovableObject implements Enemy {
 
     private static final float X_VELOCITY = 3.2f;
     private static final int attack = 40;
@@ -19,7 +19,7 @@ public class Goomba extends MovableObject {
     private Vector2 playerPosition;
 
     public Goomba(String name, Level level, float x, float y) {
-        super(name + " " + (level.getGameObjects(Goomba.class).size() + 1), level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
+        super(name + " " + (level.getGameObjects(Goomba.class).size() + 1), level, x, y, 1.1f, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
         texturePath = "Multi_Platformer_Tileset_v2/Enemies/Goomba.png";
         texture = new Texture(texturePath);
         textureRegion = new TextureRegion(getTexture(), Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE);
@@ -27,8 +27,14 @@ public class Goomba extends MovableObject {
         numMoves = 0;
     }
 
-    public static int getAttack() {
+    @Override
+    public int getAttack() {
         return attack;
+    }
+
+    @Override
+    public void onHit() {
+        setDead();
     }
 
     @Override
@@ -83,11 +89,13 @@ public class Goomba extends MovableObject {
         batch.draw(textureRegion, x, y, width, height);
     }
 
+    @Override
     public void setPlayerNearby(boolean value) {
         playerNearby = value;
     }
 
-    public void setPlayerPostion(Vector2 position) {
+    @Override
+    public void setPlayerPosition(Vector2 position) {
         playerPosition = position;
     }
 
