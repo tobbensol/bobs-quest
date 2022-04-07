@@ -86,7 +86,7 @@ public class GameCamera extends OrthographicCamera {
         float minY = 1000000;
 
         for (Player player : players) {
-            if (!player.isDead() && !player.actuallyDonzoFR()) {
+            if (!player.isDead()) {
                 maxX = Math.max(maxX, player.getPosition().x);
                 minX = Math.min(minX, player.getPosition().x);
                 maxY = Math.max(maxY, player.getPosition().y);
