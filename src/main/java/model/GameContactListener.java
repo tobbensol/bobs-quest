@@ -22,6 +22,7 @@ public class GameContactListener implements ContactListener {
         contactTypes.put("Coin", ContactType.COIN);
         contactTypes.put("Goal", ContactType.GOAL);
         contactTypes.put("Goomba", ContactType.ENEMY);
+        contactTypes.put("Floater", ContactType.ENEMY);
         contactTypes.put("Death", ContactType.DEATH);
         contactTypes.put("MapEndPoints", ContactType.CAMERA_WALL);
     }
@@ -104,11 +105,17 @@ public class GameContactListener implements ContactListener {
      */
     private <T extends IGameObject> T getContactObject(Fixture a, Fixture b, Class<T> type) {
         List<T> objects = level.getGameObjects(type);
+
+
         ContactType contactType = getContactType(type);
         Fixture objectFixture = a.getUserData() == contactType ? a : b;
 
         for (T object : objects) {
-            if (object.getBody().equals(objectFixture.getBody())) {
+//            System.out.println(Floater.class.isAssignableFrom(object.getClass()));
+//            System.out.println(Goomba.class.isAssignableFrom(object.getClass()));
+
+            System.out.println(object.getBody().equals(objectFixture.getBody()));
+            if (object.getBody().equals(objectFixture.getBody())) { // TODO: Problem with Floater!
                 return object;
             }
         }
@@ -178,9 +185,13 @@ public class GameContactListener implements ContactListener {
             Enemy enemy = getContactObject(a,b,Enemy.class);
             Player player = getContactObject(a,b,Player.class);
 
-//            if (Goomba.class.isAssignableFrom(enemy.getClass())) {
-//                System.out.println("Goomba!");
-//            }
+            if (Goomba.class.isAssignableFrom(enemy.getClass())) {
+                System.out.println("Goomba!");
+            }
+
+            if (Floater.class.isAssignableFrom(enemy.getClass())) {
+                System.out.println("Floater!");
+            }
 
             if (player.getState() == Player.State.FALLING) {
                 enemy.onHit();

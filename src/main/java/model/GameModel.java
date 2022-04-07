@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import controls.*;
 import launcher.Boot;
 import model.objects.GameObject;
+import model.objects.IGameObject;
 import model.objects.Player;
 import view.GameOverScreen;
 import view.GameScreen;
@@ -23,7 +24,7 @@ public class GameModel implements ControllableModel {
     private final GameController gameController;
     Level level;
     private boolean reload = false;
-    private int levelNR = 10;
+    private int levelNR = 0;
     private int numPlayers;
     private GameState state;
     private boolean pause = false;
@@ -94,7 +95,7 @@ public class GameModel implements ControllableModel {
         for (int i = 0; i < players.size(); i++) {
             controllers.get(i).inputListener(players.get(i));
         }
-        for (GameObject object : getLevel().getGameObjects()) {
+        for (IGameObject object : getLevel().getGameObjects()) {
             object.update();
         }
 

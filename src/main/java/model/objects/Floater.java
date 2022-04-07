@@ -9,15 +9,15 @@ import model.helper.Constants;
 import model.helper.ContactType;
 
 
-public class Floater extends MovableObject{
+public class Floater extends MovableObject implements Enemy {
     private static final float X_VELOCITY = 3.2f;
-    private static final int attack = 40;
+    private static final int attack = 10;
     private int numMoves;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
 
     public Floater(String name, Level level, float x, float y) {
-        super(name + " " + level.getGameObjects(Floater.class).size(), level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
+        super(name + " " + (level.getGameObjects(Floater.class).size() + 1), level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
         body.setGravityScale(0);
     }
@@ -39,13 +39,26 @@ public class Floater extends MovableObject{
         batch.draw(texture, x , y , width, height);
     }
 
+    @Override
+    public int getAttack() {
+        return attack;
+    }
+
+    @Override
+    public void onHit() {
+
+    }
+
+    @Override
+    public void setPlayerPosition(Vector2 position) {
+        playerPosition = position;
+    }
+
+    @Override
     public void setPlayerNearby(boolean value) {
         playerNearby = value;
     }
 
-    public void setPlayerPostion(Vector2 position) {
-        playerPosition = position;
-    }
 
     @Override
     public void moveHorizontally(boolean isRight) {

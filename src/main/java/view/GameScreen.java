@@ -10,6 +10,7 @@ import model.GameModel;
 import model.helper.Constants;
 import model.objects.Coin;
 import model.objects.GameObject;
+import model.objects.IGameObject;
 
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
@@ -66,7 +67,7 @@ public class GameScreen implements Screen {
 
         batch.begin();
 
-        for (GameObject object : gameModel.getLevel().getGameObjects()) {
+        for (IGameObject object : gameModel.getLevel().getGameObjects()) {
             // TODO: Add isDestroyed() for all GameObjects
             if (object instanceof Coin) {
                 Coin coin = (Coin) object;

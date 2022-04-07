@@ -21,7 +21,7 @@ public class Level {
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
-    private HashMap<String, ArrayList<GameObject>> objectMap;
+    private HashMap<String, ArrayList<IGameObject>> objectMap;
     private Integer score = 0;
     private Vector2 topLeft;
     private Vector2 bottomRight;
@@ -67,8 +67,11 @@ public class Level {
                 }
             }
         }
-        objectMap.put("Enemy", objectMap.get("Goomba"));
 
+        ArrayList<IGameObject> enemies = new ArrayList<>();
+        enemies.addAll(objectMap.get("Goomba"));
+        enemies.addAll(objectMap.get("Floater"));
+        objectMap.put("Enemy", enemies);
     }
 
     private void parseMapEndPoints() {
@@ -96,8 +99,8 @@ public class Level {
         return hud;
     }
 
-    public List<GameObject> getGameObjects() {
-        List<GameObject> objectList = new ArrayList<>();
+    public List<IGameObject> getGameObjects() {
+        List<IGameObject> objectList = new ArrayList<>();
         for (String object : objectMap.keySet()) {
             if (object.equals("Enemy")) { // We do not want to add enemy objects twice.
                 continue;
