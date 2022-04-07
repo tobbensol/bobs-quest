@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
+import model.helper.Constants;
 import model.objects.MapEndPoints;
 import model.objects.Player;
 
@@ -14,6 +15,12 @@ import java.util.List;
 public class GameCamera extends OrthographicCamera {
 
     private final GameModel gameModel;
+    private static final float minZoom = 1f;
+    private static final float maxZoom = 1.45f;
+    private static final float zoomTriggerPercent = 0.68f;
+    private static final float zoomIncreaseAmount = 0.0016f;
+    private static final float zoomDecreaseAmount = 0.0016f;
+
 
     public GameCamera(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -27,25 +34,39 @@ public class GameCamera extends OrthographicCamera {
         moveCameraWalls();
     }
 
+    /**
+     * Sets the camera walls' positions to the left side and the right side of the camera (x) and to the middle of the screen (y).
+     */
     private void moveCameraWalls() {
         MapEndPoints wall1 = gameModel.getLevel().getGameObjects(MapEndPoints.class).get(0);
         MapEndPoints wall2 = gameModel.getLevel().getGameObjects(MapEndPoints.class).get(1);
 
-        wall1.setPosition((position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2) / 100, position.y / 100);
-        wall2.setPosition((position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2) / 100, position.y / 100);
+        wall1.setPosition((position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2) / Constants.PPM, position.y / Constants.PPM);
+        wall2.setPosition((position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2) / Constants.PPM, position.y / Constants.PPM);
     }
 
+    /**
+     * Limits the inputted camera position between the rightmost and leftmost possible camera positions of the map.
+     *
+     * @param position Inputted camera position
+     * @return The next possible camera position
+     */
     private Vector3 getNextCameraPosition(Vector3 position) {
         Vector2 mapTopLeft = gameModel.getLevel().getTopLeft();
         Vector2 mapBottomRight = gameModel.getLevel().getBottomRight();
 
-        //limits the camera position between the rightmost and leftmost point of the map
         position.x = Math.min(Math.max(position.x, mapTopLeft.x + viewportWidth * zoom / 2), mapBottomRight.x - viewportWidth * zoom / 2);
         position.y = Math.min(Math.max(position.y, mapBottomRight.y + viewportHeight * zoom / 2), mapTopLeft.y - viewportHeight * zoom / 2);
 
         return position;
     }
 
+
+    /**
+     * If the distance between the two outermost players is less than or exceeds a certain percent of the screen scaled with the current zoom, decrease or increase the zoom level.
+     * The further the players are from each other, the faster the zoom increases.
+     * The closer the players are from each other, the faster the zoom decreases.
+     */
     private void manageZoom() {
         ArrayList<Float> playerXs = new ArrayList<>();
 
@@ -59,23 +80,26 @@ public class GameCamera extends OrthographicCamera {
             return;
         }
 
-        double paddedXWidth = viewportWidth * zoom * 0.68;
+        double zoomTriggerWidth = viewportWidth * zoom * zoomTriggerPercent;
 
         float minX = Collections.min(playerXs);
         float maxX = Collections.max(playerXs);
         float playersXDifference = maxX - minX;
 
-        float minZoom = 1f;
-        float maxZoom = 1.45f;
-
-        if (playersXDifference > paddedXWidth && zoom <= maxZoom) {
-            zoom += 0.0016f * playersXDifference / paddedXWidth;
+        if (playersXDifference > zoomTriggerWidth && zoom <= maxZoom) {
+            zoom += zoomIncreaseAmount * playersXDifference / zoomTriggerWidth;
         }
-        if (playersXDifference < paddedXWidth && zoom >= minZoom) {
-            zoom -= 0.0016f * paddedXWidth / playersXDifference;
+        if (playersXDifference < zoomTriggerWidth && zoom >= minZoom) {
+            zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifference;
         }
     }
 
+    /**
+     * Retrieves the min position and the max position of the alive players and takes the average between them.
+     * If no players are alive, then return the last position.
+     *
+     * @return The average player position
+     */
     private Vector3 getAveragePlayerPosition() {
         List<Player> players = gameModel.getLevel().getGameObjects(Player.class);
         int alivePlayerCount = 0;
