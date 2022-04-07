@@ -262,3 +262,24 @@
     - Flytt relevant kode fra GameModel til Level
     - Bruk Level i GameModel
     - Bruk Level alle steder spesifisert av akseptansekriterie
+
+### Legge til ny fiende:
+- Som spiller ønsker jeg å ha flere fiender i spillet for å ha en varians av måter å håndtere situasjoner og skape interesante spillopplevelser.
+  - Akseptansekriterier:
+    - Unik fiende som har forskjellig oppførsel fra Goomba.
+    - idé:
+      - fiende som beveger seg mot spiller om den er innenfor en viss radius fra objektet.
+      - flyter i luften.
+  - Arbeidsoppgaver:
+    - Lage ett nytt objekt til verden.
+    - Legge til egen oppførsel til objektet.
+    - Få objektet til å gjøre skade mot spilleren.
+    - Få objektet til å følge spilleren
+
+### Legge delay på game-over skjerm
+- Som spiler ønsker jeg å se spillerkarakteren før spillet blir game over slik at jeg kan se hva som drepte meg.
+  - Etter siste spiller dør skal det ta litt tid (1-2 sekunder) før spillet får game-over.
+  - I denne perioden skal kamera stå i ro hvor spilleren dør, og en kort døds animasjon skal spille.
+- Arbeidsoppgaver:
+  - Legg til en "Timer.Schedule" i set-dead som aktiverer en bool.
+  - Bruk denne bool-en til å finne når det er game over.
