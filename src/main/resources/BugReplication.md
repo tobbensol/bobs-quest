@@ -231,3 +231,15 @@
     - Check that game resumes.
   - Status:
     - It works.
+
+- Test camera features.
+  - How to replicate:
+    - Make 2-3 players walk away from each other to test the camera position and zoom.
+    - Check if the camera position is the average position of the two outermost players.
+    - Check if the zoom level increases if the two outermost players go above a certain distance away from each other and decreases when under a certain distance.
+    - Walk towards a map boundary and check if the camera stops.
+    - Check if zoom works when next to a map boundary by having two players walk away from each other.
+    - Check that the camera position average and zoom management do not include dead players.
+    - Check if the players collide with the camera walls either when reaching a map boundary or when the players reach the max zoom distance.
+  - Status:
+    - It works.
