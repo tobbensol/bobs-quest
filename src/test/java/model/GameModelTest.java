@@ -40,6 +40,9 @@ public class GameModelTest {
 
     @Test
     void testUpdateModel() {
+        Hud hud = mock(Hud.class);
+        when(level.getHud()).thenReturn(hud);
+        doNothing().when(hud).resume();
         when(level.isCompleted()).thenReturn(false);
         doNothing().when(model).changeScreen();
 
