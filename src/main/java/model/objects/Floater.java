@@ -18,7 +18,7 @@ public class Floater extends MovableObject{
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + level.getGameObjects(Floater.class).size(), level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
-        texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
+        texture = new Texture("Multi_Platformer_Tileset_v2/Dungeon/Details/Dungeon_Jar1.png");
         body.setGravityScale(0);
     }
 
