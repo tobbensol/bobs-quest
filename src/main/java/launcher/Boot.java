@@ -10,7 +10,6 @@ public class Boot extends Game {
 
     public static Boot INSTANCE;
     private int screenWidth, screenHeight;
-    private GameCamera camera;
     private GameModel gameModel;
 
     public Boot() {
@@ -22,8 +21,6 @@ public class Boot extends Game {
         this.screenWidth = Gdx.graphics.getWidth();
         this.screenHeight = Gdx.graphics.getHeight();
         this.gameModel = new GameModel();
-        this.camera = new GameCamera(gameModel);
-        this.camera.setToOrtho(false, screenWidth, screenHeight);
 
         setScreen(new StartScreen(gameModel));
     }
@@ -36,7 +33,4 @@ public class Boot extends Game {
         return screenHeight;
     }
 
-    public GameCamera getCamera() {
-        return camera;
-    }
 }
