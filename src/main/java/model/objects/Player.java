@@ -25,6 +25,7 @@ public class Player extends JumpableObject {
 
     protected State currentState;
     protected State previousState;
+    private boolean frozen = false;
 
     //TODO these should be in a parent class
     private boolean rightCollision = false;
@@ -55,6 +56,9 @@ public class Player extends JumpableObject {
 
     @Override
     public void update() {
+        if(frozen){
+            return;
+        }
         super.update();
         previousState = currentState;
         currentState = getState();
@@ -221,7 +225,12 @@ public class Player extends JumpableObject {
     }
 
     public boolean isDead() {
-        return getState() == State.DEAD;
+        System.out.println(getCurrentState());
+        return getCurrentState() == State.DEAD;
+    }
+
+    public boolean getFrozen() {
+        return frozen;
     }
 
     public void setDead() {
@@ -234,6 +243,12 @@ public class Player extends JumpableObject {
         BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
         // Death "animation"
         body.setLinearVelocity(0, 5); //TODO: Make player fall through ground as well
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                frozen = true;
+            }
+        }, 1.2f);
     }
 
     public void takeDamage(int amount) {

@@ -78,10 +78,7 @@ public class GameCamera extends OrthographicCamera {
 
     private Vector3 getAveragePlayerPosition() {
         List<Player> players = gameModel.getLevel().getGameObjects(Player.class);
-
-        if (players.size() == 0) {
-            return position;
-        }
+        int alivePlayerCount = 0;
 
         float maxX = 0;
         float minX = 1000000;
@@ -94,7 +91,12 @@ public class GameCamera extends OrthographicCamera {
                 minX = Math.min(minX, player.getPosition().x);
                 maxY = Math.max(maxY, player.getPosition().y);
                 minY = Math.min(minY, player.getPosition().y);
+                alivePlayerCount++;
             }
+        }
+
+        if (alivePlayerCount == 0) {
+            return position;
         }
 
         return new Vector3((minX+maxX)/2, (minY+maxY)/2, 0);
