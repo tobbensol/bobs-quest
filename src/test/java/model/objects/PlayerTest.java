@@ -1,5 +1,7 @@
 package model.objects;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -25,6 +27,8 @@ public class PlayerTest {
 
     @BeforeEach
     void setup() {
+        new HeadlessApplication(new Game() {public void create() {}});
+
         world = new World(new Vector2(0, 0), false);
         level = mock(Level.class);
         when(level.getWorld()).thenReturn(world);
