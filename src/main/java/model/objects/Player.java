@@ -73,6 +73,8 @@ public class Player extends JumpableObject {
     @Override
     public void update() {
         super.update();
+        grounded = grounded && canJump;
+
         previousState = currentState;
         setState();
         handlePlatform();
@@ -129,7 +131,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void jump() {
-        if (grounded && canJump && previousState != State.JUMPING && previousState != State.FALLING) {
+        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0,Y_VELOCITY);
             canJump = false;
             Timer.schedule(new Timer.Task() {
