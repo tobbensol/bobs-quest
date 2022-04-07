@@ -58,6 +58,13 @@
 			<version>${libgdx.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-backend-headless</artifactId>
+			<version>1.10.0</version>
+		</dependency>
+
+
 		<!-- Was included in the tutorial file
 		<dependency>
 			<groupId>com.badlogicgames.box2dlights</groupId>
