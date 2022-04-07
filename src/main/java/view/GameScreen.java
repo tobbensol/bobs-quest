@@ -22,9 +22,9 @@ public class GameScreen implements Screen {
     private final Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    public GameScreen(GameCamera camera, GameModel gameModel) {
+    public GameScreen(GameModel gameModel) {
         this.gameModel = gameModel;
-        this.camera = camera;
+        this.camera = gameModel.getCamera();
         this.batch = new SpriteBatch();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.orthogonalTiledMapRenderer = gameModel.getLevel().setupMap();

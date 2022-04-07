@@ -53,11 +53,28 @@ public class Player extends JumpableObject {
         }
     }
 
+    /**
+     * Constructor for testing
+     *
+     * @param level - level to be placed in
+     * @param x - horizontal position
+     * @param y - vertical position
+     */
+    public Player(Level level, float x, float y) {
+        super("Test", level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
+
+        hp = 100;
+        currentState = State.STANDING;
+        previousState = State.STANDING;
+
+        frames = new ArrayList<>();
+    }
+
     @Override
     public void update() {
         super.update();
         previousState = currentState;
-        currentState = getState();
+        setState();
         handlePlatform();
         groundedDamping();
         jumpDamping();
@@ -171,26 +188,27 @@ public class Player extends JumpableObject {
     /**
      * @return the current state of the player.
      */
-    public State getState() {
+    public void setState() {
+        State tempState = State.STANDING;
         if (previousState == State.DEAD) {
-            return State.DEAD;
+            tempState = State.DEAD;
         }
-        if (body.getLinearVelocity().y < -0.5 && grounded) {
-            return State.SLIDING;
+        else if (body.getLinearVelocity().y < -0.5 && grounded) {
+            tempState = State.SLIDING;
         }
-        if (body.getLinearVelocity().y > 0.5 && grounded) {
-            return State.WALKING;
+        else if (body.getLinearVelocity().y > 0.5 && grounded) {
+            tempState = State.WALKING;
         }
-        if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
-            return State.JUMPING;
+        else if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+            tempState = State.JUMPING;
         }
-        if (body.getLinearVelocity().y < -0.5) {
-            return State.FALLING;
+        else if (body.getLinearVelocity().y < -0.5) {
+            tempState = State.FALLING;
         }
-        if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
-            return State.WALKING;
+        else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
+            tempState = State.WALKING;
         }
-        return State.STANDING;
+        currentState = tempState;
     }
 
     /**
@@ -200,8 +218,6 @@ public class Player extends JumpableObject {
      * @return the correct texture-region for the current state the player is in.
      */
     private TextureRegion getFrame() {
-        currentState = getState();
-
         // Specify which texture region corresponding to which state.
         TextureRegion region = switch (currentState) {
             case JUMPING -> frames.get(5);
@@ -221,7 +237,7 @@ public class Player extends JumpableObject {
     }
 
     public boolean isDead() {
-        return getState() == State.DEAD;
+        return currentState == State.DEAD;
     }
 
     public void setDead() {

@@ -6,10 +6,7 @@ import controls.*;
 import launcher.Boot;
 import model.objects.GameObject;
 import model.objects.Player;
-import view.GameOverScreen;
-import view.GameScreen;
-import view.LevelCompletedScreen;
-import view.StartScreen;
+import view.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +24,8 @@ public class GameModel implements ControllableModel {
     private int numPlayers;
     private GameState state;
     private boolean pause = false;
+    private boolean initializeLevel = true;
+    private GameCamera camera;
 
     public GameModel() {
         state = GameState.STARTUP;
@@ -52,7 +51,6 @@ public class GameModel implements ControllableModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
 
-        level = new Level(levels.get(levelNR), this);
     }
 
     private boolean gameOver() {
@@ -64,7 +62,22 @@ public class GameModel implements ControllableModel {
         return true;
     }
 
+    protected Level createLevel() {
+        return new Level(levels.get(levelNR), this);
+    }
+
+    protected void createCamera() {
+        this.camera = new GameCamera(this);
+        this.camera.setToOrtho(false, Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight());
+    }
+
     public void update() {
+        if (initializeLevel) {
+            level = createLevel();
+            createCamera();
+            initializeLevel = false;
+        }
+
         gameController.inputListener();
 
         if (isPaused()) {
@@ -100,6 +113,10 @@ public class GameModel implements ControllableModel {
         getLevel().updateHUD();
     }
 
+    public GameCamera getCamera() {
+        return camera;
+    }
+
     public boolean getReload() {
         return reload;
     }
@@ -113,7 +130,7 @@ public class GameModel implements ControllableModel {
         if (getLevel().isCompleted()) {
             levelNR++;
         }
-        level = new Level(levels.get(levelNR), this);
+        level = createLevel();
     }
 
     @Override
@@ -142,7 +159,7 @@ public class GameModel implements ControllableModel {
     public void changeScreen() {
 
         switch (state) {
-            case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(Boot.INSTANCE.getCamera(), this));
+            case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
             case STARTUP -> Boot.INSTANCE.setScreen(new StartScreen(this));
             case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
             case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
