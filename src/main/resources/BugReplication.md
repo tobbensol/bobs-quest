@@ -8,6 +8,7 @@
         - Unknown
     - Status
         - Still a bug
+        - not important, you can just hit a switch in Tiled to make the map finite.
 
 
 - You can stick to wall when walking into it
@@ -46,10 +47,14 @@
         - See if you can jump
         - Walk into the corner between the slope and the ground while holding jump to regain the ability to jump
     - Reason:
-        - Collision doesn't update when going from the slope to ground
-        - This is the same reason why you can keep walking into a goomba without taking damage
+        - Collision is set to negative when leaving the ground and positive when hitting the ground
+        - When you go from one ground to another, then the following happens:
+          - You are standing on the first ground, grounded is true
+          - You start a collision with the new ground, grounded set to true
+          - You leave the first ground, grounded is set to false
     - Status:
-        - Still a bug
+        - fixed:
+        - the player keeps track of how many foot collisions they have, it increases when hitting a new ground, and decreases when leaving a ground
 
 
 - Game crashes when trying to reload game
@@ -72,9 +77,9 @@
         - After around 10 seconds, the players should start colliding with each other.
     - Reason:
         - The mask bits is also changed when changing category bits
-        - We need to change both at the same time
     - Status:
-        - Still a bug
+        - Fixed
+        - changed both at the same time
 
 
 - Zoom not working when at the edges of the map:
@@ -93,18 +98,19 @@
         - Still a bug
 
 
-- goomba moves while on start screen
-    - how to replicate:
-        - wait for a while before pressing space to start the game
-        - see that the first goomba has moved to the left
-        - see that the player has lost health
-        - if two players, the goomba will launch both players off the map
-            - causes game over from start screen
-            - model keeps updating, causing repeated game overs
-    - reason:
-        - likely that the model starts updating after launching, before the player starts the game 
-    - status:
-        - still a bug
+- Goomba moves while on start screen
+    - How to replicate:
+        - Wait for a while before pressing space to start the game
+        - See that the first goomba has moved to the left
+        - See that the player has lost health
+        - If two players, the goomba will launch both players off the map
+            - Causes game over from start screen
+            - Model keeps updating, causing repeated game overs
+    - Reason:
+        - Model is running while you are at the start screen, game-over screen, and next level screen.
+    - Status:
+        - Fixed
+        - paused the model while you are at these screens
 
 
 - low jumps on platforms
@@ -137,7 +143,28 @@
         - likely related to how players are set to dead, and that drop() messes with it
     - status:
         - still a bug
+
+
+- Player jumps really high at the start of a slope:
+  - How to replicate:
+    - Quite inconsistent.
+    - stand at the bottom of any slope
+    - walk towards it
+    - right before you walk up it, you press jump
+    - player flies to the sky
+  - reason:
+    - grounded is set to false when the amount of collisions is above 1, and when the player jumps, if the player has two collisions, jumps, and then has one collision for a while, then the player can add jumps to their jump
+    - player is at the start of a slope, colliding with both the ground and the slope
+    - the player jumps, grounded set to false
+    - the player leaves the ground, still collision with the slope, grounded cound is set to 1 and grounded is set to true
+    - the player can jump again adding forces to the jump that is already happening.
+  - status:
+    - fixed
+    - added a small timer to the jump so that the player can jump can't jump right after they jumped (0.05 seconds)
         
+
+
+
 ## Manuel Tests
 
 - Player can jump up through platforms
