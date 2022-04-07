@@ -32,6 +32,8 @@ public class GameModelTest {
 
     @Test
     void testSetNumPlayers() {
+        doNothing().when(model).restart();
+
         assertEquals(1, model.getNumPlayers());
         model.setNumPlayers(3);
         assertEquals(3, model.getNumPlayers());
