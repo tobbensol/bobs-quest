@@ -170,13 +170,41 @@
 
 - Som spillere ønsker vi et kamera som følger alle spillere slik at alle som spiller kan se hva som skjer på skjermen fordi da kan alle spillerne spille sammen.
     - Akseptansekriterier:
-        - Kameraet følger alle spillerne
+        - Kameraet følger de ytterste spillerne
         - Alle spillerne kan sees hele tiden
+        - Kameraet følger ikke døde spillere
         - Ingen exception blir kastet dersom alle spillere er døde
     - Arbeidsoppgaver:
         - Opprett en klasse for ett custom kamera
         - Lag metode(r) for å regne ut kameraposisjon
         - Lag sjekk og håndter kameraposisjon når spillerne er døde
+
+- Som spillere ønsker vi at kameraet zoomer ut slik at alle spillerene kan være innenfor kameraet over lengre distanser
+    - Akseptansekriterier:
+        - Kameraet zoomer ut basert på de ytterse spillerene 
+        - Kameraet zoomer ut når spillerene går over en viss distanse bort fra hverandre
+        - Kameraet zoomer inn når spillerene går under en viss distanse bort fra hverandre
+        - Kameraet har en maks og min zoom
+        - Håndtere døde spillere
+    - Arbeidsoppgaver:
+        - Lag en metode som håndterer zoom nivåene på kameraet
+        - Lage en sjekk som ser om spillerene er innenfor eller ovenfor en viss distanse og håndtere zoom nivåene basert på det
+
+- Som spillere ønsker vi at kameraet ikke går utenfor level grenesene slik at vi ikke ser utenfor det utviklerene ønsker oss å se
+    - Akseptansekriterier:
+        - Kameraet beveger seg ikke uten for level grensene
+    - Arbeidsoppgaver:
+        - Lage en metode som sjekker om den gjennomsnittlige positionen til spillerene vil sette kameraet slik at man kan se utenfor grensene
+        - Om kameraet vil gå utenfor, beregn en kameraposition som ikke går utenfor
+
+- Som spillere ønsker vi at vi ikke kan gå utenfor kameraet slik at vi kan se hvor vi er.
+    - Akseptansekriterier:
+        - Det finnes vegger utenfor de vertikale delene av kameraet
+        - Spillerene kolliderer med- og kan ikke gå utenfor veggene
+    - Arbeidsoppgaver:
+        - Lage et GameWall objekt
+        - Spawne to vegger når levelene lages
+        - Lage en metode i GameCamera som flytter veggene basert på kamera positionen
 
 ### Start-skjerm ved oppstart / game over:
 
