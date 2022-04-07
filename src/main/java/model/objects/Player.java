@@ -182,7 +182,6 @@ public class Player extends JumpableObject {
      * @return the current state of the player.
      */
     public void setState() {
-        // TODO: Use cumulative forces instead of linear velocity.
         State tempState = State.STANDING;
         if (previousState == State.DEAD) {
             tempState = State.DEAD;
@@ -203,7 +202,6 @@ public class Player extends JumpableObject {
             tempState = State.WALKING;
         }
         currentState = tempState;
-//        return State.STANDING;
     }
 
     /**
