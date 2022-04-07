@@ -55,7 +55,4 @@ public abstract class GameObject {
         return texture;
     }
 
-    public float getWidth() {
-        return width;
-    }
 }
