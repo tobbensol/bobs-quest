@@ -6,9 +6,7 @@ import model.helper.Constants;
 import model.helper.ContactType;
 import model.objects.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameContactListener implements ContactListener {
 
@@ -34,10 +32,7 @@ public class GameContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a == null || b == null)
-            return;
-        if (a.getUserData() == null || b.getUserData() == null)
-            return;
+        if (notValidFixtures(a, b)) return;
 
         groundContact(a, b, true);
         platformContact(a,b,true);
@@ -60,10 +55,7 @@ public class GameContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a == null || b == null)
-            return;
-        if (a.getUserData() == null || b.getUserData() == null)
-            return;
+        if (notValidFixtures(a, b)) return;
 
         groundContact(a, b, false);
         platformContact(a,b,false);
@@ -183,14 +175,6 @@ public class GameContactListener implements ContactListener {
         if (checkContactType(a,b,ContactType.ENEMY) && checkContactType(a,b,ContactType.PLAYER)) {
             Enemy enemy = getContactObject(a,b,Enemy.class);
             Player player = getContactObject(a,b,Player.class);
-
-            if (Goomba.class.isAssignableFrom(enemy.getClass())) {
-                System.out.println("Goomba!");
-            }
-
-            if (Floater.class.isAssignableFrom(enemy.getClass())) {
-                System.out.println("Floater!");
-            }
 
             if (player.getState() == Player.State.FALLING) {
                 enemy.onHit();
