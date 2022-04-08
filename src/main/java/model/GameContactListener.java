@@ -2,17 +2,29 @@ package model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import model.helper.Constants;
 import model.helper.ContactType;
 import model.objects.*;
 
-import java.util.List;
+import java.util.*;
 
 public class GameContactListener implements ContactListener {
 
     private final Level level;
+    private final Map<String, short[]> contactCategoryBits;
 
     public GameContactListener(Level level) {
         this.level = level;
+
+        contactCategoryBits = new HashMap<>();
+        contactCategoryBits.put("Player", new short[] {Constants.PLAYER_BIT, Constants.PLAYER_PASSING_THROUGH_PLATFORM_BIT});
+        contactCategoryBits.put("Coin", new short[] {Constants.COIN_BIT});
+        contactCategoryBits.put("Goal", new short[] {Constants.GOAL_BIT});
+        contactCategoryBits.put("Goomba", new short[] {Constants.ENEMY_BIT});
+        contactCategoryBits.put("Floater", new short[] {Constants.ENEMY_BIT});
+        contactCategoryBits.put("Death", new short[] {Constants.DEFAULT_BIT});
+        contactCategoryBits.put("MapEndPoints", new short[] {Constants.CAMERA_WALL_BIT});
+        contactCategoryBits.put("Enemy", new short[] {Constants.ENEMY_BIT});
     }
 
     @Override
@@ -20,24 +32,22 @@ public class GameContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a == null || b == null)
-            return;
-        if (a.getUserData() == null || b.getUserData() == null)
-            return;
+        if (notValidFixtures(a, b)) return;
 
         groundContact(a, b, true);
-        leftContact(a, b, true);
-        rightContact(a, b, true);
-        headContact(a, b, true);
         platformContact(a,b,true);
-        cameraWallContact(a,b,true);
+        sideContact(a,b,true,true);
+        sideContact(a,b,false,true);
 
-        coinContact(a, b);
-        goombaContact(a, b);
-        goombaRadar(a,b,true);
+        enemyContact(a,b);
+        enemyRadar(a,b,true);
+
         goalContact(a, b);
+        coinContact(a, b);
 
         deathContact(a, b);
+
+        cameraWallContact(a,b,true);
     }
 
     @Override
@@ -45,19 +55,24 @@ public class GameContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a == null || b == null)
-            return;
-        if (a.getUserData() == null || b.getUserData() == null)
-            return;
+        if (notValidFixtures(a, b)) return;
 
         groundContact(a, b, false);
-        leftContact(a, b, false);
-        rightContact(a, b, false);
-        headContact(a, b, false);
         platformContact(a,b,false);
+        sideContact(a,b,true,false);
+        sideContact(a,b,false,false);
 
-        goombaRadar(a,b,false);
+        enemyRadar(a,b,false);
+
         cameraWallContact(a,b,false);
+    }
+
+    private boolean notValidFixtures(Fixture a, Fixture b) {
+        if (a == null || b == null)
+            return true;
+        if (a.getUserData() == null || b.getUserData() == null)
+            return true;
+        return a.getFilterData().categoryBits == Constants.DESTROYED_BIT || b.getFilterData().categoryBits == Constants.DESTROYED_BIT;
     }
 
     @Override
@@ -71,42 +86,43 @@ public class GameContactListener implements ContactListener {
     }
 
     /**
+     * This method should return the category bits of given class.
+     * @param type - The class you want to find the contact type of.
+     * @param <T> - Generic type that extends from IGameObject.
+     * @return - The category bits of the given class.
+     */
+    private <T extends IGameObject> short[] getCategoryBits(Class<T> type) {
+        return contactCategoryBits.get(level.getClassName(type));
+    }
+
+    /**
      * This method finds and return the correct contactObject of a given type involved
      * in a given collision between Fixture a and Fixture b.
      *
      * @param a - The first Fixture involved in the contact.
      * @param b - The second Fixture involved in the contact.
      * @param type - The class of what contactObject you want. Need it on this format: ClassName.class
-     * @param <T> - Generic type that extends from GameObject.
+     * @param <T> - Generic type that extends from IGameObject.
      * @return Return the player involved in the contact.
      */
-    private <T extends GameObject> T getContactObject(Fixture a, Fixture b, Class<T> type) {
+    private <T extends IGameObject> T getContactObject(Fixture a, Fixture b, Class<T> type) {
         List<T> objects = level.getGameObjects(type);
+        short[] categoryBits = getCategoryBits(type);
 
-        ContactType contactType; // TODO: Find some way to get ContactType from the generic input "type".
-
-        if (type.isAssignableFrom(Player.class)) {
-            contactType = ContactType.PLAYER;
-        } else if (type.isAssignableFrom(Goomba.class)) {
-            contactType = ContactType.ENEMY;
-        } else if (type.isAssignableFrom(MapEndPoints.class)) {
-            contactType = ContactType.CAMERA_WALL;
-        } else if (type.isAssignableFrom(Coin.class)) {
-            contactType = ContactType.COIN;
-        } else if (type.isAssignableFrom(Goal.class)) {
-            contactType = ContactType.GOAL;
-        }else {
-            throw new NullPointerException("Class " + type + " not valid.");
+        boolean bitFound = false;
+        for (short bit : categoryBits) {
+            if (a.getFilterData().categoryBits == bit) {
+                bitFound = true;
+                break;
+            }
         }
-
-        Fixture objectFixture = a.getUserData() == contactType ? a : b;
+        Fixture objectFixture = bitFound ? a : b;
 
         for (T object : objects) {
             if (object.getBody().equals(objectFixture.getBody())) {
                 return object;
             }
         }
-
         throw new NullPointerException("No such " + type + " found.");
     }
 
@@ -155,33 +171,27 @@ public class GameContactListener implements ContactListener {
         }
     }
 
-    /**
-     * Checks if a contact is between a Player and a Goomba object.
-     * If yes, damages player.
-     *
-     * @param a - The first Fixture involved in the contact.
-     * @param b - The second Fixture involved in the contact.
-     */
-    private void goombaContact(Fixture a, Fixture b) {
+    private void enemyContact(Fixture a, Fixture b) {
         if (checkContactType(a,b,ContactType.ENEMY) && checkContactType(a,b,ContactType.PLAYER)) {
-            Goomba goomba = getContactObject(a,b,Goomba.class);
+            Enemy enemy = getContactObject(a,b,Enemy.class);
             Player player = getContactObject(a,b,Player.class);
 
-            if (player.getCurrentState() == Player.State.FALLING) { //TODO: Make attack/drop state or something in player.
-                goomba.setDead();
+            if (player.getState() == Player.State.FALLING) {
+                enemy.onHit();
             } else {
-                player.takeDamage(Goomba.getAttack());
+                player.takeDamage(enemy.getAttack());
             }
         }
     }
 
-    private void goombaRadar(Fixture a, Fixture b, boolean begin) {
-        if (checkContactSensor(a,b,"goombaRadar") && checkContactType(a,b,ContactType.PLAYER)) {
-            Goomba goomba = getContactObject(a,b,Goomba.class);
+    private void enemyRadar(Fixture a, Fixture b, boolean begin) {
+        if (checkContactSensor(a,b,"enemyRadar") && checkContactType(a,b,ContactType.PLAYER)) {
+            Enemy enemy = getContactObject(a,b,Enemy.class);
             Player player = getContactObject(a,b,Player.class);
             Vector2 playerPosition = player.getPosition();
-            goomba.setPlayerPostion(playerPosition);
-            goomba.setPlayerNearby(begin);
+
+            enemy.setPlayerPosition(playerPosition);
+            enemy.setPlayerNearby(begin);
         }
     }
 
@@ -192,17 +202,15 @@ public class GameContactListener implements ContactListener {
         }
     }
 
-    private void leftContact(Fixture a, Fixture b, boolean begin) {
-        if (checkContactSensor(a,b,"left") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
+    private void sideContact(Fixture a, Fixture b, boolean right, boolean begin) {
+        String direction = right? "right":"left";
+        if (checkContactSensor(a,b,direction) && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
             Player player = getContactObject(a,b,Player.class);
-            player.setLeftCollision(begin);
-        }
-    }
-
-    private void rightContact(Fixture a, Fixture b, boolean begin) {
-        if (checkContactSensor(a,b,"right") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM))) {
-            Player player = getContactObject(a,b,Player.class);
-            player.setRightCollision(begin);
+            if (right) {
+                player.setRightCollision(begin);
+            } else {
+                player.setLeftCollision(begin);
+            }
         }
     }
 
@@ -216,13 +224,6 @@ public class GameContactListener implements ContactListener {
             } else {
                 player.setRightCollision(begin);
             }
-        }
-    }
-
-    private void headContact(Fixture a, Fixture b, boolean begin) {
-        if ( checkContactSensor(a,b,"head") && (checkContactType(a,b,ContactType.GROUND) || checkContactType(a,b,ContactType.PLATFORM) ) ) {
-            Player player = getContactObject(a,b,Player.class);
-            player.setHeadCollision(begin);
         }
     }
 

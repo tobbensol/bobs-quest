@@ -21,7 +21,7 @@ public class Level {
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
-    private HashMap<String, ArrayList<GameObject>> objectMap;
+    private HashMap<String, ArrayList<IGameObject>> objectMap;
     private Integer score = 0;
     private Vector2 topLeft;
     private Vector2 bottomRight;
@@ -38,6 +38,7 @@ public class Level {
         objectMap.put("Goomba", new ArrayList<>());
         objectMap.put("Coin", new ArrayList<>());
         objectMap.put("Goal", new ArrayList<>());
+        objectMap.put("Floater", new ArrayList<>());
         objectMap.put("MapEndPoints", new ArrayList<>());
 
         createWorld(levelName);
@@ -60,13 +61,17 @@ public class Level {
                     objectMap.get(object).add(factory.create(object, spawnPoints.get(i).x, spawnPoints.get(i).y));
                 }
             }
-            else{
+            else {
                 for (Vector2 v : tiledMapHelper.parseMapSpawnPoints(object)) {
                     objectMap.get(object).add(factory.create(object, v.x, v.y));
                 }
             }
-
         }
+
+        ArrayList<IGameObject> enemies = new ArrayList<>();
+        enemies.addAll(objectMap.get("Goomba"));
+        enemies.addAll(objectMap.get("Floater"));
+        objectMap.put("Enemy", enemies);
     }
 
     private void parseMapEndPoints() {
@@ -94,20 +99,23 @@ public class Level {
         return hud;
     }
 
-    public List<GameObject> getGameObjects() {
-        List<GameObject> objectList = new ArrayList<>();
+    public List<IGameObject> getGameObjects() {
+        List<IGameObject> objectList = new ArrayList<>();
         for (String object : objectMap.keySet()) {
+            if (object.equals("Enemy")) { // We do not want to add enemy objects twice.
+                continue;
+            }
             objectList.addAll(objectMap.get(object));
         }
         return objectList;
     }
 
     // Source: https://stackoverflow.com/a/19254882
-    public <T extends GameObject> List<T> getGameObjects(Class<T> type) {
+    public <T extends IGameObject> List<T> getGameObjects(Class<T> type) {
         return (List<T>) objectMap.get(getClassName(type));
     }
 
-    private <T extends GameObject> String getClassName(Class<T> type) {
+    <T extends IGameObject> String getClassName(Class<T> type) {
         return type.toString().substring(type.toString().lastIndexOf('.') + 1);
     }
 

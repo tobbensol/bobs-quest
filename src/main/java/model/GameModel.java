@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import controls.*;
 import launcher.Boot;
 import model.objects.GameObject;
+import model.objects.IGameObject;
 import model.objects.Player;
 import view.*;
 
@@ -42,6 +43,7 @@ public class GameModel implements ControllableModel {
         levels.add("valleyAndSpikeTest");
         levels.add("sizeTest");
         levels.add("goombaCollisionTest");
+        levels.add("floaterTest");
 
         gameController = new GameController(this);
 
@@ -109,7 +111,7 @@ public class GameModel implements ControllableModel {
         for (int i = 0; i < players.size(); i++) {
             controllers.get(i).inputListener(players.get(i));
         }
-        for (GameObject object : getLevel().getGameObjects()) {
+        for (IGameObject object : getLevel().getGameObjects()) {
             object.update();
         }
 

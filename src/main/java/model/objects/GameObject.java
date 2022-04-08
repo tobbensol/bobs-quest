@@ -10,7 +10,7 @@ import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
-public abstract class GameObject {
+public abstract class GameObject implements IGameObject {
     final private String name;
     protected Body body;
     protected float x, y, width, height;
