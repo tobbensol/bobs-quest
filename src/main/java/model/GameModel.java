@@ -136,7 +136,6 @@ public class GameModel implements ControllableModel {
             levelNR++;
         }
         level = createLevel();
-        pauseGame();
         changeScreen();
     }
 
