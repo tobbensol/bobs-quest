@@ -10,7 +10,7 @@ import model.helper.ContactType;
 
 
 public class Floater extends MovableObject implements Enemy {
-    private static final float X_VELOCITY = 3.2f;
+    private static final float X_VELOCITY = 1f;
     private static final int attack = 10;
     private int numMoves;
     private boolean playerNearby = false;
@@ -20,6 +20,7 @@ public class Floater extends MovableObject implements Enemy {
         super(name + " " + (level.getGameObjects(Floater.class).size() + 1), level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
         body.setGravityScale(0);
+        body.setLinearDamping(3);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class Floater extends MovableObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            body.applyForceToCenter(new Vector2(-playerPosition.x - body.getPosition().x, -playerPosition.y - body.getPosition().y), true);
+            body.applyForceToCenter(new Vector2(-X_VELOCITY * (playerPosition.x - body.getPosition().x)/Constants.PPM , -X_VELOCITY * (playerPosition.y - body.getPosition().y)/Constants.PPM), true);
         }
     }
 
