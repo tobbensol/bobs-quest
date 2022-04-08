@@ -160,7 +160,7 @@
     - the player can jump again adding forces to the jump that is already happening.
   - status:
     - fixed
-    - added a small timer to the jump so that the player can jump can't jump right after they jumped (0.05 seconds)
+    - added a small timer to the jump so that the player can't jump right after they jumped (0.05 seconds)
         
 
 
