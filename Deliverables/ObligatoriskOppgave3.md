@@ -80,13 +80,13 @@ Vi har forbedret alle punktene nedenfor fra forrige innlevering. Vi føler at vi
 
 - Bestem dere for én litt mer avansert ting som dere vil prøve å få til utover et vanlig single-player plattformspill. Dette kan være f.eks.: multiplayer (på samme maskin eller over nett), å porte til en annen plattform (Android eller Web, f.eks.), å bytte ut grafikk-frontenden, e.l.
 
-Vi bestemte oss for å implementere lokal multiplayer på samme maskin. Dette vil gjøres ved å plassere flere spillere inn på spillebrettet og designere en kontroller til hver av de som kan bli brukt av så mange spillere som det er kontrollere som man legger til.
+Samme strech goal som i andre innlevering. Her har fokuset vært på å forbedre kamerasystemet slik at alle spillere er på skjermen til enhver tid og kameraet oppfører seg bra for lokal multiplayer.
 
 **MVP og annet**
 
 - Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang. Er dere kommet forbi MVP? Forklar hvordan dere prioriterer ny funksjonalitet.
 
-Vi har først og fremst prioritert kodekvalitet og en god prosjektstruktur fremfor spesifikke krav, men har også blitt ferdig med de gitte MVP kravene. Siden forrige gang har vi gjort MVP krav 4-11. Fremover tenker vi å prioritere ny funksjonalitet ved å rangere dem etter viktighetsgrad (f.eks. veldig viktig, litt viktig, lite viktig).
+I denne perioden har vi fokusert på generalisering, utvidbarhet og generell fiksing av små problemer mens vi holder fokuset på kodekvalitet og prosjekt struktur. Hva vi har gjort kommer fram av møtereferat. Framover tenker vi å prioritere å få et mer komplett spill. Vi har en god "grunnmur", men trenger mer spill å spille.
 
 - For hvert krav dere jobber med, må dere lage 1) ordentlige brukerhistorier, 2) akseptansekriterier og 3) arbeidsoppgaver. Husk at akseptansekriterier ofte skrives mer eller mindre som tester
 
@@ -94,11 +94,11 @@ Vi har skrevet en del [brukerhistorier](src/main/resources/UserStories.md).
 
 - Dersom dere har oppgaver som dere skal til å starte med, hvor dere har oversikt over både brukerhistorie, akseptansekriterier og arbeidsoppgaver, kan dere ta med disse i innleveringen også.
 
-Vi har ikke startet på noen nye oppgaver som er forbi MVP-kravene.
+Vi har ingen nye brukerhistorier som ikke er implementert.
 
 - Har dere gjort justeringer på kravene som er med i MVP? Forklar i så fall hvorfor. Hvis det er gjort endringer i rekkefølge ut fra hva som er gitt fra kunde, hvorfor er dette gjort?
 
-Vi valgte å implementere multiplayer tidligere enn gitt i MVP kravene. Det gjorde vi så tidlig som mulig etter vi fikk lastet inn verdenen og en spiller. Vi valgte vi å gjøre dette tidlig på grunn av at støtte av flere spillere er med å påvirke hvordan prosjektstrukturen til prosjektet vil se ut fremover. Å implementere dette tidlig fører til at vi forhåpentligvis slipper å skrive om mye av koden i fremtiden om vi skulle lagt til funksjonaliteten da. Vi ser i ettertid at dette var lurt, ettersom flere andre funksjonaliteter i prosjektet som f.eks kamera og contactListener er påvirket av strukturen vi har laget for muligheten for flere spillere. Her måtte vi endret en del for å ha tilpasset flere spillere om vi hadde gjort dette på et senere tidspunkt.
+Ingen nye endringer. Endringer fra MVP er forklart i andre innlevering.
 
 ## Deloppgave 3: Produkt og kode
 
