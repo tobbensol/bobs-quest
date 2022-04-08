@@ -13,7 +13,6 @@ We use the game engine [libGDX](https://libgdx.com/) for this project.
 - [Project Description](#project-description)
 - [Requirements](#requirements)
 - [Build Instructions](#build-instructions)
-- [Known Bugs](#known-bugs)
 - [Credits](#credits)
 
 ## Requirements
