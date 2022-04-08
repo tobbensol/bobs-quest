@@ -34,7 +34,6 @@ public class GameModel implements ControllableModel {
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
         levels.add("level1");
-        levels.add("level2");
         levels.add("platformTest");
         levels.add("slopeTest");
         levels.add("cameraTest");
@@ -137,7 +136,6 @@ public class GameModel implements ControllableModel {
         }
         level = createLevel();
         pauseGame();
-        changeScreen();
     }
 
     @Override
