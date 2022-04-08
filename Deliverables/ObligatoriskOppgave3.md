@@ -28,7 +28,7 @@
 
 - Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt? (se spørsmål 2)
 
-  Frem til andre obligatoriske innlevering, har vi i teamet ikke hatt definerte roller. Vi har jobbet sammen og gjort oppgaver/fordelt oppgaver slik det føles naturlig. Vi har i perioden merket litt hvilke roller vi trenger i teamet, og hvem som naturlig passer til de forskjellige rollene. Rollene er fordelt under.
+Rollene fungerer bra. Siden vi er et mindre team, ender det ofte opp med at alle gjør litt av alt, dermed glir rollene litt inn i hverandre, men de som står oppført som en rolle har et ekstra ansvar for å passe på at standarden er god. Vi har oppdatert hvem som er testere, nå er både Tobias og Martin testere. Tobias har hovedansvar for manuelle tester, mens Martin har hovedansvar for JUnit testing.
 
 - Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.
 
@@ -70,9 +70,9 @@ Vi har forbedret alle punktene nedenfor fra forrige innlevering. Vi føler at vi
 
 1) Effektivisering av team programmering (diskutere, komme fram til løsning, implementere løsning). Bli enda flinkere på å jobbe i par og kommunisere arbeid til resten av teamet.
 
-2) Bedre fordeling av arbeidsoppgaver. Mer spesifikk
+2) Mer jevn fordeling av arbeidsoppgaver.
 
-3) Skriving av mer manuelle tester(lett) og begynne Junit testing(vanskelig)
+3) Utvide Junit testing og skrive brukerhistorier før man jobber med noe.
 
 ## Deloppgave 2: krav
 
