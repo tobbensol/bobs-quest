@@ -10,38 +10,35 @@ import com.badlogic.gdx.physics.box2d.Body;
 public interface IGameObject {
 
     /**
-     *
+     * This method determines what happens with the object in each iteration of the game.
      */
     void update();
 
     /**
-     *
+     * This method renders the object in each iteration of the game.
      * @param batch
      */
     void render(SpriteBatch batch);
 
     /**
-     *
-     * @param x
-     * @param y
+     * This method should set the position of the object.
+     * @param x - The x coordinate.
+     * @param y - The y coordinate.
      */
     void setPosition(float x, float y);
 
     /**
-     *
-     * @return
+     * @return - Returns the position of the object.
      */
     Vector2 getPosition();
 
     /**
-     *
-     * @return
+     * @return - Returns the body of the object.
      */
     Body getBody();
 
     /**
-     *
-     * @return
+     * @return - Returns the name of the object.
      */
     String toString();
 }
