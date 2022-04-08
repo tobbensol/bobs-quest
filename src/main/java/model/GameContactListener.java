@@ -2,6 +2,7 @@ package model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import model.helper.Constants;
 import model.helper.ContactType;
 import model.objects.*;
 
@@ -12,19 +13,20 @@ import java.util.Map;
 public class GameContactListener implements ContactListener {
 
     private final Level level;
-    private final Map<String, ContactType> contactTypes;
+    private final Map<String, short[]> contactCategoryBits;
 
     public GameContactListener(Level level) {
         this.level = level;
 
-        contactTypes = new HashMap<>();
-        contactTypes.put("Player", ContactType.PLAYER);
-        contactTypes.put("Coin", ContactType.COIN);
-        contactTypes.put("Goal", ContactType.GOAL);
-        contactTypes.put("Goomba", ContactType.ENEMY);
-        contactTypes.put("Floater", ContactType.ENEMY);
-        contactTypes.put("Death", ContactType.DEATH);
-        contactTypes.put("MapEndPoints", ContactType.CAMERA_WALL);
+        contactCategoryBits = new HashMap<>();
+        contactCategoryBits.put("Player", new short[] {Constants.PLAYER_BIT, Constants.PLAYER_PASSING_THROUGH_PLATFORM_BIT});
+        contactCategoryBits.put("Coin", new short[] {Constants.COIN_BIT});
+        contactCategoryBits.put("Goal", new short[] {Constants.GOAL_BIT});
+        contactCategoryBits.put("Goomba", new short[] {Constants.ENEMY_BIT});
+        contactCategoryBits.put("Floater", new short[] {Constants.ENEMY_BIT});
+        contactCategoryBits.put("Death", new short[] {Constants.DEFAULT_BIT});
+        contactCategoryBits.put("MapEndPoints", new short[] {Constants.CAMERA_WALL_BIT});
+        contactCategoryBits.put("Enemy", new short[] {Constants.ENEMY_BIT});
     }
 
     @Override
@@ -73,6 +75,14 @@ public class GameContactListener implements ContactListener {
         cameraWallContact(a,b,false);
     }
 
+    private boolean notValidFixtures(Fixture a, Fixture b) {
+        if (a == null || b == null)
+            return true;
+        if (a.getUserData() == null || b.getUserData() == null)
+            return true;
+        return a.getFilterData().categoryBits == Constants.DESTROYED_BIT || b.getFilterData().categoryBits == Constants.DESTROYED_BIT;
+    }
+
     @Override
     public void preSolve(Contact contact, Manifold manifold) {
 
@@ -84,13 +94,13 @@ public class GameContactListener implements ContactListener {
     }
 
     /**
-     * This method should return the contact type of given class.
+     * This method should return the category bits of given class.
      * @param type - The class you want to find the contact type of.
      * @param <T> - Generic type that extends from IGameObject.
-     * @return - The contact type of the given class.
+     * @return - The category bits of the given class.
      */
-    private <T extends IGameObject> ContactType getContactType(Class<T> type) {
-        return contactTypes.get(level.getClassName(type));
+    private <T extends IGameObject> short[] getCategoryBits(Class<T> type) {
+        return contactCategoryBits.get(level.getClassName(type));
     }
 
     /**
@@ -105,17 +115,19 @@ public class GameContactListener implements ContactListener {
      */
     private <T extends IGameObject> T getContactObject(Fixture a, Fixture b, Class<T> type) {
         List<T> objects = level.getGameObjects(type);
+        short[] categoryBits = getCategoryBits(type);
 
-
-        ContactType contactType = getContactType(type);
-        Fixture objectFixture = a.getUserData() == contactType ? a : b;
+        boolean bitFound = false;
+        for (short bit : categoryBits) {
+            if (a.getFilterData().categoryBits == bit) {
+                bitFound = true;
+                break;
+            }
+        }
+        Fixture objectFixture = bitFound ? a : b;
 
         for (T object : objects) {
-//            System.out.println(Floater.class.isAssignableFrom(object.getClass()));
-//            System.out.println(Goomba.class.isAssignableFrom(object.getClass()));
-
-            System.out.println(object.getBody().equals(objectFixture.getBody()));
-            if (object.getBody().equals(objectFixture.getBody())) { // TODO: Problem with Floater!
+            if (object.getBody().equals(objectFixture.getBody())) {
                 return object;
             }
         }
@@ -143,19 +155,6 @@ public class GameContactListener implements ContactListener {
     private boolean checkContactSensor(Fixture a, Fixture b, String sensorName) {
         return (a.getUserData().equals(sensorName) || b.getUserData().equals(sensorName));
     }
-
-//
-//    private boolean checkBetweenTypeAndType(Fixture a, Fixture b, ContactType type1, ContactType type2) {
-//      return checkContactType(a,b,type1) && checkContactType(a,b,type2);
-//    }
-//
-//    private boolean checkBetweenTypeAndSensor(Fixture a, Fixture b, ContactType type, String sensor) {
-//        return checkContactType(a,b,type) && checkContactSensor(a,b,sensor);
-//    }
-//
-//    private boolean checkBetweenSensorAndSensor(Fixture a, Fixture b, String sensor1, String sensor2) {
-//        return checkContactSensor(a,b,sensor1) && checkContactSensor(a,b,sensor2);
-//    }
 
     private void deathContact(Fixture a, Fixture b) {
         if (checkContactType(a,b,ContactType.DEATH) && checkContactType(a,b,ContactType.PLAYER)) {
