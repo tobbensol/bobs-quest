@@ -30,7 +30,7 @@ public class Floater extends MovableObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            body.applyForceToCenter(new Vector2(playerPosition.x - body.getPosition().x, playerPosition.y - body.getPosition().y), true);
+            body.applyForceToCenter(new Vector2(-playerPosition.x - body.getPosition().x, -playerPosition.y - body.getPosition().y), true);
         }
     }
 
