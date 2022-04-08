@@ -32,8 +32,14 @@ The computer must be able to run the game at 60 FPS (the game will feel slow if 
 2. Run DesktopLauncher to start the game.
 3. Use "WASD", "Arrow keys" and "IJKL" to control the different players.
 
-## Known Bugs
-Known bugs in the game can be found [here](src/main/resources/BugReplication.md).
+### Testing
+Known bugs in the game and manual tests can be found [here](src/main/resources/BugReplication.md).
+
+To run unit tests, locate the folder "src/test/java" and run them in your IDE. This will differ depending on IDE. 
+In IntelliJ, this is done by right clicking the folder and selecting "Run 'All Tests'" or "More Run/Debug -> Run 'All Tests' with Coverage".
+
+To be able to create unit tests testing logic that uses LibGdx, it is necessary to create a headless application.
+This is an application that mocks the graphics component. Therefore, be wary that unit tests of graphics-related components can be difficult. 
 
 ## Credits
 This project is created by:
