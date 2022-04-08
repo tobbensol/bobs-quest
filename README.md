@@ -18,6 +18,7 @@ We use the game engine [libGDX](https://libgdx.com/) for this project.
 
 ## Requirements
 An IDE running on either Windows or Linux (MacOS probably works, but not tested). You can for example use one of the IDEs [IntelliJ](https://www.jetbrains.com/idea/) or [Eclipse](https://www.eclipse.org/ide/).
+The computer must be able to run the game at 60 FPS (the game will feel slow if not).
 
 ## Build Instructions
 
