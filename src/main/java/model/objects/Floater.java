@@ -17,8 +17,8 @@ public class Floater extends MovableObject implements Enemy {
     private Vector2 playerPosition;
 
     public Floater(String name, Level level, float x, float y) {
-        super(name + " " + (level.getGameObjects(Floater.class).size() + 1), level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
-        texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Coin.png");
+        super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
+        texture = new Texture("Multi_Platformer_Tileset_v2/Dungeon/Details/Dungeon_Jar1.png");
         body.setGravityScale(0);
         body.setLinearDamping(3);
     }
