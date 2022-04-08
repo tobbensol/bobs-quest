@@ -124,7 +124,7 @@
         - Fixed
 
 
-- player flickers left and right when jumping up platforms
+- Player flickers left and right when jumping up platforms
     - how to replicate:
         - try jumping up to a platform from below
         - see that the player flickers left and right for a bit before settling
@@ -134,7 +134,7 @@
         - Fixed
 
 
-- player is alive with -1 hp when dropping
+- Player is alive with -1 hp when dropping
     - how to replicate:
         - hold down to drop (while on ground)
         - touch goomba 3 times until hp == -1
