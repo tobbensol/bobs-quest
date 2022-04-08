@@ -113,15 +113,15 @@
         - paused the model while you are at these screens
 
 
-- low jumps on platforms
+- Low jumps on platforms
     - how to replicate:
         - stand on a platform
         - try jumping
         - see that the player jumps lower than usual
     - reason:
-        - unknown
+        - When using delta time, the player velocity was not equal to zero when it should be. The player's velocity inspected the jump height.
     - status:
-        - still a bug
+        - Fixed
 
 
 - player flickers left and right when jumping up platforms
@@ -129,9 +129,9 @@
         - try jumping up to a platform from below
         - see that the player flickers left and right for a bit before settling
     - reason:
-        - unknown
+        - When using delta time, the player velocity was not equal to zero when it should be. The player therefore switches between right and left state.
     - status:
-        - still a bug
+        - Fixed
 
 
 - player is alive with -1 hp when dropping
@@ -140,9 +140,9 @@
         - touch goomba 3 times until hp == -1
         - see that player cannot interact with coins, platforms or goal
     - reason:
-        - likely related to how players are set to dead, and that drop() messes with it
+        - Player.drop() sets state to FALLING. 
     - status:
-        - still a bug
+        - Fixed by returning if state is dead.
 
 
 - Player jumps really high at the start of a slope:
@@ -231,6 +231,7 @@
     - Check that game resumes.
   - Status:
     - It works.
+
 
 - Test camera features.
   - How to replicate:
