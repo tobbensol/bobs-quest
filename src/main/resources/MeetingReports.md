@@ -74,3 +74,67 @@ Vi har også gjort andre endringer som:
 - Laget BugReplication/manuelle tester.
 
 Videre i møtet gikk vi gjennom siste delen av rapporten som skal leveres inn senere i dag.
+
+### Mandag 28. mars 2022
+
+#### kl 12:15-14:00
+
+Fysisk møte
+
+Oppmøte: Fysisk: Martin, Espen, Kristoffer, Digitalt: Tobias 
+
+I dagens møte diskuterte vi hva vi skulle gjøre denne uken:
+
+- Tobias skal prøve å finne ut forrige ukes problem med å laste inn nye nivåer i spillet. Dette er trolig en eller annen feil i måten nivået blir laget på i Tiled.
+- Kristoffer fortsetter med kamera implementasjonen som han jobbet med forrige uke. Her er målet å implementere funksjonen slik at kameraet ikke kan gå utenfor mappet og at spillerne ikke kan gå utenfor kameraet.
+- Espen har sett litt på “player movement” og fortsetter med det. Her er det å prøve å få bedre spiller bevegelser og gjøre det slik at det likt på alle maskiner (deltaTime). Eventuelt begynne på implementasjon av muligheten for en spiller og hoppe opp/dette ned gjennom plattformer.
+- Martin ser på hvordan vi skal separere informasjonen om hvert enkelt level og implementere en egen level klasse. Dette for å dele opp GameModel klassen.
+
+Avhengig av hvor mye jobb dette er og hvor lang tid dette tar, kan det hende vi diskuterer flere oppgaver. 
+
+
+### Fredag 1. april 2022
+#### kl 13:00-13:30
+
+Digitalt oppsummeringsmøte
+
+Oppmøte: Alle var tilstede
+
+Vi startet møte med å gå gjennom siste ukens endringer i koden. Her presenterte vi koden og hva vi har gjort. Ukens endringer gikk ut på:
+- Tobias fikk fikset problemet med å laste inn nye nivåer i spillet. Tobias har laget en mal for å lage nye nivåer (setupMap) der oppsettet med alle typer objekter er lagt inn på riktig format.
+- Kristoffer fikk implementert kamerafunksjoner slik at kameraet ikke kan gå utenfor mappet og at spillere ikke kan gå utenfor kamera. Zoom funksjonen er også blitt forbedret.
+- Martin har implmentert en Level klasse som er med på å dele opp hva GameModel klassen skal holde på (Single resposibility prinsippet).
+- Espen har implementert funksjonalitet der spillere kan hoppe opp gjennom plattformer og droppe ned gjennom de med å trykke ned. Også implementert funksjonalitet på hvordan Goomba objekter beveger seg. De følger nå etter spillere om de er innenfor en viss rekkevidde. Spillere kan også drepe Goomba objekter. “Player movement” og “deltaTime” var vanskeligere enn antatt. Her har vi ikke funnet en løsning enda.
+
+Videre i møte diskuterte vi nye bugs som vi har funnet og mulig årsak til disse. Disse har blitt lagt til i BugReport. Vi bestemte oss også for hvilken kameraløsning som vi ønskte å gå fremover med.
+
+
+### Mandag 4.april 2022
+#### kl 12:15-14:00
+Fysisk møte
+Oppmøte: 
+
+Fysisk: Tobias, Espen, Digitalt: Kristoffer
+
+I møte diskuterte vi “player movement” og problemene vi har med at spillet kjører med ulik FPS og dermed påvirker fysikken. Vi endte til slutt på å låse FPS-en på 60 og heller skrive i systemkravet i README filen til at pcen som kjører spillet må kunne kjøre spillet i 60 FPS. Videre i møtet snakket vi om hva vi skulle gjøre denne uken. Siden det er innlevering fredag, vil alle jobbe med rapporten i tillegg.
+- Martin har sett på JUnit testing av spillet og har begynt med dette. Han fortsetter med dette denne uken.
+- Espen har endret på hvordan vi gjør “player movement” i helgen og Tobias har sett et problem vi har med en boolean variabel “grounded” som ikke gir rett verdi i overgangen mellom “ground” og “slope”. Kristoffer vil justere på parametere for at spillet skal føles best mulig.
+- Kristoffer skal også skrive manuelle tester og brukerhistorie for kamera implementasjonen som han laget forrige uke.
+- Tobias skal legge til et nytt fiende objekt i spillet. Han skal også se på en bug relatert til “grounded” fixen som har implementerte i helgen.
+- Espen har ingen spesifikke oppgaver, men skal hjelpe til der det trengs. Refaktorere/generalisere klasser osv kan være mulig.
+
+
+### Fredag 08. april 2022
+#### kl 13:00-13:30
+
+Digitalt oppsummeringsmøte
+
+Oppmøte: Alle var tilstede
+
+Vi startet møte med å gå gjennom siste ukens endringer i koden. Her presenterte vi koden og hva vi har gjort. Ukens endringer gikk ut på:
+- Martin har jobbet en del med JUnit testing. Laget JUnit tester for Player og GameModel.
+- Kristoffer har skrevet manuelle tester, brukerhistorier og dokumentasjon for kamera klassen.
+- Tobias har jobbet med å legge til en ny fiende objekt. Han har også sett på buggen relatert til "grounded" og hopping. Har også lagt til en "delay" i gameover.
+- Espen har implementert pause funksjonalitet og generalisert kontakter mellom player og fiende objekter. Laget et "Enemy" interface som fiende obekter implementer. Dette interfacet utvider et nytt interface IGameObject som GameObject implementere.
+
+Videre jobbet vi sammen med obligatorisk innlevering 3 som skal leveres inn senere i dag.
