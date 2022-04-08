@@ -16,12 +16,14 @@ public interface IGameObject {
 
     /**
      * This method renders the object in each iteration of the game.
+     *
      * @param batch
      */
     void render(SpriteBatch batch);
 
     /**
      * This method should set the position of the object.
+     *
      * @param x - The x coordinate.
      * @param y - The y coordinate.
      */

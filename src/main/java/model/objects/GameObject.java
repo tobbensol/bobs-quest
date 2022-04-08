@@ -34,7 +34,7 @@ public abstract class GameObject implements IGameObject {
 
     public abstract void render(SpriteBatch batch);
 
-    public void setPosition(float x, float y){
+    public void setPosition(float x, float y) {
         body.setTransform(x, y, body.getAngle());
     }
 

@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PlayerTest {
 
@@ -27,7 +28,10 @@ public class PlayerTest {
 
     @BeforeEach
     void setup() {
-        new HeadlessApplication(new Game() {public void create() {}});
+        new HeadlessApplication(new Game() {
+            public void create() {
+            }
+        });
 
         world = new World(new Vector2(0, 0), false);
         level = mock(Level.class);
@@ -140,6 +144,6 @@ public class PlayerTest {
     }
 
     private void doStep() {
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
     }
 }

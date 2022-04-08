@@ -17,12 +17,10 @@ import launcher.Boot;
 import model.objects.Coin;
 
 public class Hud {
-    private final Viewport viewport;
-    public Stage stage;
-
-    private final Level level;
     private static Integer score;
-
+    private final Viewport viewport;
+    private final Level level;
+    public Stage stage;
     private Label scoreLabel;
     private Label levelLabel;
     private Label pausedLabel;
@@ -97,15 +95,15 @@ public class Hud {
     }
 
     private Image createFilter() {
-        Pixmap pixmap = new Pixmap(1,1, Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
         pixmap.fillRectangle(0, 0, 1, 1);
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
 
         Image filter = new Image(texture);
-        filter.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        filter.getColor().a=0f;
+        filter.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        filter.getColor().a = 0f;
         return filter;
     }
 }

@@ -34,7 +34,7 @@ public class Player extends JumpableObject {
     private boolean headCollision = false;
     private boolean onPlatform = false;
 
-    private Vector2 cumulativeForces = new Vector2(0,0);
+    private final Vector2 cumulativeForces = new Vector2(0, 0);
 
 
     private int hp;
@@ -58,8 +58,8 @@ public class Player extends JumpableObject {
      * Constructor for testing
      *
      * @param level - level to be placed in
-     * @param x - horizontal position
-     * @param y - vertical position
+     * @param x     - horizontal position
+     * @param y     - vertical position
      */
     public Player(Level level, float x, float y) {
         super("Test", level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
@@ -89,7 +89,7 @@ public class Player extends JumpableObject {
             cumulativeForces.y = Y_VELOCITY;
         }
 
-        this.body.applyForceToCenter(cumulativeForces,true);
+        this.body.applyForceToCenter(cumulativeForces, true);
         cumulativeForces.scl(0);
     }
 
@@ -100,6 +100,7 @@ public class Player extends JumpableObject {
             cumulativeForces.add(-currentSpeed.x * X_DAMPING_SCALE, 0);
         }
     }
+
     private void jumpDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
         if (!grounded) {
@@ -133,7 +134,7 @@ public class Player extends JumpableObject {
     @Override
     public void jump() {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
-            cumulativeForces.add(0,Y_VELOCITY);
+            cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -154,16 +155,16 @@ public class Player extends JumpableObject {
         currentState = State.FALLING;
 
         this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
-        cumulativeForces.add(0,-Y_VELOCITY * DROPPING_SCALE);
+        cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
     }
 
     @Override
     public void moveHorizontally(boolean isRight) {
         if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-            cumulativeForces.add(X_VELOCITY,0);
+            cumulativeForces.add(X_VELOCITY, 0);
             facingRight = true;
         } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-            cumulativeForces.add(-X_VELOCITY,0);
+            cumulativeForces.add(-X_VELOCITY, 0);
             facingRight = false;
         }
     }
@@ -195,20 +196,15 @@ public class Player extends JumpableObject {
         State tempState = State.STANDING;
         if (previousState == State.DEAD) {
             tempState = State.DEAD;
-        }
-        else if (body.getLinearVelocity().y < -0.5 && grounded) {
+        } else if (body.getLinearVelocity().y < -0.5 && grounded) {
             tempState = State.SLIDING;
-        }
-        else if (body.getLinearVelocity().y > 0.5 && grounded) {
+        } else if (body.getLinearVelocity().y > 0.5 && grounded) {
             tempState = State.WALKING;
-        }
-        else if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+        } else if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             tempState = State.JUMPING;
-        }
-        else if (body.getLinearVelocity().y < -0.5) {
+        } else if (body.getLinearVelocity().y < -0.5) {
             tempState = State.FALLING;
-        }
-        else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
+        } else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
             tempState = State.WALKING;
         }
         currentState = tempState;

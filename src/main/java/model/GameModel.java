@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import controls.*;
 import launcher.Boot;
-import model.objects.GameObject;
 import model.objects.IGameObject;
 import model.objects.Player;
 import view.*;

@@ -7,7 +7,6 @@ public interface Jumpable extends Movable {
 
     /**
      * This method should make an object jump.
-     *
      */
     void jump();
 }

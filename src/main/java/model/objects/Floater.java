@@ -2,7 +2,6 @@ package model.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import model.Level;
 import model.helper.Constants;
@@ -31,13 +30,13 @@ public class Floater extends MovableObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            body.applyForceToCenter(new Vector2(-X_VELOCITY * (playerPosition.x - body.getPosition().x)/Constants.PPM , -X_VELOCITY * (playerPosition.y - body.getPosition().y)/Constants.PPM), true);
+            body.applyForceToCenter(new Vector2(-X_VELOCITY * (playerPosition.x - body.getPosition().x) / Constants.PPM, -X_VELOCITY * (playerPosition.y - body.getPosition().y) / Constants.PPM), true);
         }
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x , y , width, height);
+        batch.draw(texture, x, y, width, height);
     }
 
     @Override

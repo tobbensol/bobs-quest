@@ -21,7 +21,7 @@ public abstract class Controller {
             return;
         }
         if (Gdx.input.isKeyPressed(right)) {
-            player.moveHorizontally( true);
+            player.moveHorizontally(true);
         }
         if (Gdx.input.isKeyPressed(left)) {
             player.moveHorizontally(false);

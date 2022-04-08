@@ -16,10 +16,9 @@ public abstract class JumpableObject extends MovableObject implements Jumpable {
 
     //todo make other contacts work like this as well?
     public boolean setGrounded(boolean value) {
-        if(value){
+        if (value) {
             groundedcount++;
-        }
-        else{
+        } else {
             groundedcount--;
         }
         grounded = groundedcount > 0;
