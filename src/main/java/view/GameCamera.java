@@ -14,12 +14,12 @@ import java.util.List;
 
 public class GameCamera extends OrthographicCamera {
 
-    private final GameModel gameModel;
     private static final float minZoom = 1f;
     private static final float maxZoom = 1.45f;
     private static final float zoomTriggerPercent = 0.68f;
     private static final float zoomIncreaseAmount = 0.0016f;
     private static final float zoomDecreaseAmount = 0.0016f;
+    private final GameModel gameModel;
 
 
     public GameCamera(GameModel gameModel) {
@@ -124,6 +124,6 @@ public class GameCamera extends OrthographicCamera {
             return position;
         }
 
-        return new Vector3((minX+maxX)/2, (minY+maxY)/2, 0);
+        return new Vector3((minX + maxX) / 2, (minY + maxY) / 2, 0);
     }
 }

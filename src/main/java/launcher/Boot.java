@@ -3,7 +3,6 @@ package launcher;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import model.GameModel;
-import view.GameCamera;
 import view.StartScreen;
 
 public class Boot extends Game {

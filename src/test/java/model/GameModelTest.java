@@ -18,7 +18,10 @@ public class GameModelTest {
 
     @BeforeEach
     void setup() {
-        new HeadlessApplication(new Game() {public void create() {}});
+        new HeadlessApplication(new Game() {
+            public void create() {
+            }
+        });
         world = new World(new Vector2(0, 0), false);
 
         level = mock(Level.class);

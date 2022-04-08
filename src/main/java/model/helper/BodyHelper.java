@@ -34,7 +34,6 @@ public class BodyHelper {
     }
 
 
-
     public static void createEnvironmentBody(Shape shape, World world, ContactType contactType, short categoryBits, short maskBits, boolean isSensor) {
         BodyDef bodyDef = new BodyDef();
         Body body = world.createBody(bodyDef);
@@ -102,14 +101,14 @@ public class BodyHelper {
     }
 
     private static void enemySensors(FixtureDef fixtureDef, Body body, float width, float height) {
-        createCircleSensor("enemyRadar", fixtureDef,body,width*5 / Constants.PPM,0,0);
+        createCircleSensor("enemyRadar", fixtureDef, body, width * 5 / Constants.PPM, 0, 0);
     }
 
 
     private static void createCircleSensor(String name, FixtureDef fixtureDef, Body body, float radius, float x, float y) {
         CircleShape shape = new CircleShape();
         shape.setRadius(radius);
-        shape.setPosition(new Vector2(x,y));
+        shape.setPosition(new Vector2(x, y));
         fixtureDef.shape = shape;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData(name);
@@ -128,13 +127,13 @@ public class BodyHelper {
     /**
      * This method lets you change the filter data of a given body, by changing the categoryBits and maskBits.
      * Both categoryBits and maskBits can be found in the Constants class.
-     *
+     * <p>
      * All bodies have a categoryBit and a maskBit. The categoryBit is used to separate different types of objets,
      * and the maskBits are used to determine which bodies a body can interact/collide with.
      *
-     * @param body - the body which the changes should be made on.
+     * @param body         - the body which the changes should be made on.
      * @param categoryBits - bit value that determines if the given body can collide with which other bodies.
-     * @param maskBits - bit value that determines what categoryBits the body can collide with.
+     * @param maskBits     - bit value that determines what categoryBits the body can collide with.
      */
     public static void changeFilterData(Body body, short categoryBits, short maskBits) {
         Filter filter = new Filter();
@@ -149,11 +148,11 @@ public class BodyHelper {
      * This method lets you change the filter data of a given body, by changing the categoryBits.
      * The maskBits will remain the same as before.
      * Both categoryBits and maskBits can be found in the Constants class.
-     *
+     * <p>
      * All bodies have a categoryBit and a maskBit. The categoryBit is used to separate different types of objets,
      * and the maskBits are used to determine which bodies a body can interact/collide with.
      *
-     * @param body - the body which the changes should be made on.
+     * @param body         - the body which the changes should be made on.
      * @param categoryBits - bit value that determines if the given body can collide with which other bodies.
      */
     public static void changeFilterData(Body body, short categoryBits) {

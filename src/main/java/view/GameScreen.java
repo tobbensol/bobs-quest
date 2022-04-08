@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
 import model.helper.Constants;
 import model.objects.Coin;
-import model.objects.GameObject;
 import model.objects.IGameObject;
 
 /**

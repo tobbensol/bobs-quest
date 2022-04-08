@@ -5,7 +5,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import model.helper.TiledMapHelper;
-import model.objects.*;
+import model.objects.GameObjectFactory;
+import model.objects.IGameObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,15 +14,15 @@ import java.util.List;
 
 public class Level {
 
+    private static final float gravity = -26f;
     private final String levelName;
     private final GameModel model;
     private final GameObjectFactory factory;
     private World world;
-    private static final float gravity = -26f;
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
-    private HashMap<String, ArrayList<IGameObject>> objectMap;
+    private final HashMap<String, ArrayList<IGameObject>> objectMap;
     private Integer score = 0;
     private Vector2 topLeft;
     private Vector2 bottomRight;
@@ -54,14 +55,13 @@ public class Level {
     }
 
     private void createObjects() {
-        for(String object : objectMap.keySet()){
-            if(object.equalsIgnoreCase("Player")){
+        for (String object : objectMap.keySet()) {
+            if (object.equalsIgnoreCase("Player")) {
                 List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints(object);
                 for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) { // TODO: Might produce IndexOutOfBoundsException
                     objectMap.get(object).add(factory.create(object, spawnPoints.get(i).x, spawnPoints.get(i).y));
                 }
-            }
-            else {
+            } else {
                 for (Vector2 v : tiledMapHelper.parseMapSpawnPoints(object)) {
                     objectMap.get(object).add(factory.create(object, v.x, v.y));
                 }
@@ -77,11 +77,10 @@ public class Level {
     private void parseMapEndPoints() {
         List<Vector2> mapEndPoints = tiledMapHelper.parseMapSpawnPoints("MapEndPoints");
 
-        if (mapEndPoints.get(0).x < mapEndPoints.get(1).x ) {
+        if (mapEndPoints.get(0).x < mapEndPoints.get(1).x) {
             topLeft = mapEndPoints.get(0);
             bottomRight = mapEndPoints.get(1);
-        }
-        else {
+        } else {
             topLeft = mapEndPoints.get(1);
             bottomRight = mapEndPoints.get(0);
         }

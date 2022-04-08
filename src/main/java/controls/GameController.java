@@ -23,15 +23,13 @@ public class GameController {
                 if (model.isPaused()) {
                     model.resumeGame();
                     System.out.println("Game Resumed");
-                }
-                else {
+                } else {
                     model.pauseGame();
                     System.out.println("Game Paused");
                 }
                 pauseHelper = false;
             }
-        }
-        else {
+        } else {
             pauseHelper = true;
         }
 
