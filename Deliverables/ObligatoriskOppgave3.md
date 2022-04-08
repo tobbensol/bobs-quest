@@ -24,8 +24,6 @@
 
 - Lag korte referat fra team-møtene (ha med dato, hvem som var tilstede, hva dere diskuterte, hvilke avgjørelser dere tok, og hva dere ble enige om å gjøre til neste gang)
 
-  Vi ikke visste at å lage referat var noe vi skulle gjøre før oblig 2, 3 og 4 ble lagt ut, så vi har derfor ikke lagd referater til møter annet enn tilfeldige ting vi har skrevet i discord chatten vår.
-
 - Link til [møte referater](src/main/resources/MeetingReports.md).
 
 - Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt? (se spørsmål 2)
@@ -34,74 +32,43 @@
 
 - Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.
 
+Nei, vi føler ikke vi trenger flere roller. Har skrevet hva rollene innebærer i andre innlevering.
 
 Team/prosjekt-lead - Martin
 
-- Ha overordna oversikt over prosjektet
-- Oversikt over hva de andre teammedlemmene holder på med
-- Holde styr på Kanban brettet (ikke for lite arbeid, ikke for mye om gangen)
-- Sørge for at prosjektstrukturen følger viktige prinsipper innen utvikling. F.eks:
-    - MVC
-    - DRY
-    - SOLID
-
 Kundekontakt - Espen
-
-- Holde styr på innleveringene. Sørge for at vi leverer det vi skal levere.
-- Lag korte referat fra team-møtene (ha med dato, hvem som var tilstede, hva dere diskuterte, hvilke avgjørelser dere tok, og hva dere ble enige om å gjøre til neste gang). Dette var ikke oppgitt at vi skulle gjøre før denne obligatoriske innleveringen. Så dette er noe vi vil gjøre fremover.
 
 Utviklere - Martin, Espen, Tobias, Kristoffer
 
-- Bidrar i ulike deler av prosjektet med både kode, testing, og grafikk.
-- Største delen av prosjektet består av utvikling
-
-Testing - Tobias
-
-- Alt funker som det skal ifølge akseptansekriterier
-- Manuelle tester
-- Junit tester (vanskelig, så vi har ikkje gjort dette enda)
-- .MD fil for å skrive hvordan man gjenskaper bugs
+Testing - Tobias, Martin
 
 Ansvarlig for game design - Tobias, Kristoffer
 
-- Tiled maps,
-- Hud og menyer
-- Finne/lage sprites
-- Art direction
-- Hvordan spillet bør følges
-
-
 - Er det noen erfaringer enten team-messig eller mtp prosjektmetodikk som er verdt å nevne? Synes teamet at de valgene dere har tatt er gode? Hvis ikke, hva kan dere gjøre annerledes for å forbedre måten teamet fungerer på?
 
-Kanban brettet funker forsåvidt bra. Det er passelig mengde oppgaver som er tilgjengelige og passelig mengde oppgaver som er i en aktiv fase samtidig. Vi merker at vi ikke alltid er så flinke til å oppdatere brettet mens vi jobber. For å løse dette må alle teammedlemmene bli flinkere til å ta i bruk brettet. Det skal være lov å flytte ting tilbake fra ongoing til selected/backlog dersom dette er nødvendig (det beste er selvfølgelig å ferdigstille et issue). Vi må prøve å bli flinkere å fordele mengden ukens arbeid mellom hver person av teamet på mandagsmøtet slik at total arbeidsmengde for uken er omtrent det samme og at ingen går uten arbeid. Vi bør også bli flinkere til å informere de andre teammedlemmene om når man sitter og jobber, slik at andre teammedlemmer kan bli med (parprogrammering).
+Vi har blitt litt flinkere til å oppdatere brettet. Dette varierer litt fra teammedlem til teammedlem. Vi har blitt flinkere på å fordele ukens arbeid tydelig på mandagsmøte. Vi har også blitt flinkere til å informere de andre hva vi jobber med og jobber helst to og to hvis vi er flere som arbeider.
 
 - Hvordan er gruppedynamikken? Er det uenigheter som bør løses?
 
-Gruppedynamikken er god og vi klarer å kommunisere bra. Det er ingen uenigheter utenfor hvordan man bør implementere kode.
+Gruppedynamikken er god og vi klarer å kommunisere bra. Det er ingen uenigheter utenfor hvordan man bør implementere kode. Ingen endringer siden forrige innlevering.
 
 - Hvordan fungerer kommunikasjonen for dere?
 
-Vi bruker hovedsakelig Discord til kommunikasjon.
-Dette funker veldig bra og vi har ikke hatt noen spesielle problemer med det.
-Gruppemedlemmene er kjent med hverandre fra før av og det har hjulpet en god del.
+Kommunikasjonen er god. Ingen endringer siden forrige innlevering.
 
 - Gjør et kort retrospektiv hvor dere vurderer hva dere har klart til nå, og hva som kan forbedres. Dette skal handle om prosjektstruktur, ikke kode. Dere kan selvsagt diskutere kode, men dette handler ikke om feilretting, men om hvordan man jobber og kommuniserer.
 
-Når vi prøver å programmere sammen kan det oppsummeres ved at &quot;jo flere kokker, jo mer søl.&quot; Dvs. at dersom vi er mer enn to personer som skal implementere noe, så blir det vanskelig. Det som er veldig greit er å være flere (3-4) når vi skal diskutere en løsning på et problem, men når det kommer til implementeringen blir det fort rot. Vi kan fremover prøve å bli litt flinkere med å implementere diverse par-programmeringsteknikker når vi jobber i lag fremfor at flere skriver kode samtidig (kan fort bli mye rot til tider).
+Vi har klart å øke effektiviteten når vi arbeider sammen ved å begrense hvor mange som jobber sammen. Nå deler vi oss inn i grupper på to. Dette gjør det lettere å implementere løsninger og ulike grupper kan jobbe på forskjellige ting samtidig. Vi har minsket terskelen for å ta kontakt i Discord-kanalen, noe som gjør det lettere for alle å få oversikt over hva de andre teammedlemmene holder på med, og for å hjelpe hverandre når det trengs. Det er ikke alltid at en brukerhistorie blir skrevet før arbeidsoppgaven er påbegynt.
 
 - Under vurdering vil det vektlegges at alle bidrar til kodebasen. Hvis det er stor forskjell i hvem som committer, må dere legge ved en kort forklaring for hvorfor det er sånn. Husk å committe alt. (Også designfiler)
 
-Vi prøver å passe at alle i prosjektet bidrar omtrent like mye. Det er derimot flere måter å bidra på, og det er ikke alltid antall commits som viser hvem som har bidratt mest og hvor mye en har bidratt med.
-
-Vi har brukt en del det innebygde verktøyet &quot;CodeWithMe&quot; i IntelliJ som gjør at flere kan jobbe sammen på hver vår maskin. Personen som starte &quot;CodeWithMe&quot; vil da få alle endringene som er gjort registrert på seg selv. Dette kan føre til at ujevn fordeling av commits.
-
-Det varierer også en del i størrelsene i commits-ene som hver av oss committer.
-
-Det er også deler av prosjektet som tar mye tid, men som kanskje ikke er like nødvendig å committe like ofte som en liten endring i en kode. Dette kan for eksempel være å lage nye textures, jobbe med TiledMap, skrive rapporter osv. Til rapportskriving bruker vi gjerne et felles googledocs dokument før vi konverterer det til en md-fil, så da gjerne en hel rapport bli sett på som en commit (selv om alle har jobbet med den).
+Ingen endring siden andre innlevering. Antall commits er ganske jevnt fordelt, men vil variere litt etter forklaring i andre innlevering.
 
 - Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint.
 
-1) Effektivisering av team programmering (diskutere, komme fram til løsning, implementere løsning).
+Vi har forbedret alle punktene nedenfor fra forrige innlevering. Vi føler at vi ikke har så mye mer konkret å forbedre, så vi tenker å fortsette med de samme punktene og forbedre dem enda mer.
+
+1) Effektivisering av team programmering (diskutere, komme fram til løsning, implementere løsning). Bli enda flinkere på å jobbe i par og kommunisere arbeid til resten av teamet.
 
 2) Bedre fordeling av arbeidsoppgaver. Mer spesifikk
 
