@@ -33,17 +33,17 @@ public class GameModel implements ControllableModel {
         this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
-        levels.add("level1");
-        levels.add("level2");
-        levels.add("platformTest");
-        levels.add("slopeTest");
-        levels.add("cameraTest");
-        levels.add("goombaTest");
-        levels.add("coinTest");
-        levels.add("valleyAndSpikeTest");
-        levels.add("sizeTest");
-        levels.add("goombaCollisionTest");
-        levels.add("floaterTest");
+        levels.add("level1"); // 0
+        levels.add("level2"); // 1
+        levels.add("platformTest"); // 2
+        levels.add("slopeTest"); // 3
+        levels.add("cameraTest"); // 4
+        levels.add("goombaTest"); // 5
+        levels.add("coinTest"); // 6
+        levels.add("valleyAndSpikeTest"); // 7
+        levels.add("sizeTest"); // 8
+        levels.add("goombaCollisionTest"); // 9
+        levels.add("floaterTest"); // 10
 
         gameController = new GameController(this);
 
