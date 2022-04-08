@@ -106,11 +106,15 @@ Evt. tekst / kommentarer til koden kan dere putte i en egen ## Kode-seksjon i De
 
 - _Utbedring av feil:_ hvis dere har rettet / forbedret noe som dere har fått trekk for tidligere, lag en liste med «Dette har vi fikset siden sist», så det er lett for gruppelederne å få oversikt.
 
+    - Vi har ikke fått tilbakemelding på andre innlevering, så vi vet ikke om det er noe annet å forbedre enn fra første innlevering. Da er forbedringene nesten det samme som skrevet på andre innlevering.
+
     - Commitmeldingene har blitt mer beskrivende/utfyllende
 
     - Nytteverdien til brukerhistoriene har blitt oppdatert
 
-    - Lagt til noen [manuelle tester](src/main/resources/BugReplication.md)
+    - Lagt til flere [manuelle tester](src/main/resources/BugReplication.md)
+
+    - Laget JUnit tester.
 
     - Laget [README](README.md) som inneholder dokumentasjon om prosjektoppsett
 
@@ -121,13 +125,12 @@ Link til [klassdiagram](src/main/resources/ClassDiagram.uml).
 - Kodekvalitet og testdekning vektlegges. Dersom dere ikke har automatiske tester for GUI-et, lager dere manuelle tester som gruppelederne kan kjøre basert på akseptansekriteriene.
 
     - Har skrevet [manuelle tester](src/main/resources/BugReplication.md).
-    - Har også fokusert mye på kodekvalitet
+    - Har noen JUnit tester. Testdekning er noe vi ønsker å forbedre.
 
 - Statiske analyseverktøy som SpotBugs eller SonarQube kan hjelpe med å finne feil dere ikke tenker på. Hvis dere prøver det, skriv en kort oppsummering av hva dere fant / om det var nyttig.
 
-Vi har sett på SpotBugs, men vi har ikke hatt tid til å se ordentlig på det enda. Vi tenker å se på det i fremtiden
+Vi har sett på SpotBugs, men vi har ikke hatt tid til å se ordentlig på det enda. Vi tenker å se på det i fremtiden.
 
 - Automatiske tester skal dekke forretningslogikken i systemet (unit-tester). _Coverage_ kan hjelpe med å se hvor mye av koden som dekkes av testene – i Eclipse kan dette gjøres ved å installere _EclEmma_ gjennom Eclipse Marketplace.
 
-Så langt har vi ingen enhetstester. Vi begynte å se på det, men fant fort ut at det ble ganske komplisert for et slikt prosjekt. Videre tenker vi å sette oss inn i Mockito for å kunne gjøre enhetstesting.
-
+Vi har startet enhetstesting. Nå som vi har fått dette til å fungere, skal det være lettere å skrive flere tester videre framover. Vi har foreløpig 28% line coverage i hele prosjektet. Det viktigste å teste er modellen (hvor logikken ligger). Her har vi 34% coverage. Diverse andre deler av koden kan fort bli vanskelig å teste automatisk.
