@@ -39,6 +39,7 @@ public class TiledMapHelper {
 
     private MapObjects getMapObjects(String objects) {
         // OBS: If objects doesn't exist -> NullPointerException
+        // TODO: fix the OBS above this TODO
         MapObjects mapObjects;
 
         try {

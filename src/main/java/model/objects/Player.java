@@ -252,7 +252,7 @@ public class Player extends JumpableObject {
         currentState = State.DEAD;
         BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
         // Death "animation"
-        body.setLinearVelocity(0, 5); //TODO: Make player fall through ground as well
+        body.setLinearVelocity(0, 5);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {

@@ -28,6 +28,7 @@ public class Floater extends MovableObject implements Enemy {
         move();
     }
 
+    //TODO make enemy move towards players and player position update
     private void move() {
         if (playerNearby) {
             body.applyForceToCenter(new Vector2(-X_VELOCITY * (playerPosition.x - body.getPosition().x) / Constants.PPM, -X_VELOCITY * (playerPosition.y - body.getPosition().y) / Constants.PPM), true);

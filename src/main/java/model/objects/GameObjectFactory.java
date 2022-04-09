@@ -11,7 +11,7 @@ public class GameObjectFactory {
     }
 
     /**
-     * Return value must be cast to own type //TODO: Write doc
+     * Return value must be cast to own type
      *
      * @param gameObject a string with the name of the object (not case sensitive)
      * @param x          the x position of the object
