@@ -163,6 +163,25 @@ public class PlayerTest {
         assertEquals(player.getBody().getAngle(), 0);
     }
 
+    @Test
+    void testMaskbits(){
+        assertEquals(player.maskBit, 125);
+        player.changeMaskBit(true, Constants.ENEMY_BIT);
+        assertEquals(player.maskBit, 125-8);
+        player.changeMaskBit(true, Constants.ENEMY_BIT);
+        assertEquals(player.maskBit, 125-8);
+        player.changeMaskBit(true, Constants.PLATFORM_BIT);
+        assertEquals(player.maskBit, 125-8-32);
+        player.changeMaskBit(true, Constants.PLAYER_BIT);
+        assertEquals(player.maskBit, 125-8-32);
+        player.changeMaskBit(false, Constants.DEFAULT_BIT);
+        assertEquals(player.maskBit, 125-8-32);
+        player.changeMaskBit(false, Constants.PLAYER_BIT);
+        assertEquals(player.maskBit, 125-8-32+2);
+        player.changeMaskBit(false, Constants.PLATFORM_BIT);
+        assertEquals(player.maskBit, 125-8+2);
+    }
+
     private void doStep() {
         world.step(1 / 60f, 6, 2);
     }
