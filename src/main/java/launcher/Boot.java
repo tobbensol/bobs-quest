@@ -24,6 +24,7 @@ public class Boot extends Game {
         setScreen(new StartScreen(gameModel));
     }
 
+    //TODO Maybe these two methods shoud be in gameScreen? Spotbugs complains about us using "INSTANCE = this;" to write to a static field further up in the code.
     public int getScreenWidth() {
         return screenWidth;
     }
