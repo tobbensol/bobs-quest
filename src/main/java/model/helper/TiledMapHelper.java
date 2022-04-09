@@ -38,15 +38,14 @@ public class TiledMapHelper {
     }
 
     private MapObjects getMapObjects(String objects) {
-        // OBS: If objects doesn't exist -> NullPointerException
-        // TODO: fix the OBS above this TODO
         MapObjects mapObjects;
 
-        try {
-            mapObjects = tiledMap.getLayers().get(objects).getObjects();
-        } catch (NullPointerException e) {
-            throw new NullPointerException("Objects with type '" + objects + "' doesn't exist.");
+        System.out.println(objects);
+        if (tiledMap.getLayers().getIndex(objects) == -1){
+            return new MapObjects();
         }
+        mapObjects = tiledMap.getLayers().get(objects).getObjects();
+
         return mapObjects;
     }
 
