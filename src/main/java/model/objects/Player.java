@@ -23,6 +23,8 @@ public class Player extends JumpableObject {
 
     private final ArrayList<TextureRegion> frames;
 
+    private short maskBit = Constants.PLAYER_MASK_BITS;
+
     protected State currentState;
     protected State previousState;
     private boolean frozen = false;
@@ -118,9 +120,9 @@ public class Player extends JumpableObject {
 
     private void playerCanGoThroughPlatforms(boolean value) {
         if (value) {
-            BodyHelper.changeFilterData(body, Constants.PLAYER_PASSING_THROUGH_PLATFORM_BIT);
+            BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit ^ Constants.PLATFORM_BIT));
         } else {
-            BodyHelper.changeFilterData(body, Constants.PLAYER_BIT);
+            BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit | Constants.PLATFORM_BIT));
         }
     }
 
@@ -263,6 +265,13 @@ public class Player extends JumpableObject {
 
     public void takeDamage(int amount) {
         // Player doesn't take damage if dead
+        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit ^ Constants.ENEMY_BIT));
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit | Constants.ENEMY_BIT));
+            }
+        }, 0.5f);
         if (currentState == State.DEAD) {
             return;
         }
