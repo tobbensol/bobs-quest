@@ -2,9 +2,11 @@ package model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import controls.*;
 import launcher.Boot;
-import model.objects.GameObject;
 import model.objects.IGameObject;
 import model.objects.Player;
 import view.*;
@@ -27,6 +29,9 @@ public class GameModel implements ControllableModel {
     private boolean pause = false;
     private boolean initializeLevel = true;
     private GameCamera camera;
+
+    private AssetManager manager;
+    private Music music;
 
     public GameModel() {
         state = GameState.STARTUP;
@@ -52,6 +57,15 @@ public class GameModel implements ControllableModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
 
+        manager = new AssetManager();
+        manager.load("audio/music/music.mp3", Music.class);
+        manager.load("audio/sounds/gameover.wav", Sound.class);
+        manager.finishLoading();
+
+        music = manager.get("audio/music/music.mp3", Music.class);
+        music.setLooping(true);
+        music.play();
+
     }
 
     private boolean gameOver() {
@@ -60,6 +74,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
+        manager.get("audio/sounds/gameover.wav", Sound.class).play();
         return true;
     }
 
@@ -83,11 +98,13 @@ public class GameModel implements ControllableModel {
         gameController.inputListener();
 
         if (isPaused()) {
+            music.pause();
             getLevel().getHud().pause();
             getLevel().updateHUD();
             return;
         } else {
             getLevel().getHud().resume();
+            music.play();
         }
 
         if (getLevel().isCompleted()) {
@@ -102,6 +119,7 @@ public class GameModel implements ControllableModel {
             changeScreen();
             restart();
             pauseGame();
+            music.pause();
         }
 
         getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);

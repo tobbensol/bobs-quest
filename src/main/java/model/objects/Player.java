@@ -1,5 +1,7 @@
 package model.objects;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -36,6 +38,8 @@ public class Player extends JumpableObject {
 
     private final Vector2 cumulativeForces = new Vector2(0, 0);
 
+    private AssetManager manager;
+
 
     private int hp;
 
@@ -52,6 +56,12 @@ public class Player extends JumpableObject {
         for (int i = 0; i < getTexture().getWidth() / Constants.TILE_SIZE; i++) {
             frames.add(new TextureRegion(getTexture(), i * Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
+
+        manager = new AssetManager();
+        manager.load("audio/sounds/drop.wav", Sound.class);
+        manager.load("audio/sounds/hit.wav", Sound.class);
+        manager.load("audio/sounds/jump.wav", Sound.class);
+        manager.finishLoading();
     }
 
     /**
@@ -136,6 +146,7 @@ public class Player extends JumpableObject {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
+            manager.get("audio/sounds/jump.wav", Sound.class).play();
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -156,6 +167,7 @@ public class Player extends JumpableObject {
 
         this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
         cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
+        manager.get("audio/sounds/drop.wav", Sound.class).play();
     }
 
     @Override
@@ -271,6 +283,8 @@ public class Player extends JumpableObject {
             setDead();
         }
         System.out.println(this + ": " + hp);
+
+        manager.get("audio/sounds/hit.wav", Sound.class).play();
     }
 
     public void increaseHealth(int amount) {
