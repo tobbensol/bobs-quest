@@ -23,7 +23,7 @@ public class Player extends JumpableObject {
 
     private final ArrayList<TextureRegion> frames;
 
-    private short maskBit = Constants.PLAYER_MASK_BITS;
+    public short maskBit = Constants.PLAYER_MASK_BITS;
 
     protected State currentState;
     protected State previousState;
@@ -111,20 +111,11 @@ public class Player extends JumpableObject {
 
     private void handlePlatform() {
         if (body.getLinearVelocity().y > 0.5) {
-            playerCanGoThroughPlatforms(true);
+            changeMaskBit(false, Constants.PLATFORM_BIT);
         }
         if (body.getLinearVelocity().y < -0.5 && !onPlatform && previousState != State.FALLING) {
-            playerCanGoThroughPlatforms(false);
+            changeMaskBit(true, Constants.PLATFORM_BIT);
         }
-    }
-
-    private void playerCanGoThroughPlatforms(boolean value) {
-        if (value) {
-            maskBit = (short) (maskBit & ~Constants.PLATFORM_BIT);
-        } else {
-            maskBit = (short) (maskBit | Constants.PLATFORM_BIT);
-        }
-        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
     }
 
     @Override
@@ -153,7 +144,7 @@ public class Player extends JumpableObject {
             return;
         }
         if (onPlatform) {
-            playerCanGoThroughPlatforms(true);
+            changeMaskBit(true, Constants.PLATFORM_BIT);
         }
         currentState = State.FALLING;
 
@@ -246,6 +237,15 @@ public class Player extends JumpableObject {
         return frozen;
     }
 
+    public void changeMaskBit(boolean filterAway, short bit) {
+        if (filterAway) {
+            maskBit = (short) (maskBit & ~bit);
+        } else {
+            maskBit = (short) (maskBit | bit);
+        }
+        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
+    }
+
     public void setDead() {
         if (previousState == State.DEAD) {
             return;
@@ -266,13 +266,12 @@ public class Player extends JumpableObject {
 
     public void takeDamage(int amount) {
         // Player doesn't take damage if dead
-        maskBit = (short) (maskBit & ~Constants.ENEMY_BIT);
-        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
+        changeMaskBit(true, Constants.ENEMY_BIT);
+
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                maskBit = (short) (maskBit | Constants.ENEMY_BIT);
-                BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
+                changeMaskBit(false, Constants.ENEMY_BIT);
             }
         }, 0.5f);
         if (currentState == State.DEAD) {
