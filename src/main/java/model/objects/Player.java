@@ -120,10 +120,11 @@ public class Player extends JumpableObject {
 
     private void playerCanGoThroughPlatforms(boolean value) {
         if (value) {
-            BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit ^ Constants.PLATFORM_BIT));
+            maskBit = (short) (maskBit & ~Constants.PLATFORM_BIT);
         } else {
-            BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit | Constants.PLATFORM_BIT));
+            maskBit = (short) (maskBit | Constants.PLATFORM_BIT);
         }
+        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
     }
 
     @Override
@@ -265,11 +266,13 @@ public class Player extends JumpableObject {
 
     public void takeDamage(int amount) {
         // Player doesn't take damage if dead
-        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit ^ Constants.ENEMY_BIT));
+        maskBit = (short) (maskBit & ~Constants.ENEMY_BIT);
+        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, (short) (maskBit | Constants.ENEMY_BIT));
+                maskBit = (short) (maskBit | Constants.ENEMY_BIT);
+                BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
             }
         }, 0.5f);
         if (currentState == State.DEAD) {
