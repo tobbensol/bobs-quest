@@ -40,7 +40,6 @@ public class TiledMapHelper {
     private MapObjects getMapObjects(String objects) {
         MapObjects mapObjects;
 
-        System.out.println(objects);
         if (tiledMap.getLayers().getIndex(objects) == -1){
             return new MapObjects();
         }
