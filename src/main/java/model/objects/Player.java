@@ -74,7 +74,6 @@ public class Player extends JumpableObject {
     @Override
     public void update() {
         super.update();
-        grounded = grounded && canJump;
 
         previousState = currentState;
         setState();

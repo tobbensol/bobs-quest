@@ -21,7 +21,7 @@ public abstract class JumpableObject extends MovableObject implements Jumpable {
         } else {
             groundedcount--;
         }
-        grounded = groundedcount > 0;
+        grounded = groundedcount > 0 && canJump;
         return grounded;
     }
 }

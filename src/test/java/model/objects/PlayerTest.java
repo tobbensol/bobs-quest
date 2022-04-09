@@ -94,6 +94,26 @@ public class PlayerTest {
     }
 
     @Test
+    void testJumpTimer(){
+        assertFalse(player.grounded);
+        assertEquals(player.groundedcount, 0);
+        player.setGrounded(true);
+        assertTrue(player.grounded);
+        assertEquals(player.groundedcount, 1);
+        player.setGrounded(true);
+        assertTrue(player.grounded);
+        assertEquals(player.groundedcount, 2);
+        player.jump();
+        player.setGrounded(false);
+        doStep();
+        assertEquals(player.groundedcount, 1);
+        assertFalse(player.grounded);
+        player.setGrounded(false);
+        assertEquals(player.groundedcount, 0);
+        assertFalse(player.grounded);
+    }
+
+    @Test
     void testPlayerDrops() {
         assertEquals(new Vector2(0, 0), player.getPosition());
 
