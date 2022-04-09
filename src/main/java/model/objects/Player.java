@@ -135,6 +135,7 @@ public class Player extends JumpableObject {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
+            updateGrouned();
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {

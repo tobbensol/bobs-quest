@@ -24,4 +24,8 @@ public abstract class JumpableObject extends MovableObject implements Jumpable {
         grounded = groundedcount > 0 && canJump;
         return grounded;
     }
+
+    public void updateGrouned() {
+        grounded = groundedcount > 0 && canJump;
+    }
 }
