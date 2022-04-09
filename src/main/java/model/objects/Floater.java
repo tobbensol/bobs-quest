@@ -9,7 +9,7 @@ import model.helper.ContactType;
 
 
 public class Floater extends MovableObject implements Enemy {
-    private static final float X_VELOCITY = 50f;
+    private static final float X_VELOCITY = 200f;
     private static final int attack = 10;
     private int numMoves;
     private boolean playerNearby = false;
@@ -28,11 +28,10 @@ public class Floater extends MovableObject implements Enemy {
         move();
     }
 
-    //TODO make enemy move towards players and player position update
     private void move() {
         if (playerNearby) {
             System.out.println(body.getPosition());
-            body.applyForceToCenter(new Vector2((playerPosition.x/ Constants.PPM - body.getPosition().x), (playerPosition.y/ Constants.PPM - body.getPosition().y)).scl(X_VELOCITY), true);
+            body.applyForceToCenter(new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(X_VELOCITY), true);
         }
     }
 
