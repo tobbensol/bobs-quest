@@ -17,9 +17,9 @@ import launcher.Boot;
 import model.objects.Coin;
 
 public class Hud {
-    private static Integer score;
     private final Viewport viewport;
     private final Level level;
+    private Integer score;
     public Stage stage;
     private Label scoreLabel;
     private Label levelLabel;
@@ -45,8 +45,6 @@ public class Hud {
     public void update() {
         score = level.getScore();
         scoreLabel.setText(score + "/" + level.getGameObjects(Coin.class).size());
-        // TODO maybe not do this every frame
-        levelLabel.setText(level.toString());
     }
 
     public void pause() {

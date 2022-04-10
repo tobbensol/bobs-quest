@@ -11,6 +11,7 @@ import model.objects.IGameObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Level {
 
@@ -55,15 +56,15 @@ public class Level {
     }
 
     private void createObjects() {
-        for (String object : objectMap.keySet()) {
-            if (object.equalsIgnoreCase("Player")) {
-                List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints(object);
+        for (Map.Entry<String, ArrayList<IGameObject>> set: objectMap.entrySet()) {
+            if (set.getKey().equalsIgnoreCase("Player")) {
+                List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints(set.getKey());
                 for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) { // TODO: Might produce IndexOutOfBoundsException
-                    objectMap.get(object).add(factory.create(object, spawnPoints.get(i).x, spawnPoints.get(i).y));
+                    set.getValue().add(factory.create(set.getKey(), spawnPoints.get(i).x, spawnPoints.get(i).y));
                 }
             } else {
-                for (Vector2 v : tiledMapHelper.parseMapSpawnPoints(object)) {
-                    objectMap.get(object).add(factory.create(object, v.x, v.y));
+                for (Vector2 v : tiledMapHelper.parseMapSpawnPoints(set.getKey())) {
+                    set.getValue().add(factory.create(set.getKey(), v.x, v.y));
                 }
             }
         }
@@ -100,11 +101,11 @@ public class Level {
 
     public List<IGameObject> getGameObjects() {
         List<IGameObject> objectList = new ArrayList<>();
-        for (String object : objectMap.keySet()) {
-            if (object.equals("Enemy")) { // We do not want to add enemy objects twice.
+        for (Map.Entry<String, ArrayList<IGameObject>> set : objectMap.entrySet()) {
+            if (set.getKey().equals("Enemy")) { // We do not want to add enemy objects twice.
                 continue;
             }
-            objectList.addAll(objectMap.get(object));
+            objectList.addAll(set.getValue());
         }
         return objectList;
     }

@@ -19,7 +19,7 @@ public class GameContactListener implements ContactListener {
         this.level = level;
 
         contactCategoryBits = new HashMap<>();
-        contactCategoryBits.put("Player", new short[]{Constants.PLAYER_BIT, Constants.PLAYER_PASSING_THROUGH_PLATFORM_BIT});
+        contactCategoryBits.put("Player", new short[]{Constants.PLAYER_BIT});
         contactCategoryBits.put("Coin", new short[]{Constants.COIN_BIT});
         contactCategoryBits.put("Goal", new short[]{Constants.GOAL_BIT});
         contactCategoryBits.put("Goomba", new short[]{Constants.ENEMY_BIT});

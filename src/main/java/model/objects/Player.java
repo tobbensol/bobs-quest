@@ -23,6 +23,8 @@ public class Player extends JumpableObject {
 
     private final ArrayList<TextureRegion> frames;
 
+    public short maskBit = Constants.PLAYER_MASK_BITS;
+
     protected State currentState;
     protected State previousState;
     private boolean frozen = false;
@@ -109,18 +111,10 @@ public class Player extends JumpableObject {
 
     private void handlePlatform() {
         if (body.getLinearVelocity().y > 0.5) {
-            playerCanGoThroughPlatforms(true);
+            changeMaskBit(true, Constants.PLATFORM_BIT);
         }
         if (body.getLinearVelocity().y < -0.5 && !onPlatform && previousState != State.FALLING) {
-            playerCanGoThroughPlatforms(false);
-        }
-    }
-
-    private void playerCanGoThroughPlatforms(boolean value) {
-        if (value) {
-            BodyHelper.changeFilterData(body, Constants.PLAYER_PASSING_THROUGH_PLATFORM_BIT);
-        } else {
-            BodyHelper.changeFilterData(body, Constants.PLAYER_BIT);
+            changeMaskBit(false, Constants.PLATFORM_BIT);
         }
     }
 
@@ -150,7 +144,7 @@ public class Player extends JumpableObject {
             return;
         }
         if (onPlatform) {
-            playerCanGoThroughPlatforms(true);
+            changeMaskBit(true, Constants.PLATFORM_BIT);
         }
         currentState = State.FALLING;
 
@@ -243,6 +237,15 @@ public class Player extends JumpableObject {
         return frozen;
     }
 
+    public void changeMaskBit(boolean filterAway, short bit) {
+        if (filterAway) {
+            maskBit = (short) (maskBit & ~bit);
+        } else {
+            maskBit = (short) (maskBit | bit);
+        }
+        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
+    }
+
     public void setDead() {
         if (previousState == State.DEAD) {
             return;
@@ -263,6 +266,14 @@ public class Player extends JumpableObject {
 
     public void takeDamage(int amount) {
         // Player doesn't take damage if dead
+        changeMaskBit(true, Constants.ENEMY_BIT);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                changeMaskBit(false, Constants.ENEMY_BIT);
+            }
+        }, 0.5f);
         if (currentState == State.DEAD) {
             return;
         }
