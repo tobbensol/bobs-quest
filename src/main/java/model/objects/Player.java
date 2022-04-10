@@ -167,7 +167,10 @@ public class Player extends JumpableObject {
 
         this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
         cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
-        manager.get("audio/sounds/drop.wav", Sound.class).play();
+        if (previousState != State.FALLING) {
+            manager.get("audio/sounds/drop.wav", Sound.class).play();
+        }
+
     }
 
     @Override
