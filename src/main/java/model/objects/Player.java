@@ -111,10 +111,10 @@ public class Player extends JumpableObject {
 
     private void handlePlatform() {
         if (body.getLinearVelocity().y > 0.5) {
-            changeMaskBit(false, Constants.PLATFORM_BIT);
+            changeMaskBit(true, Constants.PLATFORM_BIT);
         }
         if (body.getLinearVelocity().y < -0.5 && !onPlatform && previousState != State.FALLING) {
-            changeMaskBit(true, Constants.PLATFORM_BIT);
+            changeMaskBit(false, Constants.PLATFORM_BIT);
         }
     }
 
