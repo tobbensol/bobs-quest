@@ -163,6 +163,16 @@
     - added a small timer to the jump so that the player can't jump right after they jumped (0.05 seconds)
         
 
+- player jumps high first time after spawning
+  - How to replicate:
+    - Launch game
+    - Press space to enter the game
+    - Press space
+    - Player jumps high, but only the first time
+  - reason:
+    - Unknown
+  - status:
+    - Still a bug
 
 
 ## Manuel Tests
