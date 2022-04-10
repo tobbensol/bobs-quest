@@ -129,7 +129,7 @@ Link til [klassdiagram](src/main/resources/ClassDiagram.uml).
 
 - Statiske analyseverktøy som SpotBugs eller SonarQube kan hjelpe med å finne feil dere ikke tenker på. Hvis dere prøver det, skriv en kort oppsummering av hva dere fant / om det var nyttig.
 
-Vi har sett på SpotBugs, men vi har ikke hatt tid til å se ordentlig på det enda. Vi tenker å se på det i fremtiden.
+Vi har brukt spot-bugs, men noen bugs er litt vanskelige å fikse, vi må se på sonarQube.
 
 - Automatiske tester skal dekke forretningslogikken i systemet (unit-tester). _Coverage_ kan hjelpe med å se hvor mye av koden som dekkes av testene – i Eclipse kan dette gjøres ved å installere _EclEmma_ gjennom Eclipse Marketplace.
 
