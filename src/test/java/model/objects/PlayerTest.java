@@ -163,6 +163,37 @@ public class PlayerTest {
         assertEquals(player.getBody().getAngle(), 0);
     }
 
+    @Test
+    void testMoveWithCollision(){
+        assertEquals(player.getPosition(), new Vector2(0, 0));
+        player.setLeftCollision(true);
+        player.moveHorizontally(false);
+        player.update();
+        doStep();
+        assertEquals(player.getPosition(), new Vector2(0,0));
+        player.moveHorizontally(true);
+        player.update();
+        doStep();
+        assertNotEquals(player.getPosition(), new Vector2(0,0));
+        player.body.setLinearVelocity(new Vector2(0,0));
+        player.setPosition(0,0);
+        assertEquals(player.getPosition(), new Vector2(0, 0));
+        player.setRightCollision(true);
+        player.moveHorizontally(true);
+        player.update();
+        doStep();
+        assertEquals(player.getPosition(), new Vector2(0,0));
+        player.moveHorizontally(false);
+        player.update();
+        doStep();
+        assertEquals(player.getPosition(), new Vector2(0,0));
+        player.setRightCollision(false);
+        player.moveHorizontally(true);
+        player.update();
+        doStep();
+        assertNotEquals(player.getPosition(), new Vector2(0,0));
+    }
+
     private void doStep() {
         world.step(1 / 60f, 6, 2);
     }
