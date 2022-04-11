@@ -14,6 +14,8 @@ public class Floater extends MovableObject implements Enemy {
     private int numMoves;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
+    int steps = 0;
+    int direction = 1;
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
@@ -32,6 +34,13 @@ public class Floater extends MovableObject implements Enemy {
         if (playerNearby) {
             System.out.println(body.getPosition());
             body.applyForceToCenter(new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(X_VELOCITY), true);
+        }
+        else{
+            steps++;
+            if (steps % 200 == 0){
+                direction *= -1;
+            }
+            setPosition(body.getPosition().x, body.getPosition().y + 0.2f * direction / Constants.PPM);
         }
     }
 
