@@ -2,7 +2,6 @@ package model.helper;
 
 public class Constants {
 
-    //TODO: Discuss the PixelsPerMeter constant
     public static final float PPM = 100.0f;
     public static final int TILE_SIZE = 64;
 
