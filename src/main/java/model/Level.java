@@ -42,6 +42,7 @@ public class Level {
         objectMap.put("Goal", new ArrayList<>());
         objectMap.put("Floater", new ArrayList<>());
         objectMap.put("MapEndPoints", new ArrayList<>());
+        objectMap.put("MovingPlatform", new ArrayList<>());
 
         createWorld(levelName);
         createObjects();
