@@ -231,10 +231,6 @@ public class Player extends JumpableObject {
         return getCurrentState() == State.DEAD;
     }
 
-    public boolean getFrozen() {
-        return frozen;
-    }
-
     public void setDead() {
         if (previousState == State.DEAD) {
             return;
@@ -248,7 +244,7 @@ public class Player extends JumpableObject {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                frozen = true;
+                isDestroyed = true;
             }
         }, 1.2f);
     }

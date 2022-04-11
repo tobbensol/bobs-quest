@@ -56,7 +56,7 @@ public class GameModel implements ControllableModel {
 
     private boolean gameOver() {
         for (Player player : getLevel().getGameObjects(Player.class)) {
-            if (!player.getFrozen()) {
+            if (!player.isDestroyed()) {
                 return false;
             }
         }
