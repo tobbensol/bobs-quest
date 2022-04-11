@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import controls.*;
 import launcher.Boot;
+import model.helper.AudioHelper;
 import model.objects.IGameObject;
 import model.objects.Player;
 import view.*;
@@ -30,7 +31,7 @@ public class GameModel implements ControllableModel {
     private boolean initializeLevel = true;
     private GameCamera camera;
 
-    private AssetManager manager;
+    private AudioHelper audioHelper;
     private Music music;
 
     public GameModel() {
@@ -57,15 +58,7 @@ public class GameModel implements ControllableModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
 
-        manager = new AssetManager();
-        manager.load("audio/music/music.mp3", Music.class);
-        manager.load("audio/sounds/gameover.wav", Sound.class);
-        manager.finishLoading();
-
-        music = manager.get("audio/music/music.mp3", Music.class);
-        music.setLooping(true);
-        music.play();
-
+        audioHelper = new AudioHelper();
     }
 
     private boolean gameOver() {
@@ -74,7 +67,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
-        manager.get("audio/sounds/gameover.wav", Sound.class).play();
+        audioHelper.getSoundEffect("gameover").play();
         return true;
     }
 
@@ -90,6 +83,7 @@ public class GameModel implements ControllableModel {
     public void update() {
         if (initializeLevel) {
             level = createLevel();
+            music = level.getLevelMusic();
             createCamera();
             initializeLevel = false;
             pauseGame();
@@ -98,9 +92,9 @@ public class GameModel implements ControllableModel {
         gameController.inputListener();
 
         if (isPaused()) {
-            music.pause();
             getLevel().getHud().pause();
             getLevel().updateHUD();
+            music.pause();
             return;
         } else {
             getLevel().getHud().resume();
@@ -108,18 +102,21 @@ public class GameModel implements ControllableModel {
         }
 
         if (getLevel().isCompleted()) {
+            music.stop();
             state = GameState.NEXT_LEVEL;
             changeScreen();
             restart();
             pauseGame();
+
         }
         if (gameOver()) {
             //TODO: Add some delay after all players are dead, an animation for 3 sec or something
+            music.stop();
             state = GameState.GAME_OVER;
             changeScreen();
             restart();
             pauseGame();
-            music.pause();
+
         }
 
         getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);
@@ -153,6 +150,7 @@ public class GameModel implements ControllableModel {
             levelNR++;
         }
         level = createLevel();
+        music = level.getLevelMusic();
         pauseGame();
     }
 
@@ -222,5 +220,9 @@ public class GameModel implements ControllableModel {
 
     public int getNumControllers() {
         return numControllers;
+    }
+
+    public AudioHelper getAudioHelper() {
+        return audioHelper;
     }
 }

@@ -38,9 +38,6 @@ public class Player extends JumpableObject {
 
     private final Vector2 cumulativeForces = new Vector2(0, 0);
 
-    private AssetManager manager;
-
-
     private int hp;
 
     public Player(String name, Level level, float x, float y) {
@@ -57,11 +54,6 @@ public class Player extends JumpableObject {
             frames.add(new TextureRegion(getTexture(), i * Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
 
-        manager = new AssetManager();
-        manager.load("audio/sounds/drop.wav", Sound.class);
-        manager.load("audio/sounds/hit.wav", Sound.class);
-        manager.load("audio/sounds/jump.wav", Sound.class);
-        manager.finishLoading();
     }
 
     /**
@@ -146,7 +138,7 @@ public class Player extends JumpableObject {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
-            manager.get("audio/sounds/jump.wav", Sound.class).play();
+            level.getModel().getAudioHelper().getSoundEffect("jump").play();
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -168,7 +160,7 @@ public class Player extends JumpableObject {
         this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
         cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
         if (previousState != State.FALLING) {
-            manager.get("audio/sounds/drop.wav", Sound.class).play();
+            level.getModel().getAudioHelper().getSoundEffect("drop").play();
         }
 
     }
@@ -286,8 +278,7 @@ public class Player extends JumpableObject {
             setDead();
         }
         System.out.println(this + ": " + hp);
-
-        manager.get("audio/sounds/hit.wav", Sound.class).play();
+        level.getModel().getAudioHelper().getSoundEffect("hit").play();
     }
 
     public void increaseHealth(int amount) {
