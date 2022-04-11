@@ -44,6 +44,7 @@ public interface IGameObject {
      */
     String toString();
 
+    //TODO add documentation
     /**
      *
      * @param filterAway
