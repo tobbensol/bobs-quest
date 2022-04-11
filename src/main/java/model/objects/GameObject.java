@@ -15,7 +15,7 @@ public abstract class GameObject implements IGameObject {
     protected Body body;
     protected float x, y, width, height;
     protected Level level;
-    protected boolean facingRight;
+    protected boolean facingRight, isDestroyed;
     protected short bit, maskBits;
     Texture texture;
     String texturePath;
@@ -66,5 +66,9 @@ public abstract class GameObject implements IGameObject {
             maskBits = (short) (maskBits | bit);
         }
         BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBits);
+    }
+
+    public boolean isDestroyed(){
+        return isDestroyed;
     }
 }
