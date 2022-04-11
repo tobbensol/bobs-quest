@@ -196,21 +196,21 @@ public class PlayerTest {
 
     @Test
     void testMaskbits(){
-        assertEquals(player.maskBit, 125);
+        assertEquals(player.maskBits, 125);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(player.maskBit, 125-8);
+        assertEquals(player.maskBits, 125-8);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(player.maskBit, 125-8);
+        assertEquals(player.maskBits, 125-8);
         player.changeMaskBit(true, Constants.PLATFORM_BIT);
-        assertEquals(player.maskBit, 125-8-32);
+        assertEquals(player.maskBits, 125-8-32);
         player.changeMaskBit(true, Constants.PLAYER_BIT);
-        assertEquals(player.maskBit, 125-8-32);
+        assertEquals(player.maskBits, 125-8-32);
         player.changeMaskBit(false, Constants.DEFAULT_BIT);
-        assertEquals(player.maskBit, 125-8-32);
+        assertEquals(player.maskBits, 125-8-32);
         player.changeMaskBit(false, Constants.PLAYER_BIT);
-        assertEquals(player.maskBit, 125-8-32+2);
+        assertEquals(player.maskBits, 125-8-32+2);
         player.changeMaskBit(false, Constants.PLATFORM_BIT);
-        assertEquals(player.maskBit, 125-8+2);
+        assertEquals(player.maskBits, 125-8+2);
     }
 
     private void doStep() {

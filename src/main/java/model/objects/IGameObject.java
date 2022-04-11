@@ -43,4 +43,11 @@ public interface IGameObject {
      * @return - Returns the name of the object.
      */
     String toString();
+
+    /**
+     *
+     * @param filterAway
+     * @param bit
+     */
+    void changeMaskBit(boolean filterAway, short bit);
 }
