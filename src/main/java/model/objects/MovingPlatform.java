@@ -33,7 +33,7 @@ public class MovingPlatform extends DynamicObject{
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, (body.getPosition().x - 1.3f)  * Constants.PPM, (body.getPosition().y - 0.5f) * Constants.PPM, texture.getWidth(), texture.getHeight());
+        batch.draw(texture, body.getPosition().x * Constants.PPM - Math.round((float) texture.getWidth()/2), body.getPosition().y * Constants.PPM - Math.round((float) texture.getHeight()/2), texture.getWidth(), texture.getHeight());
     }
 
 }
