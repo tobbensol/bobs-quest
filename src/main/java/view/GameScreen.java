@@ -68,8 +68,7 @@ public class GameScreen implements Screen {
 
         for (IGameObject object : gameModel.getLevel().getGameObjects()) {
             // TODO: Add isDestroyed() for all GameObjects
-            if (object instanceof Coin) {
-                Coin coin = (Coin) object;
+            if (object instanceof Coin coin) {
                 if (coin.isDestroyed()) {
                     continue;
                 }

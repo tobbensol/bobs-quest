@@ -25,8 +25,6 @@ public class Player extends JumpableObject {
 
     private final ArrayList<TextureRegion> frames;
 
-    public short maskBit = Constants.PLAYER_MASK_BITS;
-
     protected State currentState;
     protected State previousState;
     private boolean frozen = false;
@@ -242,15 +240,6 @@ public class Player extends JumpableObject {
 
     public boolean getFrozen() {
         return frozen;
-    }
-
-    public void changeMaskBit(boolean filterAway, short bit) {
-        if (filterAway) {
-            maskBit = (short) (maskBit & ~bit);
-        } else {
-            maskBit = (short) (maskBit | bit);
-        }
-        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBit);
     }
 
     public void setDead() {

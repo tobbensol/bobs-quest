@@ -16,6 +16,7 @@ public abstract class GameObject implements IGameObject {
     protected float x, y, width, height;
     protected Level level;
     protected boolean facingRight;
+    protected short bit, maskBits;
     Texture texture;
     String texturePath;
 
@@ -28,6 +29,8 @@ public abstract class GameObject implements IGameObject {
         this.height = height;
         this.body = BodyHelper.createObjectBody(x, y, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
+        this.bit = categoryBits;
+        this.maskBits = maskBits;
     }
 
     public abstract void update();
@@ -55,4 +58,13 @@ public abstract class GameObject implements IGameObject {
         return texture;
     }
 
+    @Override
+    public void changeMaskBit(boolean filterAway, short bit){
+        if (filterAway) {
+            maskBits = (short) (maskBits & ~bit);
+        } else {
+            maskBits = (short) (maskBits | bit);
+        }
+        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBits);
+    }
 }

@@ -65,7 +65,7 @@ public class Level {
         for (Map.Entry<String, ArrayList<IGameObject>> set: objectMap.entrySet()) {
             if (set.getKey().equalsIgnoreCase("Player")) {
                 List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints(set.getKey());
-                for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) { // TODO: Might produce IndexOutOfBoundsException
+                for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) {
                     set.getValue().add(factory.create(set.getKey(), spawnPoints.get(i).x, spawnPoints.get(i).y));
                 }
             } else {
