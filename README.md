@@ -53,3 +53,7 @@ This project is created by:
 Additional credits:
 - Tileset:
     - Diego del Solar/"Shackhal" for [Multi_Platformer_Tileset_v2](https://shackhal.itch.io/multi-platformer-tileset)
+- Music:
+  - Manuel Bolaños Gómez "CodeManu" (CC-BY 3.0) for [OpenGameArt.Org]("https://opengameart.org/content/platformer-game-music-pack")
+- Sound-effects:
+  - TODO: ADD licences

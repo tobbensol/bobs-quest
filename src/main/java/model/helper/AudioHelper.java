@@ -24,7 +24,6 @@ public class AudioHelper {
     }
 
     private void loadMusic() {
-        assetManager.load("audio/music/music.mp3", Music.class);
         assetManager.load("audio/music/Grasslands Theme.mp3", Music.class);
         assetManager.load("audio/music/Dungeon Theme.mp3", Music.class);
         assetManager.load("audio/music/Boss Theme.mp3", Music.class);
@@ -68,7 +67,7 @@ public class AudioHelper {
         if (levelMusic.containsKey(level)) {
             return levelMusic.get(level);
         } else {
-            return getMusic("music"); // Default music if level does not have specified music.
+            return getMusic("Intro Theme"); // Default music if level does not have specified music.
             //throw new IllegalArgumentException("This level does not have any music"); //TODO: empty music or standard music?
         }
     }
