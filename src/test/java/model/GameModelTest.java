@@ -21,6 +21,7 @@ public class GameModelTest {
     private GameModel model;
     private Level level;
     private World world;
+    private Player player;
 
     @BeforeEach
     void setup() {
@@ -107,7 +108,7 @@ public class GameModelTest {
     }
 
     @Test
-    void testChangeScreen() { // Test: a.method() -> b.setField(new c). Cannot initialize c
+    void testChangeScreen() {
         Boot.INSTANCE = mock(Boot.class);
         doNothing().when(Boot.INSTANCE).setScreen(any(Screen.class));
 
@@ -115,19 +116,12 @@ public class GameModelTest {
         assertEquals(GameState.STARTUP, model.getState());
 //        model.changeScreen();
         fail();
+        // TODO: Find out how to test: a.method() -> b.setField(new c). Cannot initialize c
     }
 
     @Test
     void testWhenGameOver() throws InterruptedException {
-        Player player = new Player(level, 0, 0);
-        List<Player> players = new ArrayList<>();
-        players.add(player);
-        when(level.getGameObjects(Player.class)).thenReturn(players);
-
-        Hud hud = mock(Hud.class);
-        when(level.getHud()).thenReturn(hud);
-        when(level.isCompleted()).thenReturn(false);
-        doNothing().when(model).changeScreen();
+        stubUpdateModel();
 
         model.update();
         model.resumeGame();
@@ -158,8 +152,41 @@ public class GameModelTest {
 
     @Test
     void testWhenLevelCompleted() {
-        fail();
-        // TODO
+        stubUpdateModel();
+
+        model.update();
+        model.resumeGame();
+
+        assertFalse(model.isPaused());
+        assertEquals(GameState.STARTUP, model.getState());
+
+        model.setState(GameState.ACTIVE);
+        model.update();
+
+        verify(model, never()).changeScreen();
+        verify(model, never()).restart();
+        assertFalse(model.isPaused());
+        assertEquals(GameState.ACTIVE, model.getState());
+
+        when(level.isCompleted()).thenReturn(true);
+        model.update();
+
+        verify(model, times(1)).changeScreen();
+        verify(model, times(1)).restart();
+        assertTrue(model.isPaused());
+        assertEquals(GameState.NEXT_LEVEL, model.getState());
+    }
+
+    private void stubUpdateModel() {
+        player = new Player(level, 0, 0);
+        List<Player> players = new ArrayList<>();
+        players.add(player);
+        when(level.getGameObjects(Player.class)).thenReturn(players);
+
+        Hud hud = mock(Hud.class);
+        when(level.getHud()).thenReturn(hud);
+        when(level.isCompleted()).thenReturn(false);
+        doNothing().when(model).changeScreen();
     }
 
 }
