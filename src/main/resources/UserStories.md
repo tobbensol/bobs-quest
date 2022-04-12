@@ -329,3 +329,18 @@
     - Legge til filter i HUD klassen som holdes skjult så lenge spillet ikke er satt til pause.
     - Legge til funksjonalitet i GameController klassen som sjekker om tast P er trykket inn (og i en lovlig tilstand) og implementer logikk i GameModel for å håndtere dette.
     - Visuelt se at tekst og filter er tydelige nok til at en spiller vet at spillet er satt til pause og hvordan man kan fortsette spillet.
+
+
+### Legge til musikk og lyd-effekter:
+
+- Som spiller ønsker jeg at spillet jeg spiller inneholder musikk og lyd-effekter slik at spillet føles mer livlig ut.
+  - Akseptansekriterier:
+    - Spillet skal kunne ha forskjellig musikk fra "level" til "level".
+    - Musikken skal settes på pause når spillet settes på pause.
+    - Musikken skal starte på nytt om "gameover" eller "restart".
+    - Lydeffekter til forskjellige handlinger i spillet som: hoppe, plukke opp mynter, drepe fiender, gameover osv.
+    - Musikken og lyd-effektene skal lastes inn på en effektiv måte. Unngå flere innlastinger av samme filene.
+  - Arbeidsoppgaver:
+    - Lage en klasse som tar hånd om innlasting av filer og gjør det lett for andre klasser å hente ut musikk og lyd-effekter.
+    - Finne musikk og lyd-effekter til prosjektet.
+    - Legge til lisenser til filene man har brukt.
