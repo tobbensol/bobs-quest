@@ -144,4 +144,12 @@ public class BodyHelper {
         }
     }
 
+    public static short changeMaskBit(boolean filterAway, short bit, short maskBits){
+        if (filterAway) {
+            maskBits = (short) (maskBits & ~bit);
+        } else {
+            maskBits = (short) (maskBits | bit);
+        }
+        return maskBits;
+    }
 }
