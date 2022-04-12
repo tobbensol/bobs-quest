@@ -9,8 +9,10 @@ public interface ControllableModel {
     /**
      * This method should restart the game. If the level is completed,
      * it should start the next level and reset the score.
+     *
+     * @return true if restarting at next level
      */
-    void restart();
+    boolean restart();
 
     /**
      * @return returns the current GameState from the model.

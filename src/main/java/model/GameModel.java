@@ -19,7 +19,7 @@ public class GameModel implements ControllableModel {
     private final List<Controller> controllers;
     private final int numControllers;
     private final GameController gameController;
-    Level level;
+    private Level level;
     private boolean reload = false;
     private int levelNR = 0;
     private int numPlayers;
@@ -91,16 +91,14 @@ public class GameModel implements ControllableModel {
         }
 
         if (getLevel().isCompleted()) {
-            state = GameState.NEXT_LEVEL;
+            setState(GameState.NEXT_LEVEL); // TODO: Extract contents of if to own method (same for level completed and game over)
             changeScreen();
             restart();
-            pauseGame();
         }
         if (gameOver()) {
-            state = GameState.GAME_OVER;
+            setState(GameState.GAME_OVER);
             changeScreen();
             restart();
-            pauseGame();
         }
 
         getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);
@@ -129,12 +127,15 @@ public class GameModel implements ControllableModel {
     }
 
     @Override
-    public void restart() {
+    public boolean restart() {
+        boolean nextLevel = false;
         if (getLevel().isCompleted()) {
             levelNR++;
+            nextLevel = true;
         }
         level = createLevel();
         pauseGame();
+        return nextLevel;
     }
 
     @Override
@@ -183,7 +184,6 @@ public class GameModel implements ControllableModel {
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
         restart();
-        pauseGame();
     }
 
     @Override
