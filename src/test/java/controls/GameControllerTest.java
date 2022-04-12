@@ -9,6 +9,7 @@ import model.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GameControllerTest {
@@ -18,15 +19,16 @@ public class GameControllerTest {
 
     @BeforeEach
     void setup() {
-        model = mock(GameModel.class);
+        model = spy(new GameModel());
+        doNothing().when(model).changeScreen();
+        doNothing().when(model).restart();
+
         controller = new GameController(model);
         Gdx.input = spy(new MockInput());
     }
 
     @Test
     void testStartup() {
-        when(model.getState()).thenReturn(GameState.STARTUP);
-
         int[] keyCodes = new int[] {Input.Keys.NUM_1, Input.Keys.NUM_2, Input.Keys.NUM_3, Input.Keys.SPACE};
         for (int key : keyCodes) {
             when(Gdx.input.isKeyPressed(key)).thenReturn(true);
@@ -34,6 +36,10 @@ public class GameControllerTest {
 
         verifyNoInteractions(model);
         verifyNoInteractions(Gdx.input);
+
+        assertEquals(1, model.getNumPlayers());
+        assertEquals(GameState.STARTUP, model.getState());
+        assertFalse(model.isPaused());
 
         controller.inputListener();
 
@@ -44,6 +50,10 @@ public class GameControllerTest {
         verify(model, times(1)).setState(GameState.ACTIVE);
         verify(model, times(1)).changeScreen();
         verify(model, times(1)).resumeGame();
+
+        assertEquals(3, model.getNumPlayers());
+        assertEquals(GameState.ACTIVE, model.getState());
+        assertFalse(model.isPaused());
     }
 
     @Test
@@ -61,57 +71,55 @@ public class GameControllerTest {
 
     @Test
     void testActiveGame() {
-        when(model.getState()).thenReturn(GameState.ACTIVE);
-
-        verifyNoInteractions(model);
         verifyNoInteractions(Gdx.input);
 
         when(Gdx.input.isKeyPressed(Input.Keys.P)).thenReturn(true);
         when(Gdx.input.isKeyPressed(Input.Keys.R)).thenReturn(true);
-        when(model.isPaused()).thenReturn(true);
+        model.setState(GameState.ACTIVE);
+        model.pauseGame();
         controller.inputListener();
 
         verify(Gdx.input, times(1)).isKeyPressed(Input.Keys.P);
-        verify(model, times(2)).getState();
-        verify(model, times(1)).isPaused();
         verify(model, times(1)).resumeGame();
         verify(Gdx.input, times(1)).isKeyPressed(Input.Keys.R);
         verify(model, times(1)).restart();
+        assertFalse(model.isPaused());
 
         when(Gdx.input.isKeyPressed(Input.Keys.P)).thenReturn(false);
         controller.inputListener();
 
         when(Gdx.input.isKeyPressed(Input.Keys.P)).thenReturn(true);
-        when(model.isPaused()).thenReturn(false);
+        model.resumeGame();
         controller.inputListener();
 
         verify(Gdx.input, times(3)).isKeyPressed(Input.Keys.P);
-        verify(model, times(5)).getState();
-        verify(model, times(2)).isPaused();
-        verify(model, times(1)).resumeGame();
-        verify(model, times(1)).pauseGame();
+        verify(model, times(2)).resumeGame();
+        verify(model, times(2)).pauseGame();
+        assertTrue(model.isPaused());
     }
 
     @Test
     void testToActiveNotStartup() {
-        when(model.getState()).thenReturn(GameState.GAME_OVER);
+        model.setState(GameState.ACTIVE);
+        model.setState(GameState.GAME_OVER);
 
-        verifyNoInteractions(model);
         verifyNoInteractions(Gdx.input);
 
         when(Gdx.input.isKeyPressed(Input.Keys.SPACE)).thenReturn(true);
         controller.inputListener();
 
-        verify(model, times(1)).setState(GameState.ACTIVE);
+        verify(model, times(2)).setState(GameState.ACTIVE);
         verify(model, times(1)).changeScreen();
         verify(model, times(1)).resumeGame();
+        assertEquals(GameState.ACTIVE, model.getState());
 
-        when(model.getState()).thenReturn(GameState.GAME_OVER);
+        model.setState(GameState.GAME_OVER);
         controller.inputListener();
 
-        verify(model, times(2)).setState(GameState.ACTIVE);
+        verify(model, times(3)).setState(GameState.ACTIVE);
         verify(model, times(2)).changeScreen();
         verify(model, times(2)).resumeGame();
+        assertEquals(GameState.ACTIVE, model.getState());
     }
 
 }
