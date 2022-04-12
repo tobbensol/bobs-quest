@@ -1,5 +1,7 @@
 package model.objects;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -130,6 +132,7 @@ public class Player extends JumpableObject {
             cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
             updateGrouned();
+            level.getModel().getAudioHelper().getSoundEffect("jump").play();
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -150,6 +153,10 @@ public class Player extends JumpableObject {
 
         this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
         cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
+        if (previousState != State.FALLING) {
+            level.getModel().getAudioHelper().getSoundEffect("drop").play();
+        }
+
     }
 
     @Override
@@ -282,6 +289,7 @@ public class Player extends JumpableObject {
             setDead();
         }
         System.out.println(this + ": " + hp);
+        level.getModel().getAudioHelper().getSoundEffect("hit").play();
     }
 
     public void increaseHealth(int amount) {

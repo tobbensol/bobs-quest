@@ -2,9 +2,12 @@ package model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import controls.*;
 import launcher.Boot;
-import model.objects.GameObject;
+import model.helper.AudioHelper;
 import model.objects.IGameObject;
 import model.objects.Player;
 import view.*;
@@ -27,6 +30,9 @@ public class GameModel implements ControllableModel {
     private boolean pause = false;
     private boolean initializeLevel = true;
     private GameCamera camera;
+
+    private AudioHelper audioHelper;
+    private Music music;
 
     public GameModel() {
         state = GameState.STARTUP;
@@ -52,6 +58,7 @@ public class GameModel implements ControllableModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
 
+        audioHelper = new AudioHelper();
     }
 
     private boolean gameOver() {
@@ -60,6 +67,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
+        audioHelper.getSoundEffect("gameover").play();
         return true;
     }
 
@@ -75,6 +83,7 @@ public class GameModel implements ControllableModel {
     public void update() {
         if (initializeLevel) {
             level = createLevel();
+            music = level.getLevelMusic();
             createCamera();
             initializeLevel = false;
             pauseGame();
@@ -85,18 +94,25 @@ public class GameModel implements ControllableModel {
         if (isPaused()) {
             getLevel().getHud().pause();
             getLevel().updateHUD();
+            music.pause();
             return;
         } else {
             getLevel().getHud().resume();
+            music.play();
         }
 
         if (getLevel().isCompleted()) {
+            music.stop();
+            music.dispose();
+            audioHelper.getSoundEffect("orchestra").play();
             state = GameState.NEXT_LEVEL;
             changeScreen();
             restart();
             pauseGame();
         }
         if (gameOver()) {
+            music.stop();
+            music.dispose();
             state = GameState.GAME_OVER;
             changeScreen();
             restart();
@@ -134,6 +150,7 @@ public class GameModel implements ControllableModel {
             levelNR++;
         }
         level = createLevel();
+        music = level.getLevelMusic();
         pauseGame();
     }
 
@@ -203,5 +220,9 @@ public class GameModel implements ControllableModel {
 
     public int getNumControllers() {
         return numControllers;
+    }
+
+    public AudioHelper getAudioHelper() {
+        return audioHelper;
     }
 }

@@ -1,9 +1,11 @@
 package model;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import model.helper.AudioHelper;
 import model.helper.TiledMapHelper;
 import model.objects.GameObjectFactory;
 import model.objects.IGameObject;
@@ -28,6 +30,8 @@ public class Level {
     private Vector2 topLeft;
     private Vector2 bottomRight;
 
+    private final Music levelMusic;
+
 
     public Level(String levelName, GameModel model) {
         this.levelName = camelToSentence(levelName);
@@ -47,6 +51,8 @@ public class Level {
         createObjects();
         createHUD();
         parseMapEndPoints();
+
+        levelMusic = model.getAudioHelper().getLevelMusic(levelName);
     }
 
     private void createWorld(String level) {
@@ -158,6 +164,14 @@ public class Level {
             return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
         }
         return null;
+    }
+
+    public GameModel getModel() {
+        return model;
+    }
+
+    public Music getLevelMusic() {
+        return levelMusic;
     }
 
     @Override
