@@ -21,7 +21,7 @@ public class GameControllerTest {
     void setup() {
         model = spy(new GameModel());
         doNothing().when(model).changeScreen();
-        doNothing().when(model).restart();
+        doReturn(false).when(model).restart();
 
         controller = new GameController(model);
         Gdx.input = spy(new MockInput());
