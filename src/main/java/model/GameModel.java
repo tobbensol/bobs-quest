@@ -103,6 +103,8 @@ public class GameModel implements ControllableModel {
 
         if (getLevel().isCompleted()) {
             music.stop();
+            music.dispose();
+            audioHelper.getSoundEffect("orchestra").play();
             state = GameState.NEXT_LEVEL;
             changeScreen();
             restart();
@@ -112,6 +114,7 @@ public class GameModel implements ControllableModel {
         if (gameOver()) {
             //TODO: Add some delay after all players are dead, an animation for 3 sec or something
             music.stop();
+            music.dispose();
             state = GameState.GAME_OVER;
             changeScreen();
             restart();

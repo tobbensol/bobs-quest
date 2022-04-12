@@ -41,6 +41,8 @@ public class AudioHelper {
         assetManager.load("audio/sounds/drop.wav", Sound.class);
         assetManager.load("audio/sounds/hit.wav", Sound.class);
         assetManager.load("audio/sounds/jump.wav", Sound.class);
+        assetManager.load("audio/sounds/chipquest.wav", Sound.class);
+        assetManager.load("audio/sounds/orchestra.wav", Sound.class);
 
     }
 
