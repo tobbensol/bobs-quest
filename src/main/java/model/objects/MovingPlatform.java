@@ -8,11 +8,11 @@ import model.Level;
 import model.helper.Constants;
 import model.helper.ContactType;
 
-public class MovingPlatform extends DynamicObject{
+public class MovingPlatform extends KinematicObject{
     int steps = 0;
     float direction = 1.2f;
     public MovingPlatform(String name, Level level, float x, float y) {
-        super(name, level, 4 * Constants.TILE_SIZE, 0.1f * Constants.PPM, x, y, 1, ContactType.PLATFORM, Constants.PLATFORM_BIT, Constants.PLATFORM_MASK_BITS, true);
+        super(name, level, 4 * Constants.TILE_SIZE, 0.1f * Constants.PPM, x, y, ContactType.PLATFORM, Constants.PLATFORM_BIT, Constants.PLATFORM_MASK_BITS, false, true);
         body.setType(BodyDef.BodyType.KinematicBody);
         texture = new Texture("Multi_Platformer_Tileset_v2/GrassLand/Background64/GrassLand_Cloud_2.png");
     }
