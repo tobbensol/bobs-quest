@@ -57,7 +57,7 @@ public class GameModelTest {
         model.resumeGame();
 
         assertFalse(model.isPaused());
-        assertFalse(player.getFrozen());
+        assertFalse(player.isDestroyed());
         assertEquals(GameState.STARTUP, model.getState());
 
         model.setState(GameState.ACTIVE);
@@ -70,7 +70,7 @@ public class GameModelTest {
 
         player.setDead();
         Thread.sleep(2000);
-        assertTrue(player.getFrozen());
+        assertTrue(player.isDestroyed());
 
         model.update();
 
