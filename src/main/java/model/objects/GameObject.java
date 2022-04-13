@@ -15,7 +15,7 @@ public abstract class GameObject implements IGameObject {
     protected Body body;
     protected float x, y, width, height;
     protected Level level;
-    protected boolean facingRight;
+    protected boolean facingRight, isDestroyed;
     protected short bit, maskBits;
     Texture texture;
     String texturePath;
@@ -59,12 +59,12 @@ public abstract class GameObject implements IGameObject {
     }
 
     @Override
-    public void changeMaskBit(boolean filterAway, short bit){
-        if (filterAway) {
-            maskBits = (short) (maskBits & ~bit);
-        } else {
-            maskBits = (short) (maskBits | bit);
-        }
-        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBits);
+    public void changeMaskBit(boolean filterAway, short filterBit){
+        short newMaskBit = BodyHelper.changeMaskBit(filterAway, filterBit, maskBits);
+        BodyHelper.changeFilterData(body, bit, newMaskBit);
+    }
+
+    public boolean isDestroyed(){
+        return isDestroyed;
     }
 }

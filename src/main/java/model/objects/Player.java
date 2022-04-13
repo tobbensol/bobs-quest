@@ -238,10 +238,6 @@ public class Player extends JumpableObject {
         return getCurrentState() == State.DEAD;
     }
 
-    public boolean getFrozen() {
-        return frozen;
-    }
-
     public void setDead() {
         if (previousState == State.DEAD) {
             return;
@@ -249,15 +245,17 @@ public class Player extends JumpableObject {
         hp = -1;
         previousState = currentState;
         currentState = State.DEAD;
-        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
+        maskBits = Constants.DESTROYED_MASK_BITS;
+        bit = Constants.DESTROYED_BIT;
+        BodyHelper.changeFilterData(body, bit, maskBits);
         // Death "animation"
         body.setLinearVelocity(0, 5);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                frozen = true;
+                isDestroyed = true;
             }
-        }, 1.2f);
+        }, 1.5f);
     }
 
     public void takeDamage(int amount) {
