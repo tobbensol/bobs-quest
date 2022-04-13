@@ -2,10 +2,12 @@ package model;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import launcher.Boot;
+import model.helper.AudioHelper;
 import model.objects.Goomba;
 import model.objects.IGameObject;
 import model.objects.Player;
@@ -28,6 +30,7 @@ public class GameModelTest {
     private Level level;
     private World world;
     private Player player;
+    private Music music;
 
     @BeforeEach
     void setup() {
@@ -36,7 +39,7 @@ public class GameModelTest {
             }
         });
         world = new World(new Vector2(0, 0), false);
-
+        music = mock(Music.class);
         level = mock(Level.class);
         when(level.getWorld()).thenReturn(world);
 
@@ -106,13 +109,13 @@ public class GameModelTest {
 
     @Test
     void testUpdateObjects() {
-        stubGraphics();
+        stubUpdateModel();
 
         List<IGameObject> objects = new ArrayList<>();
         Goomba goomba = mock(Goomba.class);
         objects.add(goomba);
         when(level.getGameObjects()).thenReturn(objects);
-        doNothing().when(model).setState(any(GameState.class));
+//        doNothing().when(model).setState(any(GameState.class));
 
         verifyNoInteractions(goomba);
 
@@ -130,6 +133,9 @@ public class GameModelTest {
         when(level.getGameObjects(Player.class)).thenReturn(players);
 
         stubGraphics();
+
+        when(level.getLevelMusic()).thenReturn(music);
+        doNothing().when(music).pause();
     }
 
     private void stubGraphics() {
@@ -242,6 +248,18 @@ public class GameModelTest {
         try (MockedConstruction<GameCamera> mockedConstruction = mockConstruction(GameCamera.class)) {
             model.createCamera();
             MockingDetails mockingDetails = new DefaultMockingDetails(model.getCamera());
+            assertTrue(mockingDetails.isMock());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testCreateAudioHelper() {
+        stubUpdateModel();
+        try (MockedConstruction<AudioHelper> mockedConstruction = mockConstruction(AudioHelper.class)) {
+            model.update();
+            MockingDetails mockingDetails = new DefaultMockingDetails(model.getAudioHelper());
             assertTrue(mockingDetails.isMock());
         } catch (Exception e) {
             fail();
