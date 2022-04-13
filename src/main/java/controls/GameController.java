@@ -7,7 +7,7 @@ import model.GameState;
 
 public class GameController {
     private final ControllableModel model;
-    private boolean pauseHelper;
+    private boolean pauseHelper = true; // If initialized with false, cannot pause on first iteration of inputListener()
 
     public GameController(ControllableModel model) {
         this.model = model;
