@@ -57,8 +57,6 @@ public class GameModel implements ControllableModel {
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
-
-        audioHelper = new AudioHelper();
     }
 
     private boolean gameOver() {
@@ -82,6 +80,7 @@ public class GameModel implements ControllableModel {
 
     public void update() {
         if (initializeLevel) {
+            audioHelper = new AudioHelper();
             level = createLevel();
             music = level.getLevelMusic();
             createCamera();
