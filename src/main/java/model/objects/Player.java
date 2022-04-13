@@ -199,7 +199,6 @@ public class Player extends JumpableObject {
         } else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
             tempState = State.WALKING;
         }
-        System.out.println(Math.round(body.getLinearVelocity().y));
         currentState = tempState;
     }
 
