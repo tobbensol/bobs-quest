@@ -1,6 +1,7 @@
 package model.objects;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
@@ -8,7 +9,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import model.GameContactListener;
+import model.GameModel;
 import model.Level;
+import model.helper.AudioHelper;
 import model.helper.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,14 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PlayerTest {
 
     private Player player;
     private World world;
     private Level level;
+    private GameModel model;
+    private AudioHelper audioHelper;
+    private Sound sound;
 
     @BeforeEach
     void setup() {
@@ -35,7 +40,14 @@ public class PlayerTest {
 
         world = new World(new Vector2(0, 0), false);
         level = mock(Level.class);
+        model = mock(GameModel.class);
+        audioHelper = mock(AudioHelper.class);
+        sound = mock(Sound.class);
         when(level.getWorld()).thenReturn(world);
+        when(level.getModel()).thenReturn(model);
+        when(model.getAudioHelper()).thenReturn(audioHelper);
+        when(audioHelper.getSoundEffect(anyString())).thenReturn(sound);
+        doReturn(-1L).when(sound).play();
         player = new Player(level, 0, 0);
 
         List<Player> players = new ArrayList<>();
