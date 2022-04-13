@@ -190,17 +190,16 @@ public class Player extends JumpableObject {
         State tempState = State.STANDING;
         if (previousState == State.DEAD) {
             tempState = State.DEAD;
-        } else if (body.getLinearVelocity().y < -0.5 && grounded) {
+        } else if (body.getLinearVelocity().y < -1.5f && grounded) {
             tempState = State.SLIDING;
-        } else if (body.getLinearVelocity().y > 0.5 && grounded) {
-            tempState = State.WALKING;
         } else if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             tempState = State.JUMPING;
-        } else if (body.getLinearVelocity().y < -0.5) {
+        } else if (body.getLinearVelocity().y < - 1.5f) {
             tempState = State.FALLING;
         } else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
             tempState = State.WALKING;
         }
+        System.out.println(Math.round(body.getLinearVelocity().y));
         currentState = tempState;
     }
 
