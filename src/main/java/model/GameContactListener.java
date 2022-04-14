@@ -27,6 +27,7 @@ public class GameContactListener implements ContactListener {
         contactCategoryBits.put("Death", new short[]{Constants.DEFAULT_BIT});
         contactCategoryBits.put("MapEndPoints", new short[]{Constants.CAMERA_WALL_BIT});
         contactCategoryBits.put("Enemy", new short[]{Constants.ENEMY_BIT});
+        contactCategoryBits.put("MovingPlatform", new short[]{Constants.PLATFORM_BIT});
     }
 
     @Override
