@@ -2,9 +2,7 @@ package model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import controls.*;
 import launcher.Boot;
 import model.helper.AudioHelper;
@@ -26,16 +24,22 @@ public class GameModel implements ControllableModel {
     private boolean reload = false;
     private int levelNR = 0;
     private int numPlayers;
-    private GameState state;
+
+    private GameState currentState;
+    private GameState previousState;
+
     private boolean pause = false;
     private boolean initializeLevel = true;
     private GameCamera camera;
 
     private AudioHelper audioHelper;
     private Music music;
+    private float musicVolume;
+    private float soundEffectsvolume;
 
     public GameModel() {
-        state = GameState.STARTUP;
+        currentState = GameState.STARTUP;
+        previousState = GameState.STARTUP;
         this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
@@ -59,6 +63,8 @@ public class GameModel implements ControllableModel {
         numControllers = controllers.size();
 
         audioHelper = new AudioHelper();
+        musicVolume = 0.5f;
+        soundEffectsvolume = 0.5f;
     }
 
     private boolean gameOver() {
@@ -67,7 +73,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
-        audioHelper.getSoundEffect("gameover").play();
+        audioHelper.getSoundEffect("gameover").play(soundEffectsvolume);
         return true;
     }
 
@@ -81,6 +87,7 @@ public class GameModel implements ControllableModel {
     }
 
     public void update() {
+
         if (initializeLevel) {
             level = createLevel();
             music = level.getLevelMusic();
@@ -99,13 +106,14 @@ public class GameModel implements ControllableModel {
         } else {
             getLevel().getHud().resume();
             music.play();
+            music.setVolume(musicVolume);
         }
 
         if (getLevel().isCompleted()) {
             music.stop();
             music.dispose();
-            audioHelper.getSoundEffect("orchestra").play();
-            state = GameState.NEXT_LEVEL;
+            audioHelper.getSoundEffect("orchestra").play(soundEffectsvolume);
+            currentState = GameState.NEXT_LEVEL;
             changeScreen();
             restart();
             pauseGame();
@@ -113,7 +121,7 @@ public class GameModel implements ControllableModel {
         if (gameOver()) {
             music.stop();
             music.dispose();
-            state = GameState.GAME_OVER;
+            currentState = GameState.GAME_OVER;
             changeScreen();
             restart();
             pauseGame();
@@ -155,35 +163,40 @@ public class GameModel implements ControllableModel {
     }
 
     @Override
-    public GameState getState() {
-        return state;
+    public GameState getCurrentState() {
+        return currentState;
+    }
+    public GameState getPreviousState() {
+        return previousState;
     }
 
     @Override
-    public void setState(GameState state) {
-        if (state == null) {
+    public void setCurrentState(GameState currentState) {
+        if (currentState == null) {
             throw new IllegalArgumentException("Cannot set state to null.");
         }
-        if (this.state == GameState.STARTUP && (state == GameState.GAME_OVER || state == GameState.NEXT_LEVEL)) {
+        if (this.currentState == GameState.STARTUP && (currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL)) {
             throw new IllegalArgumentException("Illegal state.");
         }
-        if (this.state == GameState.GAME_OVER && (state == GameState.STARTUP || state == GameState.NEXT_LEVEL)) {
+        if (this.currentState == GameState.GAME_OVER && (currentState == GameState.STARTUP || currentState == GameState.NEXT_LEVEL)) {
             throw new IllegalArgumentException("Illegal state.");
         }
-        if (this.state == GameState.NEXT_LEVEL && (state == GameState.GAME_OVER || state == GameState.STARTUP)) {
+        if (this.currentState == GameState.NEXT_LEVEL && (currentState == GameState.GAME_OVER /*|| currentState == GameState.STARTUP*/)) {
             throw new IllegalArgumentException("Illegal state.");
         }
-        this.state = state;
+        previousState = this.currentState;
+        this.currentState = currentState;
     }
 
     @Override
     public void changeScreen() {
 
-        switch (state) {
+        switch (currentState) {
             case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
             case STARTUP -> Boot.INSTANCE.setScreen(new StartScreen(this));
             case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
             case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
+            case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this)); //TODO: only one settings menu?
         }
 
     }
@@ -225,4 +238,21 @@ public class GameModel implements ControllableModel {
     public AudioHelper getAudioHelper() {
         return audioHelper;
     }
+
+    public void setMusicVolume(float musicVolume) {
+        this.musicVolume = musicVolume;
+    }
+
+    public void setSoundEffectsvolume(float soundEffectsvolume) {
+        this.soundEffectsvolume = soundEffectsvolume;
+    }
+
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public float getSoundEffectsvolume() {
+        return soundEffectsvolume;
+    }
+
 }

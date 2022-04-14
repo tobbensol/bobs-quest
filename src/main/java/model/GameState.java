@@ -1,6 +1,6 @@
 package model;
 
 public enum GameState {
-    ACTIVE, GAME_OVER, STARTUP, NEXT_LEVEL
+    ACTIVE, GAME_OVER, STARTUP, SETTINGS, NEXT_LEVEL
 }
 

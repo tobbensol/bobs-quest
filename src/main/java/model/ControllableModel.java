@@ -15,16 +15,16 @@ public interface ControllableModel {
     /**
      * @return returns the current GameState from the model.
      */
-    GameState getState();
+    GameState getCurrentState();
 
     /**
      * This method should set the current GameState to the given state.
      * The different GameStates are:
      * ACTIVE, GAME_OVER, STARTUP, NEXT_LEVEL
      *
-     * @param state - the GameState to set.
+     * @param currentState - the GameState to set.
      */
-    void setState(GameState state);
+    void setCurrentState(GameState currentState);
 
     /**
      * This method should change the screen. By calling this method,
