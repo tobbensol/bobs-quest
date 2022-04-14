@@ -92,7 +92,7 @@ public class Goomba extends MovableObject implements Enemy {
     @Override
     public void setPlayerPosition(Vector2 position) {
         //TODO: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position
-        playerPosition = position.scl(Constants.PPM);
+        playerPosition = position;
     }
 
     public void setDead() {
