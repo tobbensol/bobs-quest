@@ -1,11 +1,13 @@
 package model;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import helper.MockGL;
 import launcher.Boot;
 import model.helper.AudioHelper;
 import model.objects.Goomba;
@@ -38,6 +40,8 @@ public class GameModelTest {
             public void create() {
             }
         });
+        Gdx.gl = new MockGL();
+
         world = new World(new Vector2(0, 0), false);
         music = mock(Music.class);
         level = mock(Level.class);
@@ -127,7 +131,7 @@ public class GameModelTest {
     }
 
     private void stubUpdateModel() {
-        player = new Player(level, 0, 0);
+        player = new Player("TEST", level, 0, 0);
         List<Player> players = new ArrayList<>();
         players.add(player);
         when(level.getGameObjects(Player.class)).thenReturn(players);
