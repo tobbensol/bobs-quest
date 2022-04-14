@@ -60,8 +60,8 @@ public abstract class GameObject implements IGameObject {
 
     @Override
     public void changeMaskBit(boolean filterAway, short filterBit){
-        short newMaskBit = BodyHelper.changeMaskBit(filterAway, filterBit, maskBits);
-        BodyHelper.changeFilterData(body, bit, newMaskBit);
+        maskBits = BodyHelper.changeMaskBit(filterAway, filterBit, maskBits);
+        BodyHelper.changeFilterData(body, bit, maskBits);
     }
 
     public boolean isDestroyed(){
