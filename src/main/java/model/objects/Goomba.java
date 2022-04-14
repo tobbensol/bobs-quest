@@ -86,7 +86,7 @@ public class Goomba extends MovableObject implements Enemy {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(textureRegion, x, y, width, height);
+        batch.draw(textureRegion, x - width/2, y - height/2, width, height);
     }
 
     @Override

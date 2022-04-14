@@ -46,7 +46,7 @@ public class Floater extends MovableObject implements Enemy {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, x - width/2, y - height/2, width, height);
     }
 
     @Override
