@@ -14,10 +14,7 @@ import helper.MockGL;
 import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
-import model.objects.Enemy;
-import model.objects.Goal;
-import model.objects.Goomba;
-import model.objects.Player;
+import model.objects.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -132,6 +129,123 @@ public class GameContactListenerTest {
 
     private void doStep() {
         world.step(1 / 60f, 6, 2);
+    }
+
+    @Test
+    void testPlayerNotFallingEnemyContact() {
+        Enemy enemy = stubEnemy();
+        doNothing().when(player).takeDamage(anyInt());
+
+        verifyNoInteractions(player);
+        verifyNoInteractions(enemy);
+        assertNotEquals(Player.State.FALLING, player.getCurrentState());
+
+        doStep();
+        verify(enemy, never()).onHit();
+        verify(player, times(1)).takeDamage(enemy.getAttack());
+
+        destroyFirstBody();
+        verify(enemy, never()).onHit();
+        verify(player, times(1)).takeDamage(enemy.getAttack());
+    }
+
+    @Test
+    void testPlayerFallingEnemyContact() {
+        Enemy enemy = stubEnemy();
+        player.getBody().setLinearVelocity(0, -1);
+        player.setState();
+
+        verifyNoInteractions(enemy);
+        assertEquals(Player.State.FALLING, player.getCurrentState());
+
+        doStep();
+        verify(enemy, times(1)).onHit();
+        verify(player, never()).takeDamage(enemy.getAttack());
+
+        destroyFirstBody();
+        verify(enemy, times(1)).onHit();
+        verify(player, never()).takeDamage(enemy.getAttack());
+    }
+
+    @Test
+    void testPlayerEnemyRadar() {
+        Enemy enemy = stubEnemy();
+        doNothing().when(player).takeDamage(anyInt());
+
+        verifyNoInteractions(player);
+        verifyNoInteractions(enemy);
+
+        doStep();
+        verify(enemy, times(1)).setPlayerPosition(player.getPosition());
+        verify(enemy, times(1)).setPlayerNearby(true);
+
+        destroyFirstBody();
+        verify(enemy, times(2)).setPlayerPosition(player.getPosition());
+        verify(enemy, times(1)).setPlayerNearby(false);
+    }
+
+    private Enemy stubEnemy() {
+        Enemy enemy = spy(new Goomba("GOOMBA", level, 0, 0));
+        List<Enemy> enemyList = new ArrayList<>();
+        enemyList.add(enemy);
+        when(level.getGameObjects(Enemy.class)).thenReturn(enemyList);
+        when(level.getClassName(Enemy.class)).thenReturn("Enemy");
+        return enemy;
+    }
+
+    @Test
+    void testPlayerGoalContact() {
+        Goal goal = stubGoal();
+
+        verifyNoInteractions(player);
+        verifyNoInteractions(goal);
+
+        doStep();
+        verify(goal, times(1)).onHit();
+
+        destroyFirstBody();
+        verify(goal, times(1)).onHit();
+    }
+
+    private Goal stubGoal() {
+        Goal goal = spy(new Goal("GOAL", level, 0, 0));
+        List<Goal> goalList = new ArrayList<>();
+        goalList.add(goal);
+        when(level.getGameObjects(Goal.class)).thenReturn(goalList);
+        when(level.getClassName(Goal.class)).thenReturn("Goal");
+        return goal;
+    }
+
+    @Test
+    void testPlayerCoinContact() {
+        Coin coin = stubCoin();
+        doNothing().when(coin).onHit();
+
+        verifyNoInteractions(player);
+        verifyNoInteractions(coin);
+
+        doStep();
+        verify(coin, times(1)).onHit();
+        verify(player, times(1)).increaseHealth(10);
+
+        destroyFirstBody();
+        verify(coin, times(1)).onHit();
+        verify(player, times(1)).increaseHealth(10);
+
+    }
+
+    private Coin stubCoin() {
+        Coin coin = spy(new Coin("COIN", level, 0, 0));
+        List<Coin> coinList = new ArrayList<>();
+        coinList.add(coin);
+        when(level.getGameObjects(Coin.class)).thenReturn(coinList);
+        when(level.getClassName(Coin.class)).thenReturn("Coin");
+        return coin;
+    }
+
+    @Test
+    void testPlayerCameraWallContact() {
+        fail();
     }
 
     @Test
