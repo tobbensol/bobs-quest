@@ -8,93 +8,89 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.GameModel;
-import model.GameState;
 
-public class LevelCompletedScreen implements Screen {
+public class SettingsScreen implements Screen {
+
     private final Viewport viewport;
     private final Stage stage;
 
     private final GameModel gameModel;
-    private Skin skin;
 
-    public LevelCompletedScreen(GameModel gameModel) {
+
+    public SettingsScreen(GameModel gameModel) {
         this.gameModel = gameModel;
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
+
     }
+
 
     @Override
     public void show() {
-
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
+        table.setDebug(true);
         table.center();
         table.setFillParent(true);
         stage.addActor(table);
 
+        Skin skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
 
-        Label gameCompletedLabel = new Label(gameModel.getLevel().toString() + " COMPLETED!", font);
-        Label nextLevelLabel = new Label("Click SPACE to Play Next Level", font);
+        Label settings = new Label("Settings", font);
+        settings.setFontScale(4f);
 
-        gameCompletedLabel.setFontScale(4f);
-        nextLevelLabel.setFontScale(2f);
+        TextButton back = new TextButton("Back", skin);
 
-        table.add(gameCompletedLabel).expandX();
-        table.row();
-        table.add(nextLevelLabel).expandX().padTop(10f);
+        Label musicVolumeLabel = new Label("Music volume", font);
+        Slider musicVolumeSlider = new Slider(0,1,0.1f,false,skin);
+        musicVolumeSlider.setValue(gameModel.getMusicVolume());
 
+        Label soundEffectsVolumeLabel = new Label("Sound effects volume", font);
+        Slider soundEffectsVolumeSlider = new Slider(0,1,0.1f,false,skin);
+        soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsvolume());
 
-
-        TextButton nextLevel = new TextButton("Next Level", skin);
-        TextButton selectLevel = new TextButton("Select Level", skin);
-        TextButton settings = new TextButton("Settings", skin);
-        TextButton mainMenu = new TextButton("Main menu", skin);
-
-        table.row();
-        table.add(nextLevel);
-        table.row();
-        table.add(selectLevel);
-        table.row();
         table.add(settings);
         table.row();
-        table.add(mainMenu);
+        table.add(musicVolumeLabel);
+        table.add(musicVolumeSlider);
+        table.row();
+        table.add(soundEffectsVolumeLabel);
+        table.add(soundEffectsVolumeSlider);
+        table.row();
+        table.add(back);
 
 
-        nextLevel.addListener(new ChangeListener() {
+        musicVolumeSlider.addListener(new DragListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.ACTIVE);
-                gameModel.changeScreen();
-                gameModel.resumeGame();
+            public void dragStop(InputEvent event, float x, float y, int pointer) {
+                super.dragStop(event, x, y, pointer);
+                gameModel.setMusicVolume(musicVolumeSlider.getValue());
             }
         });
 
-        settings.addListener(new ChangeListener() {
+        soundEffectsVolumeSlider.addListener(new DragListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                //TODO: Make settings screen
-                gameModel.setCurrentState(GameState.SETTINGS);
-                gameModel.changeScreen();
+            public void dragStop(InputEvent event, float x, float y, int pointer) {
+                super.dragStop(event, x, y, pointer);
+                gameModel.setSoundEffectsvolume(soundEffectsVolumeSlider.getValue());
             }
         });
 
-        mainMenu.addListener(new ChangeListener() {
+        back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.STARTUP);
+                gameModel.setCurrentState(gameModel.getPreviousState());
                 gameModel.changeScreen();
             }
         });
@@ -104,7 +100,6 @@ public class LevelCompletedScreen implements Screen {
     @Override
     public void render(float delta) {
         gameModel.update();
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         stage.draw();

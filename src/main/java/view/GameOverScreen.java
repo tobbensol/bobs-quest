@@ -7,33 +7,50 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.GameModel;
+import model.GameState;
 
 public class GameOverScreen implements Screen {
     private final Viewport viewport;
     private final Stage stage;
 
     private final GameModel gameModel;
+    private Skin skin;
+
 
     public GameOverScreen(GameModel gameModel) {
         this.gameModel = gameModel;
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
+        Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
 
+
+    }
+
+    @Override
+    public void show() {
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
         table.center();
         table.setFillParent(true);
+        stage.addActor(table);
 
         Label gameOverLabel = new Label("GAME OVER", font);
         Label playAgainLabel = new Label("Click SPACE to Play Again", font);
+
+        TextButton playAgain = new TextButton("Play Again", skin);
 
         gameOverLabel.setFontScale(4f);
         playAgainLabel.setFontScale(2f);
@@ -41,13 +58,17 @@ public class GameOverScreen implements Screen {
         table.add(gameOverLabel).expandX();
         table.row();
         table.add(playAgainLabel).expandX().padTop(10f);
+        table.row();
+        table.add(playAgain);
 
-        stage.addActor(table);
-    }
-
-    @Override
-    public void show() {
-
+        playAgain.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameModel.setCurrentState(GameState.ACTIVE);
+                gameModel.changeScreen();
+                gameModel.resumeGame();
+            }
+        });
     }
 
     @Override
