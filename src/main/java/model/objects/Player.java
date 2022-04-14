@@ -130,7 +130,7 @@ public class Player extends JumpableObject {
             cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
             updateGrouned();
-            level.getModel().getAudioHelper().getSoundEffect("jump").play();
+            level.getModel().getAudioHelper().getSoundEffect("jump").play(level.getModel().getSoundEffectsvolume());
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -152,7 +152,7 @@ public class Player extends JumpableObject {
         this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
         cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
         if (previousState != State.FALLING) {
-            level.getModel().getAudioHelper().getSoundEffect("drop").play();
+            level.getModel().getAudioHelper().getSoundEffect("drop").play(level.getModel().getSoundEffectsvolume());
         }
 
     }
@@ -278,7 +278,7 @@ public class Player extends JumpableObject {
             setDead();
         }
         System.out.println(this + ": " + hp);
-        level.getModel().getAudioHelper().getSoundEffect("hit").play();
+        level.getModel().getAudioHelper().getSoundEffect("hit").play(level.getModel().getSoundEffectsvolume());
     }
 
     public void increaseHealth(int amount) {

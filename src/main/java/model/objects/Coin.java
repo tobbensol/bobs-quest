@@ -32,7 +32,7 @@ public class Coin extends StaticObject {
         level.increaseScore(1);
         BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT);
         isDestroyed = true;
-        level.getModel().getAudioHelper().getSoundEffect("coin").play();
+        level.getModel().getAudioHelper().getSoundEffect("coin").play(level.getModel().getSoundEffectsvolume());
     }
 
     public boolean isDestroyed() {
