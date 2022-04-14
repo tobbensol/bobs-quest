@@ -48,18 +48,16 @@ public class GameOverScreen implements Screen {
         stage.addActor(table);
 
         Label gameOverLabel = new Label("GAME OVER", font);
-        Label playAgainLabel = new Label("Click SPACE to Play Again", font);
-
         TextButton playAgain = new TextButton("Play Again", skin);
+        TextButton mainMenu = new TextButton("Main menu", skin);
 
         gameOverLabel.setFontScale(4f);
-        playAgainLabel.setFontScale(2f);
 
         table.add(gameOverLabel).expandX();
         table.row();
-        table.add(playAgainLabel).expandX().padTop(10f);
+        table.add(playAgain).padTop(20).minWidth(200).minHeight(50);
         table.row();
-        table.add(playAgain);
+        table.add(mainMenu).padTop(20).minWidth(200).minHeight(50);
 
         playAgain.addListener(new ChangeListener() {
             @Override
@@ -67,6 +65,14 @@ public class GameOverScreen implements Screen {
                 gameModel.setCurrentState(GameState.ACTIVE);
                 gameModel.changeScreen();
                 gameModel.resumeGame();
+            }
+        });
+
+        mainMenu.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameModel.setCurrentState(GameState.STARTUP);
+                gameModel.changeScreen();
             }
         });
     }

@@ -47,30 +47,16 @@ public class LevelCompletedScreen implements Screen {
 
 
         Label gameCompletedLabel = new Label(gameModel.getLevel().toString() + " COMPLETED!", font);
-        Label nextLevelLabel = new Label("Click SPACE to Play Next Level", font);
-
         gameCompletedLabel.setFontScale(4f);
-        nextLevelLabel.setFontScale(2f);
-
-        table.add(gameCompletedLabel).expandX();
-        table.row();
-        table.add(nextLevelLabel).expandX().padTop(10f);
-
-
+        table.add(gameCompletedLabel);
 
         TextButton nextLevel = new TextButton("Next Level", skin);
-        TextButton selectLevel = new TextButton("Select Level", skin);
-        TextButton settings = new TextButton("Settings", skin);
         TextButton mainMenu = new TextButton("Main menu", skin);
 
         table.row();
-        table.add(nextLevel);
+        table.add(nextLevel).padTop(20).minWidth(250).minHeight(50);;
         table.row();
-        table.add(selectLevel);
-        table.row();
-        table.add(settings);
-        table.row();
-        table.add(mainMenu);
+        table.add(mainMenu).padTop(20).minWidth(250).minHeight(50);;
 
 
         nextLevel.addListener(new ChangeListener() {
@@ -79,15 +65,6 @@ public class LevelCompletedScreen implements Screen {
                 gameModel.setCurrentState(GameState.ACTIVE);
                 gameModel.changeScreen();
                 gameModel.resumeGame();
-            }
-        });
-
-        settings.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                //TODO: Make settings screen
-                gameModel.setCurrentState(GameState.SETTINGS);
-                gameModel.changeScreen();
             }
         });
 

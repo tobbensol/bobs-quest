@@ -175,15 +175,16 @@ public class GameModel implements ControllableModel {
         if (currentState == null) {
             throw new IllegalArgumentException("Cannot set state to null.");
         }
-        if (this.currentState == GameState.STARTUP && (currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL)) {
-            throw new IllegalArgumentException("Illegal state.");
-        }
-        if (this.currentState == GameState.GAME_OVER && (currentState == GameState.STARTUP || currentState == GameState.NEXT_LEVEL)) {
-            throw new IllegalArgumentException("Illegal state.");
-        }
-        if (this.currentState == GameState.NEXT_LEVEL && (currentState == GameState.GAME_OVER /*|| currentState == GameState.STARTUP*/)) {
-            throw new IllegalArgumentException("Illegal state.");
-        }
+        //TODO: Check if GameState is valid or not. (old checks disabled for now)
+//        if (this.currentState == GameState.STARTUP && (currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL)) {
+//            throw new IllegalArgumentException("Illegal state.");
+//        }
+//        if (this.currentState == GameState.GAME_OVER && (currentState == GameState.STARTUP || currentState == GameState.NEXT_LEVEL)) {
+//            throw new IllegalArgumentException("Illegal state.");
+//        }
+//        if (this.currentState == GameState.NEXT_LEVEL && (currentState == GameState.GAME_OVER /*|| currentState == GameState.STARTUP*/)) {
+//            throw new IllegalArgumentException("Illegal state.");
+//        }
         previousState = this.currentState;
         this.currentState = currentState;
     }
@@ -196,13 +197,23 @@ public class GameModel implements ControllableModel {
             case STARTUP -> Boot.INSTANCE.setScreen(new StartScreen(this));
             case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
             case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
-            case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this)); //TODO: only one settings menu?
+            case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this));
+            case NEWGAME -> Boot.INSTANCE.setScreen(new NewGameScreen(this));
+            case SELECTLEVEL -> Boot.INSTANCE.setScreen(new SelectLevelScreen(this));
         }
 
     }
 
     public Level getLevel() {
         return level;
+    }
+
+    public List<String> getLevels() {
+        return levels;
+    }
+
+    public void setLevelNR(int levelNR) {
+        this.levelNR = levelNR;
     }
 
     public int getNumPlayers() {

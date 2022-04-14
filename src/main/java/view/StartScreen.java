@@ -37,40 +37,42 @@ public class StartScreen implements Screen {
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
-        table.setDebug(true);
-        table.center();
-        table.setFillParent(true);
         stage.addActor(table);
+//        table.setDebug(true);
+        table.center().top().padTop(viewport.getScreenHeight()/4f);
 
-        Label welcomeLabel = new Label("PLATFORM GAME", font);
-//        Label playerLabel = new Label("Choose Number of Players (1-3)", font);
-//        Label playLabel = new Label("Click SPACE to Play", font);
+        table.setFillParent(true);
+        Label title = new Label("PLATFORM GAME", font);
+//        title.debug();
+        title.setFontScale(6f);
+        table.add(title);
 
-        TextButton play = new TextButton("Play", skin);
+        TextButton newGame = new TextButton("New Game", skin);
+        TextButton continueGame = new TextButton("Continue Game", skin);
+        TextButton selectLevel = new TextButton("Select Level", skin);
         TextButton settings = new TextButton("Settings", skin);
         TextButton exit = new TextButton("Exit", skin);
 
-        play.setSize(200,50);
-
-
-        welcomeLabel.setFontScale(4f);
-//        playerLabel.setFontScale(2f);
-//        playLabel.setFontScale(2f);
-
-        table.add(welcomeLabel).expandX();
-//        table.row();
-//        table.add(playerLabel).expandX().padTop(10f);
-//        table.row();
-//        table.add(playLabel).expandX().padTop(10f);
         table.row();
-        table.add(play);
+        table.add(newGame).padTop(20).minWidth(250).minHeight(50);
         table.row();
-        table.add(settings);
+        table.add(continueGame).padTop(20).minWidth(250).minHeight(50);
         table.row();
-        table.add(exit);
-        //stage.addActor(table);
+        table.add(selectLevel).padTop(20).minWidth(250).minHeight(50);
+        table.row();
+        table.add(settings).padTop(20).minWidth(250).minHeight(50);
+        table.row();
+        table.add(exit).padTop(20).minWidth(250).minHeight(50);
 
-        play.addListener(new ChangeListener() {
+        newGame.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameModel.setCurrentState(GameState.NEWGAME);
+                gameModel.changeScreen();
+            }
+        });
+
+        continueGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 gameModel.setCurrentState(GameState.ACTIVE);
@@ -79,10 +81,17 @@ public class StartScreen implements Screen {
             }
         });
 
+        selectLevel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameModel.setCurrentState(GameState.SELECTLEVEL);
+                gameModel.changeScreen();
+            }
+        });
+
         settings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO: Make settings screen
                 gameModel.setCurrentState(GameState.SETTINGS);
                 gameModel.changeScreen();
             }

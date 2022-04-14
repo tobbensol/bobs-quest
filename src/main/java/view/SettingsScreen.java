@@ -22,15 +22,15 @@ public class SettingsScreen implements Screen {
 
     private final Viewport viewport;
     private final Stage stage;
-
     private final GameModel gameModel;
-
+    private Skin skin;
 
     public SettingsScreen(GameModel gameModel) {
         this.gameModel = gameModel;
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
 
     }
 
@@ -40,36 +40,36 @@ public class SettingsScreen implements Screen {
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
-        table.setDebug(true);
-        table.center();
+        table.center().top().padTop(viewport.getScreenHeight()/4f);
+//        table.setDebug(true);
         table.setFillParent(true);
         stage.addActor(table);
-
-        Skin skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
 
         Label settings = new Label("Settings", font);
         settings.setFontScale(4f);
 
-        TextButton back = new TextButton("Back", skin);
-
         Label musicVolumeLabel = new Label("Music volume", font);
+        musicVolumeLabel.setFontScale(1.5f);
+
         Slider musicVolumeSlider = new Slider(0,1,0.1f,false,skin);
         musicVolumeSlider.setValue(gameModel.getMusicVolume());
 
         Label soundEffectsVolumeLabel = new Label("Sound effects volume", font);
+        soundEffectsVolumeLabel.setFontScale(1.5f);
         Slider soundEffectsVolumeSlider = new Slider(0,1,0.1f,false,skin);
         soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsvolume());
 
-        table.add(settings);
-        table.row();
-        table.add(musicVolumeLabel);
-        table.add(musicVolumeSlider);
-        table.row();
-        table.add(soundEffectsVolumeLabel);
-        table.add(soundEffectsVolumeSlider);
-        table.row();
-        table.add(back);
+        TextButton back = new TextButton("Back", skin);
 
+        table.add(settings).center().colspan(2);
+        table.row();
+        table.add(musicVolumeLabel).padTop(20);
+        table.add(musicVolumeSlider).padTop(20).minWidth(250).minHeight(50);
+        table.row();
+        table.add(soundEffectsVolumeLabel).padTop(20);
+        table.add(soundEffectsVolumeSlider).padTop(20).minWidth(250).minHeight(50);
+        table.row();
+        table.add(back).padTop(20).minWidth(150).minHeight(50).colspan(2);
 
         musicVolumeSlider.addListener(new DragListener() {
             @Override
