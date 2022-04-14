@@ -41,8 +41,8 @@ public class GameCamera extends OrthographicCamera {
         MapEndPoints wall1 = gameModel.getLevel().getGameObjects(MapEndPoints.class).get(0);
         MapEndPoints wall2 = gameModel.getLevel().getGameObjects(MapEndPoints.class).get(1);
 
-        wall1.setPosition((position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2) / Constants.PPM, position.y / Constants.PPM);
-        wall2.setPosition((position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2) / Constants.PPM, position.y / Constants.PPM);
+        wall1.setPosition(position.x - viewportWidth * zoom / 2 - wall1.getWidth() / 2, position.y);
+        wall2.setPosition(position.x + viewportWidth * zoom / 2 + wall2.getWidth() / 2, position.y);
     }
 
     /**

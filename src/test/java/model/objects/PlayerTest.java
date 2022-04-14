@@ -171,7 +171,7 @@ public class PlayerTest {
     void testPlayerTeleport() {
         assertEquals(player.getPosition(), new Vector2(0, 0));
         player.setPosition(10, 10);
-        assertEquals(player.getPosition(), new Vector2(10 * Constants.PPM, 10 * Constants.PPM));
+        assertEquals(player.getPosition(), new Vector2(10, 10));
         assertEquals(player.getBody().getAngle(), 0);
     }
 

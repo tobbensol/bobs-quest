@@ -2,7 +2,6 @@ package model.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import model.Level;
 import model.helper.Constants;
@@ -28,12 +27,12 @@ public class MovingPlatform extends KinematicObject{
         if (steps % 400 == 0){
             direction *= -1;
         }
-        setPosition(body.getPosition().x, body.getPosition().y + direction / Constants.PPM);
+        setPosition(x, y + direction);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, body.getPosition().x * Constants.PPM - Math.round((float) texture.getWidth()/2), body.getPosition().y * Constants.PPM - Math.round((float) texture.getHeight()/2), texture.getWidth(), texture.getHeight());
+        batch.draw(texture, x - Math.round((float) texture.getWidth()/2), y - Math.round((float) texture.getHeight()/2), texture.getWidth(), texture.getHeight());
     }
 
 }

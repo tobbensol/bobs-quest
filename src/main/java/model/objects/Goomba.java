@@ -52,12 +52,7 @@ public class Goomba extends MovableObject implements Enemy {
 
     private void goombaMovement() {
         if (playerNearby) {
-            if (playerPosition.x > body.getPosition().x) {
-                moveHorizontally(true);
-            }
-            if (playerPosition.x < body.getPosition().x) {
-                moveHorizontally(false);
-            }
+            moveHorizontally(playerPosition.x > x / Constants.PPM);
         } else {
             int range = 150;
             if (numMoves > 0 && numMoves < range) {
@@ -96,7 +91,8 @@ public class Goomba extends MovableObject implements Enemy {
 
     @Override
     public void setPlayerPosition(Vector2 position) {
-        playerPosition = position;
+        //TODO: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position
+        playerPosition = position.scl(Constants.PPM);
     }
 
     public void setDead() {
