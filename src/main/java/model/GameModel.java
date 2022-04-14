@@ -24,7 +24,7 @@ public class GameModel implements ControllableModel {
     private final GameController gameController;
     private Level level;
     private boolean reload = false;
-    private int levelNR = 0;
+    private int levelNR = 2;
     private int numPlayers;
     private GameState state;
     private boolean pause = false;
@@ -39,16 +39,17 @@ public class GameModel implements ControllableModel {
         this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
-        levels.add("level1"); // 0
-        levels.add("platformTest"); // 1
-        levels.add("slopeTest"); // 2
-        levels.add("cameraTest"); // 3
-        levels.add("goombaTest"); // 4
-        levels.add("coinTest"); // 5
-        levels.add("valleyAndSpikeTest"); // 6
-        levels.add("sizeTest"); // 7
-        levels.add("goombaCollisionTest"); // 8
-        levels.add("floaterTest"); // 9
+        levels.add("level-1"); // 0
+        levels.add("level-2"); // 1
+        levels.add("TestMaps/platform-test"); // 2
+        levels.add("TestMaps/slope-test"); // 3
+        levels.add("TestMaps/camera-test"); // 4
+        levels.add("TestMaps/goomba-test"); // 5
+        levels.add("TestMaps/coin-test"); // 6
+        levels.add("TestMaps/valley-and-spike-test"); // 7
+        levels.add("TestMaps/sizeTest"); // 8
+        levels.add("TestMaps/goomba-collision-test"); // 9
+        levels.add("TestMaps/floater-test"); // 10
 
         gameController = new GameController(this);
 

@@ -25,7 +25,7 @@ public class TiledMapHelper {
         // OBS: Map can't be infinite
         // OBS: Layers can't be in folders
         this.level = level;
-        tiledMap = new TmxMapLoader().load("maps/" + levelID + ".tmx");
+        tiledMap = new TmxMapLoader().load("Maps/" + levelID + ".tmx");
 
         // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapEnvironment(getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
