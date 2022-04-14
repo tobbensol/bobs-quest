@@ -54,23 +54,6 @@ public class Player extends JumpableObject {
         }
     }
 
-    /**
-     * Constructor for testing
-     *
-     * @param level - level to be placed in
-     * @param x     - horizontal position
-     * @param y     - vertical position
-     */
-    public Player(Level level, float x, float y) {
-        super("Test", level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
-
-        hp = 100;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
-
-        frames = new ArrayList<>();
-    }
-
     @Override
     public void update() {
         super.update();
