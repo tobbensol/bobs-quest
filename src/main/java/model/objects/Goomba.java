@@ -52,6 +52,8 @@ public class Goomba extends MovableObject implements Enemy {
 
     private void goombaMovement() {
         if (playerNearby) {
+            //OBS: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position which is why we have to divide by PPM
+            //TODO find a way to fix this OBS (low priority since this works, just a bit annoying)
             moveHorizontally(playerPosition.x > x / Constants.PPM);
         } else {
             int range = 150;
@@ -91,7 +93,6 @@ public class Goomba extends MovableObject implements Enemy {
 
     @Override
     public void setPlayerPosition(Vector2 position) {
-        //TODO: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position
         playerPosition = position;
     }
 

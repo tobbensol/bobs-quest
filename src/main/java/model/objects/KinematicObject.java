@@ -13,8 +13,8 @@ public abstract class KinematicObject extends GameObject{
 
     @Override
     public void update() {
-        x = body.getPosition().x * Constants.PPM;
-        y = body.getPosition().y * Constants.PPM;
+        x = getPosition().x;
+        y = getPosition().y;
     }
 
     @Override

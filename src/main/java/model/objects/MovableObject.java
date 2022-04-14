@@ -11,7 +11,7 @@ public abstract class MovableObject extends DynamicObject implements Movable {
     }
 
     public void update() {
-        x = body.getPosition().x * Constants.PPM;
-        y = body.getPosition().y * Constants.PPM;
+        x = getPosition().x;
+        y = getPosition().y;
     }
 }
