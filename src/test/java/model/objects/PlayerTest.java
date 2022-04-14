@@ -108,20 +108,20 @@ public class PlayerTest {
     @Test
     void testJumpTimer(){
         assertFalse(player.grounded);
-        assertEquals(player.groundedcount, 0);
+        assertEquals(player.groundedCount, 0);
         player.setGrounded(true);
         assertTrue(player.grounded);
-        assertEquals(player.groundedcount, 1);
+        assertEquals(player.groundedCount, 1);
         player.setGrounded(true);
         assertTrue(player.grounded);
-        assertEquals(player.groundedcount, 2);
+        assertEquals(player.groundedCount, 2);
         player.jump();
         player.setGrounded(false);
         doStep();
-        assertEquals(player.groundedcount, 1);
+        assertEquals(player.groundedCount, 1);
         assertFalse(player.grounded);
         player.setGrounded(false);
-        assertEquals(player.groundedcount, 0);
+        assertEquals(player.groundedCount, 0);
         assertFalse(player.grounded);
     }
 

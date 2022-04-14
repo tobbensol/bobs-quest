@@ -1,7 +1,5 @@
 package model.objects;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -129,7 +127,7 @@ public class Player extends JumpableObject {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
-            updateGrouned();
+            updateGrounded();
             level.getModel().getAudioHelper().getSoundEffect("jump").play();
             Timer.schedule(new Timer.Task() {
                 @Override
