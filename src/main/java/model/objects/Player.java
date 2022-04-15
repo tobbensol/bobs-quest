@@ -128,6 +128,7 @@ public class Player extends JumpableObject {
     public void jump() {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0, Y_VELOCITY);
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
             canJump = false;
             updateGrouned();
             level.getModel().getAudioHelper().getSoundEffect("jump").play();
