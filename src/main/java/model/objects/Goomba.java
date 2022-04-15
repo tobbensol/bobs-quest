@@ -52,9 +52,7 @@ public class Goomba extends MovableObject implements Enemy {
 
     private void goombaMovement() {
         if (playerNearby) {
-            //OBS: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position which is why we have to divide by PPM
-            //TODO find a way to fix this OBS (low priority since this works, just a bit annoying)
-            moveHorizontally(playerPosition.x > x / Constants.PPM);
+            moveHorizontally(playerPosition.x > x );
         } else {
             int range = 150;
             if (numMoves > 0 && numMoves < range) {

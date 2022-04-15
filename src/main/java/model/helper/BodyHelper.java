@@ -27,7 +27,7 @@ public class BodyHelper {
             playerSensors(fixtureDef, body, width, height);
         }
         if (contactType == ContactType.ENEMY) {
-            enemySensors(fixtureDef, body, width / Constants.PPM);
+            enemySensors(fixtureDef, body, width);
         }
 
         return body;
