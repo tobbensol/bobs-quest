@@ -19,6 +19,7 @@ import model.GameState;
 import model.Level;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SelectLevelScreen implements Screen {
     private final Viewport viewport;
@@ -50,33 +51,31 @@ public class SelectLevelScreen implements Screen {
         title.setFontScale(4f);
         table.add(title).colspan(2);
 
-        int levelNr = 0;
-        ArrayList<TextButton> textButtonList = new ArrayList<>();
-
+        int tableIndex = 0;
         for (String level: gameModel.getLevels()) {
             TextButton textButton = new TextButton(level,skin);
-            textButtonList.add(textButton);
-            if (levelNr % 2 == 0) {
+            if (tableIndex % 2 == 0) {
                 table.row();
             }
-            table.add(textButton).padTop(20).minWidth(250).minHeight(50).colspan(1);
-            levelNr++;
-        }
-
-        int index = 0;
-        for (TextButton textButton: textButtonList) {
-            int index1 = index;
+            table.add(textButton).pad(10).minWidth(250).minHeight(50).colspan(1);
             textButton.addListener(new ChangeListener() {
+
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    gameModel.setLevelNR(index1);
+                    String level = String.valueOf(textButton.getText());
+                    int levelNR = gameModel.getLevels().indexOf(level);
+
+                    gameModel.setLevelNR(levelNR);
+                    gameModel.restart();
                     gameModel.setCurrentState(GameState.ACTIVE);
                     gameModel.changeScreen();
                     gameModel.resumeGame();
                 }
             });
-            index++;
+            tableIndex++;
         }
+
+
 
         TextButton back = new TextButton("Back", skin);
         table.row();
