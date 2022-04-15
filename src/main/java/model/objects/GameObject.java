@@ -27,7 +27,7 @@ public abstract class GameObject implements IGameObject {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.body = BodyHelper.createObjectBody(x, y + (height - Constants.PPM) / 2, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
+        this.body = BodyHelper.createObjectBody(x, y + (height - Constants.TILE_SIZE) / 2, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
         this.bit = categoryBits;
         this.maskBits = maskBits;

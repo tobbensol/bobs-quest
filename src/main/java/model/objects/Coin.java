@@ -23,7 +23,7 @@ public class Coin extends StaticObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x - width / 2, y - height / 2, width, height);
+        batch.draw(texture, x - width/2, y - height/2, width, height);
     }
 
     public void onHit() {

@@ -15,7 +15,7 @@ public class Floater extends MovableObject implements Enemy {
     private boolean playerNearby = false;
     private Vector2 playerPosition;
     int steps = 0;
-    int direction = 1;
+    float direction = 0.5f;
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
