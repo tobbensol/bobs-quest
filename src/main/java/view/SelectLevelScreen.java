@@ -63,7 +63,7 @@ public class SelectLevelScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     String level = String.valueOf(textButton.getText());
-                    System.out.println(level); // TODO: not same syntax... Capitalized etc.
+                    System.out.println(level);
                     int levelNR = gameModel.getLevels().indexOf(level);
                     System.out.println(levelNR);
 

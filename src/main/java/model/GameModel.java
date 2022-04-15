@@ -23,7 +23,7 @@ public class GameModel implements ControllableModel {
     private final GameController gameController;
     Level level;
     private boolean reload = false;
-    private int levelNR = 1;
+    private int levelNR = 0;
     private int numPlayers;
 
     private GameState currentState;
