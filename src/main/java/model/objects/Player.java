@@ -1,7 +1,5 @@
 package model.objects;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -54,23 +52,6 @@ public class Player extends JumpableObject {
         for (int i = 0; i < getTexture().getWidth() / Constants.TILE_SIZE; i++) {
             frames.add(new TextureRegion(getTexture(), i * Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
-    }
-
-    /**
-     * Constructor for testing
-     *
-     * @param level - level to be placed in
-     * @param x     - horizontal position
-     * @param y     - vertical position
-     */
-    public Player(Level level, float x, float y) {
-        super("Test", level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
-
-        hp = 100;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
-
-        frames = new ArrayList<>();
     }
 
     @Override
@@ -129,7 +110,7 @@ public class Player extends JumpableObject {
         if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
             cumulativeForces.add(0, Y_VELOCITY);
             canJump = false;
-            updateGrouned();
+            updateGrounded();
             level.getModel().getAudioHelper().getSoundEffect("jump").play();
             Timer.schedule(new Timer.Task() {
                 @Override
