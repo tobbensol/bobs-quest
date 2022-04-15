@@ -32,7 +32,6 @@ public class Floater extends MovableObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            System.out.println(body.getPosition());
             body.applyForceToCenter(new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(X_VELOCITY), true);
         }
         else{
@@ -40,13 +39,13 @@ public class Floater extends MovableObject implements Enemy {
             if (steps % 200 == 0){
                 direction *= -1;
             }
-            setPosition(body.getPosition().x, body.getPosition().y + 0.2f * direction / Constants.PPM);
+            setPosition(x, y + direction);
         }
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, x - width/2, y - height/2, width, height);
     }
 
     @Override
@@ -61,6 +60,7 @@ public class Floater extends MovableObject implements Enemy {
 
     @Override
     public void setPlayerPosition(Vector2 position) {
+        //TODO: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position
         playerPosition = position;
     }
 

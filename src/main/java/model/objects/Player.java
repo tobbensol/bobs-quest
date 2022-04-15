@@ -101,7 +101,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(), x, y, width, height);
+        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
     }
 
 
