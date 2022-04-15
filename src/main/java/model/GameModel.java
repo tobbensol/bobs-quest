@@ -222,6 +222,10 @@ public class GameModel implements ControllableModel {
         return completedLevels;
     }
 
+    public void resetCompletedLevels() {
+        completedLevels = new ArrayList<>();
+    }
+
     public void setLevelNR(int levelNR) {
         this.levelNR = levelNR;
     }

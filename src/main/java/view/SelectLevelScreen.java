@@ -52,7 +52,7 @@ public class SelectLevelScreen implements Screen {
         table.add(title).colspan(2);
 
         int tableIndex = 0;
-        for (String level: gameModel.getCompletedLevels()) {
+        for (String level: gameModel.getCompletedLevels()) { //TODO: Reset completed levels when starting new game
             TextButton textButton = new TextButton(level,skin);
             if (tableIndex % 2 == 0) {
                 table.row();
