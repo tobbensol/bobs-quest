@@ -25,6 +25,7 @@ public class Hud {
     private Label levelLabel;
     private Label pausedLabel;
     private Label pauseInfoLabel;
+    private Label mainMenuLabel;
 
     public Hud(SpriteBatch batch, Level level) {
         this.level = level;
@@ -50,12 +51,14 @@ public class Hud {
     public void pause() {
         pausedLabel.setText("GAME PAUSED");
         pauseInfoLabel.setText("Press P To Resume");
+        mainMenuLabel.setText("Press M to Main Menu");
         stage.getActors().get(0).getColor().a = 0.4f;
     }
 
     public void resume() {
         pausedLabel.setText("");
         pauseInfoLabel.setText("");
+        mainMenuLabel.setText("");
         stage.getActors().get(0).getColor().a = 0f;
     }
 
@@ -65,13 +68,17 @@ public class Hud {
         gamePausedTable.setFillParent(true);
         pausedLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         pauseInfoLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        mainMenuLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         pausedLabel.setFontScale(5f);
         pauseInfoLabel.setFontScale(2f);
+        mainMenuLabel.setFontScale(2f);
 
         gamePausedTable.add(pausedLabel).expandX();
         gamePausedTable.row();
         gamePausedTable.add(pauseInfoLabel).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(mainMenuLabel);
         return gamePausedTable;
     }
 

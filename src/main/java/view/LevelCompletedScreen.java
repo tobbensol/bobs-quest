@@ -71,7 +71,7 @@ public class LevelCompletedScreen implements Screen {
         mainMenu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.STARTUP);
+                gameModel.setCurrentState(GameState.MAIN_MENU);
                 gameModel.changeScreen();
             }
         });

@@ -32,12 +32,16 @@ public class GameController {
         } else {
             pauseHelper = true;
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.M) && model.getCurrentState() == GameState.ACTIVE && model.isPaused()) {
+            model.setCurrentState(GameState.MAIN_MENU);
+            model.changeScreen();
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             model.restart();
         }
 
-        if (model.getCurrentState() == GameState.STARTUP) {
+        if (model.getCurrentState() == GameState.MAIN_MENU) {
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
                 model.setNumPlayers(1);
             }

@@ -39,8 +39,8 @@ public class GameModel implements ControllableModel {
     private float soundEffectsvolume;
 
     public GameModel() {
-        currentState = GameState.STARTUP;
-        previousState = GameState.STARTUP;
+        currentState = GameState.MAIN_MENU;
+        previousState = GameState.MAIN_MENU;
         this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
@@ -200,12 +200,12 @@ public class GameModel implements ControllableModel {
 
         switch (currentState) {
             case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
-            case STARTUP -> Boot.INSTANCE.setScreen(new StartScreen(this));
+            case MAIN_MENU -> Boot.INSTANCE.setScreen(new MainMenuScreen(this));
             case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
             case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
             case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this));
-            case NEWGAME -> Boot.INSTANCE.setScreen(new NewGameScreen(this));
-            case SELECTLEVEL -> Boot.INSTANCE.setScreen(new SelectLevelScreen(this));
+            case NEW_GAME -> Boot.INSTANCE.setScreen(new NewGameScreen(this));
+            case SELECT_LEVEL -> Boot.INSTANCE.setScreen(new SelectLevelScreen(this));
         }
 
     }

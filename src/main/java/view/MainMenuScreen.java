@@ -17,14 +17,14 @@ import launcher.Boot;
 import model.GameModel;
 import model.GameState;
 
-public class StartScreen implements Screen {
+public class MainMenuScreen implements Screen {
     private final Viewport viewport;
     private final Stage stage;
     private final GameModel gameModel;
     private Skin skin;
 
 
-    public StartScreen(GameModel gameModel) {
+    public MainMenuScreen(GameModel gameModel) {
         this.gameModel = gameModel;
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
@@ -67,7 +67,7 @@ public class StartScreen implements Screen {
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.NEWGAME);
+                gameModel.setCurrentState(GameState.NEW_GAME);
                 gameModel.changeScreen();
             }
         });
@@ -75,16 +75,19 @@ public class StartScreen implements Screen {
         continueGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                //TODO: Game Paused when starting new game from here. Maybe check if first level or check initialized
                 gameModel.setCurrentState(GameState.ACTIVE);
                 gameModel.changeScreen();
-                gameModel.resumeGame();
+                if (!gameModel.isPaused()) {
+                    gameModel.resumeGame();
+                }
             }
         });
 
         selectLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.SELECTLEVEL);
+                gameModel.setCurrentState(GameState.SELECT_LEVEL);
                 gameModel.changeScreen();
             }
         });
