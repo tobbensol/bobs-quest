@@ -52,12 +52,7 @@ public class Goomba extends MovableObject implements Enemy {
 
     private void goombaMovement() {
         if (playerNearby) {
-            if (playerPosition.x > body.getPosition().x) {
-                moveHorizontally(true);
-            }
-            if (playerPosition.x < body.getPosition().x) {
-                moveHorizontally(false);
-            }
+            moveHorizontally(playerPosition.x > x );
         } else {
             int range = 150;
             if (numMoves > 0 && numMoves < range) {
@@ -86,7 +81,7 @@ public class Goomba extends MovableObject implements Enemy {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(textureRegion, x, y, width, height);
+        batch.draw(textureRegion, x - width/2, y - height/2, width, height);
     }
 
     @Override

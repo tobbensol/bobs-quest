@@ -14,6 +14,8 @@ public class Floater extends MovableObject implements Enemy {
     private int numMoves;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
+    int steps = 0;
+    float direction = 0.5f;
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
@@ -30,14 +32,20 @@ public class Floater extends MovableObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            System.out.println(body.getPosition());
             body.applyForceToCenter(new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(X_VELOCITY), true);
+        }
+        else{
+            steps++;
+            if (steps % 200 == 0){
+                direction *= -1;
+            }
+            setPosition(x, y + direction);
         }
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, x - width/2, y - height/2, width, height);
     }
 
     @Override
@@ -52,6 +60,7 @@ public class Floater extends MovableObject implements Enemy {
 
     @Override
     public void setPlayerPosition(Vector2 position) {
+        //TODO: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position
         playerPosition = position;
     }
 

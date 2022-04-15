@@ -27,7 +27,7 @@ public abstract class GameObject implements IGameObject {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.body = BodyHelper.createObjectBody(x, y, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
+        this.body = BodyHelper.createObjectBody(x, y + (height - Constants.TILE_SIZE) / 2, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
         this.bit = categoryBits;
         this.maskBits = maskBits;
@@ -38,7 +38,7 @@ public abstract class GameObject implements IGameObject {
     public abstract void render(SpriteBatch batch);
 
     public void setPosition(float x, float y) {
-        body.setTransform(x, y, body.getAngle());
+        body.setTransform(x / Constants.PPM, y / Constants.PPM, body.getAngle());
     }
 
     @Override
@@ -60,8 +60,8 @@ public abstract class GameObject implements IGameObject {
 
     @Override
     public void changeMaskBit(boolean filterAway, short filterBit){
-        short newMaskBit = BodyHelper.changeMaskBit(filterAway, filterBit, maskBits);
-        BodyHelper.changeFilterData(body, bit, newMaskBit);
+        maskBits = BodyHelper.changeMaskBit(filterAway, filterBit, maskBits);
+        BodyHelper.changeFilterData(body, bit, maskBits);
     }
 
     public boolean isDestroyed(){

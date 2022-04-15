@@ -1,7 +1,5 @@
 package model.objects;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -56,23 +54,6 @@ public class Player extends JumpableObject {
         }
     }
 
-    /**
-     * Constructor for testing
-     *
-     * @param level - level to be placed in
-     * @param x     - horizontal position
-     * @param y     - vertical position
-     */
-    public Player(Level level, float x, float y) {
-        super("Test", level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
-
-        hp = 100;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
-
-        frames = new ArrayList<>();
-    }
-
     @Override
     public void update() {
         super.update();
@@ -120,7 +101,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(), x, y, width, height);
+        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
     }
 
 
@@ -130,7 +111,7 @@ public class Player extends JumpableObject {
             cumulativeForces.add(0, Y_VELOCITY);
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             canJump = false;
-            updateGrouned();
+            updateGrounded();
             level.getModel().getAudioHelper().getSoundEffect("jump").play();
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -196,13 +177,11 @@ public class Player extends JumpableObject {
         State tempState = State.STANDING;
         if (previousState == State.DEAD) {
             tempState = State.DEAD;
-        } else if (body.getLinearVelocity().y < -0.5 && grounded) {
+        } else if (body.getLinearVelocity().y < -1.5f && grounded) {
             tempState = State.SLIDING;
-        } else if (body.getLinearVelocity().y > 0.5 && grounded) {
-            tempState = State.WALKING;
         } else if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             tempState = State.JUMPING;
-        } else if (body.getLinearVelocity().y < -0.5) {
+        } else if (body.getLinearVelocity().y < - 1.5f) {
             tempState = State.FALLING;
         } else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
             tempState = State.WALKING;

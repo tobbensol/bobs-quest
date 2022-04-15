@@ -24,7 +24,7 @@ public class GameModel implements ControllableModel {
     private final GameController gameController;
     private Level level;
     private boolean reload = false;
-    private int levelNR = 1;
+    private int levelNR = 0;
     private int numPlayers;
     private GameState state;
     private boolean pause = false;
@@ -50,6 +50,7 @@ public class GameModel implements ControllableModel {
         levels.add("TestMaps/sizeTest"); // 8
         levels.add("TestMaps/goomba-collision-test"); // 9
         levels.add("TestMaps/floater-test"); // 10
+        levels.add("TestMaps/movingPlatformTest"); // 10
 
         gameController = new GameController(this);
 
