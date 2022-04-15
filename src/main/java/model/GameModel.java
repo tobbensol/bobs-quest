@@ -17,12 +17,13 @@ public class GameModel implements ControllableModel {
 
 
     private final List<String> levels;
+    private List<String> completedLevels;
     private final List<Controller> controllers;
     private final int numControllers;
     private final GameController gameController;
     Level level;
     private boolean reload = false;
-    private int levelNR = 0;
+    private int levelNR = 1;
     private int numPlayers;
 
     private GameState currentState;
@@ -53,6 +54,8 @@ public class GameModel implements ControllableModel {
         levels.add("sizeTest"); // 7
         levels.add("goombaCollisionTest"); // 8
         levels.add("floaterTest"); // 9
+
+        completedLevels = new ArrayList<>();
 
         gameController = new GameController(this);
 
@@ -110,6 +113,9 @@ public class GameModel implements ControllableModel {
         }
 
         if (getLevel().isCompleted()) {
+            if (!completedLevels.contains(level.getLevelName())) {
+                completedLevels.add(level.getLevelName());
+            }
             music.stop();
             music.dispose();
             audioHelper.getSoundEffect("orchestra").play(soundEffectsvolume);
@@ -210,6 +216,10 @@ public class GameModel implements ControllableModel {
 
     public List<String> getLevels() {
         return levels;
+    }
+
+    public List<String> getCompletedLevels() {
+        return completedLevels;
     }
 
     public void setLevelNR(int levelNR) {

@@ -19,6 +19,7 @@ public class Level {
 
     private static final float gravity = -26f;
     private final String levelName;
+    private final String prettyLeveName;
     private final GameModel model;
     private final GameObjectFactory factory;
     private World world;
@@ -34,7 +35,8 @@ public class Level {
 
 
     public Level(String levelName, GameModel model) {
-        this.levelName = camelToSentence(levelName);
+        this.prettyLeveName = camelToSentence(levelName);
+        this.levelName = levelName;
         this.model = model;
         factory = new GameObjectFactory(this);
 
@@ -176,6 +178,10 @@ public class Level {
 
     @Override
     public String toString() {
+        return prettyLeveName;
+    }
+
+    public String getLevelName() {
         return levelName;
     }
 }

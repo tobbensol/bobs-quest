@@ -52,7 +52,7 @@ public class SelectLevelScreen implements Screen {
         table.add(title).colspan(2);
 
         int tableIndex = 0;
-        for (String level: gameModel.getLevels()) {
+        for (String level: gameModel.getCompletedLevels()) {
             TextButton textButton = new TextButton(level,skin);
             if (tableIndex % 2 == 0) {
                 table.row();
@@ -63,7 +63,9 @@ public class SelectLevelScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     String level = String.valueOf(textButton.getText());
+                    System.out.println(level); // TODO: not same syntax... Capitalized etc.
                     int levelNR = gameModel.getLevels().indexOf(level);
+                    System.out.println(levelNR);
 
                     gameModel.setLevelNR(levelNR);
                     gameModel.restart();
