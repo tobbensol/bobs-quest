@@ -6,9 +6,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import helper.MockGL;
 import model.helper.BodyHelper;
@@ -244,18 +242,104 @@ public class GameContactListenerTest {
     }
 
     @Test
-    void testPlayerCameraWallContact() {
-        fail();
+    void testPlayerCameraWallContactWhenPlayerToTheRight() {
+        MapEndPoints wall = stubMapEndPoints();
+        wall.setPosition(-0.1f, 0);
+
+        verifyNoInteractions(player);
+        assertEquals(-0.1f*Constants.PPM, wall.getPosition().x);
+
+        doStep();
+
+        verify(player, times(1)).setLeftCollision(true);
+
+        destroyFirstBody();
+
+        verify(player, times(1)).setLeftCollision(false);
+    }
+
+    @Test
+    void testPlayerCameraWallContactWhenPlayerToTheLeft() {
+        MapEndPoints wall = stubMapEndPoints();
+        wall.setPosition(0.1f, 0);
+
+        verifyNoInteractions(player);
+        assertEquals(0.1f*Constants.PPM, wall.getPosition().x);
+
+        doStep();
+
+        verify(player, times(1)).setRightCollision(true);
+
+        destroyFirstBody();
+
+        verify(player, times(1)).setRightCollision(false);
+    }
+
+    private MapEndPoints stubMapEndPoints() {
+        MapEndPoints wall = spy(new MapEndPoints("WALL", level, 0, 0));
+        List<MapEndPoints> wallList = new ArrayList<>();
+        wallList.add(wall);
+        when(level.getGameObjects(MapEndPoints.class)).thenReturn(wallList);
+        when(level.getClassName(MapEndPoints.class)).thenReturn("MapEndPoints");
+        return wall;
     }
 
     @Test
     void testValidFixtures() {
-        fail();
+        Contact contact = mock(Contact.class);
+        when(contact.getFixtureA()).thenReturn(null);
+        when(contact.getFixtureB()).thenReturn(null);
+
+        listener.beginContact(contact);
+
+        contact = mock(Contact.class);
+        Fixture a = mock(Fixture.class);
+        Fixture b = mock(Fixture.class);
+
+        when(contact.getFixtureA()).thenReturn(a);
+        when(contact.getFixtureB()).thenReturn(b);
+        when(a.getUserData()).thenReturn("a");
+        when(b.getUserData()).thenReturn(null);
+
+        listener.beginContact(contact);
+
+        verify(a, times(1)).getUserData();
+        verify(b, times(1)).getUserData();
+        verify(a, never()).getFilterData();
+        verify(b, never()).getFilterData();
+
+        contact = mock(Contact.class);
+        a = mock(Fixture.class);
+        b = mock(Fixture.class);
+
+        when(contact.getFixtureA()).thenReturn(a);
+        when(contact.getFixtureB()).thenReturn(b);
+        when(a.getUserData()).thenReturn("a");
+        when(b.getUserData()).thenReturn("b");
+        Filter aFilter = mock(Filter.class);
+        Filter bFilter = mock(Filter.class);
+        aFilter.categoryBits = Constants.DEFAULT_BIT;
+        bFilter.categoryBits = Constants.DESTROYED_BIT;
+        when(a.getFilterData()).thenReturn(aFilter);
+        when(b.getFilterData()).thenReturn(bFilter);
+
+        listener.beginContact(contact);
+
+        verify(a, times(1)).getFilterData();
+        verify(b, times(1)).getFilterData();
     }
 
     @Test
-    void testEmptyContactObjects() {
-        fail();
+    void testEmptyContactObjectsThrowsNullPointerException() {
+        createTestEnvironment(ContactType.GROUND);
+
+        verifyNoInteractions(player);
+        when(level.getGameObjects(Player.class)).thenReturn(new ArrayList<>());
+
+        try {
+            doStep();
+            fail();
+        } catch (NullPointerException ignored) {}
     }
 
 }
