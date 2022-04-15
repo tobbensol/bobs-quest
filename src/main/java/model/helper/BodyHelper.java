@@ -17,14 +17,14 @@ public class BodyHelper {
 
         Body body = world.createBody(bodyDef);
 
-        Shape shape = createShape(width / Constants.PPM, height / Constants.PPM, rectangle);
+        Shape shape = createShape(width, height, rectangle);
 
         FixtureDef fixtureDef = setFixture(shape, density, categoryBits, maskBits, isSensor, body, contactType);
 
         shape.dispose();
 
         if (contactType == ContactType.PLAYER) {
-            playerSensors(fixtureDef, body, width / Constants.PPM, height / Constants.PPM);
+            playerSensors(fixtureDef, body, width, height);
         }
         if (contactType == ContactType.ENEMY) {
             enemySensors(fixtureDef, body, width / Constants.PPM);
@@ -46,11 +46,11 @@ public class BodyHelper {
     public static Shape createShape(float width, float height, boolean rectangle) {
         if (rectangle) {
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.setAsBox(width / 2, height / 2);
+            polygonShape.setAsBox(width / 2 / Constants.PPM, height / 2 / Constants.PPM);
             return polygonShape;
         } else {
             CircleShape circleShape = new CircleShape();
-            circleShape.setRadius(width / 2);
+            circleShape.setRadius(width / 2 / Constants.PPM);
             return circleShape;
         }
     }
@@ -62,7 +62,7 @@ public class BodyHelper {
 
         // Retrieves all the vertices of the object
         for (int i = 0; i < vertices.length / 2; i++) {
-            worldVertices[i] = new Vector2(vertices[i * 2], vertices[i * 2 + 1]);
+            worldVertices[i] = new Vector2(vertices[i * 2] / Constants.PPM, vertices[i * 2 + 1] / Constants.PPM);
         }
 
         PolygonShape shape = new PolygonShape();
@@ -94,14 +94,14 @@ public class BodyHelper {
      * @param height     the height of the object you want to give a sensor
      */
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
-        createSensor("foot", fixtureDef, body, (width / 2) * 0.4f, 0.02f, 0, -height / 2);
-        createSensor("head", fixtureDef, body, (width / 2) * 0.4f, 0.02f, 0, height / 2);
-        createSensor("right", fixtureDef, body, 0.02f, (width / 2) * 0.2f, width / 2, 0);
-        createSensor("left", fixtureDef, body, 0.02f , (width / 2) * 0.2f, -width / 2, 0);
+        createSensor("foot", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 0.02f, 0, -height / 2 / Constants.PPM);
+        createSensor("head", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 0.02f, 0, height / 2 / Constants.PPM);
+        createSensor("right", fixtureDef, body, 0.02f, (width / 2) * 0.2f / Constants.PPM, width / 2 / Constants.PPM, 0);
+        createSensor("left", fixtureDef, body, 0.02f , (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
     }
 
     private static void enemySensors(FixtureDef fixtureDef, Body body, float width) {
-        createCircleSensor("enemyRadar", fixtureDef, body, width * 5, 0, 0);
+        createCircleSensor("enemyRadar", fixtureDef, body, width * 5 / Constants.PPM, 0, 0);
     }
 
 
