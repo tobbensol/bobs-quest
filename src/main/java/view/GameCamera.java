@@ -126,4 +126,8 @@ public class GameCamera extends OrthographicCamera {
 
         return new Vector3((minX + maxX) / 2, (minY + maxY) / 2, 0);
     }
+
+    public void resetZoom() {
+        zoom = 1;
+    }
 }

@@ -24,7 +24,7 @@ public class GameModel implements ControllableModel {
     private final GameController gameController;
     private Level level;
     private boolean reload = false;
-    private int levelNR = 0;
+    private int levelNR = 4;
     private int numPlayers;
     private GameState state;
     private boolean pause = false;
@@ -150,6 +150,7 @@ public class GameModel implements ControllableModel {
             levelNR++;
             nextLevel = true;
         }
+        camera.resetZoom();
         level = createLevel();
         music = level.getLevelMusic();
         pauseGame();
