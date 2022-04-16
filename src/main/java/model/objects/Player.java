@@ -13,9 +13,10 @@ import model.helper.ContactType;
 import java.util.ArrayList;
 
 public class Player extends JumpableObject {
-    private static final float MAX_VELOCITY = 4.2f;
-    private static final float X_VELOCITY = 15f;
-    private static final float Y_VELOCITY = 250f;
+    private static final float MAX_WALKING_VELOCITY = 4.2f;
+    private static final float MAX_X_VELOCITY = 14f;
+    private static final float X_MOVEMENT_IMPULSE = 15f;
+    private static final float Y_MOVEMENT_IMPULSE = 250f;
     private static final float DROPPING_SCALE = 0.1f;
     private static final float X_DAMPING_SCALE = 1f;
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
@@ -63,17 +64,26 @@ public class Player extends JumpableObject {
         groundedDamping();
         jumpDamping();
 
-        if (cumulativeForces.x > X_VELOCITY) {
-            cumulativeForces.x = X_VELOCITY;
-        }
-        if (cumulativeForces.y > Y_VELOCITY) {
-            cumulativeForces.y = Y_VELOCITY;
+        if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
+            System.out.println(body.getLinearVelocity().x);
+            body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
+            System.out.println(body.getLinearVelocity().x);
         }
 
         this.body.applyForceToCenter(cumulativeForces, true);
         cumulativeForces.scl(0);
     }
 
+    @Override
+    public void moveHorizontally(boolean isRight) {
+        if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_WALKING_VELOCITY) {
+            cumulativeForces.add(X_MOVEMENT_IMPULSE, 0);
+            facingRight = true;
+        } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_WALKING_VELOCITY) {
+            cumulativeForces.add(-X_MOVEMENT_IMPULSE, 0);
+            facingRight = false;
+        }
+    }
 
     private void groundedDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
@@ -82,11 +92,47 @@ public class Player extends JumpableObject {
         }
     }
 
+    @Override
+    public void jump() {
+        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
+            cumulativeForces.add(0, Y_MOVEMENT_IMPULSE);
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            canJump = false;
+            updateGrounded();
+            level.getModel().getAudioHelper().getSoundEffect("jump").play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    canJump = true;
+                }
+            }, 0.1f);
+        }
+    }
+
     private void jumpDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
         if (!grounded) {
             cumulativeForces.add(-currentSpeed.x * JUMP_X_DAMPING_SCALE, -currentSpeed.y * Y_DAMPING_SCALE);
         }
+    }
+
+    public void drop() {
+        if (currentState == State.DEAD || (grounded && body.getLinearVelocity().y == 0 && !onPlatform)) {
+            return;
+        }
+
+        changeMaskBit(true, Constants.PLATFORM_BIT);
+        currentState = State.FALLING;
+
+        if (!grounded){
+            this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
+        }
+        cumulativeForces.add(0, -Y_MOVEMENT_IMPULSE * DROPPING_SCALE);
+
+        if (previousState != State.FALLING && !grounded) {
+            level.getModel().getAudioHelper().getSoundEffect("drop").play();
+        }
+
     }
 
     private void handlePlatform() {
@@ -101,52 +147,6 @@ public class Player extends JumpableObject {
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(getFrame(), x - width/2, y - height/2, width, height);
-    }
-
-
-    @Override
-    public void jump() {
-        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
-            cumulativeForces.add(0, Y_VELOCITY);
-            body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            canJump = false;
-            updateGrounded();
-            level.getModel().getAudioHelper().getSoundEffect("jump").play();
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    canJump = true;
-                }
-            }, 0.1f);
-        }
-    }
-
-    public void drop() {
-        if (currentState == State.DEAD) {
-            return;
-        }
-        if (onPlatform) {
-            changeMaskBit(true, Constants.PLATFORM_BIT);
-        }
-        currentState = State.FALLING;
-
-        this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
-        cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
-        if (previousState != State.FALLING) {
-            level.getModel().getAudioHelper().getSoundEffect("drop").play();
-        }
-
-    }
-
-    @Override
-    public void moveHorizontally(boolean isRight) {
-        if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-            cumulativeForces.add(X_VELOCITY, 0);
-            facingRight = true;
-        } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-            cumulativeForces.add(-X_VELOCITY, 0);
-            facingRight = false;
-        }
     }
 
     public void setLeftCollision(boolean value) {
