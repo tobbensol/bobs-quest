@@ -134,6 +134,7 @@ public class PlayerTest {
     void testPlayerDrops() {
         assertEquals(new Vector2(0, 0), player.getPosition());
 
+        //doesn't work since falling is less sensetive now and needs a speed of less than -1.5 to activate falling (used to be -0.5, but that would activave falling when standing on a platform)
         player.drop();
         player.update();
         doStep();

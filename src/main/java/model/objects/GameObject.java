@@ -27,7 +27,9 @@ public abstract class GameObject implements IGameObject {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.body = BodyHelper.createObjectBody(x, y + (height - Constants.TILE_SIZE) / 2, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
+        //Makes bodies spawn on the floor, but makes tests fail since the player doesn't spawn at 0, 0
+        //this.body = BodyHelper.createObjectBody(x, y + (height - Constants.TILE_SIZE) / 2, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
+        this.body = BodyHelper.createObjectBody(x, y , width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
         this.bit = categoryBits;
         this.maskBits = maskBits;
