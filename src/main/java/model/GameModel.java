@@ -50,7 +50,7 @@ public class GameModel implements ControllableModel {
         levels.add("TestMaps/sizeTest"); // 8
         levels.add("TestMaps/goomba-collision-test"); // 9
         levels.add("TestMaps/floater-test"); // 10
-        levels.add("TestMaps/movingPlatformTest"); // 10
+        levels.add("TestMaps/moving-platform-test"); // 11
 
         gameController = new GameController(this);
 
