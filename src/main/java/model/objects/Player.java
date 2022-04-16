@@ -25,7 +25,6 @@ public class Player extends JumpableObject {
 
     protected State currentState;
     protected State previousState;
-    private boolean frozen = false;
 
     //TODO these should be in a parent class
     private boolean rightCollision = false;
