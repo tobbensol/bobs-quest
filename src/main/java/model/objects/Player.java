@@ -65,13 +65,12 @@ public class Player extends JumpableObject {
         jumpDamping();
 
         if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
-            System.out.println(body.getLinearVelocity().x);
             body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
-            System.out.println(body.getLinearVelocity().x);
         }
 
         this.body.applyForceToCenter(cumulativeForces, true);
         cumulativeForces.scl(0);
+        System.out.println(currentState);
     }
 
     @Override
@@ -129,7 +128,7 @@ public class Player extends JumpableObject {
         }
         cumulativeForces.add(0, -Y_MOVEMENT_IMPULSE * DROPPING_SCALE);
 
-        if (previousState != State.FALLING && !grounded) {
+        if (previousState != State.FALLING && !grounded || onPlatform) {
             level.getModel().getAudioHelper().getSoundEffect("drop").play();
         }
 
