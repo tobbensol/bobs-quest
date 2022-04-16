@@ -54,7 +54,7 @@ public class Goomba extends MovableObject implements Enemy {
         if (playerNearby) {
             moveHorizontally(playerPosition.x > x );
         } else {
-            int range = 150;
+            int range = 125;
             if (numMoves > 0 && numMoves < range) {
                 moveHorizontally(false);
             }
