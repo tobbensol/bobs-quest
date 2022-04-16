@@ -10,10 +10,7 @@ import model.helper.TiledMapHelper;
 import model.objects.GameObjectFactory;
 import model.objects.IGameObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Level {
 
@@ -177,6 +174,8 @@ public class Level {
 
     @Override
     public String toString() {
-        return levelName;
+        String[] splitFileName = levelName.split("/", 2);
+        String levelName = splitFileName[splitFileName.length - 1].replace("-", " ");
+        return Character.toUpperCase(levelName.charAt(0)) + levelName.substring(1);
     }
 }
