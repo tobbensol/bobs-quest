@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="116" height="116" tilewidth="64" tileheight="64" infinite="0" nextlayerid="20" nextobjectid="140">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="116" height="116" tilewidth="64" tileheight="64" infinite="0" nextlayerid="20" nextobjectid="141">
  <tileset firstgid="1" name="Grassland_Terrain_Tileset" tilewidth="64" tileheight="64" tilecount="112" columns="16">
-  <image source="../Multi_Platformer_Tileset_v2/GrassLand/Tilesets/Grassland_Terrain_Tileset.png" width="1024" height="448"/>
+  <image source="../../Multi_Platformer_Tileset_v2/GrassLand/Tilesets/Grassland_Terrain_Tileset.png" width="1024" height="448"/>
  </tileset>
  <layer id="6" name="Sky" width="116" height="116">
   <data encoding="csv">
@@ -387,6 +387,9 @@
   <object id="137" x="1408" y="1216">
    <polygon points="0,0 256,-256 256,0"/>
   </object>
+  <object id="140" x="1664" y="960">
+   <polygon points="0,0 0,256 64,256 64,0"/>
+  </object>
  </objectgroup>
  <objectgroup id="7" name="Platforms"/>
  <objectgroup id="18" name="MapEndPoints">
@@ -395,9 +398,6 @@
   </object>
   <object id="123" name="BottomRight" x="2880" y="1792">
    <point/>
-  </object>
-  <object id="139" x="1664" y="960">
-   <polygon points="0,0 64,0 64,256 0,256"/>
   </object>
  </objectgroup>
 </map>
