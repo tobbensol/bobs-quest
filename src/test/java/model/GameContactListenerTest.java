@@ -150,7 +150,7 @@ public class GameContactListenerTest {
     @Test
     void testPlayerFallingEnemyContact() {
         Enemy enemy = stubEnemy();
-        player.getBody().setLinearVelocity(0, -1);
+        player.getBody().setLinearVelocity(0, -2);
         player.setState();
 
         verifyNoInteractions(enemy);

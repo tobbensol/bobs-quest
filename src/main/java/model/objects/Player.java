@@ -15,9 +15,11 @@ import java.util.ArrayList;
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
     private static final float MAX_X_VELOCITY = 14f;
+
+    private static final float MAX_Y_VELOCITY = 20f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
     private static final float Y_MOVEMENT_IMPULSE = 250f;
-    private static final float DROPPING_SCALE = 0.1f;
+    private static final float DROPPING_SCALE = 0.2f;
     private static final float X_DAMPING_SCALE = 1f;
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
@@ -64,13 +66,18 @@ public class Player extends JumpableObject {
         groundedDamping();
         jumpDamping();
 
-        if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
-            body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
+        float xVal = body.getLinearVelocity().x;
+        float yVal = body.getLinearVelocity().y;
+
+        if (Math.abs(xVal) > MAX_X_VELOCITY) {
+            body.setLinearVelocity(MAX_X_VELOCITY * xVal/Math.abs(xVal), body.getLinearVelocity().y);
+        }
+        if (Math.abs(yVal) > MAX_Y_VELOCITY) {
+            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY * yVal/Math.abs(yVal));
         }
 
         this.body.applyForceToCenter(cumulativeForces, true);
         cumulativeForces.scl(0);
-        System.out.println(currentState);
     }
 
     @Override
