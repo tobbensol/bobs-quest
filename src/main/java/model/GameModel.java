@@ -133,7 +133,7 @@ public class GameModel implements ControllableModel {
 //            pauseGame(); //TODO: Uncomment?
         }
 
-        getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);
+        getLevel().getWorld().step(1/60f, 12, 4);
 
         List<Player> players = getLevel().getGameObjects(Player.class);
         for (int i = 0; i < players.size(); i++) {
@@ -165,7 +165,10 @@ public class GameModel implements ControllableModel {
             levelNR++;
             nextLevel = true;
         }
-        camera.resetZoom();
+        //TODO only here to make tests work, not a porblem outside of tests
+        if (camera != null){
+            camera.resetZoom();
+        }
         level = createLevel();
         if (!availableLevels.contains(level.getLevelName())) {
             availableLevels.add(level.getLevelName());
