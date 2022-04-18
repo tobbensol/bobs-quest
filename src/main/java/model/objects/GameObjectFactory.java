@@ -27,6 +27,7 @@ public class GameObjectFactory {
             case "GOAL" -> new Goal(objectString, level, x, y);
             case "MAPENDPOINTS" -> new MapEndPoints(objectString, level, x, y);
             case "FLOATER" -> new Floater(objectString, level, x, y);
+            case "MOVINGPLATFORM" -> new MovingPlatform(objectString, level, x, y);
             default -> null;
         };
     }

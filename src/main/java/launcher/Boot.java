@@ -20,8 +20,9 @@ public class Boot extends Game {
         this.screenWidth = Gdx.graphics.getWidth();
         this.screenHeight = Gdx.graphics.getHeight();
         this.gameModel = new GameModel();
+        this.gameModel.changeScreen();
 
-        setScreen(new MainMenuScreen(gameModel));
+        //setScreen(new MainMenuScreen(gameModel));
     }
 
     //TODO Maybe these two methods shoud be in gameScreen? Spotbugs complains about us using "INSTANCE = this;" to write to a static field further up in the code.

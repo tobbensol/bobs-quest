@@ -27,7 +27,7 @@ public class BodyHelper {
             playerSensors(fixtureDef, body, width, height);
         }
         if (contactType == ContactType.ENEMY) {
-            enemySensors(fixtureDef, body, width, height);
+            enemySensors(fixtureDef, body, width);
         }
 
         return body;
@@ -94,13 +94,13 @@ public class BodyHelper {
      * @param height     the height of the object you want to give a sensor
      */
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
-        createSensor("foot", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 1.2f / Constants.PPM, 0, -height / 2 / Constants.PPM);
-        createSensor("head", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 2 / Constants.PPM, 0, height / 2 / Constants.PPM);
-        createSensor("right", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, width / 2 / Constants.PPM, 0);
-        createSensor("left", fixtureDef, body, 2 / Constants.PPM, (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
+        createSensor("foot", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 0.02f, 0, -height / 2 / Constants.PPM);
+        createSensor("head", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 0.02f, 0, height / 2 / Constants.PPM);
+        createSensor("right", fixtureDef, body, 0.02f, (width / 2) * 0.2f / Constants.PPM, width / 2 / Constants.PPM, 0);
+        createSensor("left", fixtureDef, body, 0.02f , (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
     }
 
-    private static void enemySensors(FixtureDef fixtureDef, Body body, float width, float height) {
+    private static void enemySensors(FixtureDef fixtureDef, Body body, float width) {
         createCircleSensor("enemyRadar", fixtureDef, body, width * 5 / Constants.PPM, 0, 0);
     }
 
@@ -144,23 +144,12 @@ public class BodyHelper {
         }
     }
 
-    /**
-     * This method lets you change the filter data of a given body, by changing the categoryBits.
-     * The maskBits will remain the same as before.
-     * Both categoryBits and maskBits can be found in the Constants class.
-     * <p>
-     * All bodies have a categoryBit and a maskBit. The categoryBit is used to separate different types of objets,
-     * and the maskBits are used to determine which bodies a body can interact/collide with.
-     *
-     * @param body         - the body which the changes should be made on.
-     * @param categoryBits - bit value that determines if the given body can collide with which other bodies.
-     */
-    public static void changeFilterData(Body body, short categoryBits) {
-        short maskBits = Constants.DEFAULT_MASK_BITS;
-        for (Fixture f : body.getFixtureList()) {
-            maskBits = f.getFilterData().maskBits;
+    public static short changeMaskBit(boolean filterAway, short bit, short maskBits){
+        if (filterAway) {
+            maskBits = (short) (maskBits & ~bit);
+        } else {
+            maskBits = (short) (maskBits | bit);
         }
-        changeFilterData(body, categoryBits, maskBits);
+        return maskBits;
     }
-
 }

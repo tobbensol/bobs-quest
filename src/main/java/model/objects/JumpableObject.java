@@ -5,7 +5,7 @@ import model.helper.ContactType;
 
 public abstract class JumpableObject extends MovableObject implements Jumpable {
 
-    protected int groundedcount = 0;
+    protected int groundedCount = 0;
     protected boolean canJump = true;
     protected boolean grounded = false;
 
@@ -16,14 +16,14 @@ public abstract class JumpableObject extends MovableObject implements Jumpable {
     //todo make other contacts work like this as well?
     public void setGrounded(boolean value) {
         if (value) {
-            groundedcount++;
+            groundedCount++;
         } else {
-            groundedcount--;
+            groundedCount--;
         }
-        updateGrouned();
+        updateGrounded();
     }
 
-    public void updateGrouned() {
-        grounded = groundedcount > 0 && canJump;
+    public void updateGrounded() {
+        grounded = groundedCount > 0 && canJump;
     }
 }

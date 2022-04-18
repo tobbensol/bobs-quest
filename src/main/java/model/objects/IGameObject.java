@@ -44,10 +44,17 @@ public interface IGameObject {
      */
     String toString();
 
+    //TODO add documentation
     /**
      *
      * @param filterAway
      * @param bit
      */
     void changeMaskBit(boolean filterAway, short bit);
+
+    /**
+     *
+     * @return a bool saying if the object is destroyed.
+     */
+    boolean isDestroyed();
 }

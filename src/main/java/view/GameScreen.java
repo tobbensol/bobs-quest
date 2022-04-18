@@ -67,13 +67,9 @@ public class GameScreen implements Screen {
         batch.begin();
 
         for (IGameObject object : gameModel.getLevel().getGameObjects()) {
-            // TODO: Add isDestroyed() for all GameObjects
-            if (object instanceof Coin coin) {
-                if (coin.isDestroyed()) {
-                    continue;
-                }
+            if (!object.isDestroyed()) {
+                object.render(batch);
             }
-            object.render(batch);
         }
 
         batch.end();

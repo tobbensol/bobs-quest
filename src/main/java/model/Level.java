@@ -5,15 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import model.helper.AudioHelper;
 import model.helper.TiledMapHelper;
 import model.objects.GameObjectFactory;
 import model.objects.IGameObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Level {
 
@@ -48,6 +44,7 @@ public class Level {
         objectMap.put("Goal", new ArrayList<>());
         objectMap.put("Floater", new ArrayList<>());
         objectMap.put("MapEndPoints", new ArrayList<>());
+        objectMap.put("MovingPlatform", new ArrayList<>());
 
         createWorld(levelName);
         createObjects();
@@ -178,7 +175,9 @@ public class Level {
 
     @Override
     public String toString() {
-        return prettyLeveName;
+        String[] splitFileName = levelName.split("/", 2);
+        String levelName = splitFileName[splitFileName.length - 1].replace("-", " ");
+        return Character.toUpperCase(levelName.charAt(0)) + levelName.substring(1);
     }
 
     public String getLevelName() {

@@ -1,14 +1,20 @@
 package model.objects;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import helper.MockGL;
 import model.GameContactListener;
+import model.GameContactListenerTest;
+import model.GameModel;
 import model.Level;
+import model.helper.AudioHelper;
 import model.helper.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,14 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PlayerTest {
 
     private Player player;
     private World world;
     private Level level;
+    private GameModel model;
+    private AudioHelper audioHelper;
+    private Sound sound;
 
     @BeforeEach
     void setup() {
@@ -32,11 +40,20 @@ public class PlayerTest {
             public void create() {
             }
         });
+        Gdx.gl = new MockGL();
 
         world = new World(new Vector2(0, 0), false);
         level = mock(Level.class);
+        model = mock(GameModel.class);
+        audioHelper = mock(AudioHelper.class);
+        sound = mock(Sound.class);
         when(level.getWorld()).thenReturn(world);
-        player = new Player(level, 0, 0);
+        when(level.getModel()).thenReturn(model);
+        when(model.getAudioHelper()).thenReturn(audioHelper);
+        when(audioHelper.getSoundEffect(anyString())).thenReturn(sound);
+        doReturn(-1L).when(sound).play();
+//        player = new Player(level, 0, 0);
+        player = new Player("TEST", level, 0, 0);
 
         List<Player> players = new ArrayList<>();
         players.add(player);
@@ -96,20 +113,20 @@ public class PlayerTest {
     @Test
     void testJumpTimer(){
         assertFalse(player.grounded);
-        assertEquals(player.groundedcount, 0);
+        assertEquals(0, player.groundedCount);
         player.setGrounded(true);
         assertTrue(player.grounded);
-        assertEquals(player.groundedcount, 1);
+        assertEquals(1, player.groundedCount);
         player.setGrounded(true);
         assertTrue(player.grounded);
-        assertEquals(player.groundedcount, 2);
+        assertEquals(2, player.groundedCount);
         player.jump();
         player.setGrounded(false);
         doStep();
-        assertEquals(player.groundedcount, 1);
+        assertEquals(1, player.groundedCount);
         assertFalse(player.grounded);
         player.setGrounded(false);
-        assertEquals(player.groundedcount, 0);
+        assertEquals(0, player.groundedCount);
         assertFalse(player.grounded);
     }
 
@@ -117,6 +134,7 @@ public class PlayerTest {
     void testPlayerDrops() {
         assertEquals(new Vector2(0, 0), player.getPosition());
 
+        //doesn't work since falling is less sensetive now and needs a speed of less than -1.5 to activate falling (used to be -0.5, but that would activave falling when standing on a platform)
         player.drop();
         player.update();
         doStep();
@@ -157,60 +175,68 @@ public class PlayerTest {
 
     @Test
     void testPlayerTeleport() {
-        assertEquals(player.getPosition(), new Vector2(0, 0));
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.setPosition(10, 10);
-        assertEquals(player.getPosition(), new Vector2(10 * Constants.PPM, 10 * Constants.PPM));
+        assertEquals(new Vector2(10, 10), player.getPosition());
         assertEquals(player.getBody().getAngle(), 0);
     }
 
     @Test
     void testMoveWithCollision(){
-        assertEquals(player.getPosition(), new Vector2(0, 0));
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.setLeftCollision(true);
         player.moveHorizontally(false);
         player.update();
         doStep();
-        assertEquals(player.getPosition(), new Vector2(0,0));
+        assertEquals(new Vector2(0,0), player.getPosition());
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertNotEquals(player.getPosition(), new Vector2(0,0));
+        assertNotEquals(new Vector2(0,0), player.getPosition());
         player.body.setLinearVelocity(new Vector2(0,0));
         player.setPosition(0,0);
-        assertEquals(player.getPosition(), new Vector2(0, 0));
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.setRightCollision(true);
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertEquals(player.getPosition(), new Vector2(0,0));
+        assertEquals(new Vector2(0,0), player.getPosition());
         player.moveHorizontally(false);
         player.update();
         doStep();
-        assertEquals(player.getPosition(), new Vector2(0,0));
+        assertEquals(new Vector2(0,0), player.getPosition());
         player.setRightCollision(false);
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertNotEquals(player.getPosition(), new Vector2(0,0));
+        assertNotEquals(new Vector2(0,0), player.getPosition());
     }
 
     @Test
     void testMaskbits(){
-        assertEquals(player.maskBits, 125);
+        assertEquals(125, player.maskBits);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(player.maskBits, 125-8);
+        assertEquals(125-8, player.maskBits);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(player.maskBits, 125-8);
+        assertEquals(125-8, player.maskBits);
         player.changeMaskBit(true, Constants.PLATFORM_BIT);
-        assertEquals(player.maskBits, 125-8-32);
+        assertEquals(125-8-32, player.maskBits);
         player.changeMaskBit(true, Constants.PLAYER_BIT);
-        assertEquals(player.maskBits, 125-8-32);
+        assertEquals(125-8-32, player.maskBits);
         player.changeMaskBit(false, Constants.DEFAULT_BIT);
-        assertEquals(player.maskBits, 125-8-32);
+        assertEquals(125-8-32, player.maskBits);
         player.changeMaskBit(false, Constants.PLAYER_BIT);
-        assertEquals(player.maskBits, 125-8-32+2);
+        assertEquals(125-8-32+2, player.maskBits);
         player.changeMaskBit(false, Constants.PLATFORM_BIT);
-        assertEquals(player.maskBits, 125-8+2);
+        assertEquals(125-8+2, player.maskBits);
+    }
+
+    @Test
+    void testSpeedLimit(){
+        assertEquals(new Vector2(0, 0), player.body.getLinearVelocity());
+        player.body.setLinearVelocity(100, 100);
+        player.update();
+        assertEquals(new Vector2(14, 20), player.body.getLinearVelocity());
     }
 
     private void doStep() {

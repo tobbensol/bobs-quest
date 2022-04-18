@@ -15,7 +15,7 @@ public abstract class GameObject implements IGameObject {
     protected Body body;
     protected float x, y, width, height;
     protected Level level;
-    protected boolean facingRight;
+    protected boolean facingRight, isDestroyed;
     protected short bit, maskBits;
     Texture texture;
     String texturePath;
@@ -27,7 +27,9 @@ public abstract class GameObject implements IGameObject {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.body = BodyHelper.createObjectBody(x, y, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
+        //Makes bodies spawn on the floor, but makes tests fail since the player doesn't spawn at 0, 0
+        //this.body = BodyHelper.createObjectBody(x, y + (height - Constants.TILE_SIZE) / 2, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
+        this.body = BodyHelper.createObjectBody(x, y , width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
         this.bit = categoryBits;
         this.maskBits = maskBits;
@@ -38,7 +40,7 @@ public abstract class GameObject implements IGameObject {
     public abstract void render(SpriteBatch batch);
 
     public void setPosition(float x, float y) {
-        body.setTransform(x, y, body.getAngle());
+        body.setTransform(x / Constants.PPM, y / Constants.PPM, body.getAngle());
     }
 
     @Override
@@ -59,12 +61,12 @@ public abstract class GameObject implements IGameObject {
     }
 
     @Override
-    public void changeMaskBit(boolean filterAway, short bit){
-        if (filterAway) {
-            maskBits = (short) (maskBits & ~bit);
-        } else {
-            maskBits = (short) (maskBits | bit);
-        }
-        BodyHelper.changeFilterData(body, Constants.PLAYER_BIT, maskBits);
+    public void changeMaskBit(boolean filterAway, short filterBit){
+        maskBits = BodyHelper.changeMaskBit(filterAway, filterBit, maskBits);
+        BodyHelper.changeFilterData(body, bit, maskBits);
+    }
+
+    public boolean isDestroyed(){
+        return isDestroyed;
     }
 }

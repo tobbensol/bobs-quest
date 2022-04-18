@@ -1,7 +1,5 @@
 package model.objects;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,10 +13,13 @@ import model.helper.ContactType;
 import java.util.ArrayList;
 
 public class Player extends JumpableObject {
-    private static final float MAX_VELOCITY = 4.2f;
-    private static final float X_VELOCITY = 15f;
-    private static final float Y_VELOCITY = 250f;
-    private static final float DROPPING_SCALE = 0.1f;
+    private static final float MAX_WALKING_VELOCITY = 4.2f;
+    //TODO tweek max velocities
+    private static final float MAX_X_VELOCITY = 14f;
+    private static final float MAX_Y_VELOCITY = 20f;
+    private static final float X_MOVEMENT_IMPULSE = 15f;
+    private static final float Y_MOVEMENT_IMPULSE = 250f;
+    private static final float DROPPING_SCALE = 0.2f;
     private static final float X_DAMPING_SCALE = 1f;
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
@@ -27,7 +28,6 @@ public class Player extends JumpableObject {
 
     protected State currentState;
     protected State previousState;
-    private boolean frozen = false;
 
     //TODO these should be in a parent class
     private boolean rightCollision = false;
@@ -56,23 +56,6 @@ public class Player extends JumpableObject {
         }
     }
 
-    /**
-     * Constructor for testing
-     *
-     * @param level - level to be placed in
-     * @param x     - horizontal position
-     * @param y     - vertical position
-     */
-    public Player(Level level, float x, float y) {
-        super("Test", level, x, y, 0.8f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
-
-        hp = 100;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
-
-        frames = new ArrayList<>();
-    }
-
     @Override
     public void update() {
         super.update();
@@ -83,17 +66,30 @@ public class Player extends JumpableObject {
         groundedDamping();
         jumpDamping();
 
-        if (cumulativeForces.x > X_VELOCITY) {
-            cumulativeForces.x = X_VELOCITY;
+        float xVal = body.getLinearVelocity().x;
+        float yVal = body.getLinearVelocity().y;
+
+        if (Math.abs(xVal) > MAX_X_VELOCITY) {
+            body.setLinearVelocity(MAX_X_VELOCITY * xVal/Math.abs(xVal), body.getLinearVelocity().y);
         }
-        if (cumulativeForces.y > Y_VELOCITY) {
-            cumulativeForces.y = Y_VELOCITY;
+        if (Math.abs(yVal) > MAX_Y_VELOCITY) {
+            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY * yVal/Math.abs(yVal));
         }
 
         this.body.applyForceToCenter(cumulativeForces, true);
         cumulativeForces.scl(0);
     }
 
+    @Override
+    public void moveHorizontally(boolean isRight) {
+        if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_WALKING_VELOCITY) {
+            cumulativeForces.add(X_MOVEMENT_IMPULSE, 0);
+            facingRight = true;
+        } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_WALKING_VELOCITY) {
+            cumulativeForces.add(-X_MOVEMENT_IMPULSE, 0);
+            facingRight = false;
+        }
+    }
 
     private void groundedDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
@@ -102,11 +98,47 @@ public class Player extends JumpableObject {
         }
     }
 
+    @Override
+    public void jump() {
+        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
+            cumulativeForces.add(0, Y_MOVEMENT_IMPULSE);
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            canJump = false;
+            updateGrouned();
+            level.getModel().getAudioHelper().getSoundEffect("jump").play(level.getModel().getSoundEffectsvolume());
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    canJump = true;
+                }
+            }, 0.1f);
+        }
+    }
+
     private void jumpDamping() {
         Vector2 currentSpeed = this.body.getLinearVelocity();
         if (!grounded) {
             cumulativeForces.add(-currentSpeed.x * JUMP_X_DAMPING_SCALE, -currentSpeed.y * Y_DAMPING_SCALE);
         }
+    }
+
+    public void drop() {
+        if (currentState == State.DEAD || (grounded && body.getLinearVelocity().y == 0 && !onPlatform)) {
+            return;
+        }
+
+        changeMaskBit(true, Constants.PLATFORM_BIT);
+        currentState = State.FALLING;
+
+        if (!grounded){
+            this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
+        }
+        cumulativeForces.add(0, -Y_MOVEMENT_IMPULSE * DROPPING_SCALE);
+
+        if (previousState != State.FALLING && !grounded || onPlatform) {
+            level.getModel().getAudioHelper().getSoundEffect("drop").play(level.getModel().getSoundEffectsvolume());
+        }
+
     }
 
     private void handlePlatform() {
@@ -120,52 +152,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(), x, y, width, height);
-    }
-
-
-    @Override
-    public void jump() {
-        if (grounded && previousState != State.JUMPING && previousState != State.FALLING) {
-            cumulativeForces.add(0, Y_VELOCITY);
-            canJump = false;
-            updateGrouned();
-            level.getModel().getAudioHelper().getSoundEffect("jump").play(level.getModel().getSoundEffectsvolume());
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    canJump = true;
-                }
-            }, 0.1f);
-        }
-    }
-
-    public void drop() {
-        if (currentState == State.DEAD) {
-            return;
-        }
-        if (onPlatform) {
-            changeMaskBit(true, Constants.PLATFORM_BIT);
-        }
-        currentState = State.FALLING;
-
-        this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
-        cumulativeForces.add(0, -Y_VELOCITY * DROPPING_SCALE);
-        if (previousState != State.FALLING) {
-            level.getModel().getAudioHelper().getSoundEffect("drop").play(level.getModel().getSoundEffectsvolume());
-        }
-
-    }
-
-    @Override
-    public void moveHorizontally(boolean isRight) {
-        if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_VELOCITY) {
-            cumulativeForces.add(X_VELOCITY, 0);
-            facingRight = true;
-        } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_VELOCITY) {
-            cumulativeForces.add(-X_VELOCITY, 0);
-            facingRight = false;
-        }
+        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
     }
 
     public void setLeftCollision(boolean value) {
@@ -188,20 +175,15 @@ public class Player extends JumpableObject {
         return currentState;
     }
 
-    /**
-     * @return the current state of the player.
-     */
     public void setState() {
         State tempState = State.STANDING;
         if (previousState == State.DEAD) {
             tempState = State.DEAD;
-        } else if (body.getLinearVelocity().y < -0.5 && grounded) {
+        } else if (body.getLinearVelocity().y < -1.5f && grounded) {
             tempState = State.SLIDING;
-        } else if (body.getLinearVelocity().y > 0.5 && grounded) {
-            tempState = State.WALKING;
         } else if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             tempState = State.JUMPING;
-        } else if (body.getLinearVelocity().y < -0.5) {
+        } else if (body.getLinearVelocity().y < - 1.5f) {
             tempState = State.FALLING;
         } else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
             tempState = State.WALKING;
@@ -238,10 +220,6 @@ public class Player extends JumpableObject {
         return getCurrentState() == State.DEAD;
     }
 
-    public boolean getFrozen() {
-        return frozen;
-    }
-
     public void setDead() {
         if (previousState == State.DEAD) {
             return;
@@ -249,19 +227,28 @@ public class Player extends JumpableObject {
         hp = -1;
         previousState = currentState;
         currentState = State.DEAD;
-        BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
+        maskBits = Constants.DESTROYED_MASK_BITS;
+        bit = Constants.DESTROYED_BIT;
+        BodyHelper.changeFilterData(body, bit, maskBits);
         // Death "animation"
         body.setLinearVelocity(0, 5);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                frozen = true;
+                isDestroyed = true;
             }
-        }, 1.2f);
+        }, 1.5f);
     }
 
     public void takeDamage(int amount) {
         // Player doesn't take damage if dead
+        if (currentState == State.DEAD) {
+            return;
+        }
+        hp -= amount;
+        if (hp <= 0) {
+            setDead();
+        }
         changeMaskBit(true, Constants.ENEMY_BIT);
 
         Timer.schedule(new Timer.Task() {
@@ -270,13 +257,7 @@ public class Player extends JumpableObject {
                 changeMaskBit(false, Constants.ENEMY_BIT);
             }
         }, 0.5f);
-        if (currentState == State.DEAD) {
-            return;
-        }
-        hp -= amount;
-        if (hp <= 0) {
-            setDead();
-        }
+
         System.out.println(this + ": " + hp);
         level.getModel().getAudioHelper().getSoundEffect("hit").play(level.getModel().getSoundEffectsvolume());
     }
@@ -286,9 +267,7 @@ public class Player extends JumpableObject {
             return;
         }
         hp += amount;
-        if (hp > 100) {
-            hp = 100;
-        }
+        hp = Math.min(100, hp);
     }
 
     public int getHp() {

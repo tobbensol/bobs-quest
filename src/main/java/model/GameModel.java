@@ -21,7 +21,7 @@ public class GameModel implements ControllableModel {
     private final List<Controller> controllers;
     private final int numControllers;
     private final GameController gameController;
-    Level level;
+    private Level level;
     private boolean reload = false;
     private int levelNR = 0;
     private int numPlayers;
@@ -44,16 +44,18 @@ public class GameModel implements ControllableModel {
         this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
-        levels.add("level1"); // 0
-        levels.add("platformTest"); // 1
-        levels.add("slopeTest"); // 2
-        levels.add("cameraTest"); // 3
-        levels.add("goombaTest"); // 4
-        levels.add("coinTest"); // 5
-        levels.add("valleyAndSpikeTest"); // 6
-        levels.add("sizeTest"); // 7
-        levels.add("goombaCollisionTest"); // 8
-        levels.add("floaterTest"); // 9
+        levels.add("level-1"); // 0
+        levels.add("level-2"); // 1
+        levels.add("TestMaps/platform-test"); // 2
+        levels.add("TestMaps/slope-test"); // 3
+        levels.add("TestMaps/camera-test"); // 4
+        levels.add("TestMaps/goomba-test"); // 5
+        levels.add("TestMaps/coin-test"); // 6
+        levels.add("TestMaps/valley-and-spike-test"); // 7
+        levels.add("TestMaps/size-test"); // 8
+        levels.add("TestMaps/goomba-collision-test"); // 9
+        levels.add("TestMaps/floater-test"); // 10
+        levels.add("TestMaps/moving-platform-test"); // 11
 
         availableLevels = new ArrayList<>();
 
@@ -65,14 +67,14 @@ public class GameModel implements ControllableModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
 
-        audioHelper = new AudioHelper();
+
         musicVolume = 0.5f;
         soundEffectsvolume = 0.5f;
     }
 
     private boolean gameOver() {
         for (Player player : getLevel().getGameObjects(Player.class)) {
-            if (!player.getFrozen()) {
+            if (!player.isDestroyed()) {
                 return false;
             }
         }
@@ -90,8 +92,8 @@ public class GameModel implements ControllableModel {
     }
 
     public void update() {
-
         if (initializeLevel) {
+            audioHelper = new AudioHelper(); // TODO: Maybe set this in constructor?
             level = createLevel();
             availableLevels.add(level.getLevelName());
             music = level.getLevelMusic();
@@ -114,14 +116,13 @@ public class GameModel implements ControllableModel {
         }
 
         if (getLevel().isCompleted()) {
-
             music.stop();
             music.dispose();
             audioHelper.getSoundEffect("orchestra").play(soundEffectsvolume);
             currentState = GameState.NEXT_LEVEL;
             changeScreen();
             restart();
-            pauseGame();
+//            pauseGame(); TODO: Uncomment?
         }
         if (gameOver()) {
             music.stop();
@@ -129,7 +130,7 @@ public class GameModel implements ControllableModel {
             currentState = GameState.GAME_OVER;
             changeScreen();
             restart();
-            pauseGame();
+//            pauseGame(); //TODO: Uncomment?
         }
 
         getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);
@@ -158,16 +159,20 @@ public class GameModel implements ControllableModel {
     }
 
     @Override
-    public void restart() {
+    public boolean restart() {
+        boolean nextLevel = false;
         if (getLevel().isCompleted()) {
             levelNR++;
+            nextLevel = true;
         }
+        camera.resetZoom();
         level = createLevel();
         if (!availableLevels.contains(level.getLevelName())) {
             availableLevels.add(level.getLevelName());
         }
         music = level.getLevelMusic();
         pauseGame();
+        return nextLevel;
     }
 
     @Override
@@ -240,7 +245,7 @@ public class GameModel implements ControllableModel {
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
         restart();
-        pauseGame();
+        //pauseGame(); //TODO: Uncomment???
     }
 
     @Override
