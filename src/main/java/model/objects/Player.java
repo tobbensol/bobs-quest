@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
+    //TODO tweek max velocities
     private static final float MAX_X_VELOCITY = 14f;
-
     private static final float MAX_Y_VELOCITY = 20f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
     private static final float Y_MOVEMENT_IMPULSE = 250f;
