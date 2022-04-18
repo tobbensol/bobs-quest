@@ -104,7 +104,7 @@ public class Player extends JumpableObject {
             cumulativeForces.add(0, Y_MOVEMENT_IMPULSE);
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             canJump = false;
-            updateGrouned();
+            updateGrounded();
             level.getModel().getAudioHelper().getSoundEffect("jump").play(level.getModel().getSoundEffectsvolume());
             Timer.schedule(new Timer.Task() {
                 @Override
