@@ -17,7 +17,7 @@ public class GameModel implements ControllableModel {
 
 
     private final List<String> levels;
-    private List<String> completedLevels;
+    private List<String> availableLevels;
     private final List<Controller> controllers;
     private final int numControllers;
     private final GameController gameController;
@@ -55,7 +55,7 @@ public class GameModel implements ControllableModel {
         levels.add("goombaCollisionTest"); // 8
         levels.add("floaterTest"); // 9
 
-        completedLevels = new ArrayList<>();
+        availableLevels = new ArrayList<>();
 
         gameController = new GameController(this);
 
@@ -93,6 +93,7 @@ public class GameModel implements ControllableModel {
 
         if (initializeLevel) {
             level = createLevel();
+            availableLevels.add(level.getLevelName());
             music = level.getLevelMusic();
             createCamera();
             initializeLevel = false;
@@ -113,9 +114,7 @@ public class GameModel implements ControllableModel {
         }
 
         if (getLevel().isCompleted()) {
-            if (!completedLevels.contains(level.getLevelName())) {
-                completedLevels.add(level.getLevelName());
-            }
+
             music.stop();
             music.dispose();
             audioHelper.getSoundEffect("orchestra").play(soundEffectsvolume);
@@ -164,6 +163,9 @@ public class GameModel implements ControllableModel {
             levelNR++;
         }
         level = createLevel();
+        if (!availableLevels.contains(level.getLevelName())) {
+            availableLevels.add(level.getLevelName());
+        }
         music = level.getLevelMusic();
         pauseGame();
     }
@@ -218,12 +220,12 @@ public class GameModel implements ControllableModel {
         return levels;
     }
 
-    public List<String> getCompletedLevels() {
-        return completedLevels;
+    public List<String> getAvailableLevels() {
+        return availableLevels;
     }
 
-    public void resetCompletedLevels() {
-        completedLevels = new ArrayList<>();
+    public void resetAvailableLevels() {
+        availableLevels = new ArrayList<>();
     }
 
     public void setLevelNR(int levelNR) {

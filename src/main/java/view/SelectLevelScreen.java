@@ -16,10 +16,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.GameModel;
 import model.GameState;
-import model.Level;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SelectLevelScreen implements Screen {
     private final Viewport viewport;
@@ -52,7 +48,7 @@ public class SelectLevelScreen implements Screen {
         table.add(title).colspan(2);
 
         int tableIndex = 0;
-        for (String level: gameModel.getCompletedLevels()) { //TODO: Reset completed levels when starting new game
+        for (String level: gameModel.getAvailableLevels()) { //TODO: Reset completed levels when starting new game
             TextButton textButton = new TextButton(level,skin);
             if (tableIndex % 2 == 0) {
                 table.row();

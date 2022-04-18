@@ -66,7 +66,7 @@ public class NewGameScreen implements Screen {
         singleplayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.resetCompletedLevels();
+                gameModel.resetAvailableLevels();
                 gameModel.setLevelNR(0);
                 gameModel.restart();
                 gameModel.setCurrentState(GameState.ACTIVE);
@@ -78,7 +78,7 @@ public class NewGameScreen implements Screen {
         multiplayer1.addListener(new ChangeListener() { //TODO: ADD multiplayer option screen
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.resetCompletedLevels();
+                gameModel.resetAvailableLevels();
                 gameModel.setLevelNR(0);
                 gameModel.setNumPlayers(2);
                 gameModel.restart();
@@ -91,7 +91,7 @@ public class NewGameScreen implements Screen {
         multiplayer2.addListener(new ChangeListener() { //TODO: ADD multiplayer option screen
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.resetCompletedLevels();
+                gameModel.resetAvailableLevels();
                 gameModel.setLevelNR(0);
                 gameModel.setNumPlayers(3);
                 gameModel.restart();
