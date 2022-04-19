@@ -66,38 +66,21 @@ public class NewGameScreen implements Screen {
         singleplayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.resetAvailableLevels();
-                gameModel.setLevelNR(0);
-                gameModel.restart();
-                gameModel.setCurrentState(GameState.ACTIVE);
-                gameModel.changeScreen();
-                gameModel.resumeGame();
+                newGame(1);
             }
         });
 
         multiplayer1.addListener(new ChangeListener() { //TODO: ADD multiplayer option screen
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.resetAvailableLevels();
-                gameModel.setLevelNR(0);
-                gameModel.setNumPlayers(2);
-                gameModel.restart();
-                gameModel.setCurrentState(GameState.ACTIVE);
-                gameModel.changeScreen();
-                gameModel.resumeGame();
+                newGame(2);
             }
         });
 
         multiplayer2.addListener(new ChangeListener() { //TODO: ADD multiplayer option screen
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameModel.resetAvailableLevels();
-                gameModel.setLevelNR(0);
-                gameModel.setNumPlayers(3);
-                gameModel.restart();
-                gameModel.setCurrentState(GameState.ACTIVE);
-                gameModel.changeScreen();
-                gameModel.resumeGame();
+                newGame(3);
             }
         });
 
@@ -110,6 +93,21 @@ public class NewGameScreen implements Screen {
             }
         });
 
+    }
+
+    private void newGame(int numberOfPlayers) {
+        if (numberOfPlayers < 1 || numberOfPlayers > 3) {
+            throw new IllegalArgumentException("Number of players must be between 1 and 3");
+        }
+        if (gameModel.getCurrentState() != GameState.ACTIVE) {
+            gameModel.resetAvailableLevels();
+            gameModel.setLevelNR(0);
+            gameModel.setNumPlayers(numberOfPlayers);
+            gameModel.restart();
+            gameModel.setCurrentState(GameState.ACTIVE);
+            gameModel.changeScreen();
+            gameModel.resumeGame();
+        }
     }
 
 

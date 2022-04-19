@@ -76,11 +76,14 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO: Game Paused when starting new game from here. Maybe check if first level or check initialized
-                gameModel.setCurrentState(GameState.ACTIVE);
-                gameModel.changeScreen();
-                if (!gameModel.isPaused()) {
-                    gameModel.resumeGame();
+                if (gameModel.getCurrentState() != GameState.ACTIVE) {
+                    gameModel.setCurrentState(GameState.ACTIVE);
+                    gameModel.changeScreen();
+                    if (!gameModel.isPaused()) {
+                        gameModel.resumeGame();
+                    }
                 }
+
             }
         });
 
