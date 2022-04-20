@@ -16,7 +16,7 @@ public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
     //TODO tweek max velocities
     private static final float MAX_X_VELOCITY = 14f;
-    private static final float MAX_Y_VELOCITY = 20f;
+    private static final float MAX_Y_VELOCITY = 14f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
     private static final float Y_MOVEMENT_IMPULSE = 250f;
     private static final float DROPPING_SCALE = 0.2f;
@@ -65,19 +65,19 @@ public class Player extends JumpableObject {
         handlePlatform();
         groundedDamping();
         jumpDamping();
-
-        float xVal = body.getLinearVelocity().x;
-        float yVal = body.getLinearVelocity().y;
-
-        if (Math.abs(xVal) > MAX_X_VELOCITY) {
-            body.setLinearVelocity(MAX_X_VELOCITY * xVal/Math.abs(xVal), body.getLinearVelocity().y);
-        }
-        if (Math.abs(yVal) > MAX_Y_VELOCITY) {
-            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY * yVal/Math.abs(yVal));
-        }
+        checkIfMaxVelocity();
 
         this.body.applyForceToCenter(cumulativeForces, true);
         cumulativeForces.scl(0);
+    }
+
+    private void checkIfMaxVelocity() {
+        if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
+            body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
+        }
+        if (Math.abs(body.getLinearVelocity().y) > MAX_Y_VELOCITY) {
+            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY);
+        }
     }
 
     @Override
