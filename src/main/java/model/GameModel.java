@@ -1,6 +1,5 @@
 package model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import controls.*;
@@ -93,7 +92,7 @@ public class GameModel implements ControllableModel {
 
     public void update() {
         if (initializeLevel) {
-            audioHelper = new AudioHelper(); // TODO: Maybe set this in constructor?
+            audioHelper = new AudioHelper();
             level = createLevel();
             availableLevels.add(level.getLevelName());
             music = level.getLevelMusic();
@@ -122,7 +121,6 @@ public class GameModel implements ControllableModel {
             currentState = GameState.NEXT_LEVEL;
             changeScreen();
             restart();
-//            pauseGame(); TODO: Uncomment?
         }
         if (gameOver()) {
             music.stop();
@@ -130,7 +128,6 @@ public class GameModel implements ControllableModel {
             currentState = GameState.GAME_OVER;
             changeScreen();
             restart();
-//            pauseGame(); //TODO: Uncomment?
         }
 
         getLevel().getWorld().step(1/60f, 12, 4);
@@ -165,7 +162,7 @@ public class GameModel implements ControllableModel {
             levelNR++;
             nextLevel = true;
         }
-        //TODO only here to make tests work, not a porblem outside of tests
+        //TODO only here to make tests work, not a problem outside of tests
         if (camera != null){
             camera.resetZoom();
         }
@@ -191,16 +188,28 @@ public class GameModel implements ControllableModel {
         if (currentState == null) {
             throw new IllegalArgumentException("Cannot set state to null.");
         }
-        //TODO: Check if GameState is valid or not. (old checks disabled for now)
-//        if (this.currentState == GameState.STARTUP && (currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL)) {
-//            throw new IllegalArgumentException("Illegal state.");
-//        }
-//        if (this.currentState == GameState.GAME_OVER && (currentState == GameState.STARTUP || currentState == GameState.NEXT_LEVEL)) {
-//            throw new IllegalArgumentException("Illegal state.");
-//        }
-//        if (this.currentState == GameState.NEXT_LEVEL && (currentState == GameState.GAME_OVER /*|| currentState == GameState.STARTUP*/)) {
-//            throw new IllegalArgumentException("Illegal state.");
-//        }
+        if (this.currentState == GameState.MAIN_MENU && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.NEW_GAME && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER || currentState == GameState.SETTINGS)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.SELECT_LEVEL && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER || currentState == GameState.SETTINGS)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.SETTINGS && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER || currentState == GameState.SELECT_LEVEL)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.NEXT_LEVEL && (currentState == GameState.GAME_OVER || currentState == GameState.NEW_GAME || currentState == GameState.SELECT_LEVEL)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.ACTIVE && (currentState == GameState.NEW_GAME || currentState == GameState.SETTINGS)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.GAME_OVER && (currentState == GameState.NEXT_LEVEL || currentState == GameState.SETTINGS)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+
         previousState = this.currentState;
         this.currentState = currentState;
     }
@@ -248,7 +257,6 @@ public class GameModel implements ControllableModel {
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
         restart();
-        //pauseGame(); //TODO: Uncomment???
     }
 
     @Override

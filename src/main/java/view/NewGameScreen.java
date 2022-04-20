@@ -96,6 +96,7 @@ public class NewGameScreen implements Screen {
     }
 
     private void newGame(int numberOfPlayers) {
+        //TODO: Dispose old game?
         if (numberOfPlayers < 1 || numberOfPlayers > 3) {
             throw new IllegalArgumentException("Number of players must be between 1 and 3");
         }
