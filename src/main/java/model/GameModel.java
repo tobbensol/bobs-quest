@@ -108,7 +108,7 @@ public class GameModel implements ControllableModel {
             getLevel().updateHUD();
             music.pause();
             return;
-        } else {
+        } else { //TODO i dont think this should happen every update
             getLevel().getHud().resume();
             music.play();
             music.setVolume(musicVolume);
@@ -147,20 +147,11 @@ public class GameModel implements ControllableModel {
         return camera;
     }
 
-    public boolean getReload() {
-        return reload;
-    }
-
-    public void setReload(Boolean value) {
-        reload = value;
-    }
-
     @Override
     public boolean restart() {
-        boolean nextLevel = false;
-        if (getLevel().isCompleted()) {
+        boolean nextLevel = getLevel().isCompleted();
+        if (nextLevel) {
             levelNR++;
-            nextLevel = true;
         }
         //TODO only here to make tests work, not a problem outside of tests
         if (camera != null){

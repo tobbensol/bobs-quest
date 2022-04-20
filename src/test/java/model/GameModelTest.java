@@ -160,13 +160,6 @@ public class GameModelTest {
     }
 
     @Test
-    void testReload() {
-        assertFalse(model.getReload());
-        model.setReload(true);
-        assertTrue(model.getReload());
-    }
-
-    @Test
     void testRestart() {
         // No access to model.levels or model.levelNR
         assertFalse(model.getLevel().isCompleted());
