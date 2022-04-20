@@ -113,21 +113,21 @@ public class GameModel implements ControllableModel {
             music.play();
             music.setVolume(musicVolume);
         }
-
+        if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL){
+            restart();
+        }
         if (getLevel().isCompleted()) {
             music.stop();
             music.dispose();
             audioHelper.getSoundEffect("orchestra").play(soundEffectsvolume);
             currentState = GameState.NEXT_LEVEL;
             changeScreen();
-            restart();
         }
         if (gameOver()) {
             music.stop();
             music.dispose();
             currentState = GameState.GAME_OVER;
             changeScreen();
-            restart();
         }
 
         getLevel().getWorld().step(1/60f, 12, 4);
