@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="125" height="126" tilewidth="64" tileheight="64" infinite="0" nextlayerid="31" nextobjectid="224">
- <tileset firstgid="1" source="../Multi_Platformer_Tileset_v2/Tilesets/WorldObjects.tsx"/>
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="125" height="126" tilewidth="64" tileheight="64" infinite="0" nextlayerid="31" nextobjectid="224">
+ <tileset firstgid="1" source="../Multi_Platformer_Tileset_v2/Tilesets/WorldObject_Tileset.tsx"/>
  <tileset firstgid="26" source="../Multi_Platformer_Tileset_v2/Tilesets/Sky_Tileset.tsx"/>
  <tileset firstgid="122" source="../Multi_Platformer_Tileset_v2/SnowLand/Tilesets/SnowLand_Terrain_Tileset.tsx"/>
+ <tileset firstgid="234" source="../Multi_Platformer_Tileset_v2/SnowLand/Tilesets/SnowLand_Background_Tileset.tsx"/>
+ <tileset firstgid="1259" source="../Multi_Platformer_Tileset_v2/SnowLand/Tilesets/SnowLand_Details_Tileset.tsx"/>
  <layer id="26" name="Background" width="125" height="126">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

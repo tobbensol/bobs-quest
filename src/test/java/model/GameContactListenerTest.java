@@ -150,10 +150,11 @@ public class GameContactListenerTest {
     @Test
     void testPlayerFallingEnemyContact() {
         Enemy enemy = stubEnemy();
-        player.getBody().setLinearVelocity(0, -1);
+        player.getBody().setLinearVelocity(0, -2);
         player.setState();
 
         verifyNoInteractions(enemy);
+        //doesn't work since falling is less sensetive now and needs a speed of less than -1.5 to activate falling (used to be -0.5, but that would activave falling when standing on a platform)
         assertEquals(Player.State.FALLING, player.getCurrentState());
 
         doStep();
@@ -247,7 +248,7 @@ public class GameContactListenerTest {
         wall.setPosition(-0.1f, 0);
 
         verifyNoInteractions(player);
-        assertEquals(-0.1f*Constants.PPM, wall.getPosition().x);
+        assertEquals(-0.1f, wall.getPosition().x);
 
         doStep();
 
@@ -264,7 +265,7 @@ public class GameContactListenerTest {
         wall.setPosition(0.1f, 0);
 
         verifyNoInteractions(player);
-        assertEquals(0.1f*Constants.PPM, wall.getPosition().x);
+        assertEquals(0.1f, wall.getPosition().x);
 
         doStep();
 

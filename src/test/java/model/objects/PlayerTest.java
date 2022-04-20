@@ -113,20 +113,20 @@ public class PlayerTest {
     @Test
     void testJumpTimer(){
         assertFalse(player.grounded);
-        assertEquals(player.groundedCount, 0);
+        assertEquals(0, player.groundedCount);
         player.setGrounded(true);
         assertTrue(player.grounded);
-        assertEquals(player.groundedCount, 1);
+        assertEquals(1, player.groundedCount);
         player.setGrounded(true);
         assertTrue(player.grounded);
-        assertEquals(player.groundedCount, 2);
+        assertEquals(2, player.groundedCount);
         player.jump();
         player.setGrounded(false);
         doStep();
-        assertEquals(player.groundedCount, 1);
+        assertEquals(1, player.groundedCount);
         assertFalse(player.grounded);
         player.setGrounded(false);
-        assertEquals(player.groundedCount, 0);
+        assertEquals(0, player.groundedCount);
         assertFalse(player.grounded);
     }
 
@@ -134,6 +134,7 @@ public class PlayerTest {
     void testPlayerDrops() {
         assertEquals(new Vector2(0, 0), player.getPosition());
 
+        //doesn't work since falling is less sensetive now and needs a speed of less than -1.5 to activate falling (used to be -0.5, but that would activave falling when standing on a platform)
         player.drop();
         player.update();
         doStep();
@@ -174,60 +175,68 @@ public class PlayerTest {
 
     @Test
     void testPlayerTeleport() {
-        assertEquals(player.getPosition(), new Vector2(0, 0));
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.setPosition(10, 10);
-        assertEquals(player.getPosition(), new Vector2(10, 10));
+        assertEquals(new Vector2(10, 10), player.getPosition());
         assertEquals(player.getBody().getAngle(), 0);
     }
 
     @Test
     void testMoveWithCollision(){
-        assertEquals(player.getPosition(), new Vector2(0, 0));
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.setLeftCollision(true);
         player.moveHorizontally(false);
         player.update();
         doStep();
-        assertEquals(player.getPosition(), new Vector2(0,0));
+        assertEquals(new Vector2(0,0), player.getPosition());
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertNotEquals(player.getPosition(), new Vector2(0,0));
+        assertNotEquals(new Vector2(0,0), player.getPosition());
         player.body.setLinearVelocity(new Vector2(0,0));
         player.setPosition(0,0);
-        assertEquals(player.getPosition(), new Vector2(0, 0));
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.setRightCollision(true);
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertEquals(player.getPosition(), new Vector2(0,0));
+        assertEquals(new Vector2(0,0), player.getPosition());
         player.moveHorizontally(false);
         player.update();
         doStep();
-        assertEquals(player.getPosition(), new Vector2(0,0));
+        assertEquals(new Vector2(0,0), player.getPosition());
         player.setRightCollision(false);
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertNotEquals(player.getPosition(), new Vector2(0,0));
+        assertNotEquals(new Vector2(0,0), player.getPosition());
     }
 
     @Test
     void testMaskbits(){
-        assertEquals(player.maskBits, 125);
+        assertEquals(125, player.maskBits);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(player.maskBits, 125-8);
+        assertEquals(125-8, player.maskBits);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(player.maskBits, 125-8);
+        assertEquals(125-8, player.maskBits);
         player.changeMaskBit(true, Constants.PLATFORM_BIT);
-        assertEquals(player.maskBits, 125-8-32);
+        assertEquals(125-8-32, player.maskBits);
         player.changeMaskBit(true, Constants.PLAYER_BIT);
-        assertEquals(player.maskBits, 125-8-32);
+        assertEquals(125-8-32, player.maskBits);
         player.changeMaskBit(false, Constants.DEFAULT_BIT);
-        assertEquals(player.maskBits, 125-8-32);
+        assertEquals(125-8-32, player.maskBits);
         player.changeMaskBit(false, Constants.PLAYER_BIT);
-        assertEquals(player.maskBits, 125-8-32+2);
+        assertEquals(125-8-32+2, player.maskBits);
         player.changeMaskBit(false, Constants.PLATFORM_BIT);
-        assertEquals(player.maskBits, 125-8+2);
+        assertEquals(125-8+2, player.maskBits);
+    }
+
+    @Test
+    void testSpeedLimit(){
+        assertEquals(new Vector2(0, 0), player.body.getLinearVelocity());
+        player.body.setLinearVelocity(100, 100);
+        player.update();
+        assertEquals(new Vector2(14, 20), player.body.getLinearVelocity());
     }
 
     private void doStep() {

@@ -14,11 +14,12 @@ import java.util.ArrayList;
 
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
+    //TODO tweek max velocities
     private static final float MAX_X_VELOCITY = 14f;
     private static final float MAX_Y_VELOCITY = 14f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
     private static final float Y_MOVEMENT_IMPULSE = 250f;
-    private static final float DROPPING_SCALE = 0.1f;
+    private static final float DROPPING_SCALE = 0.2f;
     private static final float X_DAMPING_SCALE = 1f;
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
@@ -68,7 +69,6 @@ public class Player extends JumpableObject {
 
         this.body.applyForceToCenter(cumulativeForces, true);
         cumulativeForces.scl(0);
-        System.out.println(currentState);
     }
 
     private void checkIfMaxVelocity() {
@@ -175,9 +175,6 @@ public class Player extends JumpableObject {
         return currentState;
     }
 
-    /**
-     * @return the current state of the player.
-     */
     public void setState() {
         State tempState = State.STANDING;
         if (previousState == State.DEAD) {
@@ -245,6 +242,13 @@ public class Player extends JumpableObject {
 
     public void takeDamage(int amount) {
         // Player doesn't take damage if dead
+        if (currentState == State.DEAD) {
+            return;
+        }
+        hp -= amount;
+        if (hp <= 0) {
+            setDead();
+        }
         changeMaskBit(true, Constants.ENEMY_BIT);
 
         Timer.schedule(new Timer.Task() {
@@ -253,13 +257,7 @@ public class Player extends JumpableObject {
                 changeMaskBit(false, Constants.ENEMY_BIT);
             }
         }, 0.5f);
-        if (currentState == State.DEAD) {
-            return;
-        }
-        hp -= amount;
-        if (hp <= 0) {
-            setDead();
-        }
+
         System.out.println(this + ": " + hp);
         level.getModel().getAudioHelper().getSoundEffect("hit").play();
     }
@@ -269,9 +267,7 @@ public class Player extends JumpableObject {
             return;
         }
         hp += amount;
-        if (hp > 100) {
-            hp = 100;
-        }
+        hp = Math.min(100, hp);
     }
 
     public int getHp() {
