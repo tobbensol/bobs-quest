@@ -684,13 +684,13 @@
  </objectgroup>
  <objectgroup id="7" name="Platforms">
   <object id="209" x="1024" y="1280">
-   <polygon points="0,0 0,64 192,64 192,0"/>
+   <polygon points="0,0 0,0.64 192,0.64 192,0"/>
   </object>
   <object id="210" x="1216" y="1216">
-   <polygon points="0,0 0,64 192,64 192,0"/>
+   <polygon points="0,0 0,0.64 192,0.64 192,0"/>
   </object>
   <object id="211" x="1408" y="1152">
-   <polygon points="0,0 0,64 192,64 192,0"/>
+   <polygon points="0,0 0,0.64 192,0.64 192,0"/>
   </object>
   <object id="212" x="1600" y="1024">
    <polygon points="0,0 0,64 192,64 192,0"/>
