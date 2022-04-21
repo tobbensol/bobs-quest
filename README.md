@@ -54,6 +54,9 @@ Additional credits:
 - Tileset:
     - Diego del Solar/"Shackhal" for [Multi_Platformer_Tileset_v2](https://shackhal.itch.io/multi-platformer-tileset)
 - Music:
-  - Manuel Bolaños Gómez "CodeManu" (CC-BY 3.0) for [OpenGameArt.Org]("https://opengameart.org/content/platformer-game-music-pack")
+  - Manuel Bolaños Gómez "CodeManu" (CC-BY 3.0) for [OpenGameArt.Org](https://opengameart.org/content/platformer-game-music-pack)
 - Sound-effects:
-  - TODO: ADD licences
+
+  - Bart Kelsey "bart" (CC-BY 3.0) for [OpenGameArt.Org](https://opengameart.org/content/level-up-sound-effects)
+  - Juhani Junkala "SubspaceAudio" (CC-BY 3.0) for [OpenGameArt.Org](https://opengameart.org/content/512-sound-effects-8-bit-style)
+  - [Mixkit Sound Effects Free License](https://mixkit.co/license/#sfxFree) from [Mixkit](https://mixkit.co/free-sound-effects/)
