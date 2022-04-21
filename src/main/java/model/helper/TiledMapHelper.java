@@ -31,6 +31,7 @@ public class TiledMapHelper {
         parseMapEnvironment(getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
         parseMapEnvironment(getMapObjects("Platforms"), ContactType.PLATFORM, Constants.PLATFORM_BIT, Constants.DEFAULT_MASK_BITS, false);
         parseMapEnvironment(getMapObjects("Death"), ContactType.DEATH, Constants.DEFAULT_BIT, Constants.INTERACTIVE_MASK_BITS, true);
+        parseMapEnvironment(getMapObjects("Edge"), ContactType.EDGE, Constants.DEFAULT_BIT, Constants.EDGE_MASK_BITS, false);
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
