@@ -18,8 +18,8 @@ public class Player extends JumpableObject {
     private static final float MAX_X_VELOCITY = 14f;
     private static final float MAX_Y_VELOCITY = 14f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
-    private static final float Y_MOVEMENT_IMPULSE = 250f;
-    private static final float DROPPING_SCALE = 0.2f;
+    private static final float Y_MOVEMENT_IMPULSE = 260f;
+    private static final float DROPPING_SCALE = 0.1f;
     private static final float X_DAMPING_SCALE = 1f;
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
