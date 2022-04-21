@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import controls.GameController;
 import launcher.Boot;
 import model.GameModel;
 import model.GameState;
@@ -29,7 +31,7 @@ public class NewGameScreen implements Screen {
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
     }
 
     @Override
@@ -38,12 +40,10 @@ public class NewGameScreen implements Screen {
 
         Table table = new Table();
         stage.addActor(table);
-//        table.setDebug(true);
         table.center().top().padTop(viewport.getScreenHeight()/4f);
 
         table.setFillParent(true);
         Label title = new Label("NEW GAME", font);
-//        title.debug();
         title.setFontScale(4f);
         table.add(title);
 
@@ -61,57 +61,12 @@ public class NewGameScreen implements Screen {
         table.add(multiplayer2).padTop(20).minWidth(250).minHeight(50);
         table.row();
         table.add(back).padTop(20).minWidth(250).minHeight(50);
-        //stage.addActor(table);
 
-        singleplayer.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                newGame(1);
-            }
-        });
-
-        multiplayer1.addListener(new ChangeListener() { //TODO: ADD multiplayer option screen
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                newGame(2);
-            }
-        });
-
-        multiplayer2.addListener(new ChangeListener() { //TODO: ADD multiplayer option screen
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                newGame(3);
-            }
-        });
-
-
-        back.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(gameModel.getPreviousState());
-                gameModel.changeScreen();
-            }
-        });
-
+        singleplayer.addListener(Boot.INSTANCE.getGameController().newGameListener(1));
+        multiplayer1.addListener(Boot.INSTANCE.getGameController().newGameListener(2));
+        multiplayer2.addListener(Boot.INSTANCE.getGameController().newGameListener(3));
+        back.addListener(Boot.INSTANCE.getGameController().goBackListener());
     }
-
-    private void newGame(int numberOfPlayers) {
-        //TODO: Dispose old game?
-        if (numberOfPlayers < 1 || numberOfPlayers > 3) {
-            throw new IllegalArgumentException("Number of players must be between 1 and 3");
-        }
-        if (gameModel.getCurrentState() != GameState.ACTIVE) {
-            gameModel.resetAvailableLevels();
-            gameModel.setLevelNR(0);
-            gameModel.setNumPlayers(numberOfPlayers);
-            gameModel.restart();
-            gameModel.setCurrentState(GameState.ACTIVE);
-            gameModel.changeScreen();
-            gameModel.resumeGame();
-        }
-    }
-
-
 
     @Override
     public void render(float delta) {

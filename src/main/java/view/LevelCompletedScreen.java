@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.GameModel;
 import model.GameState;
+import org.lwjgl.system.CallbackI;
 
 public class LevelCompletedScreen implements Screen {
     private final Viewport viewport;
@@ -32,7 +33,7 @@ public class LevelCompletedScreen implements Screen {
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
     }
 
     @Override
@@ -59,23 +60,8 @@ public class LevelCompletedScreen implements Screen {
         table.add(mainMenu).padTop(20).minWidth(250).minHeight(50);;
 
 
-        nextLevel.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.ACTIVE);
-                gameModel.changeScreen();
-                gameModel.resumeGame();
-            }
-        });
-
-        mainMenu.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.MAIN_MENU);
-                gameModel.changeScreen();
-            }
-        });
-
+        nextLevel.addListener(Boot.INSTANCE.getGameController().goToScreenListener(GameState.ACTIVE));
+        mainMenu.addListener(Boot.INSTANCE.getGameController().goToScreenListener(GameState.MAIN_MENU));
     }
 
     @Override

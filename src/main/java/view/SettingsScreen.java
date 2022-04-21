@@ -7,12 +7,8 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
@@ -30,7 +26,7 @@ public class SettingsScreen implements Screen {
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
     }
 
@@ -57,7 +53,7 @@ public class SettingsScreen implements Screen {
         Label soundEffectsVolumeLabel = new Label("Sound effects volume", font);
         soundEffectsVolumeLabel.setFontScale(1.5f);
         Slider soundEffectsVolumeSlider = new Slider(0,1,0.1f,false,skin);
-        soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsvolume());
+        soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsVolume());
 
         TextButton back = new TextButton("Back", skin);
 
@@ -71,29 +67,10 @@ public class SettingsScreen implements Screen {
         table.row();
         table.add(back).padTop(20).minWidth(150).minHeight(50).colspan(2);
 
-        musicVolumeSlider.addListener(new DragListener() {
-            @Override
-            public void dragStop(InputEvent event, float x, float y, int pointer) {
-                super.dragStop(event, x, y, pointer);
-                gameModel.setMusicVolume(musicVolumeSlider.getValue());
-            }
-        });
+        musicVolumeSlider.addListener(Boot.INSTANCE.getGameController().volumeListener(musicVolumeSlider, true));
+        soundEffectsVolumeSlider.addListener(Boot.INSTANCE.getGameController().volumeListener(soundEffectsVolumeSlider, false));
+        back.addListener(Boot.INSTANCE.getGameController().goBackListener());
 
-        soundEffectsVolumeSlider.addListener(new DragListener() {
-            @Override
-            public void dragStop(InputEvent event, float x, float y, int pointer) {
-                super.dragStop(event, x, y, pointer);
-                gameModel.setSoundEffectsvolume(soundEffectsVolumeSlider.getValue());
-            }
-        });
-
-        back.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(gameModel.getPreviousState());
-                gameModel.changeScreen();
-            }
-        });
 
     }
 
