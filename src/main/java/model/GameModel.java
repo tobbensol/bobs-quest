@@ -21,7 +21,6 @@ public class GameModel implements ControllableModel {
     private final int numControllers;
     private final GameController gameController;
     private Level level;
-    private boolean reload = false;
     private int levelNR = 0;
     private int numPlayers;
 

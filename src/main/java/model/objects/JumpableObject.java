@@ -13,7 +13,6 @@ public abstract class JumpableObject extends MovableObject implements Jumpable {
         super(name, level, x, y, density, contactType, categoryBits, maskBits);
     }
 
-    //todo make other contacts work like this as well?
     public void setGrounded(boolean value) {
         if (value) {
             groundedCount++;
