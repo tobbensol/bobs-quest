@@ -16,6 +16,9 @@ public class Floater extends MovableObject implements Enemy {
     private Vector2 playerPosition;
     int steps = 0;
     float direction = 0.5f;
+    //values for alternate movement
+    //int steps = 1;
+    //float direction = 0;
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
@@ -40,6 +43,10 @@ public class Floater extends MovableObject implements Enemy {
                 direction *= -1;
             }
             setPosition(x, y + direction);
+            //alternate floater movement
+            //steps %= 200;
+            //direction = (float) (steps * Math.PI/100);
+            //setPosition((float) (x+Math.sin(direction)), (float) (y + Math.cos(direction)));
         }
     }
 
@@ -60,7 +67,6 @@ public class Floater extends MovableObject implements Enemy {
 
     @Override
     public void setPlayerPosition(Vector2 position) {
-        //TODO: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position
         playerPosition = position;
     }
 
