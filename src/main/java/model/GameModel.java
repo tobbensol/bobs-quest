@@ -151,7 +151,10 @@ public class GameModel implements ControllableModel {
         if (!availableLevels.contains(level.getLevelName())) {
             availableLevels.add(level.getLevelName());
         }
+        music.stop();
+        music.dispose();
         music = level.getLevelMusic();
+        music.pause();
         pauseGame();
         return nextLevel;
     }
