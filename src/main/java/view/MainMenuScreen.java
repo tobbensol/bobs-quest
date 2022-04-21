@@ -38,12 +38,10 @@ public class MainMenuScreen implements Screen {
 
         Table table = new Table();
         stage.addActor(table);
-//        table.setDebug(true);
         table.center().top().padTop(viewport.getScreenHeight()/4f);
 
         table.setFillParent(true);
         Label title = new Label("PLATFORM GAME", font);
-//        title.debug();
         title.setFontScale(6f);
         table.add(title);
 
@@ -64,53 +62,11 @@ public class MainMenuScreen implements Screen {
         table.row();
         table.add(exit).padTop(20).minWidth(250).minHeight(50);
 
-        newGame.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.NEW_GAME);
-                gameModel.changeScreen();
-            }
-        });
-
-        continueGame.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                //TODO: Game Paused when starting new game from here. Maybe check if first level or check initialized
-                if (gameModel.getCurrentState() != GameState.ACTIVE) {
-                    gameModel.setCurrentState(GameState.ACTIVE);
-                    gameModel.changeScreen();
-                    if (!gameModel.isPaused()) {
-                        gameModel.resumeGame();
-                    }
-                }
-
-            }
-        });
-
-        selectLevel.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.SELECT_LEVEL);
-                gameModel.changeScreen();
-            }
-        });
-
-        settings.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameModel.setCurrentState(GameState.SETTINGS);
-                gameModel.changeScreen();
-            }
-        });
-
-
-        exit.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
-            }
-        });
-
+        newGame.addListener(Boot.INSTANCE.getGameController().goToScreenListener(GameState.NEW_GAME));
+        continueGame.addListener(Boot.INSTANCE.getGameController().continueGameListener());
+        selectLevel.addListener(Boot.INSTANCE.getGameController().goToScreenListener(GameState.SELECT_LEVEL));
+        settings.addListener(Boot.INSTANCE.getGameController().goToScreenListener(GameState.SETTINGS));
+        exit.addListener(Boot.INSTANCE.getGameController().exitListener());
     }
 
 
