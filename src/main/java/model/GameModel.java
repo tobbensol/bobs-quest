@@ -269,10 +269,12 @@ public class GameModel implements ControllableModel {
         return audioHelper;
     }
 
+    @Override
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
     }
 
+    @Override
     public void setSoundEffectsVolume(float soundEffectsVolume) {
         this.soundEffectsVolume = soundEffectsVolume;
     }
@@ -285,6 +287,7 @@ public class GameModel implements ControllableModel {
         return soundEffectsVolume;
     }
 
+    @Override
     public void startNewGame(int numberOfPlayers) {
         if (numberOfPlayers < 1 || numberOfPlayers > 3) {
             throw new IllegalArgumentException("Number of players must be between 1 and 3");
@@ -293,6 +296,7 @@ public class GameModel implements ControllableModel {
         startGame(0,numberOfPlayers);
     }
 
+    @Override
     public void startSelectedLevel(String levelName) {
         int levelNR = getLevels().indexOf(levelName);
         if (levelNR == -1) {
@@ -313,6 +317,7 @@ public class GameModel implements ControllableModel {
         }
     }
 
+    @Override
     public void continueGame() {
         if (getCurrentState() != GameState.ACTIVE) {
             setCurrentState(GameState.ACTIVE);
@@ -323,7 +328,7 @@ public class GameModel implements ControllableModel {
         }
     }
 
-
+    @Override
     public void goToScreen(GameState state) {
         setCurrentState(state);
         changeScreen();

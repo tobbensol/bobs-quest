@@ -52,7 +52,6 @@ public interface ControllableModel {
     void resumeGame();
 
     boolean isPaused();
-    
 
     void goToScreen(GameState newGame);
 
@@ -62,6 +61,7 @@ public interface ControllableModel {
      */
     void startNewGame(int numberOfPlayers);
 
+
     void continueGame();
 
     /**
@@ -70,7 +70,15 @@ public interface ControllableModel {
      */
     void startSelectedLevel(String level);
 
+    /**
+     * This method sets the music volume in the GameModel.
+     * @param volume - float value between 0 and 1.
+     */
     void setMusicVolume(float volume);
 
+    /**
+     * This method sets the sound effect volume in the GameModel.
+     * @param volume - float value between 0 and 1.
+     */
     void setSoundEffectsVolume(float volume);
 }
