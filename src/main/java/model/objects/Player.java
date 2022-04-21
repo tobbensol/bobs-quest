@@ -1,9 +1,12 @@
 package model.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import model.Level;
 import model.helper.BodyHelper;
@@ -11,6 +14,8 @@ import model.helper.Constants;
 import model.helper.ContactType;
 
 import java.util.ArrayList;
+
+import static com.badlogic.gdx.graphics.g2d.TextureRegion.split;
 
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
@@ -37,8 +42,10 @@ public class Player extends JumpableObject {
 
     private final Vector2 cumulativeForces = new Vector2(0, 0);
 
-
     private int hp;
+
+    private Animation<TextureRegion> walkingAnimation;
+    private float stateTime;
 
     public Player(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Player.class).size() + 1), level, x, y, 1.1f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
@@ -53,6 +60,16 @@ public class Player extends JumpableObject {
         for (int i = 0; i < getTexture().getWidth() / Constants.TILE_SIZE; i++) {
             frames.add(new TextureRegion(getTexture(), i * Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE));
         }
+
+        Array<TextureRegion> walkingFrames = new Array<>();
+        walkingFrames.add(frames.get(3));
+        walkingFrames.add(frames.get(13));
+
+        // If we want an animation that is m seconds long and we have n frames, then time per frame is m/n.
+        // With animation duration at 1 second (m=1) and 2 frames (n=2), the time per frame is 1/2.
+        stateTime = 0;
+        walkingAnimation = new Animation<>(0.5f, walkingFrames);
+
     }
 
     @Override
@@ -201,10 +218,16 @@ public class Player extends JumpableObject {
         TextureRegion region = switch (currentState) {
             case JUMPING -> frames.get(5);
             case FALLING, SLIDING -> frames.get(7);
-            case WALKING -> frames.get(3);
             case DEAD -> frames.get(13);
             default -> frames.get(0);
         };
+
+        if (currentState == State.WALKING) {
+            stateTime += Gdx.graphics.getDeltaTime();
+            region = walkingAnimation.getKeyFrame(stateTime, true);
+        } else {
+            stateTime = 0;
+        }
 
         if (!facingRight && !region.isFlipX()) {
             region.flip(true, false);
