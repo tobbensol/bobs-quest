@@ -20,7 +20,7 @@ public class GameModel implements ControllableModel {
     private final List<Controller> controllers;
     private final int numControllers;
     private Level level;
-    private int levelNR = 0;
+    private int levelNR = 10;
     private int numPlayers;
 
     private GameState currentState;
