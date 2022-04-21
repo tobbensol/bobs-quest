@@ -32,8 +32,6 @@ public class GameModel implements ControllableModel {
 
     private AudioHelper audioHelper;
     private Music music;
-    private float musicVolume;
-    private float soundEffectsVolume;
 
     public GameModel() {
         currentState = GameState.MAIN_MENU;
@@ -61,10 +59,6 @@ public class GameModel implements ControllableModel {
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
-
-
-        musicVolume = 0.5f;
-        soundEffectsVolume = 0.5f;
     }
 
     private boolean gameOver() {
@@ -73,7 +67,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
-        audioHelper.getSoundEffect("gameover").play(soundEffectsVolume);
+        audioHelper.getSoundEffect("gameover").play(audioHelper.getSoundEffectsVolume());
         return true;
     }
 
@@ -107,7 +101,7 @@ public class GameModel implements ControllableModel {
         } else { //TODO i dont think this should happen every update
             getLevel().getHud().resume();
             music.play();
-            music.setVolume(musicVolume);
+            music.setVolume(audioHelper.getMusicVolume());
         }
         if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL){
             restart();
@@ -115,7 +109,7 @@ public class GameModel implements ControllableModel {
         if (getLevel().isCompleted()) {
             music.stop();
             music.dispose();
-            audioHelper.getSoundEffect("orchestra").play(soundEffectsVolume);
+            audioHelper.getSoundEffect("orchestra").play(audioHelper.getSoundEffectsVolume());
             currentState = GameState.NEXT_LEVEL;
             changeScreen();
         }
@@ -166,6 +160,8 @@ public class GameModel implements ControllableModel {
     public GameState getCurrentState() {
         return currentState;
     }
+
+    @Override
     public GameState getPreviousState() {
         return previousState;
     }
@@ -271,20 +267,20 @@ public class GameModel implements ControllableModel {
 
     @Override
     public void setMusicVolume(float musicVolume) {
-        this.musicVolume = musicVolume;
+        audioHelper.setMusicVolume(musicVolume);
     }
 
     @Override
     public void setSoundEffectsVolume(float soundEffectsVolume) {
-        this.soundEffectsVolume = soundEffectsVolume;
+        audioHelper.setSoundEffectsVolume(soundEffectsVolume);
     }
 
     public float getMusicVolume() {
-        return musicVolume;
+        return audioHelper.getMusicVolume();
     }
 
     public float getSoundEffectsVolume() {
-        return soundEffectsVolume;
+        return audioHelper.getSoundEffectsVolume();
     }
 
     @Override
