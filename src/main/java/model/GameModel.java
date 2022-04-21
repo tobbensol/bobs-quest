@@ -22,7 +22,7 @@ public class GameModel implements ControllableModel {
     private final GameController gameController;
     private Level level;
     private boolean reload = false;
-    private int levelNR = 0;
+    private int levelNR = 2;
     private int numPlayers;
 
     private GameState currentState;
@@ -45,16 +45,17 @@ public class GameModel implements ControllableModel {
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
         levels.add("level-1"); // 0
         levels.add("level-2"); // 1
-        levels.add("TestMaps/platform-test"); // 2
-        levels.add("TestMaps/slope-test"); // 3
-        levels.add("TestMaps/camera-test"); // 4
-        levels.add("TestMaps/goomba-test"); // 5
-        levels.add("TestMaps/coin-test"); // 6
-        levels.add("TestMaps/valley-and-spike-test"); // 7
-        levels.add("TestMaps/size-test"); // 8
-        levels.add("TestMaps/goomba-collision-test"); // 9
-        levels.add("TestMaps/floater-test"); // 10
-        levels.add("TestMaps/moving-platform-test"); // 11
+        levels.add("level-3"); // 2
+        levels.add("TestMaps/platform-test"); // 3
+        levels.add("TestMaps/slope-test"); // 4
+        levels.add("TestMaps/camera-test"); // 5
+        levels.add("TestMaps/goomba-test"); // 6
+        levels.add("TestMaps/coin-test"); // 7
+        levels.add("TestMaps/valley-and-spike-test"); // 8
+        levels.add("TestMaps/size-test"); // 9
+        levels.add("TestMaps/goomba-collision-test"); // 10
+        levels.add("TestMaps/floater-test"); // 11
+        levels.add("TestMaps/moving-platform-test"); // 12
 
         availableLevels = new ArrayList<>();
 
@@ -67,8 +68,8 @@ public class GameModel implements ControllableModel {
         numControllers = controllers.size();
 
 
-        musicVolume = 0.5f;
-        soundEffectsvolume = 0.5f;
+        musicVolume = 0f;
+        soundEffectsvolume = 0f;
     }
 
     private boolean gameOver() {
