@@ -33,7 +33,7 @@ public class GameOverScreen implements Screen {
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("src/main/resources/ui/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
 
     }
