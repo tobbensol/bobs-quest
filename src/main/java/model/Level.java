@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import model.helper.AudioHelper;
 import model.helper.TiledMapHelper;
 import model.objects.GameObjectFactory;
 import model.objects.IGameObject;
@@ -27,6 +28,7 @@ public class Level {
     private Vector2 topLeft;
     private Vector2 bottomRight;
 
+    private final AudioHelper audioHelper;
     private final Music levelMusic;
 
 
@@ -35,6 +37,8 @@ public class Level {
         this.levelName = levelName;
         this.model = model;
         factory = new GameObjectFactory(this);
+        this.audioHelper = model.getAudioHelper();
+
 
         objectMap = new HashMap<>();
 
@@ -51,7 +55,7 @@ public class Level {
         createHUD();
         parseMapEndPoints();
 
-        levelMusic = model.getAudioHelper().getLevelMusic(levelName);
+        levelMusic = audioHelper.getLevelMusic(levelName);
     }
 
     private void createWorld(String level) {
@@ -167,6 +171,10 @@ public class Level {
 
     public GameModel getModel() {
         return model;
+    }
+
+    public AudioHelper getAudioHelper() {
+        return audioHelper;
     }
 
     public Music getLevelMusic() {
