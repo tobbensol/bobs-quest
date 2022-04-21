@@ -17,7 +17,7 @@ public class GameController {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.P) && model.getState() == GameState.ACTIVE) {
+        if (Gdx.input.isKeyPressed(Input.Keys.P) && model.getCurrentState() == GameState.ACTIVE) {
             // Use a helper so that a held-down button does not continuously switch between states with every tick
             if (pauseHelper) {
                 if (model.isPaused()) {
@@ -32,12 +32,16 @@ public class GameController {
         } else {
             pauseHelper = true;
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.M) && model.getCurrentState() == GameState.ACTIVE && model.isPaused()) {
+            model.setCurrentState(GameState.MAIN_MENU);
+            model.changeScreen();
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             model.restart();
         }
 
-        if (model.getState() == GameState.STARTUP) {
+        if (model.getCurrentState() == GameState.MAIN_MENU) {
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
                 model.setNumPlayers(1);
             }
@@ -48,15 +52,18 @@ public class GameController {
                 model.setNumPlayers(3);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                model.setState(GameState.ACTIVE);
+                model.setCurrentState(GameState.ACTIVE);
                 model.changeScreen();
                 model.resumeGame();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+
             }
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (model.getState() == GameState.GAME_OVER || model.getState() == GameState.NEXT_LEVEL) {
-                model.setState(GameState.ACTIVE);
+            if (model.getCurrentState() == GameState.GAME_OVER || model.getCurrentState() == GameState.NEXT_LEVEL) {
+                model.setCurrentState(GameState.ACTIVE);
                 model.changeScreen();
                 model.resumeGame();
             }

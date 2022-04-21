@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
@@ -25,6 +25,7 @@ public class Hud {
     private Label levelLabel;
     private Label pausedLabel;
     private Label pauseInfoLabel;
+    private Label mainMenuLabel;
 
     public Hud(SpriteBatch batch, Level level) {
         this.level = level;
@@ -50,12 +51,14 @@ public class Hud {
     public void pause() {
         pausedLabel.setText("GAME PAUSED");
         pauseInfoLabel.setText("Press P To Resume");
+        mainMenuLabel.setText("Press M to Main Menu");
         stage.getActors().get(0).getColor().a = 0.4f;
     }
 
     public void resume() {
         pausedLabel.setText("");
         pauseInfoLabel.setText("");
+        mainMenuLabel.setText("");
         stage.getActors().get(0).getColor().a = 0f;
     }
 
@@ -65,13 +68,17 @@ public class Hud {
         gamePausedTable.setFillParent(true);
         pausedLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         pauseInfoLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        mainMenuLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         pausedLabel.setFontScale(5f);
         pauseInfoLabel.setFontScale(2f);
+        mainMenuLabel.setFontScale(2f);
 
         gamePausedTable.add(pausedLabel).expandX();
         gamePausedTable.row();
         gamePausedTable.add(pauseInfoLabel).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(mainMenuLabel);
         return gamePausedTable;
     }
 
@@ -88,6 +95,8 @@ public class Hud {
 
         table.add(levelLabel).expandX().padTop(10);
         table.add(scoreLabel).expandX().padTop(10);
+
+
 
         return table;
     }

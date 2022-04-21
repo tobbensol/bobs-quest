@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import model.helper.AudioHelper;
 import model.helper.TiledMapHelper;
 import model.objects.GameObjectFactory;
 import model.objects.IGameObject;
@@ -16,6 +15,7 @@ public class Level {
 
     private static final float gravity = -26f;
     private final String levelName;
+    private final String prettyLeveName;
     private final GameModel model;
     private final GameObjectFactory factory;
     private World world;
@@ -31,7 +31,8 @@ public class Level {
 
 
     public Level(String levelName, GameModel model) {
-        this.levelName = camelToSentence(levelName);
+        this.prettyLeveName = camelToSentence(levelName);
+        this.levelName = levelName;
         this.model = model;
         factory = new GameObjectFactory(this);
 
@@ -177,5 +178,9 @@ public class Level {
         String[] splitFileName = levelName.split("/", 2);
         String levelName = splitFileName[splitFileName.length - 1].replace("-", " ");
         return Character.toUpperCase(levelName.charAt(0)) + levelName.substring(1);
+    }
+
+    public String getLevelName() {
+        return levelName;
     }
 }

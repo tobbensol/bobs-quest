@@ -1,10 +1,7 @@
 package model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import controls.*;
 import launcher.Boot;
 import model.helper.AudioHelper;
@@ -19,6 +16,7 @@ public class GameModel implements ControllableModel {
 
 
     private final List<String> levels;
+    private List<String> availableLevels;
     private final List<Controller> controllers;
     private final int numControllers;
     private final GameController gameController;
@@ -26,16 +24,22 @@ public class GameModel implements ControllableModel {
     private boolean reload = false;
     private int levelNR = 0;
     private int numPlayers;
-    private GameState state;
+
+    private GameState currentState;
+    private GameState previousState;
+
     private boolean pause = false;
     private boolean initializeLevel = true;
     private GameCamera camera;
 
     private AudioHelper audioHelper;
     private Music music;
+    private float musicVolume;
+    private float soundEffectsvolume;
 
     public GameModel() {
-        state = GameState.STARTUP;
+        currentState = GameState.MAIN_MENU;
+        previousState = GameState.MAIN_MENU;
         this.numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
@@ -52,6 +56,8 @@ public class GameModel implements ControllableModel {
         levels.add("TestMaps/floater-test"); // 10
         levels.add("TestMaps/moving-platform-test"); // 11
 
+        availableLevels = new ArrayList<>();
+
         gameController = new GameController(this);
 
         controllers = new ArrayList<>();
@@ -59,6 +65,10 @@ public class GameModel implements ControllableModel {
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
+
+
+        musicVolume = 0.5f;
+        soundEffectsvolume = 0.5f;
     }
 
     private boolean gameOver() {
@@ -67,7 +77,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
-        audioHelper.getSoundEffect("gameover").play();
+        audioHelper.getSoundEffect("gameover").play(soundEffectsvolume);
         return true;
     }
 
@@ -84,6 +94,7 @@ public class GameModel implements ControllableModel {
         if (initializeLevel) {
             audioHelper = new AudioHelper();
             level = createLevel();
+            availableLevels.add(level.getLevelName());
             music = level.getLevelMusic();
             createCamera();
             initializeLevel = false;
@@ -97,28 +108,29 @@ public class GameModel implements ControllableModel {
             getLevel().updateHUD();
             music.pause();
             return;
-        } else {
+        } else { //TODO i dont think this should happen every update
             getLevel().getHud().resume();
             music.play();
+            music.setVolume(musicVolume);
         }
-
+        if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL){
+            restart();
+        }
         if (getLevel().isCompleted()) {
             music.stop();
             music.dispose();
-            audioHelper.getSoundEffect("orchestra").play();
-            setState(GameState.NEXT_LEVEL); // TODO: Extract contents of if to own method (same for level completed and game over)
+            audioHelper.getSoundEffect("orchestra").play(soundEffectsvolume);
+            currentState = GameState.NEXT_LEVEL;
             changeScreen();
-            restart();
         }
         if (gameOver()) {
             music.stop();
             music.dispose();
-            setState(GameState.GAME_OVER);
+            currentState = GameState.GAME_OVER;
             changeScreen();
-            restart();
         }
 
-        getLevel().getWorld().step(Gdx.graphics.getDeltaTime(), 12, 4);
+        getLevel().getWorld().step(1/60f, 12, 4);
 
         List<Player> players = getLevel().getGameObjects(Player.class);
         for (int i = 0; i < players.size(); i++) {
@@ -135,64 +147,97 @@ public class GameModel implements ControllableModel {
         return camera;
     }
 
-    public boolean getReload() {
-        return reload;
-    }
-
-    public void setReload(Boolean value) {
-        reload = value;
-    }
-
     @Override
     public boolean restart() {
-        boolean nextLevel = false;
-        if (getLevel().isCompleted()) {
+        boolean nextLevel = getLevel().isCompleted();
+        if (nextLevel) {
             levelNR++;
-            nextLevel = true;
         }
-        camera.resetZoom();
+        //TODO only here to make tests work, not a problem outside of tests
+        if (camera != null){
+            camera.resetZoom();
+        }
         level = createLevel();
+        if (!availableLevels.contains(level.getLevelName())) {
+            availableLevels.add(level.getLevelName());
+        }
         music = level.getLevelMusic();
         pauseGame();
         return nextLevel;
     }
 
     @Override
-    public GameState getState() {
-        return state;
+    public GameState getCurrentState() {
+        return currentState;
+    }
+    public GameState getPreviousState() {
+        return previousState;
     }
 
     @Override
-    public void setState(GameState state) {
-        if (state == null) {
+    public void setCurrentState(GameState currentState) {
+        if (currentState == null) {
             throw new IllegalArgumentException("Cannot set state to null.");
         }
-        if (this.state == GameState.STARTUP && (state == GameState.GAME_OVER || state == GameState.NEXT_LEVEL)) {
+        if (this.currentState == GameState.MAIN_MENU && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER)) {
             throw new IllegalArgumentException("Illegal state.");
         }
-        if (this.state == GameState.GAME_OVER && (state == GameState.STARTUP || state == GameState.NEXT_LEVEL)) {
+        if (this.currentState == GameState.NEW_GAME && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER || currentState == GameState.SETTINGS)) {
             throw new IllegalArgumentException("Illegal state.");
         }
-        if (this.state == GameState.NEXT_LEVEL && (state == GameState.GAME_OVER || state == GameState.STARTUP)) {
+        if (this.currentState == GameState.SELECT_LEVEL && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER || currentState == GameState.SETTINGS)) {
             throw new IllegalArgumentException("Illegal state.");
         }
-        this.state = state;
+        if (this.currentState == GameState.SETTINGS && (currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_OVER || currentState == GameState.SELECT_LEVEL)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.NEXT_LEVEL && (currentState == GameState.GAME_OVER || currentState == GameState.NEW_GAME || currentState == GameState.SELECT_LEVEL)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.ACTIVE && (currentState == GameState.NEW_GAME || currentState == GameState.SETTINGS)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+        if (this.currentState == GameState.GAME_OVER && (currentState == GameState.NEXT_LEVEL || currentState == GameState.SETTINGS)) {
+            throw new IllegalArgumentException("Illegal state.");
+        }
+
+        previousState = this.currentState;
+        this.currentState = currentState;
     }
 
     @Override
     public void changeScreen() {
 
-        switch (state) {
+        switch (currentState) {
             case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
-            case STARTUP -> Boot.INSTANCE.setScreen(new StartScreen(this));
+            case MAIN_MENU -> Boot.INSTANCE.setScreen(new MainMenuScreen(this));
             case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
             case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
+            case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this));
+            case NEW_GAME -> Boot.INSTANCE.setScreen(new NewGameScreen(this));
+            case SELECT_LEVEL -> Boot.INSTANCE.setScreen(new SelectLevelScreen(this));
         }
 
     }
 
     public Level getLevel() {
         return level;
+    }
+
+    public List<String> getLevels() {
+        return levels;
+    }
+
+    public List<String> getAvailableLevels() {
+        return availableLevels;
+    }
+
+    public void resetAvailableLevels() {
+        availableLevels = new ArrayList<>();
+    }
+
+    public void setLevelNR(int levelNR) {
+        this.levelNR = levelNR;
     }
 
     public int getNumPlayers() {
@@ -227,4 +272,21 @@ public class GameModel implements ControllableModel {
     public AudioHelper getAudioHelper() {
         return audioHelper;
     }
+
+    public void setMusicVolume(float musicVolume) {
+        this.musicVolume = musicVolume;
+    }
+
+    public void setSoundEffectsvolume(float soundEffectsvolume) {
+        this.soundEffectsvolume = soundEffectsvolume;
+    }
+
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public float getSoundEffectsvolume() {
+        return soundEffectsvolume;
+    }
+
 }

@@ -7,46 +7,74 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.GameModel;
+import model.GameState;
 
 public class LevelCompletedScreen implements Screen {
     private final Viewport viewport;
     private final Stage stage;
 
     private final GameModel gameModel;
+    private Skin skin;
 
     public LevelCompletedScreen(GameModel gameModel) {
         this.gameModel = gameModel;
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
+        Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+    }
+
+    @Override
+    public void show() {
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
         table.center();
         table.setFillParent(true);
+        stage.addActor(table);
+
 
         Label gameCompletedLabel = new Label(gameModel.getLevel().toString() + " COMPLETED!", font);
-        Label nextLevelLabel = new Label("Click SPACE to Play Next Level", font);
-
         gameCompletedLabel.setFontScale(4f);
-        nextLevelLabel.setFontScale(2f);
+        table.add(gameCompletedLabel);
 
-        table.add(gameCompletedLabel).expandX();
+        TextButton nextLevel = new TextButton("Next Level", skin);
+        TextButton mainMenu = new TextButton("Main menu", skin);
+
         table.row();
-        table.add(nextLevelLabel).expandX().padTop(10f);
+        table.add(nextLevel).padTop(20).minWidth(250).minHeight(50);;
+        table.row();
+        table.add(mainMenu).padTop(20).minWidth(250).minHeight(50);;
 
-        stage.addActor(table);
-    }
 
-    @Override
-    public void show() {
+        nextLevel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameModel.setCurrentState(GameState.ACTIVE);
+                gameModel.changeScreen();
+                gameModel.resumeGame();
+            }
+        });
+
+        mainMenu.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameModel.setCurrentState(GameState.MAIN_MENU);
+                gameModel.changeScreen();
+            }
+        });
 
     }
 

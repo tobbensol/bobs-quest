@@ -119,7 +119,7 @@ public class GameContactListenerTest {
         PolygonMapObject polygonMapObject = new PolygonMapObject(polygon);
         Shape shape = BodyHelper.createShape(polygonMapObject);
         if (contactType == ContactType.PLATFORM) {
-            BodyHelper.createEnvironmentBody(shape, world, contactType, Constants.PLATFORM_BIT, Constants.PLATFORM_MASK_BITS, false);
+            BodyHelper.createEnvironmentBody(shape, world, contactType, Constants.PLATFORM_BIT, Constants.DEFAULT_MASK_BITS, false);
         } else {
             BodyHelper.createEnvironmentBody(shape, world, contactType, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, contactType == ContactType.DEATH);
         }
