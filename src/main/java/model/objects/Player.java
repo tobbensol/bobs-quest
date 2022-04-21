@@ -6,16 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
-
-import java.util.ArrayList;
-
-import static com.badlogic.gdx.graphics.g2d.TextureRegion.split;
 
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
@@ -29,7 +24,7 @@ public class Player extends JumpableObject {
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
 
-    private final ArrayList<TextureRegion> frames;
+    private final TextureRegion[] frames;
 
     protected State currentState;
     protected State previousState;
@@ -44,32 +39,20 @@ public class Player extends JumpableObject {
 
     private int hp;
 
-    private Animation<TextureRegion> walkingAnimation;
+    private final Animation<TextureRegion> walkingAnimation;
     private float stateTime;
 
     public Player(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Player.class).size() + 1), level, x, y, 1.1f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
-        texturePath = "Multi_Platformer_Tileset_v2/Players/Small_Mario.png";
-        texture = new Texture(texturePath);
+        texture = new Texture("Multi_Platformer_Tileset_v2/Players/Small_Mario.png");
 
         hp = 100;
         currentState = State.STANDING;
         previousState = State.STANDING;
 
-        frames = new ArrayList<>();
-        for (int i = 0; i < getTexture().getWidth() / Constants.TILE_SIZE; i++) {
-            frames.add(new TextureRegion(getTexture(), i * Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE));
-        }
-
-        Array<TextureRegion> walkingFrames = new Array<>();
-        walkingFrames.add(frames.get(3));
-        walkingFrames.add(frames.get(13));
-
-        // If we want an animation that is m seconds long and we have n frames, then time per frame is m/n.
-        // With animation duration at 1 second (m=1) and 2 frames (n=2), the time per frame is 1/2.
+        frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE)[0];
         stateTime = 0;
-        walkingAnimation = new Animation<>(0.5f, walkingFrames);
-
+        walkingAnimation = new Animation<>(0.166f, frames[1], frames[2], frames[3]);
     }
 
     @Override
@@ -210,18 +193,20 @@ public class Player extends JumpableObject {
     /**
      * This method returns the correct texture-region for the current state the player is in.
      * It also checks wherever it should flip the texture based on the direction of movement of the player.
+     * Animates WALKING state.
      *
      * @return the correct texture-region for the current state the player is in.
      */
     private TextureRegion getFrame() {
         // Specify which texture region corresponding to which state.
         TextureRegion region = switch (currentState) {
-            case JUMPING -> frames.get(5);
-            case FALLING, SLIDING -> frames.get(7);
-            case DEAD -> frames.get(13);
-            default -> frames.get(0);
+            case JUMPING -> frames[5];
+            case FALLING, SLIDING -> frames[7];
+            case DEAD -> frames[13];
+            default -> frames[0];
         };
 
+        // Animation for WALKING
         if (currentState == State.WALKING) {
             stateTime += Gdx.graphics.getDeltaTime();
             region = walkingAnimation.getKeyFrame(stateTime, true);
