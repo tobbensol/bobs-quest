@@ -2,6 +2,7 @@ package launcher;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import controls.GameController;
 import model.GameModel;
 import view.MainMenuScreen;
 
@@ -10,6 +11,7 @@ public class Boot extends Game {
     public static Boot INSTANCE;
     private int screenWidth, screenHeight;
     private GameModel gameModel;
+    private GameController gameController;
 
     public Boot() {
         INSTANCE = this;
@@ -21,6 +23,7 @@ public class Boot extends Game {
         this.screenHeight = Gdx.graphics.getHeight();
         this.gameModel = new GameModel();
         this.gameModel.changeScreen();
+        this.gameController = new GameController(gameModel);
 
         //setScreen(new MainMenuScreen(gameModel));
     }
@@ -34,4 +37,7 @@ public class Boot extends Game {
         return screenHeight;
     }
 
+    public GameController getGameController() {
+        return gameController;
+    }
 }

@@ -19,7 +19,6 @@ public class GameModel implements ControllableModel {
     private List<String> availableLevels;
     private final List<Controller> controllers;
     private final int numControllers;
-    private final GameController gameController;
     private Level level;
     private boolean reload = false;
     private int levelNR = 0;
@@ -57,8 +56,6 @@ public class GameModel implements ControllableModel {
         levels.add("TestMaps/moving-platform-test"); // 11
 
         availableLevels = new ArrayList<>();
-
-        gameController = new GameController(this);
 
         controllers = new ArrayList<>();
         controllers.add(new ArrowController());
@@ -101,7 +98,7 @@ public class GameModel implements ControllableModel {
             pauseGame();
         }
 
-        gameController.inputListener();
+        Boot.INSTANCE.getGameController().inputListener();
 
         if (isPaused()) {
             getLevel().getHud().pause();
@@ -265,6 +262,10 @@ public class GameModel implements ControllableModel {
         return pause;
     }
 
+//    public GameController getGameController() {
+//        return gameController;
+//    }
+
     public int getNumControllers() {
         return numControllers;
     }
@@ -288,5 +289,6 @@ public class GameModel implements ControllableModel {
     public float getSoundEffectsvolume() {
         return soundEffectsvolume;
     }
+
 
 }
