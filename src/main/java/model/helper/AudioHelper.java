@@ -18,9 +18,9 @@ public class AudioHelper {
         assetManager.finishLoading();
 
         levelMusic = new HashMap<>(); // ADD level specific music here:
-        levelMusic.put("level1", getMusic("Grasslands Theme"));
-        levelMusic.put("platformTest", getMusic("Dungeon Theme"));
-        levelMusic.put("slopeTest", getMusic("Iceland Theme"));
+        levelMusic.put("level-1", getMusic("Grasslands Theme"));
+        levelMusic.put("level-2", getMusic("Iceland Theme"));
+        levelMusic.put("level-3", getMusic("Desert Theme"));
     }
 
     private void loadMusic() {
