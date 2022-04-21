@@ -20,7 +20,6 @@ public class GameModel implements ControllableModel {
     private final List<Controller> controllers;
     private final int numControllers;
     private Level level;
-    private boolean reload = false;
     private int levelNR = 0;
     private int numPlayers;
 
@@ -34,7 +33,7 @@ public class GameModel implements ControllableModel {
     private AudioHelper audioHelper;
     private Music music;
     private float musicVolume;
-    private float soundEffectsvolume;
+    private float soundEffectsVolume;
 
     public GameModel() {
         currentState = GameState.MAIN_MENU;
@@ -65,7 +64,7 @@ public class GameModel implements ControllableModel {
 
 
         musicVolume = 0.5f;
-        soundEffectsvolume = 0.5f;
+        soundEffectsVolume = 0.5f;
     }
 
     private boolean gameOver() {
@@ -74,7 +73,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
-        audioHelper.getSoundEffect("gameover").play(soundEffectsvolume);
+        audioHelper.getSoundEffect("gameover").play(soundEffectsVolume);
         return true;
     }
 
@@ -116,7 +115,7 @@ public class GameModel implements ControllableModel {
         if (getLevel().isCompleted()) {
             music.stop();
             music.dispose();
-            audioHelper.getSoundEffect("orchestra").play(soundEffectsvolume);
+            audioHelper.getSoundEffect("orchestra").play(soundEffectsVolume);
             currentState = GameState.NEXT_LEVEL;
             changeScreen();
         }
@@ -262,10 +261,6 @@ public class GameModel implements ControllableModel {
         return pause;
     }
 
-//    public GameController getGameController() {
-//        return gameController;
-//    }
-
     public int getNumControllers() {
         return numControllers;
     }
@@ -278,17 +273,63 @@ public class GameModel implements ControllableModel {
         this.musicVolume = musicVolume;
     }
 
-    public void setSoundEffectsvolume(float soundEffectsvolume) {
-        this.soundEffectsvolume = soundEffectsvolume;
+    public void setSoundEffectsVolume(float soundEffectsVolume) {
+        this.soundEffectsVolume = soundEffectsVolume;
     }
 
     public float getMusicVolume() {
         return musicVolume;
     }
 
-    public float getSoundEffectsvolume() {
-        return soundEffectsvolume;
+    public float getSoundEffectsVolume() {
+        return soundEffectsVolume;
     }
 
+    public void startNewGame(int numberOfPlayers) {
+        if (numberOfPlayers < 1 || numberOfPlayers > 3) {
+            throw new IllegalArgumentException("Number of players must be between 1 and 3");
+        }
+        resetAvailableLevels();
+        startGame(0,numberOfPlayers);
+    }
+
+    public void startSelectedLevel(String levelName) {
+        int levelNR = getLevels().indexOf(levelName);
+        if (levelNR == -1) {
+            throw new IllegalArgumentException("No level named " + levelName);
+        }
+        int numPlayers = getNumPlayers();
+        startGame(levelNR,numPlayers);
+    }
+
+    private void startGame(int levelNR, int numberOfPlayers) {
+        if (getCurrentState() != GameState.ACTIVE) {
+            setLevelNR(levelNR);
+            setNumPlayers(numberOfPlayers);
+            restart();
+            setCurrentState(GameState.ACTIVE);
+            changeScreen();
+            resumeGame();
+        }
+    }
+
+    public void continueGame() {
+        if (getCurrentState() != GameState.ACTIVE) {
+            setCurrentState(GameState.ACTIVE);
+            changeScreen();
+            if (!isPaused()) {
+                resumeGame();
+            }
+        }
+    }
+
+
+    public void goToScreen(GameState state) {
+        setCurrentState(state);
+        changeScreen();
+        if (getCurrentState() == GameState.ACTIVE) {
+            resumeGame();
+        }
+    }
 
 }
