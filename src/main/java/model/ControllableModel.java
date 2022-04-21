@@ -20,6 +20,11 @@ public interface ControllableModel {
     GameState getCurrentState();
 
     /**
+     * @return returns the previous GameState from the model.
+     */
+    GameState getPreviousState();
+
+    /**
      * This method should set the current GameState to the given state.
      * The different GameStates are:
      * ACTIVE, GAME_OVER, STARTUP, NEXT_LEVEL
@@ -47,4 +52,25 @@ public interface ControllableModel {
     void resumeGame();
 
     boolean isPaused();
+    
+
+    void goToScreen(GameState newGame);
+
+    /**
+     * This method let you start a new game from the beginning. The progress of the game will be lost.
+     * @param numberOfPlayers - The number of players you want to start the game with.
+     */
+    void startNewGame(int numberOfPlayers);
+
+    void continueGame();
+
+    /**
+     * This method let you start a game at a specific level. The progress in the game will not be lost.
+     * @param level - The level you want to start at.
+     */
+    void startSelectedLevel(String level);
+
+    void setMusicVolume(float volume);
+
+    void setSoundEffectsVolume(float volume);
 }
