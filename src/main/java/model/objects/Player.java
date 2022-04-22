@@ -265,7 +265,6 @@ public class Player extends JumpableObject {
             }
         }, 0.5f);
 
-        System.out.println(this + ": " + hp);
         level.getAudioHelper().getSoundEffect("hit").play(level.getAudioHelper().getSoundEffectsVolume());
     }
 

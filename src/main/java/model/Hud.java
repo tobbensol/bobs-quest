@@ -52,15 +52,18 @@ public class Hud {
     public void update() {
         score = level.getScore();
         scoreLabel.setText(score + "/" + level.getGameObjects(Coin.class).size());
+        updateHpLabels();
+    }
 
+    private void updateHpLabels() {
         if (!level.getModel().isPaused()) {
             for (Player player : playerLabelHashMap.keySet()) {
                 if (player.isDead()) {
-                    playerLabelHashMap.get(player).setText("");
+                    playerLabelHashMap.get(player).setColor(Color.DARK_GRAY);
                 } else {
-                    playerLabelHashMap.get(player).setText(player.toString() + " HP: " + player.getHp());
+                    playerLabelHashMap.get(player).setText(player.toString());
 
-                    if (player.getHp() == 100) {
+                    if (player.getHp() > 80) {
                         playerLabelHashMap.get(player).setColor(Color.GREEN);
                     } else if (player.getHp() > 40) {
                         playerLabelHashMap.get(player).setColor(Color.ORANGE);
@@ -71,7 +74,6 @@ public class Hud {
                 }
             }
         }
-
     }
 
     public void pause() {
@@ -120,7 +122,7 @@ public class Hud {
             Label label = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
             label.setFontScale(1.5f);
             playerLabelHashMap.put(player,label);
-            playerHpTable.add(label).left().padLeft(20);
+            playerHpTable.add(label).left().padLeft(10);
             playerHpTable.row();
         }
         return playerHpTable;
