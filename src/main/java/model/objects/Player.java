@@ -135,7 +135,7 @@ public class Player extends JumpableObject {
         cumulativeForces.add(0, -Y_MOVEMENT_IMPULSE * DROPPING_SCALE);
 
         if (previousState != State.FALLING && !grounded || onPlatform) {
-            level.getAudioHelper().getSoundEffect("drop").play(level.getAudioHelper().getSoundEffectsVolume());
+            level.getAudioHelper().getSoundEffect("drop3").play(level.getAudioHelper().getSoundEffectsVolume());
         }
 
     }
@@ -206,7 +206,7 @@ public class Player extends JumpableObject {
             default -> frames[0];
         };
 
-        // Animation for WALKIN
+        // Animation for WALKING
         if (currentState == State.WALKING) {
             stateTime += Gdx.graphics.getDeltaTime();
             region = walkingAnimation.getKeyFrame(stateTime, true);
@@ -263,7 +263,7 @@ public class Player extends JumpableObject {
             }
         }, 0.5f);
 
-        level.getAudioHelper().getSoundEffect("hit").play(level.getAudioHelper().getSoundEffectsVolume());
+        level.getAudioHelper().getSoundEffect("hit2").play(level.getAudioHelper().getSoundEffectsVolume());
     }
 
     public void increaseHealth(int amount) {

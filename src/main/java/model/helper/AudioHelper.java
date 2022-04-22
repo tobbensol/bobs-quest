@@ -26,6 +26,9 @@ public class AudioHelper {
         levelMusic = new HashMap<>(); // ADD level specific music here:
         levelMusic.put("level-1", getMusic("Grasslands Theme"));
         levelMusic.put("level-2", getMusic("Iceland Theme"));
+//        levelMusic.put("level-3", getMusic("Desert Theme"));
+//        levelMusic.put("level-4", getMusic("Dungeon Theme"));
+
 
     }
 
@@ -44,8 +47,11 @@ public class AudioHelper {
         assetManager.load("audio/sounds/gameover.wav", Sound.class);
         assetManager.load("audio/sounds/coin.wav", Sound.class);
         assetManager.load("audio/sounds/drop.wav", Sound.class);
+        assetManager.load("audio/sounds/drop3.wav", Sound.class);
         assetManager.load("audio/sounds/hit.wav", Sound.class);
+        assetManager.load("audio/sounds/hit2.wav", Sound.class);
         assetManager.load("audio/sounds/jump.wav", Sound.class);
+        assetManager.load("audio/sounds/jump2.wav", Sound.class);
         assetManager.load("audio/sounds/chipquest.wav", Sound.class);
         assetManager.load("audio/sounds/orchestra.wav", Sound.class);
 
