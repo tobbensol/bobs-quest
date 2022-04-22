@@ -74,9 +74,9 @@ public class Player extends JumpableObject {
         if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
             body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
         }
-//        if (Math.abs(body.getLinearVelocity().y) > MAX_Y_VELOCITY) {
-//            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY);
-//        }
+        if (Math.abs(body.getLinearVelocity().y) > MAX_Y_VELOCITY) {
+            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY);
+        }
     }
 
     @Override
@@ -206,7 +206,7 @@ public class Player extends JumpableObject {
             default -> frames[0];
         };
 
-        // Animation for WALKING
+        // Animation for WALKIN
         if (currentState == State.WALKING) {
             stateTime += Gdx.graphics.getDeltaTime();
             region = walkingAnimation.getKeyFrame(stateTime, true);
@@ -214,9 +214,7 @@ public class Player extends JumpableObject {
             stateTime = 0;
         }
 
-        if (!facingRight && !region.isFlipX()) {
-            region.flip(true, false);
-        } else if (facingRight && region.isFlipX()) {
+        if (facingRight == region.isFlipX()) {
             region.flip(true, false);
         }
 

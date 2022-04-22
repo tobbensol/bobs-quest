@@ -182,7 +182,7 @@ public class GameContactListener implements ContactListener {
             Enemy enemy = getContactObject(a, b, Enemy.class);
             Player player = getContactObject(a, b, Player.class);
 
-            if (player.getCurrentState() == Player.State.FALLING) {
+            if (player.getCurrentState() == Player.State.FALLING || player.getCurrentState() == Player.State.SLIDING) {
                 enemy.onHit();
             } else {
                 player.takeDamage(enemy.getAttack());
