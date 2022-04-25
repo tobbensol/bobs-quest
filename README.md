@@ -52,11 +52,12 @@ This project is created by:
 
 Additional credits:
 - Tileset:
-    - Diego del Solar/"Shackhal" for [Multi_Platformer_Tileset_v2](https://shackhal.itch.io/multi-platformer-tileset)
+    - Tileset from [Multi_Platformer_Tileset_v2](https://shackhal.itch.io/multi-platformer-tileset) by Diego del Solar/"Shackhal" with license: CC0 license (Creative Commons Zero).
+- Spritesheet:
+  - Sprites from [GameDev Market](https://www.gamedevmarket.net/) with license: [gamedevmarket pro-licence](https://www.gamedevmarket.net/terms-conditions/#pro-licence).
 - Music:
-  - Manuel Bolaños Gómez "CodeManu" (CC-BY 3.0) for [OpenGameArt.Org](https://opengameart.org/content/platformer-game-music-pack)
+  - Music from [OpenGameArt.Org](https://opengameart.org/content/platformer-game-music-pack) by Manuel Bolaños Gómez "CodeManu" with license: (CC-BY 3.0).
 - Sound-effects:
-
-  - Bart Kelsey "bart" (CC-BY 3.0) for [OpenGameArt.Org](https://opengameart.org/content/level-up-sound-effects)
-  - Juhani Junkala "SubspaceAudio" (CC-BY 3.0) for [OpenGameArt.Org](https://opengameart.org/content/512-sound-effects-8-bit-style)
-  - [Mixkit Sound Effects Free License](https://mixkit.co/license/#sfxFree) from [Mixkit](https://mixkit.co/free-sound-effects/)
+  - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/level-up-sound-effects) by Bart Kelsey "bart" with license: (CC-BY 3.0).
+  - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/512-sound-effects-8-bit-style) by Juhani Junkala "SubspaceAudio" with license: (CC-BY 3.0).
+  - Sound effects from [Mixkit](https://mixkit.co/free-sound-effects/) with license: [Mixkit Sound Effects Free License](https://mixkit.co/license/#sfxFree).
