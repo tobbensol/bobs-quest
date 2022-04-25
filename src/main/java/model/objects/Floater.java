@@ -16,9 +16,8 @@ public class Floater extends MovableObject implements Enemy {
     private static final int attack = 10;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
-    int steps = 0;
-    float direction = 1f;
-    private final TextureRegion[][] frames;
+    private int steps = 0;
+    private float direction = 1f;
     private float stateTime;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> attackAnimation;
@@ -29,7 +28,7 @@ public class Floater extends MovableObject implements Enemy {
         body.setGravityScale(0);
         body.setLinearDamping(3);
 
-        frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE/4, Constants.TILE_SIZE/4);
+        TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE / 4, Constants.TILE_SIZE / 4);
         idleAnimation = new Animation<>(0.166f/2f, frames[1]);
         attackAnimation = new Animation<>(0.166f/2f, frames[0]);
     }
@@ -42,7 +41,9 @@ public class Floater extends MovableObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            body.applyForceToCenter(new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(X_VELOCITY), true);
+            Vector2 forceVec = new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(X_VELOCITY);
+            body.applyForceToCenter(forceVec, true);
+            facingRight = forceVec.x > 0;
         }
         else{
             steps++;
@@ -55,8 +56,10 @@ public class Floater extends MovableObject implements Enemy {
                 direction *= -1;
             }
             steps %= 200;
-            double nextpos  = direction * steps * Math.PI/100;
-            setPosition((float) (x+Math.sin(nextpos)), (float) (y + Math.cos(nextpos)));
+            double nextPos = direction * steps * Math.PI/100;
+            Vector2 currentPos = new Vector2(getPosition());
+            setPosition((float) (x+Math.sin(nextPos)), (float) (y + Math.cos(nextPos)));
+            facingRight = getPosition().x > currentPos.x;
         }
     }
 
@@ -68,8 +71,8 @@ public class Floater extends MovableObject implements Enemy {
     @Override
     protected TextureRegion getFrame() {
         TextureRegion region;
-
         stateTime += Gdx.graphics.getDeltaTime();
+
         if (playerNearby) {
             region = attackAnimation.getKeyFrame(stateTime, true);
         } else {
