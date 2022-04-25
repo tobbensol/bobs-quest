@@ -70,10 +70,12 @@ public class GameCamera extends OrthographicCamera {
      */
     private void manageZoom() {
         ArrayList<Float> playerXs = new ArrayList<>();
+        ArrayList<Float> playerYs = new ArrayList<>();
 
         for (Player player : gameModel.getLevel().getGameObjects(Player.class)) {
             if (!player.isDead()) {
                 playerXs.add(player.getPosition().x);
+                playerYs.add(player.getPosition().y);
             }
         }
 
@@ -82,16 +84,38 @@ public class GameCamera extends OrthographicCamera {
         }
 
         double zoomTriggerWidth = viewportWidth * zoom * zoomTriggerPercent;
+        double zoomTriggerHeight = viewportHeight * zoom * zoomTriggerPercent;
 
         float minX = Collections.min(playerXs);
         float maxX = Collections.max(playerXs);
         float playersXDifferenceWidth = maxX - minX;
+
+        float minY = Collections.min(playerYs);
+        float maxY = Collections.max(playerYs);
+        float playersYDifferenceHeight = maxY - minY;
 
         if (playersXDifferenceWidth > zoomTriggerWidth && zoom <= maxZoom) {
             zoom += zoomIncreaseAmount * playersXDifferenceWidth / zoomTriggerWidth;
         }
         if (playersXDifferenceWidth < zoomTriggerWidth && zoom >= minZoom) {
             zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifferenceWidth;
+        }
+
+        if (playersYDifferenceHeight < zoomTriggerWidth && playersYDifferenceHeight < zoomTriggerHeight && zoom >= minZoom) {
+            if (playersYDifferenceHeight == 0 || playersXDifferenceWidth == 0) {
+                return;
+            }
+
+            if (playersYDifferenceHeight > zoomTriggerWidth) {
+                zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifferenceWidth;
+            }
+            else {
+                zoom -= zoomDecreaseAmount * zoomTriggerHeight / playersYDifferenceHeight;
+            }
+
+            if (zoom < minZoom) {
+                zoom = minZoom;
+            }
         }
     }
 
