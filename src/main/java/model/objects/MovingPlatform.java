@@ -25,8 +25,6 @@ public class MovingPlatform extends KinematicObject{
     }
 
     private void move() {
-        System.out.println(y);
-        System.out.println(top);
         if (y > top || y < bottom){
             direction *= -1;
         }
