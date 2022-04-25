@@ -72,12 +72,10 @@ public class Player extends JumpableObject {
 
     private void checkIfMaxVelocity() {
         if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
-            body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
+            body.setLinearVelocity(Math.copySign(MAX_X_VELOCITY, body.getLinearVelocity().x), body.getLinearVelocity().y);
         }
-        if (body.getLinearVelocity().y > MAX_Y_VELOCITY) {
-            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY);
-        } else if (body.getLinearVelocity().y < -MAX_Y_VELOCITY) {
-            body.setLinearVelocity(body.getLinearVelocity().x, -MAX_Y_VELOCITY);
+        if (Math.abs(body.getLinearVelocity().y) > MAX_Y_VELOCITY) {
+            body.setLinearVelocity(body.getLinearVelocity().x, Math.copySign(MAX_Y_VELOCITY, body.getLinearVelocity().y));
         }
     }
 
