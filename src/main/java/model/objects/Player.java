@@ -12,6 +12,7 @@ import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +27,6 @@ public class Player extends JumpableObject {
     private static final float X_DAMPING_SCALE = 1f;
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
-
-    private final TextureRegion[] frames;
 
     protected State currentState;
     protected State previousState;
@@ -47,7 +46,7 @@ public class Player extends JumpableObject {
 
     public Player(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Player.class).size() + 1), level, x, y, 1.1f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
-        texture = new Texture("Multi_Platformer_Tileset_v2/Players/Small_Mario.png");
+        texture = new Texture("Multi_Platformer_Tileset_v2/Players/Adventurer_Sprite_Sheet.png");
 
         hp = 100;
         currentState = State.STANDING;
@@ -58,19 +57,18 @@ public class Player extends JumpableObject {
         * STANDING -> frames[0]
         * WALKING -> frames[1]
         * JUMPING -> frames[5]
-        * onHit() -> frames[6]
+        * takeDamage() -> frames[6] // TODO: Animate getting hurt
         * DEAD -> frames[7]
         * drop() -> frames[12]
         * */
-        frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE)[0];
-
+        TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE / 2, Constants.TILE_SIZE / 2);
         animationMap = new HashMap<>();
-        animationMap.put(State.STANDING, new Animation<>(0f, frames[0]));
-        animationMap.put(State.WALKING, new Animation<>(0.166f, frames[1], frames[2], frames[3]));
-        animationMap.put(State.JUMPING, new Animation<>(0f, frames[5]));
-        animationMap.put(State.FALLING, new Animation<>(0f, frames[7]));
-        animationMap.put(State.SLIDING, new Animation<>(0f, frames[7]));
-        animationMap.put(State.DEAD, new Animation<>(0f, frames[13]));
+        animationMap.put(State.STANDING, new Animation<>(0.166f, frames[0]));
+        animationMap.put(State.WALKING, new Animation<>(0.166f, Arrays.copyOf(frames[1], 8)));
+        animationMap.put(State.JUMPING, new Animation<>(0.166f, Arrays.copyOf(frames[5], 6)));
+        animationMap.put(State.FALLING, new Animation<>(0.166f, frames[12][1]));
+        animationMap.put(State.SLIDING, new Animation<>(0.166f, Arrays.copyOf(frames[12], 5)));
+        animationMap.put(State.DEAD, new Animation<>(0.166f, Arrays.copyOf(frames[7], 7)));
 
         stateTime = 0;
     }
@@ -212,22 +210,16 @@ public class Player extends JumpableObject {
         currentState = tempState;
     }
 
-    /**
-     * This method returns the correct texture-region for the current state the player is in.
-     * It also checks wherever it should flip the texture based on the direction of movement of the player.
-     * Animates WALKING state.
-     *
-     * @return the correct texture-region for the current state the player is in.
-     */
-    private TextureRegion getFrame() {
+    @Override
+    protected TextureRegion getFrame() {
         // Specify which texture region corresponding to which state.
         stateTime = currentState == previousState ? stateTime + Gdx.graphics.getDeltaTime() : 0;
         TextureRegion region = switch (currentState) { // TODO: After deciding which states should animate, merge switch cases
             case WALKING -> getKeyFrame(true);
             case JUMPING -> getKeyFrame(false);
-            case FALLING, SLIDING -> getKeyFrame(false);
+            case FALLING, SLIDING -> getKeyFrame(true);
             case DEAD -> getKeyFrame(false);
-            default -> getKeyFrame(false);
+            default -> getKeyFrame(true);
         };
 
         flipRegionHorizontally(region);
