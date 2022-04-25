@@ -230,10 +230,7 @@ public class Player extends JumpableObject {
             default -> getKeyFrame(false);
         };
 
-        if (facingRight == region.isFlipX()) {
-            region.flip(true, false);
-        }
-
+        flipRegionHorizontally(region);
         return region;
     }
 

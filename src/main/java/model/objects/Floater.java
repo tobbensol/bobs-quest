@@ -79,10 +79,7 @@ public class Floater extends MovableObject implements Enemy {
             region = idleAnimation.getKeyFrame(stateTime, true);
         }
 
-        if (facingRight == region.isFlipX()) { // TODO: Update facingRight
-            region.flip(true, false);
-        }
-
+        flipRegionHorizontally(region);
         return region;
     }
 

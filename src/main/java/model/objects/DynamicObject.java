@@ -1,6 +1,7 @@
 package model.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import model.Level;
 import model.helper.ContactType;
@@ -19,5 +20,16 @@ public abstract class DynamicObject extends GameObject {
     @Override
     public void render(SpriteBatch batch) {
 
+    }
+
+    /**
+     * Flips the given TextureRegion if the DynamicObject is facingRight or not
+     *
+     * @param region - the region to check for flipping
+     */
+    protected void flipRegionHorizontally(TextureRegion region) {
+        if (facingRight == region.isFlipX()) {
+            region.flip(true, false);
+        }
     }
 }
