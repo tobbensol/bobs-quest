@@ -3,6 +3,7 @@ package model;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import model.helper.AudioHelper;
@@ -67,13 +68,13 @@ public class Level {
     private void createObjects() {
         for (Map.Entry<String, ArrayList<IGameObject>> set: objectMap.entrySet()) {
             if (set.getKey().equalsIgnoreCase("Player")) {
-                List<Vector2> spawnPoints = tiledMapHelper.parseMapSpawnPoints(set.getKey());
+                List<Rectangle> spawnPoints = tiledMapHelper.parseMapRectangles(set.getKey());
                 for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) {
-                    set.getValue().add(factory.create(set.getKey(), spawnPoints.get(i).x, spawnPoints.get(i).y));
+                    set.getValue().add(factory.create(set.getKey(), spawnPoints.get(i)));
                 }
             } else {
-                for (Vector2 v : tiledMapHelper.parseMapSpawnPoints(set.getKey())) {
-                    set.getValue().add(factory.create(set.getKey(), v.x, v.y));
+                for (Rectangle spawn : tiledMapHelper.parseMapRectangles(set.getKey())) {
+                    set.getValue().add(factory.create(set.getKey(), spawn));
                 }
             }
         }
@@ -85,7 +86,7 @@ public class Level {
     }
 
     private void parseMapEndPoints() {
-        List<Vector2> mapEndPoints = tiledMapHelper.parseMapSpawnPoints("MapEndPoints");
+        List<Vector2> mapEndPoints = tiledMapHelper.parseMapRectangles("MapEndPoints").stream().map((i)-> new Vector2(i.x, i.y)).toList();
 
         if (mapEndPoints.get(0).x < mapEndPoints.get(1).x) {
             topLeft = mapEndPoints.get(0);

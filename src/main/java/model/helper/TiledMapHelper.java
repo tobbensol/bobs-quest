@@ -69,12 +69,9 @@ public class TiledMapHelper {
      * @param objectLayer - string with the name of the layer you wish to get the spawnpoints from
      * @return list of spawn-points
      */
-    public List<Vector2> parseMapSpawnPoints(String objectLayer) {
-        List<Vector2> center = new ArrayList<>();
-        for (Rectangle r : parseMapObjects(objectLayer)) {
-            center.add(r.getCenter(new Vector2()));
-        }
-        return center;
+
+    public List<Rectangle> parseMapRectangles(String objectLayer) {
+        return parseMapObjects(objectLayer);
     }
 
     /**

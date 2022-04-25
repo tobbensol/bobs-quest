@@ -1,6 +1,9 @@
 package model.objects;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import model.Level;
+
 
 public class GameObjectFactory {
 
@@ -18,16 +21,17 @@ public class GameObjectFactory {
      * @param y          the y position of the object
      * @return the object in the designated location
      */
-    public GameObject create(String gameObject, float x, float y) {
+    public GameObject create(String gameObject, Rectangle rectangle) {
+        Vector2 loc = rectangle.getCenter(new Vector2());
         String objectString = gameObject.toUpperCase();
         return switch (objectString) {
-            case "COIN" -> new Coin(objectString, level, x, y);
-            case "PLAYER" -> new Player(objectString, level, x, y);
-            case "GOOMBA" -> new Goomba(objectString, level, x, y);
-            case "GOAL" -> new Goal(objectString, level, x, y);
-            case "MAPENDPOINTS" -> new MapEndPoints(objectString, level, x, y);
-            case "FLOATER" -> new Floater(objectString, level, x, y);
-            case "MOVINGPLATFORM" -> new MovingPlatform(objectString, level, x, y);
+            case "COIN" -> new Coin(objectString, level, loc.x, loc.y);
+            case "PLAYER" -> new Player(objectString, level, loc.x, loc.y);
+            case "GOOMBA" -> new Goomba(objectString, level, loc.x, loc.y);
+            case "GOAL" -> new Goal(objectString, level, loc.x, loc.y);
+            case "MAPENDPOINTS" -> new MapEndPoints(objectString, level, loc.x, loc.y);
+            case "FLOATER" -> new Floater(objectString, level, loc.x, loc.y);
+            case "MOVINGPLATFORM" -> new MovingPlatform(objectString, level, loc.x, loc.y, rectangle.height);
             default -> null;
         };
     }
