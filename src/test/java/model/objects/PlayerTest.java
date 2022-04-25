@@ -49,10 +49,9 @@ public class PlayerTest {
         sound = mock(Sound.class);
         when(level.getWorld()).thenReturn(world);
         when(level.getModel()).thenReturn(model);
-        when(model.getAudioHelper()).thenReturn(audioHelper);
+        when(level.getAudioHelper()).thenReturn(audioHelper);
         when(audioHelper.getSoundEffect(anyString())).thenReturn(sound);
         doReturn(-1L).when(sound).play();
-//        player = new Player(level, 0, 0);
         player = new Player("TEST", level, 0, 0);
 
         List<Player> players = new ArrayList<>();
@@ -236,7 +235,10 @@ public class PlayerTest {
         assertEquals(new Vector2(0, 0), player.body.getLinearVelocity());
         player.body.setLinearVelocity(100, 100);
         player.update();
-        assertEquals(new Vector2(14, 20), player.body.getLinearVelocity());
+        assertEquals(new Vector2(14, 28), player.body.getLinearVelocity());
+        player.body.setLinearVelocity(-100, -100);
+        player.update();
+        assertEquals(new Vector2(-14, -28), player.body.getLinearVelocity());
     }
 
     private void doStep() {

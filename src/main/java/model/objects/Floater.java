@@ -8,14 +8,13 @@ import model.helper.Constants;
 import model.helper.ContactType;
 
 
-public class Floater extends MovableObject implements Enemy {
+public class Floater extends DynamicObject implements Enemy {
     private static final float X_VELOCITY = 200f;
     private static final int attack = 10;
-    private int numMoves;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
     int steps = 0;
-    float direction = 0.5f;
+    float direction = 1f;
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
@@ -36,10 +35,17 @@ public class Floater extends MovableObject implements Enemy {
         }
         else{
             steps++;
-            if (steps % 200 == 0){
+            //if (steps % 200 == 0){
+            //    direction *= -1;
+            //}
+            //setPosition(x, y + direction);
+            //alternate floater movement
+            if (steps % 200 == 0 && Math.random() > 0.5f){
                 direction *= -1;
             }
-            setPosition(x, y + direction);
+            steps %= 200;
+            double nextpos  = direction * steps * Math.PI/100;
+            setPosition((float) (x+Math.sin(nextpos)), (float) (y + Math.cos(nextpos)));
         }
     }
 
@@ -60,7 +66,6 @@ public class Floater extends MovableObject implements Enemy {
 
     @Override
     public void setPlayerPosition(Vector2 position) {
-        //TODO: when the players position is updated, the coordinates are scaled down to the body position and not the PPM position
         playerPosition = position;
     }
 

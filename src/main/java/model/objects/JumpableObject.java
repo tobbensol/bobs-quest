@@ -3,7 +3,7 @@ package model.objects;
 import model.Level;
 import model.helper.ContactType;
 
-public abstract class JumpableObject extends MovableObject implements Jumpable {
+public abstract class JumpableObject extends DynamicObject implements Jumpable {
 
     protected int groundedCount = 0;
     protected boolean canJump = true;
@@ -13,7 +13,6 @@ public abstract class JumpableObject extends MovableObject implements Jumpable {
         super(name, level, x, y, density, contactType, categoryBits, maskBits);
     }
 
-    //todo make other contacts work like this as well?
     public void setGrounded(boolean value) {
         if (value) {
             groundedCount++;

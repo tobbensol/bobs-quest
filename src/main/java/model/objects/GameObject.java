@@ -18,7 +18,6 @@ public abstract class GameObject implements IGameObject {
     protected boolean facingRight, isDestroyed;
     protected short bit, maskBits;
     Texture texture;
-    String texturePath;
 
     public GameObject(String name, Level level, float width, float height, float x, float y, float density, ContactType contactType, BodyDef.BodyType bodyType, short categoryBits, short maskBits, boolean isSensor, boolean rectangle) {
         this.name = name;

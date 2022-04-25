@@ -10,6 +10,9 @@ public class AudioHelper {
 
     private final AssetManager assetManager;
     private Map<String, Music> levelMusic;
+    private float musicVolume;
+    private float soundEffectsVolume;
+
 
     public AudioHelper() {
         assetManager = new AssetManager();
@@ -17,10 +20,16 @@ public class AudioHelper {
         loadSoundEffects();
         assetManager.finishLoading();
 
+        musicVolume = 0.5f;
+        soundEffectsVolume = 0.5f;
+
         levelMusic = new HashMap<>(); // ADD level specific music here:
         levelMusic.put("level-1", getMusic("Grasslands Theme"));
         levelMusic.put("level-2", getMusic("Iceland Theme"));
-        levelMusic.put("level-3", getMusic("Desert Theme"));
+//        levelMusic.put("level-3", getMusic("Desert Theme"));
+//        levelMusic.put("level-4", getMusic("Dungeon Theme"));
+
+
     }
 
     private void loadMusic() {
@@ -38,8 +47,11 @@ public class AudioHelper {
         assetManager.load("audio/sounds/gameover.wav", Sound.class);
         assetManager.load("audio/sounds/coin.wav", Sound.class);
         assetManager.load("audio/sounds/drop.wav", Sound.class);
+        assetManager.load("audio/sounds/drop3.wav", Sound.class);
         assetManager.load("audio/sounds/hit.wav", Sound.class);
+        assetManager.load("audio/sounds/hit2.wav", Sound.class);
         assetManager.load("audio/sounds/jump.wav", Sound.class);
+        assetManager.load("audio/sounds/jump2.wav", Sound.class);
         assetManager.load("audio/sounds/chipquest.wav", Sound.class);
         assetManager.load("audio/sounds/orchestra.wav", Sound.class);
 
@@ -70,6 +82,22 @@ public class AudioHelper {
             return getMusic("Intro Theme"); // Default music if level does not have specified music.
             //throw new IllegalArgumentException("This level does not have any music"); //TODO: empty music or standard music?
         }
+    }
+
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public float getSoundEffectsVolume() {
+        return soundEffectsVolume;
+    }
+
+    public void setMusicVolume(float musicVolume) {
+        this.musicVolume = musicVolume;
+    }
+
+    public void setSoundEffectsVolume(float soundEffectsVolume) {
+        this.soundEffectsVolume = soundEffectsVolume;
     }
 
     public void dispose() {

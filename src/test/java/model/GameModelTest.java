@@ -5,8 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.mock.audio.MockMusic;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import controls.GameController;
 import helper.MockGL;
 import launcher.Boot;
 import model.helper.AudioHelper;
@@ -68,7 +70,6 @@ public class GameModelTest {
         model.update();
 
         verify(model, never()).changeScreen();
-        verify(model, never()).restart();
         assertFalse(model.isPaused());
         assertEquals(GameState.ACTIVE, model.getCurrentState());
 
@@ -79,8 +80,6 @@ public class GameModelTest {
         model.update();
 
         verify(model, times(1)).changeScreen();
-        verify(model, times(1)).restart();
-        assertTrue(model.isPaused());
         assertEquals(GameState.GAME_OVER, model.getCurrentState());
     }
 
@@ -98,7 +97,6 @@ public class GameModelTest {
         model.update();
 
         verify(model, never()).changeScreen();
-        verify(model, never()).restart();
         assertFalse(model.isPaused());
         assertEquals(GameState.ACTIVE, model.getCurrentState());
 
@@ -106,8 +104,6 @@ public class GameModelTest {
         model.update();
 
         verify(model, times(1)).changeScreen();
-        verify(model, times(1)).restart();
-        assertTrue(model.isPaused());
         assertEquals(GameState.NEXT_LEVEL, model.getCurrentState());
     }
 
@@ -140,6 +136,11 @@ public class GameModelTest {
 
         when(level.getLevelMusic()).thenReturn(music);
         doNothing().when(music).pause();
+
+        Boot.INSTANCE = mock(Boot.class);
+        GameController controller = mock(GameController.class);
+        when(Boot.INSTANCE.getGameController()).thenReturn(controller);
+        doNothing().when(controller).inputListener();
     }
 
     private void stubGraphics() {
@@ -161,13 +162,20 @@ public class GameModelTest {
 
     @Test
     void testRestart() {
+        Music music = new MockMusic();
+        when(level.getLevelMusic()).thenReturn(music);
+        stubUpdateModel();
+        model.pauseGame();
+        model.update();
+        model.resumeGame();
+
         // No access to model.levels or model.levelNR
         assertFalse(model.getLevel().isCompleted());
         assertFalse(model.isPaused());
 
         assertFalse(model.restart());
 
-        verify(model, times(1)).createLevel();
+        verify(model, times(2)).createLevel();
         assertTrue(model.isPaused());
 
         model.resumeGame();
@@ -176,7 +184,7 @@ public class GameModelTest {
 
         assertTrue(model.restart());
 
-        verify(model, times(2)).createLevel();
+        verify(model, times(3)).createLevel();
         assertTrue(model.isPaused());
     }
 

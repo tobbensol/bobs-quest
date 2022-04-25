@@ -1,7 +1,5 @@
 package model.objects;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import model.Level;
@@ -30,6 +28,6 @@ public class Coin extends StaticObject {
         level.increaseScore(1);
         BodyHelper.changeFilterData(body, Constants.DESTROYED_BIT, Constants.DESTROYED_MASK_BITS);
         isDestroyed = true;
-        level.getModel().getAudioHelper().getSoundEffect("coin").play(level.getModel().getSoundEffectsvolume());
+        level.getAudioHelper().getSoundEffect("coin").play(level.getAudioHelper().getSoundEffectsVolume());
     }
 }

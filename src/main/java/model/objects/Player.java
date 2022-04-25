@@ -1,6 +1,8 @@
 package model.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -10,13 +12,11 @@ import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
-import java.util.ArrayList;
-
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
     //TODO tweek max velocities
     private static final float MAX_X_VELOCITY = 14f;
-    private static final float MAX_Y_VELOCITY = 14f;
+    private static final float MAX_Y_VELOCITY = 28f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
     private static final float Y_MOVEMENT_IMPULSE = 260f;
     private static final float DROPPING_SCALE = 0.1f;
@@ -24,12 +24,11 @@ public class Player extends JumpableObject {
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
 
-    private final ArrayList<TextureRegion> frames;
+    private final TextureRegion[] frames;
 
     protected State currentState;
     protected State previousState;
 
-    //TODO these should be in a parent class
     private boolean rightCollision = false;
     private boolean leftCollision = false;
 
@@ -38,22 +37,22 @@ public class Player extends JumpableObject {
 
     private final Vector2 cumulativeForces = new Vector2(0, 0);
 
-
     private int hp;
+
+    private final Animation<TextureRegion> walkingAnimation;
+    private float stateTime;
 
     public Player(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Player.class).size() + 1), level, x, y, 1.1f, ContactType.PLAYER, Constants.PLAYER_BIT, Constants.PLAYER_MASK_BITS);
-        texturePath = "Multi_Platformer_Tileset_v2/Players/Small_Mario.png";
-        texture = new Texture(texturePath);
+        texture = new Texture("Multi_Platformer_Tileset_v2/Players/Small_Mario.png");
 
         hp = 100;
         currentState = State.STANDING;
         previousState = State.STANDING;
 
-        frames = new ArrayList<>();
-        for (int i = 0; i < getTexture().getWidth() / Constants.TILE_SIZE; i++) {
-            frames.add(new TextureRegion(getTexture(), i * Constants.TILE_SIZE, 0, Constants.TILE_SIZE, Constants.TILE_SIZE));
-        }
+        frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE)[0];
+        stateTime = 0;
+        walkingAnimation = new Animation<>(0.166f, frames[1], frames[2], frames[3]);
     }
 
     @Override
@@ -73,11 +72,11 @@ public class Player extends JumpableObject {
 
     private void checkIfMaxVelocity() {
         if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
-            body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
+            body.setLinearVelocity(Math.copySign(MAX_X_VELOCITY, body.getLinearVelocity().x), body.getLinearVelocity().y);
         }
-//        if (Math.abs(body.getLinearVelocity().y) > MAX_Y_VELOCITY) {
-//            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY);
-//        }
+        if (Math.abs(body.getLinearVelocity().y) > MAX_Y_VELOCITY) {
+            body.setLinearVelocity(body.getLinearVelocity().x, Math.copySign(MAX_Y_VELOCITY, body.getLinearVelocity().y));
+        }
     }
 
     @Override
@@ -105,7 +104,7 @@ public class Player extends JumpableObject {
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             canJump = false;
             updateGrounded();
-            level.getModel().getAudioHelper().getSoundEffect("jump").play(level.getModel().getSoundEffectsvolume());
+            level.getAudioHelper().getSoundEffect("jump").play(level.getAudioHelper().getSoundEffectsVolume());
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -136,7 +135,7 @@ public class Player extends JumpableObject {
         cumulativeForces.add(0, -Y_MOVEMENT_IMPULSE * DROPPING_SCALE);
 
         if (previousState != State.FALLING && !grounded || onPlatform) {
-            level.getModel().getAudioHelper().getSoundEffect("drop").play(level.getModel().getSoundEffectsvolume());
+            level.getAudioHelper().getSoundEffect("drop3").play(level.getAudioHelper().getSoundEffectsVolume());
         }
 
     }
@@ -194,22 +193,28 @@ public class Player extends JumpableObject {
     /**
      * This method returns the correct texture-region for the current state the player is in.
      * It also checks wherever it should flip the texture based on the direction of movement of the player.
+     * Animates WALKING state.
      *
      * @return the correct texture-region for the current state the player is in.
      */
     private TextureRegion getFrame() {
         // Specify which texture region corresponding to which state.
         TextureRegion region = switch (currentState) {
-            case JUMPING -> frames.get(5);
-            case FALLING, SLIDING -> frames.get(7);
-            case WALKING -> frames.get(3);
-            case DEAD -> frames.get(13);
-            default -> frames.get(0);
+            case JUMPING -> frames[5];
+            case FALLING, SLIDING -> frames[7];
+            case DEAD -> frames[13];
+            default -> frames[0];
         };
 
-        if (!facingRight && !region.isFlipX()) {
-            region.flip(true, false);
-        } else if (facingRight && region.isFlipX()) {
+        // Animation for WALKING
+        if (currentState == State.WALKING) {
+            stateTime += Gdx.graphics.getDeltaTime();
+            region = walkingAnimation.getKeyFrame(stateTime, true);
+        } else {
+            stateTime = 0;
+        }
+
+        if (facingRight == region.isFlipX()) {
             region.flip(true, false);
         }
 
@@ -258,8 +263,7 @@ public class Player extends JumpableObject {
             }
         }, 0.5f);
 
-        System.out.println(this + ": " + hp);
-        level.getModel().getAudioHelper().getSoundEffect("hit").play(level.getModel().getSoundEffectsvolume());
+        level.getAudioHelper().getSoundEffect("hit2").play(level.getAudioHelper().getSoundEffectsVolume());
     }
 
     public void increaseHealth(int amount) {
