@@ -16,7 +16,7 @@ public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
     //TODO tweek max velocities
     private static final float MAX_X_VELOCITY = 14f;
-    private static final float MAX_Y_VELOCITY = 14f;
+    private static final float MAX_Y_VELOCITY = 28f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
     private static final float Y_MOVEMENT_IMPULSE = 250f;
     private static final float DROPPING_SCALE = 0.2f;
@@ -74,8 +74,10 @@ public class Player extends JumpableObject {
         if (Math.abs(body.getLinearVelocity().x) > MAX_X_VELOCITY) {
             body.setLinearVelocity(MAX_X_VELOCITY, body.getLinearVelocity().y);
         }
-        if (Math.abs(body.getLinearVelocity().y) > MAX_Y_VELOCITY) {
+        if (body.getLinearVelocity().y > MAX_Y_VELOCITY) {
             body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_VELOCITY);
+        } else if (body.getLinearVelocity().y < -MAX_Y_VELOCITY) {
+            body.setLinearVelocity(body.getLinearVelocity().x, -MAX_Y_VELOCITY);
         }
     }
 

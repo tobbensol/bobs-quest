@@ -235,7 +235,7 @@ public class PlayerTest {
         assertEquals(new Vector2(0, 0), player.body.getLinearVelocity());
         player.body.setLinearVelocity(100, 100);
         player.update();
-        assertEquals(new Vector2(14, 14), player.body.getLinearVelocity());
+        assertEquals(new Vector2(14, 28), player.body.getLinearVelocity());
     }
 
     private void doStep() {
