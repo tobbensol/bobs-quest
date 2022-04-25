@@ -97,8 +97,8 @@ public class GameCamera extends OrthographicCamera {
         if (playersXDifferenceWidth > zoomTriggerWidth && zoom <= maxZoom) {
             zoom += zoomIncreaseAmount * playersXDifferenceWidth / zoomTriggerWidth;
         }
-        if (playersXDifferenceWidth < zoomTriggerWidth && zoom >= minZoom) {
-            zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifferenceWidth;
+        if (playersYDifferenceHeight > zoomTriggerHeight && zoom <= maxZoom) {
+            zoom += zoomIncreaseAmount * playersYDifferenceHeight / zoomTriggerHeight;
         }
 
         if (playersYDifferenceHeight < zoomTriggerWidth && playersYDifferenceHeight < zoomTriggerHeight && zoom >= minZoom) {
