@@ -12,12 +12,14 @@ import model.helper.ContactType;
 
 
 public class Floater extends MovableObject implements Enemy {
-    private static final float X_VELOCITY = 200f;
     private static final int attack = 10;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
     private int steps = 0;
-    private float direction = 1f;
+    //TODO tweek idleVel and idleCircleSize
+    private float idleVel = 3f;
+    private final float idleCircleSize = 1.5f;
+    private static final float activeVel = 200f;
     private float stateTime;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> attackAnimation;
@@ -41,24 +43,19 @@ public class Floater extends MovableObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            Vector2 forceVec = new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(X_VELOCITY);
+            Vector2 forceVec = new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(activeVel);
             body.applyForceToCenter(forceVec, true);
             facingRight = forceVec.x > 0;
         }
         else{
             steps++;
-            //if (steps % 200 == 0){
-            //    direction *= -1;
-            //}
-            //setPosition(x, y + direction);
-            //alternate floater movement
-            if (steps % 200 == 0 && Math.random() > 0.5f){
-                direction *= -1;
+            steps = (int)(steps % (200 * idleCircleSize/idleVel));
+            if (steps == 0 && Math.random() > 0.5){
+                idleVel *= -1;
             }
-            steps %= 200;
-            double nextPos = direction * steps * Math.PI/100;
+            double nextPos = idleVel * steps * Math.PI/100 / idleCircleSize;
             Vector2 currentPos = new Vector2(getPosition());
-            setPosition((float) (x+Math.sin(nextPos)), (float) (y + Math.cos(nextPos)));
+            setPosition((float) (x+Math.sin(nextPos)*Math.abs(idleVel)), (float) (y + Math.cos(nextPos)*Math.abs(idleVel)));
             facingRight = getPosition().x > currentPos.x;
         }
     }
