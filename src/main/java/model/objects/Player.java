@@ -12,6 +12,9 @@ import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
     //TODO tweek max velocities
@@ -39,7 +42,7 @@ public class Player extends JumpableObject {
 
     private int hp;
 
-    private final Animation<TextureRegion> walkingAnimation;
+    private final Map<State, Animation<TextureRegion>> animationMap;
     private float stateTime;
 
     public Player(String name, Level level, float x, float y) {
@@ -50,9 +53,26 @@ public class Player extends JumpableObject {
         currentState = State.STANDING;
         previousState = State.STANDING;
 
+        /*
+        * Which row corresponds to which state in Adventurer_Sprite_Sheet:
+        * STANDING -> frames[0]
+        * WALKING -> frames[1]
+        * JUMPING -> frames[5]
+        * onHit() -> frames[6]
+        * DEAD -> frames[7]
+        * drop() -> frames[12]
+        * */
         frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE)[0];
+
+        animationMap = new HashMap<>();
+        animationMap.put(State.STANDING, new Animation<>(0f, frames[0]));
+        animationMap.put(State.WALKING, new Animation<>(0.166f, frames[1], frames[2], frames[3]));
+        animationMap.put(State.JUMPING, new Animation<>(0f, frames[5]));
+        animationMap.put(State.FALLING, new Animation<>(0f, frames[7]));
+        animationMap.put(State.SLIDING, new Animation<>(0f, frames[7]));
+        animationMap.put(State.DEAD, new Animation<>(0f, frames[13]));
+
         stateTime = 0;
-        walkingAnimation = new Animation<>(0.166f, frames[1], frames[2], frames[3]);
     }
 
     @Override
@@ -201,26 +221,24 @@ public class Player extends JumpableObject {
      */
     private TextureRegion getFrame() {
         // Specify which texture region corresponding to which state.
-        TextureRegion region = switch (currentState) {
-            case JUMPING -> frames[5];
-            case FALLING, SLIDING -> frames[7];
-            case DEAD -> frames[13];
-            default -> frames[0];
+        stateTime = currentState == previousState ? stateTime + Gdx.graphics.getDeltaTime() : 0;
+        TextureRegion region = switch (currentState) { // TODO: After deciding which states should animate, merge switch cases
+            case WALKING -> getKeyFrame(true);
+            case JUMPING -> getKeyFrame(false);
+            case FALLING, SLIDING -> getKeyFrame(false);
+            case DEAD -> getKeyFrame(false);
+            default -> getKeyFrame(false);
         };
-
-        // Animation for WALKING
-        if (currentState == State.WALKING) {
-            stateTime += Gdx.graphics.getDeltaTime();
-            region = walkingAnimation.getKeyFrame(stateTime, true);
-        } else {
-            stateTime = 0;
-        }
 
         if (facingRight == region.isFlipX()) {
             region.flip(true, false);
         }
 
         return region;
+    }
+
+    private TextureRegion getKeyFrame(boolean looping) {
+        return animationMap.get(currentState).getKeyFrame(stateTime, looping);
     }
 
     public boolean isDead() {
