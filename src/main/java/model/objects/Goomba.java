@@ -11,7 +11,7 @@ import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
 
-public class Goomba extends MovableObject implements Enemy {
+public class Goomba extends DynamicObject implements Enemy {
 
     private static final float X_VELOCITY = 3.2f;
     private static final int attack = 40;
