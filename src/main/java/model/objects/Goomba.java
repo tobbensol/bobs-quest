@@ -84,10 +84,8 @@ public class Goomba extends MovableObject implements Enemy {
         batch.draw(getFrame(), x - width/2, y - height/2, width, height);
     }
 
-    /**
-     * @return the TextureRegion for the current frame of the walking animation if alive, death texture if dead
-     */
-    private TextureRegion getFrame() {
+    @Override
+    protected TextureRegion getFrame() {
         if (isDead) {
             return frames[0];
         }

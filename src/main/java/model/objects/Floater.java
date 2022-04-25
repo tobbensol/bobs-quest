@@ -1,7 +1,10 @@
 package model.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import model.Level;
 import model.helper.Constants;
@@ -15,12 +18,20 @@ public class Floater extends MovableObject implements Enemy {
     private Vector2 playerPosition;
     int steps = 0;
     float direction = 1f;
+    private final TextureRegion[][] frames;
+    private float stateTime;
+    private final Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> attackAnimation;
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
-        texture = new Texture("Multi_Platformer_Tileset_v2/Dungeon/Details/Dungeon_Jar1.png");
+        texture = new Texture("Multi_Platformer_Tileset_v2/Enemies/Bat_Sprite_Sheet.png");
         body.setGravityScale(0);
         body.setLinearDamping(3);
+
+        frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE/4, Constants.TILE_SIZE/4);
+        idleAnimation = new Animation<>(0.166f/2f, frames[1]);
+        attackAnimation = new Animation<>(0.166f/2f, frames[0]);
     }
 
     @Override
@@ -51,7 +62,25 @@ public class Floater extends MovableObject implements Enemy {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x - width/2, y - height/2, width, height);
+        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
+    }
+
+    @Override
+    protected TextureRegion getFrame() {
+        TextureRegion region;
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        if (playerNearby) {
+            region = attackAnimation.getKeyFrame(stateTime, true);
+        } else {
+            region = idleAnimation.getKeyFrame(stateTime, true);
+        }
+
+        if (facingRight == region.isFlipX()) { // TODO: Update facingRight
+            region.flip(true, false);
+        }
+
+        return region;
     }
 
     @Override
