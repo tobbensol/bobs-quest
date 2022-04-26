@@ -88,10 +88,11 @@ public class GameCamera extends OrthographicCamera {
 
         float minX = Collections.min(playerXs);
         float maxX = Collections.max(playerXs);
-        float playersXDifferenceWidth = maxX - minX;
 
         float minY = Collections.min(playerYs);
         float maxY = Collections.max(playerYs);
+
+        float playersXDifferenceWidth = maxX - minX;
         float playersYDifferenceHeight = maxY - minY;
 
         if (playersXDifferenceWidth > zoomTriggerWidth && zoom <= maxZoom) {
@@ -100,23 +101,15 @@ public class GameCamera extends OrthographicCamera {
         if (playersYDifferenceHeight > zoomTriggerHeight && zoom <= maxZoom) {
             zoom += zoomIncreaseAmount * playersYDifferenceHeight / zoomTriggerHeight;
         }
-
-        if (playersYDifferenceHeight < zoomTriggerWidth && playersYDifferenceHeight < zoomTriggerHeight && zoom >= minZoom) {
-            if (playersYDifferenceHeight == 0 || playersXDifferenceWidth == 0) {
-                return;
-            }
-
-            if (playersYDifferenceHeight > zoomTriggerWidth) {
-                zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifferenceWidth;
-            }
-            else {
+        if (playersXDifferenceWidth < zoomTriggerWidth && zoom > minZoom && playersXDifferenceWidth != 0) {
                 zoom -= zoomDecreaseAmount * zoomTriggerHeight / playersYDifferenceHeight;
-            }
-
-            if (zoom < minZoom) {
-                zoom = minZoom;
-            }
         }
+        if (playersYDifferenceHeight < zoomTriggerHeight && zoom > minZoom && playersYDifferenceHeight != 0) {
+                zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifferenceWidth;
+        }
+
+        if (zoom < minZoom)
+            zoom = minZoom;
     }
 
     /**
