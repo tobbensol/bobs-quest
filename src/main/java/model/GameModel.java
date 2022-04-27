@@ -205,13 +205,13 @@ public class GameModel implements ControllableModel {
     public void changeScreen() {
 
         switch (currentState) {
-            case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
             case MAIN_MENU -> Boot.INSTANCE.setScreen(new MainMenuScreen(this));
-            case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
-            case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
-            case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this));
             case NEW_GAME -> Boot.INSTANCE.setScreen(new NewGameScreen(this));
             case SELECT_LEVEL -> Boot.INSTANCE.setScreen(new SelectLevelScreen(this));
+            case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this));
+            case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
+            case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
+            case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
         }
 
     }
