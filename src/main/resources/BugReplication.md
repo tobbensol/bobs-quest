@@ -174,6 +174,12 @@
   - status:
     - Still a bug
 
+- The sky tile from the grassland terrain tileset makes the sky flicker ingame
+  - Reason:
+    - Problem with tile from the Grassland terrain tileset. Use Sky_Tileset
+  - Status:
+    - Fixed
+
 
 ## Manuel Tests
 
