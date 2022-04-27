@@ -51,6 +51,10 @@ public abstract class AbstractScreen implements Screen {
         this.animation = new Animation<>(0.166f, Arrays.copyOf(frames[1], 8));
     }
 
+    /**
+     * This method renders the scrolling background with player animation.
+     * The scrolling progress is saved in the GameModel when switching between the screens.
+     */
     protected void renderBackground() {
         batch.begin();
         batch.draw(background,gameModel.getBackgroundX(),-350);
