@@ -17,8 +17,8 @@ public class GameCamera extends OrthographicCamera {
     private static final float minZoom = 1f;
     private static final float maxZoom = 1.45f;
     private static final float zoomTriggerPercent = 0.68f;
-    private static final float zoomIncreaseAmount = 0.0016f;
-    private static final float zoomDecreaseAmount = 0.0016f;
+    private static final float zoomIncreaseAmount = 0.0024f;
+    private static final float zoomDecreaseAmount = 0.0064f;
     private final GameModel gameModel;
 
 
@@ -83,8 +83,11 @@ public class GameCamera extends OrthographicCamera {
             return;
         }
 
-        double zoomTriggerWidth = viewportWidth * zoom * zoomTriggerPercent;
-        double zoomTriggerHeight = viewportHeight * zoom * zoomTriggerPercent;
+        double zoomOutTriggerWidth = viewportWidth * zoom * zoomTriggerPercent;
+        double zoomOutTriggerHeight = viewportHeight * zoom * zoomTriggerPercent;
+
+        double zoomInTriggerWidth = viewportWidth * zoom * zoomTriggerPercent-8;
+        double zoomInTriggerHeight = viewportHeight * zoom * zoomTriggerPercent-8;
 
         float minX = Collections.min(playerXs);
         float maxX = Collections.max(playerXs);
@@ -95,21 +98,26 @@ public class GameCamera extends OrthographicCamera {
         float playersXDifferenceWidth = maxX - minX;
         float playersYDifferenceHeight = maxY - minY;
 
-        if (playersXDifferenceWidth > zoomTriggerWidth && zoom <= maxZoom) {
-            zoom += zoomIncreaseAmount * playersXDifferenceWidth / zoomTriggerWidth;
-        }
-        if (playersYDifferenceHeight > zoomTriggerHeight && zoom <= maxZoom) {
-            zoom += zoomIncreaseAmount * playersYDifferenceHeight / zoomTriggerHeight;
-        }
-        if (playersXDifferenceWidth < zoomTriggerWidth && zoom > minZoom && playersXDifferenceWidth != 0) {
-                zoom -= zoomDecreaseAmount * zoomTriggerHeight / playersYDifferenceHeight;
-        }
-        if (playersYDifferenceHeight < zoomTriggerHeight && zoom > minZoom && playersYDifferenceHeight != 0) {
-                zoom -= zoomDecreaseAmount * zoomTriggerWidth / playersXDifferenceWidth;
+
+        if (playersYDifferenceHeight > zoomOutTriggerHeight && zoom < maxZoom) {
+            zoom += zoomIncreaseAmount * playersYDifferenceHeight / zoomOutTriggerHeight;
         }
 
-        if (zoom < minZoom)
+        if (playersXDifferenceWidth > zoomOutTriggerWidth && zoom < maxZoom) {
+            zoom += zoomIncreaseAmount * playersXDifferenceWidth / zoomOutTriggerWidth;
+        }
+
+        if ( (playersYDifferenceHeight < zoomInTriggerHeight) && (playersXDifferenceWidth < zoomInTriggerWidth) && (zoom > minZoom) ) {
+            if (playersYDifferenceHeight < zoomInTriggerHeight && playersYDifferenceHeight != 0) {
+                zoom -= zoomDecreaseAmount;
+            } else if (playersXDifferenceWidth < zoomInTriggerWidth && playersXDifferenceWidth != 0) {
+                zoom -= zoomDecreaseAmount;
+            }
+        }
+
+        if (zoom < minZoom) {
             zoom = minZoom;
+        }
     }
 
     /**
