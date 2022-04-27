@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.mock.input.MockInput;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import model.GameModel;
 import model.GameState;
+import model.helper.AudioHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -122,4 +125,16 @@ public class GameControllerTest {
         assertEquals(GameState.ACTIVE, model.getCurrentState());
     }
 
+    @Test
+    void testGoingToMenu(){
+        model.setCurrentState(GameState.ACTIVE);
+        model.pauseGame();
+
+        verifyNoInteractions(Gdx.input);
+
+        when(Gdx.input.isKeyPressed(Input.Keys.M)).thenReturn(true);
+        controller.inputListener();
+
+        assertEquals(GameState.MAIN_MENU, model.getCurrentState());
+    }
 }

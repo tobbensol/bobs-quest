@@ -51,8 +51,11 @@ public class GameModelTest {
 
         model = spy(new GameModel());
         doReturn(level).when(model).createLevel();
+        doReturn(music).when(model).getMusic();
         when(model.getLevel()).thenReturn(level);
         doNothing().when(model).createCamera();
+        doNothing().when(model).resetZoom();
+        doNothing().when(model).setMusic(music);
     }
 
     @Test
@@ -298,7 +301,40 @@ public class GameModelTest {
         } catch (Exception e) {
             fail();
         }
+        model.setMusicVolume(0);
+        assertEquals(0, model.getMusicVolume());
+        model.setSoundEffectsVolume(0);
+        assertEquals(0, model.getSoundEffectsVolume());
     }
 
+    @Test
+    void testContinueGame(){
+        stubUpdateModel();
+        model.setCurrentState(GameState.MAIN_MENU);
+        assertEquals(GameState.MAIN_MENU, model.getCurrentState());
+        model.continueGame();
+        assertEquals(GameState.ACTIVE, model.getCurrentState());
+    }
+
+    @Test
+    void testGoToScreen(){
+        stubUpdateModel();
+        model.goToScreen(GameState.MAIN_MENU);
+        assertEquals(GameState.MAIN_MENU, model.getCurrentState());
+        assertTrue(model.isPaused());
+        model.goToScreen(GameState.ACTIVE);
+        assertEquals(GameState.ACTIVE, model.getCurrentState());
+        assertFalse(model.isPaused());
+    }
+
+    @Test
+    void testStartNewGame(){
+        stubUpdateModel();
+        assertThrows(IllegalArgumentException.class, () -> model.startNewGame(0));
+        assertThrows(IllegalArgumentException.class, () -> model.startNewGame(4));
+        model.startNewGame(3);
+        assertEquals(3, model.getNumPlayers());
+        assertEquals(1, model.getAvailableLevels().size());
+    }
 }
 

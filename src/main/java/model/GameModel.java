@@ -20,7 +20,7 @@ public class GameModel implements ControllableModel {
     private final List<Controller> controllers;
     private final int numControllers;
     private Level level;
-    private int levelNR = 1;
+    private int levelNR = 0;
     private int numPlayers;
 
     private GameState currentState;
@@ -68,7 +68,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
-        audioHelper.getSoundEffect("gameover").play(audioHelper.getSoundEffectsVolume());
+        getAudioHelper().getSoundEffect("gameover").play(getAudioHelper().getSoundEffectsVolume());
         return true;
     }
 
@@ -102,7 +102,7 @@ public class GameModel implements ControllableModel {
         } else { //TODO i dont think this should happen every update
             getLevel().getHud().resume();
             music.play();
-            music.setVolume(audioHelper.getMusicVolume());
+            music.setVolume(getAudioHelper().getMusicVolume());
         }
         if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL){
             restart();
@@ -110,7 +110,7 @@ public class GameModel implements ControllableModel {
         if (getLevel().isCompleted()) {
             music.stop();
             music.dispose();
-            audioHelper.getSoundEffect("orchestra").play(audioHelper.getSoundEffectsVolume());
+            getAudioHelper().getSoundEffect("orchestra").play(getAudioHelper().getSoundEffectsVolume());
             currentState = GameState.NEXT_LEVEL;
             changeScreen();
         }
@@ -138,24 +138,29 @@ public class GameModel implements ControllableModel {
         return camera;
     }
 
+    public Music getMusic() {
+        return music;
+    }
+
+    public void setMusic(Music m){
+        music = m;
+    }
+
     @Override
     public boolean restart() {
         boolean nextLevel = getLevel().isCompleted();
         if (nextLevel) {
             levelNR++;
         }
-        //TODO only here to make tests work, not a problem outside of tests
-        if (camera != null){
-            camera.resetZoom();
-        }
+        resetZoom();
         level = createLevel();
         if (!availableLevels.contains(level.getLevelName())) {
             availableLevels.add(level.getLevelName());
         }
-        music.stop();
-        music.dispose();
-        music = level.getLevelMusic();
-        music.pause();
+        getMusic().stop();
+        getMusic().dispose();
+        setMusic(level.getLevelMusic());
+        getMusic().pause();
         pauseGame();
         return nextLevel;
     }
@@ -276,11 +281,11 @@ public class GameModel implements ControllableModel {
 
     @Override
     public void setSoundEffectsVolume(float soundEffectsVolume) {
-        audioHelper.setSoundEffectsVolume(soundEffectsVolume);
+        getAudioHelper().setSoundEffectsVolume(soundEffectsVolume);
     }
 
     public float getMusicVolume() {
-        return audioHelper.getMusicVolume();
+        return getAudioHelper().getMusicVolume();
     }
 
     public float getSoundEffectsVolume() {
@@ -322,9 +327,6 @@ public class GameModel implements ControllableModel {
         if (getCurrentState() != GameState.ACTIVE) {
             setCurrentState(GameState.ACTIVE);
             changeScreen();
-            if (!isPaused()) {
-                resumeGame();
-            }
         }
     }
 
@@ -334,7 +336,13 @@ public class GameModel implements ControllableModel {
         changeScreen();
         if (getCurrentState() == GameState.ACTIVE) {
             resumeGame();
+        } else{
+            pauseGame();
         }
+    }
+
+    public void resetZoom(){
+        camera.resetZoom();
     }
 
 }
