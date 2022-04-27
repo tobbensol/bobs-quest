@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="297" height="142" tilewidth="64" tileheight="64" infinite="0" nextlayerid="38" nextobjectid="579">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="297" height="142" tilewidth="64" tileheight="64" infinite="0" nextlayerid="38" nextobjectid="583">
  <tileset firstgid="1" source="../Multi_Platformer_Tileset_v2/Tilesets/WorldObject_Tileset.tsx"/>
  <tileset firstgid="26" source="../Multi_Platformer_Tileset_v2/Tilesets/Sky_Tileset.tsx"/>
  <tileset firstgid="122" source="../Multi_Platformer_Tileset_v2/Desert/Tilesets/Desert_Background_Tileset.tsx"/>
@@ -1632,8 +1632,9 @@
   <object id="533" x="3904" y="1856" width="64" height="64"/>
   <object id="534" x="3904" y="2432" width="64" height="64"/>
   <object id="556" x="4992" y="1088" width="64" height="64"/>
-  <object id="561" x="8256" y="1600" width="128" height="64"/>
+  <object id="561" x="8448" y="1600" width="64" height="64"/>
   <object id="572" x="5184" y="2112" width="64" height="64"/>
+  <object id="579" x="8128" y="1600" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="13" name="Goomba">
   <object id="249" x="1664" y="2496" width="64" height="64"/>
@@ -1653,9 +1654,9 @@
   <object id="570" x="10176" y="2752" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="9" name="Player">
-  <object id="576" x="192" y="2432" width="64" height="64"/>
-  <object id="577" x="320" y="2432" width="64" height="64"/>
-  <object id="578" x="448" y="2432" width="64" height="64"/>
+  <object id="580" x="7552" y="1920" width="64" height="64"/>
+  <object id="581" x="7680" y="1920" width="64" height="64"/>
+  <object id="582" x="7808" y="1920" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="14" name="Coin">
   <object id="277" x="5504" y="2112" width="64" height="64"/>
