@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -25,12 +26,23 @@ public class MainMenuScreen implements Screen {
     private Skin skin;
 
 
+
+    private float backgroundX = 0;
+    private float scrollingVelocity = 2f;
+
+    Texture texture;
+    SpriteBatch batch = new SpriteBatch();
+
+
     public MainMenuScreen(GameModel gameModel) {
         this.gameModel = gameModel;
         viewport = new FitViewport(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight(), new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        texture = new Texture("images/main-menu-background.png");
+        System.out.println(texture.getWidth());
+        System.out.println(texture.getHeight());
     }
 
     @Override
@@ -77,7 +89,15 @@ public class MainMenuScreen implements Screen {
         gameModel.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        batch.draw(texture,backgroundX,-350);
+        batch.end();
         stage.draw();
+
+        backgroundX -= scrollingVelocity;
+        if (backgroundX < -texture.getWidth() + Boot.INSTANCE.getScreenWidth()) {
+            backgroundX = 0;
+        }
     }
 
     @Override
