@@ -24,7 +24,7 @@ public class Goomba extends DynamicObject implements Enemy {
     private boolean isDead;
 
     public Goomba(String name, Level level, float x, float y) {
-        super(name + " " + (level.getGameObjects(Goomba.class).size() + 1), level, x, y, 1.1f, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
+        super(name + " " + (level.getGameObjects(Goomba.class).size() + 1), level, x, y, 1.1f, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.GOOMBA_MASK_BITS);
         texture = new Texture("Multi_Platformer_Tileset_v2/Enemies/Goomba.png");
 
         frames = TextureRegion.split(texture, Constants.TILE_SIZE, Constants.TILE_SIZE)[0];

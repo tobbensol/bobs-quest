@@ -19,12 +19,15 @@ public class Constants {
     public static final short PLATFORM_BIT = 32;
     public static final short CAMERA_WALL_BIT = 64;
 
+    public static final short EDGE_BIT = 128;
+
 
     /**
      * The bit values that a given body can interact with.
      */
     public static final short PLAYER_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | COIN_BIT | GOAL_BIT | PLATFORM_BIT | CAMERA_WALL_BIT;
-    public static final short ENEMY_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | ENEMY_BIT | PLATFORM_BIT;
+    public static final short GOOMBA_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | ENEMY_BIT | PLATFORM_BIT | EDGE_BIT;
+    public static final short FLOATER_MASK_BITS = DEFAULT_BIT | PLAYER_BIT | ENEMY_BIT;
     public static final short INTERACTIVE_MASK_BITS = PLAYER_BIT;
     public static final short DEFAULT_MASK_BITS = DEFAULT_BIT | ENEMY_BIT | PLAYER_BIT;
     public static final short EDGE_MASK_BITS = ENEMY_BIT;
