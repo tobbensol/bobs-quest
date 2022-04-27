@@ -188,43 +188,72 @@ public class GameModelTest {
         assertTrue(model.isPaused());
     }
 
-//    @Test
-//    void testSetStateThrows() {
-//        assertThrows(IllegalArgumentException.class, () -> model.setState(null));
-//
-//        assertEquals(GameState.STARTUP, model.getState());
-//        assertThrows(IllegalArgumentException.class, () -> model.setState(GameState.GAME_OVER));
-//        assertThrows(IllegalArgumentException.class, () -> model.setState(GameState.NEXT_LEVEL));
-//
-//        model.setState(GameState.ACTIVE);
-//        model.setState(GameState.GAME_OVER);
-//        assertThrows(IllegalArgumentException.class, () -> model.setState(GameState.STARTUP));
-//        assertThrows(IllegalArgumentException.class, () -> model.setState(GameState.NEXT_LEVEL));
-//
-//        model.setState(GameState.ACTIVE);
-//        model.setState(GameState.NEXT_LEVEL);
-//        assertThrows(IllegalArgumentException.class, () -> model.setState(GameState.GAME_OVER));
-//        assertThrows(IllegalArgumentException.class, () -> model.setState(GameState.STARTUP));
-//    }
+    @Test
+    void testSetStateThrows() {
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(null));
+
+        assertEquals(GameState.MAIN_MENU, model.getCurrentState());
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.NEXT_LEVEL));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.GAME_OVER));
+
+        model.setCurrentState(GameState.NEW_GAME);
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.NEXT_LEVEL));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.GAME_OVER));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.SETTINGS));
+
+        model.setCurrentState(GameState.SELECT_LEVEL);
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.NEXT_LEVEL));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.GAME_OVER));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.SETTINGS));
+
+        model.setCurrentState(GameState.MAIN_MENU);
+        model.setCurrentState(GameState.SETTINGS);
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.NEXT_LEVEL));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.GAME_OVER));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.SELECT_LEVEL));
+
+        model.setCurrentState(GameState.ACTIVE);
+        model.setCurrentState(GameState.NEXT_LEVEL);
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.GAME_OVER));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.NEW_GAME));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.SELECT_LEVEL));
+
+        model.setCurrentState(GameState.ACTIVE);
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.NEW_GAME));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.SETTINGS));
+
+        model.setCurrentState(GameState.GAME_OVER);
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.NEXT_LEVEL));
+        assertThrows(IllegalArgumentException.class, () -> model.setCurrentState(GameState.SETTINGS));
+    }
 
     @Test
     void testChangeScreen() {
         Boot.INSTANCE = mock(Boot.class);
         doNothing().when(Boot.INSTANCE).setScreen(any(Screen.class));
-        assertEquals(GameState.MAIN_MENU, model.getCurrentState());
 
+        assertEquals(GameState.MAIN_MENU, model.getCurrentState());
         mockScreenChange(MainMenuScreen.class);
+
+        model.setCurrentState(GameState.NEW_GAME);
+        mockScreenChange(NewGameScreen.class);
+
+        model.setCurrentState(GameState.SELECT_LEVEL);
+        mockScreenChange(SelectLevelScreen.class);
+
+        model.setCurrentState(GameState.MAIN_MENU);
+        model.setCurrentState(GameState.SETTINGS);
+        mockScreenChange(SettingsScreen.class);
 
         model.setCurrentState(GameState.ACTIVE);
         mockScreenChange(GameScreen.class);
 
-        model.setCurrentState(GameState.GAME_OVER);
-        mockScreenChange(GameOverScreen.class);
-
-        model.setCurrentState(GameState.ACTIVE);
         model.setCurrentState(GameState.NEXT_LEVEL);
         mockScreenChange(LevelCompletedScreen.class);
 
+        model.setCurrentState(GameState.ACTIVE);
+        model.setCurrentState(GameState.GAME_OVER);
+        mockScreenChange(GameOverScreen.class);
     }
 
     private void mockScreenChange(Class<? extends Screen> type) {
