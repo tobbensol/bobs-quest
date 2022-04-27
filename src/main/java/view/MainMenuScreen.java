@@ -1,23 +1,24 @@
 package view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.GameModel;
 import model.GameState;
+import model.helper.Constants;
+import java.util.Arrays;
 
 public class MainMenuScreen implements Screen {
     private final Viewport viewport;
@@ -25,12 +26,13 @@ public class MainMenuScreen implements Screen {
     private final GameModel gameModel;
     private Skin skin;
 
-
-
     private float backgroundX = 0;
     private float scrollingVelocity = 2f;
+    private float stateTime;
 
-    Texture texture;
+    Texture background;
+    Texture player;
+    Animation<TextureRegion> animation;
     SpriteBatch batch = new SpriteBatch();
 
 
@@ -40,9 +42,13 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(viewport, new SpriteBatch());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        texture = new Texture("images/main-menu-background.png");
-        System.out.println(texture.getWidth());
-        System.out.println(texture.getHeight());
+
+        background = new Texture("images/main-menu-background.png");
+
+        player = new Texture("Multi_Platformer_Tileset_v2/Players/Adventurer_Sprite_Sheet.png");
+        TextureRegion[][] frames = TextureRegion.split(player, Constants.TILE_SIZE / 2, Constants.TILE_SIZE / 2);
+        animation = new Animation<>(0.166f, Arrays.copyOf(frames[1], 8));
+        stateTime = 0;
     }
 
     @Override
@@ -90,14 +96,18 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(texture,backgroundX,-350);
+        batch.draw(background,backgroundX,-350);
+
+        batch.draw(animation.getKeyFrame(stateTime,true),200,157,120,120);
+
         batch.end();
         stage.draw();
 
         backgroundX -= scrollingVelocity;
-        if (backgroundX < -texture.getWidth() + Boot.INSTANCE.getScreenWidth()) {
+        if (backgroundX < -background.getWidth() + Boot.INSTANCE.getScreenWidth()) {
             backgroundX = 0;
         }
+        stateTime = stateTime +Gdx.graphics.getDeltaTime();
     }
 
     @Override
@@ -123,5 +133,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        background.dispose();
+        player.dispose();
     }
 }
