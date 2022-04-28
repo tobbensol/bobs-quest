@@ -95,14 +95,7 @@ public class GameModel implements ControllableModel {
         Boot.INSTANCE.getGameController().inputListener();
 
         if (isPaused()) {
-            getLevel().getHud().pause();
-            getLevel().updateHUD();
-            music.pause();
             return;
-        } else { //TODO i dont think this should happen every update
-            getLevel().getHud().resume();
-            music.play();
-            music.setVolume(getAudioHelper().getMusicVolume());
         }
         if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_COMPLETED){
             restart();
@@ -263,11 +256,17 @@ public class GameModel implements ControllableModel {
     @Override
     public void pauseGame() {
         pause = true;
+        getLevel().getHud().pause();
+        getLevel().updateHUD();
+        music.pause();
     }
 
     @Override
     public void resumeGame() {
         pause = false;
+        getLevel().getHud().resume();
+        music.play();
+        music.setVolume(getAudioHelper().getMusicVolume());
     }
 
     @Override

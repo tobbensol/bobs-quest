@@ -69,7 +69,9 @@ public class AudioHelper {
     public Music getMusic(String name) {
         String filename = "audio/music/" + name + ".mp3";
         if (assetManager.contains(filename)) {
-            return assetManager.get("audio/music/" + name + ".mp3", Music.class);
+            Music song = assetManager.get("audio/music/" + name + ".mp3", Music.class);
+            song.setLooping(true);
+            return song;
         } else {
             throw new IllegalArgumentException("Music '" + name + "' not found.");
         }
