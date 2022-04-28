@@ -25,11 +25,10 @@ public class AudioHelper {
 
         levelMusic = new HashMap<>(); // ADD level specific music here:
         levelMusic.put("level-1", getMusic("Grasslands Theme"));
-        levelMusic.put("level-2", getMusic("Iceland Theme"));
+        levelMusic.put("level-2", getMusic("Desert_Game_song"));
+        levelMusic.put("level-3", getMusic("Winter_Game_song"));
 //        levelMusic.put("level-3", getMusic("Desert Theme"));
 //        levelMusic.put("level-4", getMusic("Dungeon Theme"));
-
-
     }
 
     private void loadMusic() {
@@ -39,8 +38,8 @@ public class AudioHelper {
         assetManager.load("audio/music/Iceland Theme.mp3", Music.class);
         assetManager.load("audio/music/Intro Theme.mp3", Music.class);
         assetManager.load("audio/music/Mushroom Theme.mp3", Music.class);
-        assetManager.load("audio/music/Worldmap Theme.mp3", Music.class);
-        assetManager.load("audio/music/Desert Theme.mp3", Music.class);
+        assetManager.load("audio/music/Winter_Game_song.mp3", Music.class);
+        assetManager.load("audio/music/Desert_Game_song.mp3", Music.class);
     }
 
     private void loadSoundEffects() {
