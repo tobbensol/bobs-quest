@@ -138,3 +138,66 @@ Vi startet møte med å gå gjennom siste ukens endringer i koden. Her presenter
 - Espen har implementert pause funksjonalitet og generalisert kontakter mellom player og fiende objekter. Laget et "Enemy" interface som fiende obekter implementer. Dette interfacet utvider et nytt interface IGameObject som GameObject implementere.
 
 Videre jobbet vi sammen med obligatorisk innlevering 3 som skal leveres inn senere i dag.
+
+
+### Mandag 11. april 2022
+#### kl 12:00-12:30
+
+Digitalt møte
+
+Oppmøte: Alle tilstede
+
+I møtet snakket vi om hva vi ønskte å få gjort iløpet av påskeferien og hvem som skal gjøre hva. Vi kom frem til at:
+- Kristoffer: Skal re-skalere tileset-ene til de andre pakkene med teksturer slik at vi kan lage nye levler i spillet med andre teksturer. Han skal også se på å kanskje lage et nytt level.
+- Martin: Skal fortsette med JUnit testing av spillet.
+- Espen: Skal forsøke å legge til musikk og lydeffekter til spillet. Skal også se på muligheten til å lage et bedre menysystem med funksjonelle knapper.
+- Tobias: Skal se på muligheten til å legge til et nytt objekt i spillet og eventuelt lage et nytt level. 
+
+
+### Fredag 15. april 2022
+Dette møtet gikk vekk på grunn av påskeferie
+
+
+### Onsdag 20. april 2022
+(Opprinnelig Mandag 18. april, flyttet på grunn av påskeferie)
+#### kl 12:00-13:30
+Digitalt møte
+
+Oppmøte: Alle tilstede
+
+I møte gikk vi gjennom hva hver av oss fikk gjort siden sist mandag.
+- Espen: Implementert et nytt Menysystem og har fått lagt til musikk og lydeffekter. Her er det litt mer jobb som må gjøres før dette kan merges inn i master branchen.
+- Kristoffer: Skalerte opp og ryddet/laget nytt system i  tileset-ene. Fikset player movement.
+- Tobias: Fikset opp i bit-systemet i programmet. Laget et nytt objekt (moving platform) og fikset litt her og der i koden.
+- Martin: Har implementert flere JUnit tester.
+
+Videre i møte snakket vi om hva vi skal gjøre fremover. Siden fristen på prosjektet nærmer seg, legger vi fokuset på å fullføre det vi holder på med fremfor å legge til mer funksjonalitet. Vi fordelte arbeidsoppgaver for uken:
+- Espen: Bli ferdig med menysystemet/musikk og lydeffekter og refaktorere deler av koden for å få det på et ønskelig format.
+- Kristoffer:  Fokusere på å lage nye levler til spillet.
+- Tobias: Fokusere på å lage nye levler til spillet.
+- Martin: Se på muligheten til å legge til animasjoner i spillet (spiller bevegelse osv), eventuelt se på å forberede generell kode i prosjektet.
+
+
+### Fredag 22. april 2022
+####kl 13:00-13:30
+Digitalt møte
+
+Oppmøte: Alle tilstede
+
+Vi startet møte med å gå gjennom siste ukens endringer i koden. Her presenterte vi koden og hva vi har gjort. Ukens endringer gikk ut på:
+- Martin: La til animasjoner for spiller og Goomba bevegelse.
+- Espen: Flyttet logikken til knappene i menysystemet til GameController klassen som igjen kaller på metodene i GameModel. Musikk, lydeffekter, volum holder til i AudioHelper klassen.
+- Tobias: Fortsatt med level 2, funnet mulige teksturer, fikset buggen “neste level flashet (1 frame) før begynne på neste level”, floater movement.
+- Kristoffer: Begynt på level 3, oppdatert player movement, tynnere plattformer, laget edge objekter (hindre at goomba detter av mappet)
+
+
+### Mandag 25. april 2022
+####kl 12:15-14:00
+Fysisk møte
+
+Oppmøte: Alle tilstede
+
+Dette er det siste mandagsmøte før prosjektet skal leveres inn fredag 29. april. Møtet gikk da ut på å gå gjennom hva som må gjøres den siste uken. 
+Hovedfokuset blir å gjør ferdig det vi holder på med og ikke begynne med noe helt nytt før innleveringen. 
+Arbeidsoppgavene denne uken blir da å gjøre ferdig så mange levler (3-4 totalt) som vi klarer, få byttet ut teksturene til de forskjellige objektene i spillet, 
+svare på spørsmålene knyttet til innleveringen og finpusse koden der det trengs.
