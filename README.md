@@ -14,6 +14,7 @@ We use the game engine [libGDX](https://libgdx.com/) for this project.
 - [Requirements](#requirements)
 - [Build Instructions](#build-instructions)
 - [Credits](#credits)
+- [License](#license)
 
 ## Requirements
 An IDE running on either Windows or Linux (MacOS probably works, but not tested). You can for example use one of the IDEs [IntelliJ](https://www.jetbrains.com/idea/) or [Eclipse](https://www.eclipse.org/ide/).
@@ -61,3 +62,6 @@ Additional credits:
   - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/level-up-sound-effects) by Bart Kelsey "bart" with license: (CC-BY 3.0).
   - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/512-sound-effects-8-bit-style) by Juhani Junkala "SubspaceAudio" with license: (CC-BY 3.0).
   - Sound effects from [Mixkit](https://mixkit.co/free-sound-effects/) with license: [Mixkit Sound Effects Free License](https://mixkit.co/license/#sfxFree).
+
+## License
+The project licensed under Attribution-NonCommercial 4.0 International (CC BY-NC 4.0), and can be found [here](LICENSE).
