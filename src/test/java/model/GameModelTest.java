@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.mock.audio.MockMusic;
 import com.badlogic.gdx.math.Vector2;
@@ -44,10 +45,14 @@ public class GameModelTest {
         });
         Gdx.gl = new MockGL();
 
+        AudioHelper audioHelper = mock(AudioHelper.class);
+        Sound sound = mock(Sound.class);
         world = new World(new Vector2(0, 0), false);
         music = mock(Music.class);
         level = mock(Level.class);
         when(level.getWorld()).thenReturn(world);
+        when(level.getAudioHelper()).thenReturn(audioHelper);
+        when(audioHelper.getSoundEffect(anyString())).thenReturn(sound);
 
         model = spy(new GameModel());
         doReturn(level).when(model).createLevel();

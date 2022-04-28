@@ -2,6 +2,7 @@ package model;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.Polygon;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import helper.MockGL;
+import model.helper.AudioHelper;
 import model.helper.BodyHelper;
 import model.helper.Constants;
 import model.helper.ContactType;
@@ -37,11 +39,15 @@ public class GameContactListenerTest {
         });
         Gdx.gl = new MockGL();
 
+        AudioHelper audioHelper = mock(AudioHelper.class);
+        Sound sound = mock(Sound.class);
         level = mock(Level.class);
         listener = new GameContactListener(level);
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(listener);
         when(level.getWorld()).thenReturn(world);
+        when(level.getAudioHelper()).thenReturn(audioHelper);
+        when(audioHelper.getSoundEffect(anyString())).thenReturn(sound);
 
         player = spy(new Player("TEST", level, 0, 0));
         List<Player> playerList = new ArrayList<>();
