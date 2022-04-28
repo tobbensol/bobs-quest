@@ -151,6 +151,9 @@ public class Player extends JumpableObject {
 
         if (!grounded){
             this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
+            currentState = State.FALLING;
+        } else{
+            currentState = State.SLIDING;
         }
         cumulativeForces.add(0, -Y_MOVEMENT_IMPULSE * DROPPING_SCALE);
 
