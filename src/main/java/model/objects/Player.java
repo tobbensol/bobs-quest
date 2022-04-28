@@ -34,6 +34,7 @@ public class Player extends JumpableObject {
 
     private boolean headCollision = false;
     private boolean onPlatform = false;
+    private boolean canDrop = true;
 
     private final Vector2 cumulativeForces = new Vector2(0, 0);
 
@@ -122,7 +123,7 @@ public class Player extends JumpableObject {
     }
 
     public void drop() {
-        if (currentState == State.DEAD || (grounded && body.getLinearVelocity().y == 0 && !onPlatform)) {
+        if (currentState == State.DEAD || (grounded && body.getLinearVelocity().y == 0 && !onPlatform) || !canDrop) {
             return;
         }
 
@@ -168,6 +169,10 @@ public class Player extends JumpableObject {
 
     public void setOnPlatform(boolean value) {
         this.onPlatform = value;
+    }
+
+    public void setCanDrop(boolean canDrop) {
+        this.canDrop = canDrop;
     }
 
     public State getCurrentState() {

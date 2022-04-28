@@ -2,6 +2,7 @@ package model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
 import model.helper.Constants;
 import model.helper.ContactType;
 import model.objects.*;
@@ -184,7 +185,18 @@ public class GameContactListener implements ContactListener {
 
             if (player.getCurrentState() == Player.State.FALLING || player.getCurrentState() == Player.State.SLIDING) {
                 enemy.onHit();
-            } else {
+                player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
+                player.changeMaskBit(false, Constants.ENEMY_BIT);
+                player.setCanDrop(false);
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        player.setCanDrop(true);
+                    }
+                },0.5f);
+
+            }
+            else {
                 player.takeDamage(enemy.getAttack());
             }
         }
