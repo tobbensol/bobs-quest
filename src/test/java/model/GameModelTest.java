@@ -53,14 +53,17 @@ public class GameModelTest {
         when(level.getWorld()).thenReturn(world);
         when(level.getAudioHelper()).thenReturn(audioHelper);
         when(audioHelper.getSoundEffect(anyString())).thenReturn(sound);
+        when(audioHelper.getLevelMusic(anyString())).thenReturn(music);
 
         model = spy(new GameModel());
         doReturn(level).when(model).createLevel();
-        doReturn(music).when(model).getMusic();
+
         when(model.getLevel()).thenReturn(level);
         doNothing().when(model).createCamera();
         doNothing().when(model).resetZoom();
         doNothing().when(model).setMusic(music);
+        when(model.getMusic()).thenReturn(music);
+        when(model.getAudioHelper()).thenReturn(audioHelper);
     }
 
     @Test

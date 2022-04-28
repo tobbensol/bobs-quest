@@ -258,15 +258,15 @@ public class GameModel implements ControllableModel {
         pause = true;
         getLevel().getHud().pause();
         getLevel().updateHUD();
-        music.pause();
+        getMusic().pause();
     }
 
     @Override
     public void resumeGame() {
         pause = false;
         getLevel().getHud().resume();
-        music.play();
-        music.setVolume(getAudioHelper().getMusicVolume());
+        getMusic().play();
+        getMusic().setVolume(getAudioHelper().getMusicVolume());
     }
 
     @Override
