@@ -41,6 +41,7 @@ public class Goomba extends DynamicObject implements Enemy {
     @Override
     public void onHit() {
         setDead();
+        level.getAudioHelper().getSoundEffect("goombaDeath").play(level.getAudioHelper().getSoundEffectsVolume());
     }
 
     @Override

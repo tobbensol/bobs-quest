@@ -237,6 +237,7 @@ public class Player extends JumpableObject {
         BodyHelper.changeFilterData(body, bit, maskBits);
         // Death "animation"
         body.setLinearVelocity(0, 5);
+        level.getAudioHelper().getSoundEffect("deathScream").play(level.getAudioHelper().getSoundEffectsVolume());
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
