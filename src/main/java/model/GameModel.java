@@ -32,6 +32,7 @@ public class GameModel implements ControllableModel {
 
     private AudioHelper audioHelper;
     private Music music;
+    private float backgroundX;
 
     public GameModel() {
         currentState = GameState.MAIN_MENU;
@@ -89,6 +90,7 @@ public class GameModel implements ControllableModel {
             createCamera();
             initializeLevel = false;
             pauseGame();
+            backgroundX = 0;
         }
 
         Boot.INSTANCE.getGameController().inputListener();
@@ -202,7 +204,6 @@ public class GameModel implements ControllableModel {
 
     @Override
     public void changeScreen() {
-
         switch (currentState) {
             case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
             case MAIN_MENU -> Boot.INSTANCE.setScreen(new MainMenuScreen(this));
@@ -276,6 +277,14 @@ public class GameModel implements ControllableModel {
     @Override
     public void setSoundEffectsVolume(float soundEffectsVolume) {
         audioHelper.setSoundEffectsVolume(soundEffectsVolume);
+    }
+
+    public float getBackgroundX() {
+        return backgroundX;
+    }
+
+    public void setBackgroundX(float stateTime) {
+        this.backgroundX = stateTime;
     }
 
     public float getMusicVolume() {
