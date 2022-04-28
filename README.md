@@ -26,8 +26,23 @@ The computer must be able to run the game at 60 FPS (the game will feel slow if 
 1. To run this project, you will need to install [Java](https://www.oracle.com/java/technologies/downloads/) (version 17 recommended. We cannot assure that older versions work).
 2. Download the Source code from [here](https://git.app.uib.no/grabbane/inf112.22v.libgdx-template.git).
 3. Unzip the source code. 
-4. Open the project with an IDE of your choice.
-5. Find DesktopLauncher in src/main/java/launcher/DesktopLauncher and press the run button.
+#### alternatively:
+//TODO
+1. `instructions how to clone the project`
+
+### Compile
+1. Open the terminal of your choice.
+2. Navigate to the `inf112.prosjekt` folder.
+3. When in the `inf112.prosjekt` folder, write `mvn package` in the terminal.
+
+### Run
+1. from the `inf112.prosjekt` folder, navigate to the `target` folder.
+2. write `java -jar epic-game-app-1.0-SNAPSHOT-fat.jar` in the terminal
+
+#### alternatively:
+//TODO
+1. `instructions how to run the source code from an IDE`
+
 
 ### Running
 #### Note: The stable version of the project is on the `master` branch.
