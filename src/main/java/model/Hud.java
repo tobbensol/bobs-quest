@@ -78,7 +78,7 @@ public class Hud {
 
     public void pause() {
         pausedLabel.setText("GAME PAUSED");
-        pauseInfoLabel.setText("Press P To Resume");
+        pauseInfoLabel.setText("Press ESC To Resume");
         mainMenuLabel.setText("Press M to Main Menu");
         stage.getActors().get(0).getColor().a = 0.4f;
         for (Player player : playerLabelHashMap.keySet()) {

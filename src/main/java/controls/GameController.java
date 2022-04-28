@@ -20,10 +20,7 @@ public class GameController {
     }
 
     public void inputListener() {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.P) && model.getCurrentState() == GameState.ACTIVE) {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && model.getCurrentState() == GameState.ACTIVE) {
             // Use a helper so that a held-down button does not continuously switch between states with every tick
             if (pauseHelper) {
                 if (model.isPaused()) {
@@ -46,27 +43,15 @@ public class GameController {
         }
 
         if (model.getCurrentState() == GameState.MAIN_MENU) {
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-                model.setNumPlayers(1);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-                model.setNumPlayers(2);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
-                model.setNumPlayers(3);
-            }
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 model.setCurrentState(GameState.ACTIVE);
                 model.changeScreen();
                 model.resumeGame();
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-
-            }
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (model.getCurrentState() == GameState.GAME_OVER || model.getCurrentState() == GameState.NEXT_LEVEL) {
+        if (model.getCurrentState() == GameState.GAME_OVER || model.getCurrentState() == GameState.NEXT_LEVEL) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 model.setCurrentState(GameState.ACTIVE);
                 model.changeScreen();
                 model.resumeGame();
