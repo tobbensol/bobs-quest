@@ -18,7 +18,6 @@ public class Constants {
     public static final short GOAL_BIT = 16;
     public static final short PLATFORM_BIT = 32;
     public static final short CAMERA_WALL_BIT = 64;
-
     public static final short EDGE_BIT = 128;
 
 
