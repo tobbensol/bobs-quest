@@ -31,8 +31,6 @@ public class Player extends JumpableObject {
 
     private boolean rightCollision = false;
     private boolean leftCollision = false;
-
-    private boolean headCollision = false;
     private boolean onPlatform = false;
     private boolean canDrop = true;
 
@@ -161,10 +159,6 @@ public class Player extends JumpableObject {
 
     public void setRightCollision(boolean value) {
         this.rightCollision = value;
-    }
-
-    public void setHeadCollision(boolean value) {
-        this.headCollision = value;
     }
 
     public void setOnPlatform(boolean value) {

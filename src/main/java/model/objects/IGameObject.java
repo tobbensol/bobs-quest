@@ -44,11 +44,10 @@ public interface IGameObject {
      */
     String toString();
 
-    //TODO add documentation
     /**
      *
-     * @param filterAway
-     * @param bit
+     * @param filterAway lets you interact with the given object if true, and not if false
+     * @param bit the bit you want to add or remove from the filter
      */
     void changeMaskBit(boolean filterAway, short bit);
 
