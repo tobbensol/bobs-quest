@@ -104,14 +104,19 @@ public class GameModel implements ControllableModel {
             music.play();
             music.setVolume(getAudioHelper().getMusicVolume());
         }
-        if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL){
+        if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_COMPLETED){
             restart();
         }
         if (getLevel().isCompleted()) {
             music.stop();
             music.dispose();
             getAudioHelper().getSoundEffect("orchestra").play(getAudioHelper().getSoundEffectsVolume());
-            currentState = GameState.NEXT_LEVEL;
+
+            if (levelNR == levels.size() - 1) {
+                currentState = GameState.GAME_COMPLETED;
+            } else {
+                currentState = GameState.NEXT_LEVEL;
+            }
             changeScreen();
         }
         if (gameOver()) {
@@ -151,6 +156,9 @@ public class GameModel implements ControllableModel {
         boolean nextLevel = getLevel().isCompleted();
         if (nextLevel) {
             levelNR++;
+            if (levelNR > levels.size() - 1 ) {
+                levelNR = 0;
+            }
         }
         resetZoom();
         level = createLevel();
@@ -213,6 +221,7 @@ public class GameModel implements ControllableModel {
             case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
             case MAIN_MENU -> Boot.INSTANCE.setScreen(new MainMenuScreen(this));
             case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
+            case GAME_COMPLETED -> Boot.INSTANCE.setScreen(new GameCompletedScreen(this));
             case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
             case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this));
             case NEW_GAME -> Boot.INSTANCE.setScreen(new NewGameScreen(this));
