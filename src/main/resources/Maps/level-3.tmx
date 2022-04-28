@@ -1896,7 +1896,7 @@
    <polygon points="0,0 256,0 256,64 0,64"/>
   </object>
   <object id="268" x="6656" y="7552">
-   <polygon points="0,0 320,0 320,64 0,64"/>
+   <polygon points="0,0 384,0 384,64 0,64"/>
   </object>
   <object id="269" x="7424" y="7552">
    <polygon points="0,0 320,0 320,64 0,64"/>
