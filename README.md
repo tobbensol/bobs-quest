@@ -13,10 +13,10 @@ We use the game engine [libGDX](https://libgdx.com/) for this project.
 - [Project Description](#project-description)
 - [Requirements](#requirements)
 - [Build Instructions](#build-instructions)
-- [Setup](#setup)
-- [Build](#build-optional)
-- [Run from IDE](#run-from-ide)
-- [Run from commandline](#run-from-commandline)
+  - [Setup](#setup)
+  - [Build](#build-optional)
+  - [Run from IDE](#run-from-ide)
+  - [Run from commandline](#run-from-commandline)
 - [Controls](#controls)
 - [Testing](#testing)
 - [Credits](#credits)
@@ -42,7 +42,7 @@ Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](http
 ### Build (optional)
 1. Open the terminal of your choice (Command Prompt, Terminal, Git Bash etc).
 2. Navigate to the project folder `inf112.project` using the `cd 'directory_name'` command.
-3. When the project folder `inf112.prosjekt` is located, use the command `mvn package` to build the project.
+3. When the project folder `inf112.prosject` is located, use the command `mvn package` to build the project.
 
 ### Run from IDE
 1. To run the project from the IDE, locate the file `src/main/java/launcher/DesktopLauncher.java`.
