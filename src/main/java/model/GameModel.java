@@ -68,7 +68,7 @@ public class GameModel implements ControllableModel {
                 return false;
             }
         }
-        getAudioHelper().getSoundEffect("gameover").play(getAudioHelper().getSoundEffectsVolume());
+        getAudioHelper().getSoundEffect("gameOver").play(getAudioHelper().getSoundEffectsVolume());
         return true;
     }
 

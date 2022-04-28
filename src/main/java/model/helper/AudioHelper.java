@@ -44,7 +44,7 @@ public class AudioHelper {
     }
 
     private void loadSoundEffects() {
-        assetManager.load("audio/sounds/gameover.wav", Sound.class);
+        assetManager.load("audio/sounds/gameOver.wav", Sound.class);
         assetManager.load("audio/sounds/coin.wav", Sound.class);
         assetManager.load("audio/sounds/drop.wav", Sound.class);
         assetManager.load("audio/sounds/drop3.wav", Sound.class);
@@ -52,9 +52,10 @@ public class AudioHelper {
         assetManager.load("audio/sounds/hit2.wav", Sound.class);
         assetManager.load("audio/sounds/jump.wav", Sound.class);
         assetManager.load("audio/sounds/jump2.wav", Sound.class);
-        assetManager.load("audio/sounds/chipquest.wav", Sound.class);
+        assetManager.load("audio/sounds/chipQuest.wav", Sound.class);
         assetManager.load("audio/sounds/orchestra.wav", Sound.class);
-
+        assetManager.load("audio/sounds/deathScream.wav", Sound.class);
+        assetManager.load("audio/sounds/goombaDeath.wav", Sound.class);
     }
 
     public Sound getSoundEffect(String name) {
