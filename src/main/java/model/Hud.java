@@ -51,7 +51,7 @@ public class Hud {
 
     public void update() {
         score = level.getScore();
-        scoreLabel.setText(score + "/" + level.getGameObjects(Coin.class).size());
+        scoreLabel.setText("Coins: " + score + "/" + level.getGameObjects(Coin.class).size());
         updateHpLabels();
     }
 
@@ -133,7 +133,10 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        scoreLabel = new Label(score + "/" + level.getGameObjects(Coin.class).size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+
+
+        scoreLabel = new Label("Coins: " + score + "/" + level.getGameObjects(Coin.class).size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label(level.toString(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         scoreLabel.setFontScale(2f);
