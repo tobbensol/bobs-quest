@@ -1623,7 +1623,7 @@
   </object>
  </objectgroup>
  <objectgroup id="17" name="Goal">
-  <object id="500" x="11008" y="2304" width="64" height="64"/>
+  <object id="500" x="11072" y="2240" width="64" height="128"/>
  </objectgroup>
  <objectgroup id="19" name="Floater">
   <object id="533" x="3904" y="1856" width="64" height="64"/>
