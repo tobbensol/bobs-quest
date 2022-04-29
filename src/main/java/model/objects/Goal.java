@@ -18,7 +18,7 @@ public class Goal extends StaticObject {
         super(name + " " + (level.getGameObjects(Goal.class).size() + 1), level, Constants.TILE_SIZE, Constants.TILE_SIZE * 2, x, y, 0, ContactType.GOAL, Constants.GOAL_BIT, Constants.INTERACTIVE_MASK_BITS, true, true);
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Green_Portal_Sprite_Sheet.png");
 
-        TextureRegion[] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE)[0];
+        TextureRegion[] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE * 2)[0];
         idleAnimation = new Animation<>(0.1875f, frames); // 1.5s animation duration
     }
 
@@ -29,7 +29,7 @@ public class Goal extends StaticObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(), x - width / 2, y - (float)(Constants.TILE_SIZE) / 2, width, height);
+        batch.draw(getFrame(), x - width / 2, y - height / 2, width, height);
     }
 
     @Override
