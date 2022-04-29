@@ -27,8 +27,6 @@ public class AudioHelper {
         levelMusic.put("level-1", getMusic("Plains_Game_song"));
         levelMusic.put("level-2", getMusic("Desert_Game_song"));
         levelMusic.put("level-3", getMusic("Winter_Game_song"));
-//        levelMusic.put("level-3", getMusic("Desert Theme"));
-//        levelMusic.put("level-4", getMusic("Dungeon Theme"));
     }
 
     private void loadMusic() {
