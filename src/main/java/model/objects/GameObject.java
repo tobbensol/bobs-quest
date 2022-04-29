@@ -78,4 +78,15 @@ public abstract class GameObject implements IGameObject {
     public boolean isDestroyed(){
         return isDestroyed;
     }
+
+    /**
+     * Flips the given TextureRegion if the DynamicObject is facingRight or not
+     *
+     * @param region - the region to check for flipping
+     */
+    protected void flipRegionHorizontally(TextureRegion region) {
+        if (facingRight == region.isFlipX()) {
+            region.flip(true, false);
+        }
+    }
 }
