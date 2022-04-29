@@ -1,6 +1,7 @@
 package model;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import controls.*;
 import launcher.Boot;
@@ -34,10 +35,17 @@ public class GameModel implements ControllableModel {
     private Music music;
     private float backgroundX;
 
+
+    private Screen currentScreen;
+    private Screen previousScreen;
+
     public GameModel() {
         currentState = GameState.MAIN_MENU;
         previousState = GameState.MAIN_MENU;
-        this.numPlayers = 1;
+        currentScreen = null;
+        previousScreen = null;
+
+        numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
         levels.add("level-1"); // 0
@@ -204,16 +212,24 @@ public class GameModel implements ControllableModel {
 
     @Override
     public void changeScreen() {
+        Screen screen = null;
         switch (currentState) {
-            case ACTIVE -> Boot.INSTANCE.setScreen(new GameScreen(this));
-            case MAIN_MENU -> Boot.INSTANCE.setScreen(new MainMenuScreen(this));
-            case GAME_OVER -> Boot.INSTANCE.setScreen(new GameOverScreen(this));
-            case NEXT_LEVEL -> Boot.INSTANCE.setScreen(new LevelCompletedScreen(this));
-            case SETTINGS -> Boot.INSTANCE.setScreen(new SettingsScreen(this));
-            case NEW_GAME -> Boot.INSTANCE.setScreen(new NewGameScreen(this));
-            case SELECT_LEVEL -> Boot.INSTANCE.setScreen(new SelectLevelScreen(this));
+            case ACTIVE -> screen = new GameScreen(this);
+            case MAIN_MENU -> screen = new MainMenuScreen(this);
+            case GAME_OVER -> screen = new GameOverScreen(this);
+            case NEXT_LEVEL -> screen = new LevelCompletedScreen(this);
+            case SETTINGS -> screen = new SettingsScreen(this);
+            case NEW_GAME -> screen = new NewGameScreen(this);
+            case SELECT_LEVEL -> screen = new SelectLevelScreen(this);
         }
+        previousScreen = currentScreen;
+        currentScreen = screen;
 
+        Boot.INSTANCE.setScreen(screen);
+
+        if (previousScreen != null) {
+            previousScreen.dispose();
+        }
     }
 
     public Level getLevel() {
