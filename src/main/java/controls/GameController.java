@@ -134,7 +134,7 @@ public class GameController {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(Gdx.graphics.isFullscreen()){
-                    Gdx.graphics.setWindowedMode((int)(Boot.INSTANCE.getScreenWidth()*0.9f) , (int)(Boot.INSTANCE.getScreenHeight()*0.9f));
+                    Gdx.graphics.setWindowedMode(1600 , 900);
                 } else {
                     Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                 }
