@@ -57,8 +57,8 @@ public abstract class AbstractScreen implements Screen {
      */
     protected void renderBackground() {
         batch.begin();
-        batch.draw(background,gameModel.getBackgroundX(),-350);
-        batch.draw(animation.getKeyFrame(stateTime,true),200,162, 80, 80);
+        batch.draw(background, gameModel.getBackgroundX(), -350);
+        batch.draw(animation.getKeyFrame(stateTime, true), 200, 162, 80, 80);
         batch.end();
         stage.draw();
 

@@ -28,7 +28,7 @@ public abstract class GameObject implements IGameObject {
         this.width = width;
         this.height = height;
         //Makes bodies spawn on the floor, but makes tests fail since the player doesn't spawn at 0, 0
-        this.body = BodyHelper.createObjectBody(x, y , width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
+        this.body = BodyHelper.createObjectBody(x, y, width, height, density, level.getWorld(), contactType, bodyType, categoryBits, maskBits, isSensor, rectangle);
         facingRight = true;
         this.bit = categoryBits;
         this.maskBits = maskBits;
@@ -69,12 +69,12 @@ public abstract class GameObject implements IGameObject {
     protected abstract TextureRegion getFrame();
 
     @Override
-    public void changeMaskBit(boolean filterAway, short filterBit){
+    public void changeMaskBit(boolean filterAway, short filterBit) {
         maskBits = BodyHelper.changeMaskBit(filterAway, filterBit, maskBits);
         BodyHelper.changeFilterData(body, bit, maskBits);
     }
 
-    public boolean isDestroyed(){
+    public boolean isDestroyed() {
         return isDestroyed;
     }
 

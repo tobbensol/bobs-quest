@@ -26,20 +26,15 @@ public class Player extends JumpableObject {
     private static final float X_DAMPING_SCALE = 1f;
     private static final float JUMP_X_DAMPING_SCALE = 0.2f;
     private static final float Y_DAMPING_SCALE = 0.27f;
-
+    private final Vector2 cumulativeForces = new Vector2(0, 0);
+    private final Map<State, Animation<TextureRegion>> animationMap;
     protected State currentState;
     protected State previousState;
-
     private boolean rightCollision = false;
     private boolean leftCollision = false;
     private boolean onPlatform = false;
     private boolean canDrop = true;
-
-    private final Vector2 cumulativeForces = new Vector2(0, 0);
-
     private int hp;
-
-    private final Map<State, Animation<TextureRegion>> animationMap;
     private float stateTime;
 
     public Player(String name, Level level, float x, float y) {
@@ -147,10 +142,10 @@ public class Player extends JumpableObject {
         changeMaskBit(true, Constants.PLATFORM_BIT);
         currentState = State.FALLING;
 
-        if (!grounded){
+        if (!grounded) {
             this.body.setLinearVelocity(0, this.body.getLinearVelocity().y);
             currentState = State.FALLING;
-        } else{
+        } else {
             currentState = State.SLIDING;
         }
         cumulativeForces.add(0, -Y_MOVEMENT_IMPULSE * DROPPING_SCALE);
@@ -172,7 +167,7 @@ public class Player extends JumpableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
+        batch.draw(getFrame(), x - width / 2, y - height / 2, width, height);
     }
 
     public void setLeftCollision(boolean value) {
@@ -203,7 +198,7 @@ public class Player extends JumpableObject {
             tempState = State.SLIDING;
         } else if ((body.getLinearVelocity().y > 0 && !grounded) || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
             tempState = State.JUMPING;
-        } else if (body.getLinearVelocity().y < - 1.5f) {
+        } else if (body.getLinearVelocity().y < -1.5f) {
             tempState = State.FALLING;
         } else if (body.getLinearVelocity().x != 0 && previousState != State.JUMPING) { // Fixes bug when jumping up in the underside of the platform -> y = 0.
             tempState = State.WALKING;

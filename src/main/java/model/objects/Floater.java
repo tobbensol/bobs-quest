@@ -13,16 +13,16 @@ import model.helper.ContactType;
 
 public class Floater extends DynamicObject implements Enemy {
     private static final int attack = 10;
+    private static final float activeVel = 200f;
+    private final float idleCircleSize = 1.5f;
+    private final Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> attackAnimation;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
     private int steps = 0;
     //TODO tweek idleVel and idleCircleSize
     private float idleVel = 3f;
-    private final float idleCircleSize = 1.5f;
-    private static final float activeVel = 200f;
     private float stateTime;
-    private final Animation<TextureRegion> idleAnimation;
-    private final Animation<TextureRegion> attackAnimation;
 
     public Floater(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Floater.class).size()) + 1, level, x, y, 1, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.FLOATER_MASK_BITS);
@@ -31,8 +31,8 @@ public class Floater extends DynamicObject implements Enemy {
         body.setLinearDamping(3);
 
         TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE);
-        idleAnimation = new Animation<>(0.166f/2f, frames[1]);
-        attackAnimation = new Animation<>(0.166f/2f, frames[0]);
+        idleAnimation = new Animation<>(0.166f / 2f, frames[1]);
+        attackAnimation = new Animation<>(0.166f / 2f, frames[0]);
     }
 
     @Override
@@ -43,26 +43,25 @@ public class Floater extends DynamicObject implements Enemy {
 
     private void move() {
         if (playerNearby) {
-            Vector2 forceVec = new Vector2((playerPosition.x - x), (playerPosition.y  - y)).setLength(activeVel);
+            Vector2 forceVec = new Vector2((playerPosition.x - x), (playerPosition.y - y)).setLength(activeVel);
             body.applyForceToCenter(forceVec, true);
             facingRight = forceVec.x > 0;
-        }
-        else{
+        } else {
             steps++;
-            steps = (int)(steps % (200 * idleCircleSize/idleVel));
-            if (steps == 0 && Math.random() > 0.5){
+            steps = (int) (steps % (200 * idleCircleSize / idleVel));
+            if (steps == 0 && Math.random() > 0.5) {
                 idleVel *= -1;
             }
-            double nextPos = idleVel * steps * Math.PI/100 / idleCircleSize;
+            double nextPos = idleVel * steps * Math.PI / 100 / idleCircleSize;
             Vector2 currentPos = new Vector2(getPosition());
-            setPosition((float) (x+Math.sin(nextPos)*Math.abs(idleVel)), (float) (y + Math.cos(nextPos)*Math.abs(idleVel)));
+            setPosition((float) (x + Math.sin(nextPos) * Math.abs(idleVel)), (float) (y + Math.cos(nextPos) * Math.abs(idleVel)));
             facingRight = getPosition().x > currentPos.x;
         }
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
+        batch.draw(getFrame(), x - width / 2, y - height / 2, width, height);
     }
 
     @Override

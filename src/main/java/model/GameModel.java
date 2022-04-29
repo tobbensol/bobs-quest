@@ -3,7 +3,10 @@ package model;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import controls.*;
+import controls.ArrowController;
+import controls.Controller;
+import controls.CustomController;
+import controls.WASDController;
 import launcher.Boot;
 import model.helper.AudioHelper;
 import model.objects.IGameObject;
@@ -17,9 +20,9 @@ public class GameModel implements ControllableModel {
 
 
     private final List<String> levels;
-    private List<String> availableLevels;
     private final List<Controller> controllers;
     private final int numControllers;
+    private List<String> availableLevels;
     private Level level;
     private int levelNR = 0;
     private int numPlayers;
@@ -31,9 +34,9 @@ public class GameModel implements ControllableModel {
     private boolean initializeLevel = true;
     private GameCamera camera;
 
-    private AudioHelper audioHelper;
+    private final AudioHelper audioHelper;
     private Music music;
-    private Music menuMusic;
+    private final Music menuMusic;
     private float backgroundX;
 
 
@@ -109,7 +112,7 @@ public class GameModel implements ControllableModel {
         if (isPaused()) {
             return;
         }
-        if(currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_COMPLETED){
+        if (currentState == GameState.GAME_OVER || currentState == GameState.NEXT_LEVEL || currentState == GameState.GAME_COMPLETED) {
             restart();
         }
         if (getLevel().isCompleted()) {
@@ -131,7 +134,7 @@ public class GameModel implements ControllableModel {
             changeScreen();
         }
 
-        getLevel().getWorld().step(1/60f, 12, 4);
+        getLevel().getWorld().step(1 / 60f, 12, 4);
 
         List<Player> players = getLevel().getGameObjects(Player.class);
         for (int i = 0; i < players.size(); i++) {
@@ -152,7 +155,7 @@ public class GameModel implements ControllableModel {
         return music;
     }
 
-    public void setMusic(Music m){
+    public void setMusic(Music m) {
         music = m;
     }
 
@@ -161,7 +164,7 @@ public class GameModel implements ControllableModel {
         boolean nextLevel = getLevel().isCompleted();
         if (nextLevel) {
             levelNR++;
-            if (levelNR > levels.size() - 1 ) {
+            if (levelNR > levels.size() - 1) {
                 levelNR = 0;
             }
         }
@@ -181,11 +184,6 @@ public class GameModel implements ControllableModel {
     @Override
     public GameState getCurrentState() {
         return currentState;
-    }
-
-    @Override
-    public GameState getPreviousState() {
-        return previousState;
     }
 
     @Override
@@ -217,6 +215,11 @@ public class GameModel implements ControllableModel {
 
         previousState = this.currentState;
         this.currentState = currentState;
+    }
+
+    @Override
+    public GameState getPreviousState() {
+        return previousState;
     }
 
     @Override
@@ -301,16 +304,6 @@ public class GameModel implements ControllableModel {
         return audioHelper;
     }
 
-    @Override
-    public void setMusicVolume(float musicVolume) {
-        audioHelper.setMusicVolume(musicVolume);
-    }
-
-    @Override
-    public void setSoundEffectsVolume(float soundEffectsVolume) {
-        getAudioHelper().setSoundEffectsVolume(soundEffectsVolume);
-    }
-
     public float getBackgroundX() {
         return backgroundX;
     }
@@ -323,8 +316,18 @@ public class GameModel implements ControllableModel {
         return getAudioHelper().getMusicVolume();
     }
 
+    @Override
+    public void setMusicVolume(float musicVolume) {
+        audioHelper.setMusicVolume(musicVolume);
+    }
+
     public float getSoundEffectsVolume() {
         return audioHelper.getSoundEffectsVolume();
+    }
+
+    @Override
+    public void setSoundEffectsVolume(float soundEffectsVolume) {
+        getAudioHelper().setSoundEffectsVolume(soundEffectsVolume);
     }
 
     @Override
@@ -333,7 +336,7 @@ public class GameModel implements ControllableModel {
             throw new IllegalArgumentException("Number of players must be between 1 and 3");
         }
         resetAvailableLevels();
-        startGame(0,numberOfPlayers);
+        startGame(0, numberOfPlayers);
     }
 
     @Override
@@ -343,7 +346,7 @@ public class GameModel implements ControllableModel {
             throw new IllegalArgumentException("No level named " + levelName);
         }
         int numPlayers = getNumPlayers();
-        startGame(levelNR,numPlayers);
+        startGame(levelNR, numPlayers);
     }
 
     private void startGame(int levelNR, int numberOfPlayers) {
@@ -374,12 +377,12 @@ public class GameModel implements ControllableModel {
         changeScreen();
         if (getCurrentState() == GameState.ACTIVE) {
             resumeGame();
-        } else{
+        } else {
             pauseGame();
         }
     }
 
-    public void resetZoom(){
+    public void resetZoom() {
         camera.resetZoom();
     }
 

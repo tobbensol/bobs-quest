@@ -62,8 +62,9 @@ public class GameController {
 
     /**
      * This method returns a drag-listener that updates the volume in the GameModel according to the value of the slider inside the Settings Screen.
+     *
      * @param slider - The slider to update from.
-     * @param music - True if music, false if sound effect.
+     * @param music  - True if music, false if sound effect.
      * @return
      */
     public DragListener volumeListener(Slider slider, boolean music) {

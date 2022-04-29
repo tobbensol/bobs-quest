@@ -2,7 +2,9 @@ package view;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import launcher.Boot;
 import model.GameModel;
 
@@ -19,7 +21,7 @@ public class NewGameScreen extends AbstractScreen {
 
         Table table = new Table();
         stage.addActor(table);
-        table.center().top().padTop(viewport.getScreenHeight()/4f);
+        table.center().top().padTop(viewport.getScreenHeight() / 4f);
 
         table.setFillParent(true);
         Label title = new Label("NEW GAME", font);

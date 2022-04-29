@@ -193,10 +193,9 @@ public class GameContactListener implements ContactListener {
                     public void run() {
                         player.setCanDrop(true);
                     }
-                },0.5f);
+                }, 0.5f);
 
-            }
-            else {
+            } else {
                 player.takeDamage(enemy.getAttack());
             }
         }
