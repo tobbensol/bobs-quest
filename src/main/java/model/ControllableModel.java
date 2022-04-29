@@ -20,11 +20,6 @@ public interface ControllableModel {
     GameState getCurrentState();
 
     /**
-     * @return returns the previous GameState from the model.
-     */
-    GameState getPreviousState();
-
-    /**
      * This method should set the current GameState to the given state.
      * The different GameStates are:
      * ACTIVE, GAME_OVER, STARTUP, NEXT_LEVEL
@@ -32,6 +27,11 @@ public interface ControllableModel {
      * @param currentState - the GameState to set.
      */
     void setCurrentState(GameState currentState);
+
+    /**
+     * @return returns the previous GameState from the model.
+     */
+    GameState getPreviousState();
 
     /**
      * This method should change the screen. By calling this method,
@@ -57,6 +57,7 @@ public interface ControllableModel {
 
     /**
      * This method let you start a new game from the beginning. The progress of the game will be lost.
+     *
      * @param numberOfPlayers - The number of players you want to start the game with.
      */
     void startNewGame(int numberOfPlayers);
@@ -66,18 +67,21 @@ public interface ControllableModel {
 
     /**
      * This method let you start a game at a specific level. The progress in the game will not be lost.
+     *
      * @param level - The level you want to start at.
      */
     void startSelectedLevel(String level);
 
     /**
      * This method sets the music volume in the GameModel.
+     *
      * @param volume - float value between 0 and 1.
      */
     void setMusicVolume(float volume);
 
     /**
      * This method sets the sound effect volume in the GameModel.
+     *
      * @param volume - float value between 0 and 1.
      */
     void setSoundEffectsVolume(float volume);

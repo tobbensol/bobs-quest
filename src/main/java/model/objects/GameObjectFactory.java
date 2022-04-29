@@ -17,7 +17,7 @@ public class GameObjectFactory {
      * Return value must be cast to own type
      *
      * @param gameObject A string with the name of the object (not case sensitive)
-     * @param rectangle The rectangle to create an object on.
+     * @param rectangle  The rectangle to create an object on.
      * @return The object in the designated location
      */
     public GameObject create(String gameObject, Rectangle rectangle) {

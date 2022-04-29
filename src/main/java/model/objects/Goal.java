@@ -11,8 +11,8 @@ import model.helper.ContactType;
 
 public class Goal extends StaticObject {
 
-    private float stateTime;
     private final Animation<TextureRegion> idleAnimation;
+    private float stateTime;
 
     public Goal(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Goal.class).size() + 1), level, Constants.TILE_SIZE, Constants.TILE_SIZE * 2, x, y, 0, ContactType.GOAL, Constants.GOAL_BIT, Constants.INTERACTIVE_MASK_BITS, true, true);

@@ -3,10 +3,7 @@ package controls;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.mock.input.MockInput;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import model.GameModel;
 import model.GameState;
 import model.Hud;
@@ -119,7 +116,7 @@ public class GameControllerTest {
     }
 
     @Test
-    void testGoingToMenu(){
+    void testGoingToMenu() {
         model.setCurrentState(GameState.ACTIVE);
         model.pauseGame();
 

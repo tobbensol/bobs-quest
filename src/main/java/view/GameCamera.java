@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import model.GameModel;
-import model.helper.Constants;
 import model.objects.MapEndPoints;
 import model.objects.Player;
 
@@ -86,8 +85,8 @@ public class GameCamera extends OrthographicCamera {
         double zoomOutTriggerWidth = viewportWidth * zoom * zoomTriggerPercent;
         double zoomOutTriggerHeight = viewportHeight * zoom * zoomTriggerPercent;
 
-        double zoomInTriggerWidth = viewportWidth * zoom * zoomTriggerPercent-8;
-        double zoomInTriggerHeight = viewportHeight * zoom * zoomTriggerPercent-8;
+        double zoomInTriggerWidth = viewportWidth * zoom * zoomTriggerPercent - 8;
+        double zoomInTriggerHeight = viewportHeight * zoom * zoomTriggerPercent - 8;
 
         float minX = Collections.min(playerXs);
         float maxX = Collections.max(playerXs);
@@ -107,7 +106,7 @@ public class GameCamera extends OrthographicCamera {
             zoom += zoomIncreaseAmount * playersXDifferenceWidth / zoomOutTriggerWidth;
         }
 
-        if ( (playersYDifferenceHeight < zoomInTriggerHeight) && (playersXDifferenceWidth < zoomInTriggerWidth) && (zoom > minZoom) ) {
+        if ((playersYDifferenceHeight < zoomInTriggerHeight) && (playersXDifferenceWidth < zoomInTriggerWidth) && (zoom > minZoom)) {
             if (playersYDifferenceHeight < zoomInTriggerHeight && playersYDifferenceHeight != 0) {
                 zoom -= zoomDecreaseAmount;
             } else if (playersXDifferenceWidth < zoomInTriggerWidth && playersXDifferenceWidth != 0) {

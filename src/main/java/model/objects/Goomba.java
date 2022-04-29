@@ -15,13 +15,13 @@ public class Goomba extends DynamicObject implements Enemy {
 
     private static final float X_VELOCITY = 3.2f;
     private static final int attack = 40;
+    private final TextureRegion[][] frames;
+    private final Animation<TextureRegion> walkingAnimation;
+    private final Animation<TextureRegion> attackAnimation;
     private int numMoves;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
-    private final TextureRegion[][] frames;
     private float stateTime;
-    private final Animation<TextureRegion> walkingAnimation;
-    private final Animation<TextureRegion> attackAnimation;
     private boolean isDead;
 
     public Goomba(String name, Level level, float x, float y) {
@@ -55,7 +55,7 @@ public class Goomba extends DynamicObject implements Enemy {
 
     private void goombaMovement() {
         if (playerNearby) {
-            moveHorizontally(playerPosition.x > x );
+            moveHorizontally(playerPosition.x > x);
         } else {
             int range = 125;
             if (numMoves > 0 && numMoves < range) {
@@ -84,7 +84,7 @@ public class Goomba extends DynamicObject implements Enemy {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
+        batch.draw(getFrame(), x - width / 2, y - height / 2, width, height);
     }
 
     @Override

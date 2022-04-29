@@ -3,6 +3,7 @@ package model.helper;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,12 +82,12 @@ public class AudioHelper {
         return musicVolume;
     }
 
-    public float getSoundEffectsVolume() {
-        return soundEffectsVolume;
-    }
-
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
+    }
+
+    public float getSoundEffectsVolume() {
+        return soundEffectsVolume;
     }
 
     public void setSoundEffectsVolume(float soundEffectsVolume) {

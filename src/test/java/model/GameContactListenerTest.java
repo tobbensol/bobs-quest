@@ -119,9 +119,9 @@ public class GameContactListenerTest {
 
     private void createTestEnvironment(ContactType contactType) {
         Polygon polygon = new Polygon();
-        polygon.setVertices(new float[] {-100,-100, 100,-100, 100,100, -100,100});
-        polygon.setPosition(0,0);
-        polygon.setOrigin(0,0);
+        polygon.setVertices(new float[]{-100, -100, 100, -100, 100, 100, -100, 100});
+        polygon.setPosition(0, 0);
+        polygon.setOrigin(0, 0);
         PolygonMapObject polygonMapObject = new PolygonMapObject(polygon);
         Shape shape = BodyHelper.createShape(polygonMapObject);
         if (contactType == ContactType.PLATFORM) {
@@ -346,7 +346,8 @@ public class GameContactListenerTest {
         try {
             doStep();
             fail();
-        } catch (NullPointerException ignored) {}
+        } catch (NullPointerException ignored) {
+        }
     }
 
 }

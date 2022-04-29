@@ -8,7 +8,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import model.Level;
 
@@ -41,7 +40,7 @@ public class TiledMapHelper {
     private MapObjects getMapObjects(String objects) {
         MapObjects mapObjects;
 
-        if (tiledMap.getLayers().getIndex(objects) == -1){
+        if (tiledMap.getLayers().getIndex(objects) == -1) {
             return new MapObjects();
         }
         mapObjects = tiledMap.getLayers().get(objects).getObjects();

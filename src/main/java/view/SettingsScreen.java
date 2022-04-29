@@ -2,7 +2,10 @@ package view;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import launcher.Boot;
 import model.GameModel;
 
@@ -18,7 +21,7 @@ public class SettingsScreen extends AbstractScreen {
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
-        table.center().top().padTop(viewport.getScreenHeight()/4f);
+        table.center().top().padTop(viewport.getScreenHeight() / 4f);
         table.setFillParent(true);
         stage.addActor(table);
 
@@ -28,12 +31,12 @@ public class SettingsScreen extends AbstractScreen {
         Label musicVolumeLabel = new Label("Music volume", font);
         musicVolumeLabel.setFontScale(1.5f);
 
-        Slider musicVolumeSlider = new Slider(0,1,0.1f,false,skin);
+        Slider musicVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
         musicVolumeSlider.setValue(gameModel.getMusicVolume());
 
         Label soundEffectsVolumeLabel = new Label("Sound effects volume", font);
         soundEffectsVolumeLabel.setFontScale(1.5f);
-        Slider soundEffectsVolumeSlider = new Slider(0,1,0.1f,false,skin);
+        Slider soundEffectsVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
         soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsVolume());
 
         TextButton back = new TextButton("Back", skin);

@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import helper.MockGL;
 import model.GameContactListener;
-import model.GameContactListenerTest;
 import model.GameModel;
 import model.Level;
 import model.helper.AudioHelper;
@@ -110,7 +109,7 @@ public class PlayerTest {
     }
 
     @Test
-    void testJumpTimer(){
+    void testJumpTimer() {
         assertFalse(player.grounded);
         assertEquals(0, player.groundedCount);
         player.setGrounded(true);
@@ -183,57 +182,57 @@ public class PlayerTest {
     }
 
     @Test
-    void testMoveWithCollision(){
+    void testMoveWithCollision() {
         assertEquals(new Vector2(0, 0), player.getPosition());
         player.setLeftCollision(true);
         player.moveHorizontally(false);
         player.update();
         doStep();
-        assertEquals(new Vector2(0,0), player.getPosition());
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertNotEquals(new Vector2(0,0), player.getPosition());
-        player.body.setLinearVelocity(new Vector2(0,0));
-        player.setPosition(0,0);
+        assertNotEquals(new Vector2(0, 0), player.getPosition());
+        player.body.setLinearVelocity(new Vector2(0, 0));
+        player.setPosition(0, 0);
         assertEquals(new Vector2(0, 0), player.getPosition());
         player.setRightCollision(true);
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertEquals(new Vector2(0,0), player.getPosition());
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.moveHorizontally(false);
         player.update();
         doStep();
-        assertEquals(new Vector2(0,0), player.getPosition());
+        assertEquals(new Vector2(0, 0), player.getPosition());
         player.setRightCollision(false);
         player.moveHorizontally(true);
         player.update();
         doStep();
-        assertNotEquals(new Vector2(0,0), player.getPosition());
+        assertNotEquals(new Vector2(0, 0), player.getPosition());
     }
 
     @Test
-    void testMaskbits(){
+    void testMaskbits() {
         assertEquals(125, player.maskBits);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(125-8, player.maskBits);
+        assertEquals(125 - 8, player.maskBits);
         player.changeMaskBit(true, Constants.ENEMY_BIT);
-        assertEquals(125-8, player.maskBits);
+        assertEquals(125 - 8, player.maskBits);
         player.changeMaskBit(true, Constants.PLATFORM_BIT);
-        assertEquals(125-8-32, player.maskBits);
+        assertEquals(125 - 8 - 32, player.maskBits);
         player.changeMaskBit(true, Constants.PLAYER_BIT);
-        assertEquals(125-8-32, player.maskBits);
+        assertEquals(125 - 8 - 32, player.maskBits);
         player.changeMaskBit(false, Constants.DEFAULT_BIT);
-        assertEquals(125-8-32, player.maskBits);
+        assertEquals(125 - 8 - 32, player.maskBits);
         player.changeMaskBit(false, Constants.PLAYER_BIT);
-        assertEquals(125-8-32+2, player.maskBits);
+        assertEquals(125 - 8 - 32 + 2, player.maskBits);
         player.changeMaskBit(false, Constants.PLATFORM_BIT);
-        assertEquals(125-8+2, player.maskBits);
+        assertEquals(125 - 8 + 2, player.maskBits);
     }
 
     @Test
-    void testSpeedLimit(){
+    void testSpeedLimit() {
         assertEquals(new Vector2(0, 0), player.body.getLinearVelocity());
         player.body.setLinearVelocity(100, 100);
         player.update();
