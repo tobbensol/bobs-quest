@@ -30,8 +30,8 @@ Link til [møte referater](src/main/resources/MeetingReports.md).
 - Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt? (se spørsmål 2)
 
 Rollene fungerer bra. Fra forrige innlevering har vi brukt rollene mer enn før. Det har vært større behov for testing,
-game og anna som ikke involverer koding(Assets, musikk, level design), så nå har teammedlemmene fordelt seg mer på de
-forskjellige arbeidsområdene og jobbet på mer uavhengige deler av prosjektet.
+game design og anna som ikke involverer koding(assets, musikk, level design), så nå har teammedlemmene fordelt seg mer
+på de forskjellige arbeidsområdene og jobbet på mer uavhengige deler av prosjektet.
 
 - Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.
 
@@ -124,7 +124,7 @@ så vi tenker å fortsette med de samme punktene og forbedre dem enda mer.
 
 1) Oppdatere brettet jevnlig
 
-2) Mer jevn fordeling av arbeidsoppgaver.
+2) Syknronisering av arbeid.
 
 3) Skrive brukerhistorier før man jobber med noe.
 
