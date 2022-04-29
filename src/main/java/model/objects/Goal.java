@@ -19,7 +19,7 @@ public class Goal extends StaticObject {
         texture = new Texture("Multi_Platformer_Tileset_v2/WorldObjects/Green_Portal_Sprite_Sheet.png");
 
         TextureRegion[] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE)[0];
-        idleAnimation = new Animation<>(0.2f, frames);
+        idleAnimation = new Animation<>(0.1875f, frames); // 1.5s animation duration
     }
 
     @Override
