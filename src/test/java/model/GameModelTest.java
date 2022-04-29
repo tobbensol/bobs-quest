@@ -54,6 +54,7 @@ public class GameModelTest {
         when(level.getAudioHelper()).thenReturn(audioHelper);
         when(audioHelper.getSoundEffect(anyString())).thenReturn(sound);
         when(audioHelper.getLevelMusic(anyString())).thenReturn(music);
+        when(audioHelper.getMusic(anyString())).thenReturn(music);
 
         model = spy(new GameModel());
         doReturn(level).when(model).createLevel();
@@ -147,6 +148,8 @@ public class GameModelTest {
 
         when(level.getLevelMusic()).thenReturn(music);
         doNothing().when(music).pause();
+
+        doNothing().when(music).setLooping(true);
 
         Boot.INSTANCE = mock(Boot.class);
         GameController controller = mock(GameController.class);
@@ -307,6 +310,7 @@ public class GameModelTest {
             MockingDetails mockingDetails = new DefaultMockingDetails(model.getAudioHelper());
             assertTrue(mockingDetails.isMock());
         } catch (Exception e) {
+            e.printStackTrace();
             fail();
         }
         model.setMusicVolume(0);

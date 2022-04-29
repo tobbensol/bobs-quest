@@ -34,9 +34,9 @@ public class GameModel implements ControllableModel {
     private boolean initializeLevel = true;
     private GameCamera camera;
 
-    private final AudioHelper audioHelper;
+    private AudioHelper audioHelper;
     private Music music;
-    private final Music menuMusic;
+    private Music menuMusic;
     private float backgroundX;
 
 
@@ -64,9 +64,7 @@ public class GameModel implements ControllableModel {
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
 
-        audioHelper = new AudioHelper();
-        menuMusic = audioHelper.getMusic("Menu_Game_song");
-        menuMusic.setLooping(true);
+
     }
 
     private boolean gameOver() {
@@ -89,15 +87,10 @@ public class GameModel implements ControllableModel {
     }
 
     public void update() {
-
-        if (currentState != GameState.ACTIVE) {
-            menuMusic.setVolume(audioHelper.getMusicVolume());
-            menuMusic.play();
-        } else {
-            menuMusic.pause();
-        }
-
         if (initializeLevel) {
+            audioHelper = new AudioHelper();
+            menuMusic = getAudioHelper().getMusic("Menu_Game_song");
+            menuMusic.setLooping(true);
             level = createLevel();
             availableLevels.add(level.getLevelName());
             music = level.getLevelMusic();
@@ -105,6 +98,13 @@ public class GameModel implements ControllableModel {
             initializeLevel = false;
             pauseGame();
             backgroundX = 0;
+        }
+
+        if (currentState != GameState.ACTIVE) {
+            menuMusic.setVolume(audioHelper.getMusicVolume());
+            menuMusic.play();
+        } else {
+            menuMusic.pause();
         }
 
         Boot.INSTANCE.getGameController().inputListener();
