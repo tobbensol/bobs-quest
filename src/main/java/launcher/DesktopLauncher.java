@@ -10,6 +10,7 @@ public class DesktopLauncher {
         cfg.setForegroundFPS(60);
         cfg.setWindowedMode(1600, 900);
         cfg.setWindowIcon("Multi_Platformer_Tileset_v2/Players/Bob.png");
+        cfg.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 
         new Lwjgl3Application(new Boot(), cfg);
     }
