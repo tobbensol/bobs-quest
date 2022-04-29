@@ -14,18 +14,16 @@ import model.objects.IGameObject;
 /**
  * the screen of the game, where everything is rendered onto and where all visual elements reside
  */
-public class GameScreen implements Screen {
+public class GameScreen extends AbstractScreen {
 
-    private final GameModel gameModel;
-    private final SpriteBatch batch;
     private final GameCamera camera;
     private final Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     public GameScreen(GameModel gameModel) {
-        this.gameModel = gameModel;
+        super(gameModel);
+
         this.camera = gameModel.getCamera();
-        this.batch = new SpriteBatch();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.orthogonalTiledMapRenderer = gameModel.getLevel().setupMap();
     }
@@ -37,18 +35,10 @@ public class GameScreen implements Screen {
         gameModel.update();
         camera.update();
 
-        batch.setProjectionMatrix(camera.combined);
+        this.batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
     }
 
-    /**
-     * the camera should follow the player character
-     */
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-    }
 
     @Override
     public void render(float v) {
@@ -79,21 +69,5 @@ public class GameScreen implements Screen {
 
     }
 
-    @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-
-    }
 
 }

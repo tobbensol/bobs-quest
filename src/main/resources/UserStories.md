@@ -344,3 +344,21 @@
     - Lage en klasse som tar hånd om innlasting av filer og gjør det lett for andre klasser å hente ut musikk og lyd-effekter.
     - Finne musikk og lyd-effekter til prosjektet.
     - Legge til lisenser til filene man har brukt.
+
+
+### Animasjoner på objekt bevegelse
+
+- Som spiller ønsker jeg animasjoner på spilleren og andre objekter for at spillet skal føles mer levende ut og slik at ulike bevegelser er mer tydelige. Dette vil gjøre spillet mer visuelt tiltrekkende
+    - Akseptansekriterier:
+      - Player, Goomba, Floater og Goal har diverse animasjoner
+        - Player: idle, walk, jump, slide, drop, dead
+        - Goomba: walk, dead
+        - Floater: move
+        - Goal: idle
+      - En animasjon består av forskjellige teksturer som vises med et gitt tidsinterval
+      - Objektene har en getFrame() metode som styrer logikken for hvilken animasjon som skal vises
+    - Arbeidsoppgaver:
+      - Last inn en texture for hvert objekt
+      - Del texturen inn i regioner for hver frame av animasjonen
+      - Bruk Animation til å holde styr på ulike animasjoner
+      - Implementer getFrame() som oppdaterer hvor lang tid det er gått og velger riktig frame av gjeldende animasjon

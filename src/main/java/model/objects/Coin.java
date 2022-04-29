@@ -2,6 +2,7 @@ package model.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import model.Level;
 import model.helper.BodyHelper;
 import model.helper.Constants;
@@ -21,7 +22,12 @@ public class Coin extends StaticObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x - width/2, y - height/2, width, height);
+        batch.draw(getFrame(), x - width/2, y - height/2, width, height);
+    }
+
+    @Override
+    protected TextureRegion getFrame() {
+        return new TextureRegion(texture);
     }
 
     public void onHit() {
