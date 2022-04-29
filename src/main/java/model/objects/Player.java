@@ -51,14 +51,14 @@ public class Player extends JumpableObject {
         previousState = State.STANDING;
 
         /*
-        * Which row corresponds to which state in Adventurer_Sprite_Sheet:
-        * STANDING -> frames[0]
-        * WALKING -> frames[1]
-        * JUMPING -> frames[5]
-        * takeDamage() -> frames[6] // TODO: Animate getting hurt
-        * DEAD -> frames[7]
-        * drop() -> frames[12]
-        * */
+         * Which row corresponds to which state in Adventurer_Sprite_Sheet:
+         * STANDING -> frames[0]
+         * WALKING -> frames[1]
+         * JUMPING -> frames[5]
+         * takeDamage() -> frames[6] // TODO: Animate getting hurt
+         * DEAD -> frames[7]
+         * drop() -> frames[12]
+         * */
         TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE);
         animationMap = new HashMap<>();
         animationMap.put(State.STANDING, new Animation<>(0.384f, frames[0])); // 5s animation duration
@@ -121,10 +121,12 @@ public class Player extends JumpableObject {
             canJump = false;
             updateGrounded();
             level.getAudioHelper().getSoundEffect("jump").play(level.getAudioHelper().getSoundEffectsVolume());
+            canDrop = false;
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
                     canJump = true;
+                    canDrop = true;
                 }
             }, 0.1f);
         }

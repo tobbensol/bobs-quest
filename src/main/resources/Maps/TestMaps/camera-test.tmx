@@ -417,7 +417,7 @@
 </data>
  </layer>
  <objectgroup id="17" name="Goal">
-  <object id="142" x="6400" y="1472" width="64" height="64"/>
+  <object id="142" x="6400" y="1408" width="64" height="128"/>
  </objectgroup>
  <objectgroup id="18" name="MapEndPoints">
   <object id="143" x="2.78788" y="3.0303">
