@@ -16,6 +16,7 @@ public class GameScreen extends AbstractScreen {
     private final GameCamera camera;
     private final Box2DDebugRenderer box2DDebugRenderer;
     private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private final boolean debug = false;
 
     public GameScreen(GameModel gameModel) {
         super(gameModel);
@@ -55,7 +56,10 @@ public class GameScreen extends AbstractScreen {
         }
 
         batch.end();
-        box2DDebugRenderer.render(gameModel.getLevel().getWorld(), camera.combined.scl(Constants.PPM));
+
+        if (debug) {
+            box2DDebugRenderer.render(gameModel.getLevel().getWorld(), camera.combined.scl(Constants.PPM));
+        }
 
         batch.setProjectionMatrix(gameModel.getLevel().getHud().stage.getCamera().combined);
         gameModel.getLevel().getHud().stage.draw();
