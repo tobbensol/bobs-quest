@@ -1,10 +1,13 @@
-# INF112 - Platform Game
-The 2022 semester assignment in the course INF112 - Introduction to Systems Development at the University of Bergen (UiB).
+# Bob's Quest
+In this epic 2022 adventure, join Bob in his quest against bats and mice!
+Bob's Quest is a 2D platformer game, where players can move around, collect coins and interact with bats and mice.
+Play through different levels and explore different terrains and encounter different obstacles.
+Play alone or play with your friends with couch co-op multiplayer with up to three different players.
+
+
 
 ## Project Description
-This project is a 2D platform game, where players can move around, collect items and interact/take damage with other objects. 
-The game has multiple levels, and you can move on to next level ones you have completed the current level. 
-The game supports local multiplayer on the same computer.
+The 2022 semester assignment in the course INF112 - Introduction to Systems Development at the University of Bergen (UiB).
 The project is based on a given [Maven template](https://git.app.uib.no/inf112/22v/inf112.22v.libgdx-template.git). 
 We use the game engine [libGDX](https://libgdx.com/) for this project.
 
@@ -31,7 +34,7 @@ The computer must be able to run the game at 60 FPS (the game will feel slow if 
 
 ### Setup
 1. To run this project, you will need to install [Java](https://www.oracle.com/java/technologies/downloads/) (version 17 recommended. We cannot assure that older versions work).
-2. Clone the project from our [GitLab repository](https://git.app.uib.no/grabbane/inf112.22v.libgdx-template) using either [SSH](git@git.app.uib.no:grabbane/inf112.22v.libgdx-template.git) or [HTTPS](https://git.app.uib.no/grabbane/inf112.22v.libgdx-template.git). 
+2. Clone the project from our [GitLab repository](https://git.app.uib.no/grabbane/inf112.22v.bob-quest) using either [SSH](git@git.app.uib.no:grabbane/inf112.22v.bob-quest.git) or [HTTPS](https://git.app.uib.no/grabbane/inf112.22v.bob-quest.git). 
 Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](https://docs.gitlab.com/omnibus/settings/ssl.html) and [tutorial for cloning repository](https://docs.gitlab.com/ee/user/project/repository/#clone-a-repository). Alternatively you can download the source code with the button to the left of the clone button and unzip the source code at the desired location.
 3. Inside the IDE of your choice, open the project by 
    - IntelliJ: navigate `File -> New -> Project from Version Control` and paste the link provided by step 2 (either with SSH or HTTPS).
@@ -83,6 +86,7 @@ Additional credits:
   - Sprites from [GameDev Market](https://www.gamedevmarket.net/) with license: [gamedevmarket pro-licence](https://www.gamedevmarket.net/terms-conditions/#pro-licence).
 - Music:
   - Music from [OpenGameArt.Org](https://opengameart.org/content/platformer-game-music-pack) by Manuel Bolaños Gómez "CodeManu" with license: (CC-BY 3.0).
+  - Music by Henrik Hergerland Aga
 - Sound-effects:
   - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/level-up-sound-effects) by Bart Kelsey "bart" with license: (CC-BY 3.0).
   - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/512-sound-effects-8-bit-style) by Juhani Junkala "SubspaceAudio" with license: (CC-BY 3.0).
