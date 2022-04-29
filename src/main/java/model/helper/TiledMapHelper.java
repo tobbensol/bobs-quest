@@ -65,9 +65,9 @@ public class TiledMapHelper {
     }
 
     /**
-     * This method is parsing mapObjects into the game by getting the centrer of its object box
+     * This method is parsing mapObjects into the game by getting the center of its object box
      *
-     * @param objectLayer - string with the name of the layer you wish to get the spawnpoints from
+     * @param objectLayer - string with the name of the layer you wish to get the spawn-points from
      * @return list of spawn-points
      */
 
