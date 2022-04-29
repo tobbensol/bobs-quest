@@ -101,7 +101,6 @@ public abstract class AbstractScreen implements Screen {
 
     }
 
-    // TODO: How and where to call this method? Should be called when changing screens.
     @Override
     public void dispose() {
         stage.dispose();
