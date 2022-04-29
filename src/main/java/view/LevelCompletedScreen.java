@@ -27,7 +27,7 @@ public class LevelCompletedScreen extends AbstractScreen {
         stage.addActor(table);
 
 
-        Label gameCompletedLabel = new Label(gameModel.getLevel().toString() + " COMPLETED!", font);
+        Label gameCompletedLabel = new Label(gameModel.getLevel().toString().toUpperCase() + " COMPLETED!", font);
         gameCompletedLabel.setFontScale(4f);
         table.add(gameCompletedLabel);
 
