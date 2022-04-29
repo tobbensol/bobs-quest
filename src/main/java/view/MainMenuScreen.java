@@ -22,7 +22,7 @@ public class MainMenuScreen extends AbstractScreen {
         table.center().top().padTop(viewport.getScreenHeight()/4f);
 
         table.setFillParent(true);
-        Label title = new Label("PLATFORM GAME", font);
+        Label title = new Label("BOB'S QUEST", font);
         title.setFontScale(6f);
         table.add(title);
 
