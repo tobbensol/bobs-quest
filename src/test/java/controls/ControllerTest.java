@@ -23,7 +23,7 @@ public class ControllerTest {
 
     @Test
     void testInputListener() {
-        int[] keyCodes = new int[] {Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN};
+        int[] keyCodes = new int[]{Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN};
         for (int key : keyCodes) {
             when(Gdx.input.isKeyPressed(key)).thenReturn(true);
         }

@@ -11,7 +11,10 @@ import model.helper.TiledMapHelper;
 import model.objects.GameObjectFactory;
 import model.objects.IGameObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Level {
 
@@ -20,17 +23,16 @@ public class Level {
     private final String prettyLeveName;
     private final GameModel model;
     private final GameObjectFactory factory;
+    private final HashMap<String, ArrayList<IGameObject>> objectMap;
+    private final AudioHelper audioHelper;
+    private final Music levelMusic;
     private World world;
     private Hud hud;
     private TiledMapHelper tiledMapHelper;
     private boolean levelCompleted;
-    private final HashMap<String, ArrayList<IGameObject>> objectMap;
     private Integer score = 0;
     private Vector2 topLeft;
     private Vector2 bottomRight;
-
-    private final AudioHelper audioHelper;
-    private final Music levelMusic;
 
 
     public Level(String levelName, GameModel model) {
@@ -66,7 +68,7 @@ public class Level {
     }
 
     private void createObjects() {
-        for (Map.Entry<String, ArrayList<IGameObject>> set: objectMap.entrySet()) {
+        for (Map.Entry<String, ArrayList<IGameObject>> set : objectMap.entrySet()) {
             if (set.getKey().equalsIgnoreCase("Player")) {
                 List<Rectangle> spawnPoints = tiledMapHelper.parseMapRectangles(set.getKey());
                 for (int i = 0; i < Math.min(model.getNumPlayers(), model.getNumControllers()); i++) {
@@ -86,7 +88,7 @@ public class Level {
     }
 
     private void parseMapEndPoints() {
-        List<Vector2> mapEndPoints = tiledMapHelper.parseMapRectangles("MapEndPoints").stream().map((i)-> new Vector2(i.x, i.y)).toList();
+        List<Vector2> mapEndPoints = tiledMapHelper.parseMapRectangles("MapEndPoints").stream().map((i) -> new Vector2(i.x, i.y)).toList();
 
         if (mapEndPoints.get(0).x < mapEndPoints.get(1).x) {
             topLeft = mapEndPoints.get(0);

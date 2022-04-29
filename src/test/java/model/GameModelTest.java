@@ -316,7 +316,7 @@ public class GameModelTest {
     }
 
     @Test
-    void testContinueGame(){
+    void testContinueGame() {
         stubUpdateModel();
         model.setCurrentState(GameState.MAIN_MENU);
         assertEquals(GameState.MAIN_MENU, model.getCurrentState());
@@ -325,7 +325,7 @@ public class GameModelTest {
     }
 
     @Test
-    void testGoToScreen(){
+    void testGoToScreen() {
         stubUpdateModel();
         model.goToScreen(GameState.MAIN_MENU);
         assertEquals(GameState.MAIN_MENU, model.getCurrentState());
@@ -336,7 +336,7 @@ public class GameModelTest {
     }
 
     @Test
-    void testStartNewGame(){
+    void testStartNewGame() {
         stubUpdateModel();
         assertThrows(IllegalArgumentException.class, () -> model.startNewGame(0));
         assertThrows(IllegalArgumentException.class, () -> model.startNewGame(4));

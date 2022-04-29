@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import controls.GameController;
 import model.GameModel;
-import view.MainMenuScreen;
 
 public class Boot extends Game {
 

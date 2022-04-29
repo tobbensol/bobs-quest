@@ -44,8 +44,8 @@ Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](http
 
 ### Build (optional)
 1. Open the terminal of your choice (Command Prompt, Terminal, Git Bash etc).
-2. Navigate to the project folder `inf112.project` using the `cd 'directory_name'` command.
-3. When the project folder `inf112.prosject` is located, use the command `mvn package` to build the project.
+2. Navigate to the project folder containing `src` using the `cd 'directory_name'` command.
+3. When the project folder is located, use the command `mvn package` to build the project.
 
 ### Run from IDE
 1. To run the project from the IDE, locate the file `src/main/java/launcher/DesktopLauncher.java`.
@@ -53,8 +53,8 @@ Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](http
 
 ### Run from commandline
 1. To run the project from the commandline, you must first [build](#build-optional) the project as instructed above.
-2. Use the commandline to locate the `inf112.project` folder as above and navigate to the `target` folder.
-3. From that folder, use the `java -jar epic-game-app-1.0-SNAPSHOT-fat.jar` command in the commandline to run the project.
+2. Use the commandline to locate the project folder as above and navigate to the `target` folder.
+3. From that folder, use the `java -jar bob-quest-app-1.0-SNAPSHOT-fat.jar` command in the commandline to run the project.
 
 ## Controls
 - Use `WASD`, `Arrow keys` and `IJKL` to control the different players.
@@ -85,7 +85,6 @@ Additional credits:
 - Spritesheet:
   - Sprites from [GameDev Market](https://www.gamedevmarket.net/) with license: [gamedevmarket pro-licence](https://www.gamedevmarket.net/terms-conditions/#pro-licence).
 - Music:
-  - Music from [OpenGameArt.Org](https://opengameart.org/content/platformer-game-music-pack) by Manuel Bolaños Gómez "CodeManu" with license: (CC-BY 3.0).
   - Music by Henrik Hergerland Aga
 - Sound-effects:
   - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/level-up-sound-effects) by Bart Kelsey "bart" with license: (CC-BY 3.0).

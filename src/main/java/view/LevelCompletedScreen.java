@@ -35,9 +35,9 @@ public class LevelCompletedScreen extends AbstractScreen {
         TextButton mainMenu = new TextButton("Main menu", skin);
 
         table.row();
-        table.add(nextLevel).padTop(20).minWidth(250).minHeight(50);;
+        table.add(nextLevel).padTop(20).minWidth(250).minHeight(50);
         table.row();
-        table.add(mainMenu).padTop(20).minWidth(250).minHeight(50);;
+        table.add(mainMenu).padTop(20).minWidth(250).minHeight(50);
 
 
         nextLevel.addListener(Boot.INSTANCE.getGameController().goToScreenListener(GameState.ACTIVE));

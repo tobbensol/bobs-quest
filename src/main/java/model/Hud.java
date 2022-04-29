@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
@@ -21,14 +23,14 @@ import java.util.Map;
 public class Hud {
     private final Viewport viewport;
     private final Level level;
-    private Integer score;
+    private final Map<Player, Label> playerLabelHashMap = new HashMap<>();
     public Stage stage;
+    private Integer score;
     private Label scoreLabel;
     private Label levelLabel;
     private Label pausedLabel;
     private Label pauseInfoLabel;
     private Label mainMenuLabel;
-    private final Map<Player, Label> playerLabelHashMap = new HashMap<>();
 
     public Hud(SpriteBatch batch, Level level) {
         this.level = level;
@@ -121,7 +123,7 @@ public class Hud {
         for (Player player : level.getGameObjects(Player.class)) {
             Label label = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
             label.setFontScale(1.5f);
-            playerLabelHashMap.put(player,label);
+            playerLabelHashMap.put(player, label);
             playerHpTable.add(label).left().padLeft(10);
             playerHpTable.row();
         }
@@ -132,8 +134,6 @@ public class Hud {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-
-
 
 
         scoreLabel = new Label("Coins: " + score + "/" + level.getGameObjects(Coin.class).size(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));

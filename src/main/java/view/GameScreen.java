@@ -1,14 +1,11 @@
 package view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import model.GameModel;
 import model.helper.Constants;
-import model.objects.Coin;
 import model.objects.IGameObject;
 
 /**
@@ -18,7 +15,7 @@ public class GameScreen extends AbstractScreen {
 
     private final GameCamera camera;
     private final Box2DDebugRenderer box2DDebugRenderer;
-    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     public GameScreen(GameModel gameModel) {
         super(gameModel);

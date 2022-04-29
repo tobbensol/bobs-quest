@@ -49,12 +49,13 @@
     - Reason:
         - Collision is set to negative when leaving the ground and positive when hitting the ground
         - When you go from one ground to another, then the following happens:
-          - You are standing on the first ground, grounded is true
-          - You start a collision with the new ground, grounded set to true
-          - You leave the first ground, grounded is set to false
+            - You are standing on the first ground, grounded is true
+            - You start a collision with the new ground, grounded set to true
+            - You leave the first ground, grounded is set to false
     - Status:
         - fixed:
-        - the player keeps track of how many foot collisions they have, it increases when hitting a new ground, and decreases when leaving a ground
+        - the player keeps track of how many foot collisions they have, it increases when hitting a new ground, and
+          decreases when leaving a ground
 
 
 - Game crashes when trying to reload game
@@ -93,7 +94,8 @@
             - Move the last one to the edge of the map
             - The camera stays zoomed out
     - Reason:
-        - The method to stop the camera when reaching the end of the map did not handle zoom properly as it would have zoomed outside the map
+        - The method to stop the camera when reaching the end of the map did not handle zoom properly as it would have
+          zoomed outside the map
     - Status:
         - Fixed
 
@@ -119,7 +121,8 @@
         - try jumping
         - see that the player jumps lower than usual
     - reason:
-        - When using delta time, the player velocity was not equal to zero when it should be. The player's velocity inspected the jump height.
+        - When using delta time, the player velocity was not equal to zero when it should be. The player's velocity
+          inspected the jump height.
     - status:
         - Fixed
 
@@ -129,7 +132,8 @@
         - try jumping up to a platform from below
         - see that the player flickers left and right for a bit before settling
     - reason:
-        - When using delta time, the player velocity was not equal to zero when it should be. The player therefore switches between right and left state.
+        - When using delta time, the player velocity was not equal to zero when it should be. The player therefore
+          switches between right and left state.
     - status:
         - Fixed
 
@@ -140,68 +144,75 @@
         - touch goomba 3 times until hp == -1
         - see that player cannot interact with coins, platforms or goal
     - reason:
-        - Player.drop() sets state to FALLING. 
+        - Player.drop() sets state to FALLING.
     - status:
         - Fixed by returning if state is dead.
 
 
 - Player jumps really high at the start of a slope:
-  - How to replicate:
-    - Quite inconsistent.
-    - stand at the bottom of any slope
-    - walk towards it
-    - right before you walk up it, you press jump
-    - player flies to the sky
-  - reason:
-    - grounded is set to false when the amount of collisions is above 1, and when the player jumps, if the player has two collisions, jumps, and then has one collision for a while, then the player can add jumps to their jump
-    - player is at the start of a slope, colliding with both the ground and the slope
-    - the player jumps, grounded set to false
-    - the player leaves the ground, still collision with the slope, grounded cound is set to 1 and grounded is set to true
-    - the player can jump again adding forces to the jump that is already happening.
-  - status:
-    - fixed
-    - added a small timer to the jump so that the player can't jump right after they jumped (0.05 seconds)
-        
+    - How to replicate:
+        - Quite inconsistent.
+        - stand at the bottom of any slope
+        - walk towards it
+        - right before you walk up it, you press jump
+        - player flies to the sky
+    - reason:
+        - grounded is set to false when the amount of collisions is above 1, and when the player jumps, if the player
+          has two collisions, jumps, and then has one collision for a while, then the player can add jumps to their jump
+        - player is at the start of a slope, colliding with both the ground and the slope
+        - the player jumps, grounded set to false
+        - the player leaves the ground, still collision with the slope, grounded cound is set to 1 and grounded is set
+          to true
+        - the player can jump again adding forces to the jump that is already happening.
+    - status:
+        - fixed
+        - added a small timer to the jump so that the player can't jump right after they jumped (0.05 seconds)
+
 
 - player jumps high first time after spawning
-  - How to replicate:
-    - Launch game
-    - Press space to enter the game
-    - Press space
-    - Player jumps high, but only the first time
-  - reason:
-    - Unknown
-  - status:
-    - Still a bug
+    - How to replicate:
+        - Launch game
+        - Press space to enter the game
+        - Press space
+        - Player jumps high, but only the first time
+    - reason:
+        - Unknown
+    - status:
+        - Still a bug
 
 - The sky tile from the grassland terrain tileset makes the sky flicker ingame
-  - Reason:
-    - Problem with tile from the Grassland terrain tileset. Use Sky_Tileset
-  - Status:
-    - Fixed
-
+    - Reason:
+        - Problem with tile from the Grassland terrain tileset. Use Sky_Tileset
+    - Status:
+        - Fixed
 
 ## Manuel Tests
 
 - Player can jump up through platforms
-  - How to replicate:
-    - Move a player underneath a platform and jump (press up).
-    - The player should jump up through the platform (and not collide).
-    - The player should be able to stand at the top of the platform without falling down through the platform. Platform should feel solid.
-  - Reasons it might not work:
-    - When trying to change the Category Bit (on/off switch that lets the player move through the platform without colliding), it might not change the Category Bit to the desired Bit or the Mask Bits for the different objects are wrong.
-  - Status:
-    - It works.
+    - How to replicate:
+        - Move a player underneath a platform and jump (press up).
+        - The player should jump up through the platform (and not collide).
+        - The player should be able to stand at the top of the platform without falling down through the platform.
+          Platform should feel solid.
+    - Reasons it might not work:
+        - When trying to change the Category Bit (on/off switch that lets the player move through the platform without
+          colliding), it might not change the Category Bit to the desired Bit or the Mask Bits for the different objects
+          are wrong.
+    - Status:
+        - It works.
 
-    
+
 - Player can drop down through platforms
     - How to replicate:
-        - Move a player on top of a platform. The player should stand at the top of the platform without falling down through the platform. Platform should feel solid.
+        - Move a player on top of a platform. The player should stand at the top of the platform without falling down
+          through the platform. Platform should feel solid.
         - Press down.
-        - The player should now drop through the platform and land on the surface underneath. 
+        - The player should now drop through the platform and land on the surface underneath.
         - Move the player on top of the platform again and try again.
     - Reasons it might not work:
-        - When trying to change the Category Bit (on/off switch that lets the player move through the platform without colliding), it might not change the Category Bit to the desired Bit or the Mask Bits for the different objects are wrong.
+        - When trying to change the Category Bit (on/off switch that lets the player move through the platform without
+          colliding), it might not change the Category Bit to the desired Bit or the Mask Bits for the different objects
+          are wrong.
     - Status:
         - It works.
 
@@ -209,54 +220,60 @@
 - A player jumping/dropping through a platform should not affect other players on/or off the same platform.
     - How to replicate:
         - Spawn multiple players (two or three) when starting the game.
-        - Move all the players on top of a platform player on top of a platform. Make sure that the platform feel solid (not falling through).
-        - Press down with one of the players. This should just affect the player performing the action. The rest should stand on top of the players.
-        - For the player dropping underneath. Try jumping back up. The player should be able to jump through the platform while the other players are still standing at the platform.
+        - Move all the players on top of a platform player on top of a platform. Make sure that the platform feel
+          solid (not falling through).
+        - Press down with one of the players. This should just affect the player performing the action. The rest should
+          stand on top of the players.
+        - For the player dropping underneath. Try jumping back up. The player should be able to jump through the
+          platform while the other players are still standing at the platform.
         - Repeat this with the other players.
     - Reasons it might not work:
-        - When changing the Category Bit for a player (on/off switch that lets the player move through the platform without colliding), it might set the Category Bit for all players. 
+        - When changing the Category Bit for a player (on/off switch that lets the player move through the platform
+          without colliding), it might set the Category Bit for all players.
     - Status:
         - It works.
-  
+
 
 - Goomba moves towards a player if the player is within range of the Goomba.
-  - How to replicate:
-    - Move a player towards a Goomba. The Goomba radar is clearly visible by a circle surrounding the Goomba.
-    - Move the player inside of this sensor, and see if the Goomba starts to move towards you.
-    - Try to step in and out of the sensor to see it works properly.
-    - When no player is within range, see if the Goomba objects is walking back and forth.
-  - Status: 
-    - It works.
+    - How to replicate:
+        - Move a player towards a Goomba. The Goomba radar is clearly visible by a circle surrounding the Goomba.
+        - Move the player inside of this sensor, and see if the Goomba starts to move towards you.
+        - Try to step in and out of the sensor to see it works properly.
+        - When no player is within range, see if the Goomba objects is walking back and forth.
+    - Status:
+        - It works.
 
 
 - Player can kill Goombas.
-  - How to replicate:
-    - Move a player towards a Goomba object.
-    - Jump up and press down over the Goomba, such that the player hits the top of the Goomba.
-    - See that the Goomba object dies.
-    - Check that the HP of the player remains the same.
-  - Status:
-    - It works.
+    - How to replicate:
+        - Move a player towards a Goomba object.
+        - Jump up and press down over the Goomba, such that the player hits the top of the Goomba.
+        - See that the Goomba object dies.
+        - Check that the HP of the player remains the same.
+    - Status:
+        - It works.
 
 
 - Pause/Resume works in game.
-  - How to replicate:
-    - Start a game, press P to pause.
-    - Check that the game is paused.
-    - Press P again to resume.
-    - Check that game resumes.
-  - Status:
-    - It works.
+    - How to replicate:
+        - Start a game, press P to pause.
+        - Check that the game is paused.
+        - Press P again to resume.
+        - Check that game resumes.
+    - Status:
+        - It works.
 
 
 - Test camera features.
-  - How to replicate:
-    - Make 2-3 players walk away from each other to test the camera position and zoom.
-    - Check if the camera position is the average position of the two outermost players.
-    - Check if the zoom level increases if the two outermost players go above a certain distance away from each other and decreases when under a certain distance.
-    - Walk towards a map boundary and check if the camera stops.
-    - Check if zoom works when next to a map boundary by having two players walk away from each other.
-    - Check that the camera position average and zoom management do not include dead players.
-    - Check if the players collide with the camera walls either when reaching a map boundary or when the players reach the max zoom distance.
-  - Status:
-    - It works.
+    - How to replicate:
+        - Make 2-3 players walk away from each other to test the camera position and zoom.
+        - Check if the camera position is the average position of the two outermost players.
+        - Check if the zoom level increases if the two outermost players go above a certain distance away from each
+          other and decreases when under a certain distance.
+        - Walk towards a map boundary and check if the camera stops.
+        - Check if zoom works when next to a map boundary by having two players walk away from each other.
+        - Check that the camera position average and zoom management do not include dead players.
+        - Check if the players collide with the camera walls either when reaching a map boundary or when the players
+          reach the max zoom distance.
+    - Status:
+        - It works.
