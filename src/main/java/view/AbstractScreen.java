@@ -47,7 +47,7 @@ public abstract class AbstractScreen implements Screen {
     private void loadBackground() {
         this.background = new Texture("images/main-menu-background.png");
         this.player = new Texture("Multi_Platformer_Tileset_v2/Players/Adventurer_Sprite_Sheet.png");
-        TextureRegion[][] frames = TextureRegion.split(player, Constants.TILE_SIZE / 2, Constants.TILE_SIZE / 2);
+        TextureRegion[][] frames = TextureRegion.split(player, Constants.TILE_SIZE, Constants.TILE_SIZE);
         this.animation = new Animation<>(0.166f, Arrays.copyOf(frames[1], 8));
     }
 
@@ -58,7 +58,7 @@ public abstract class AbstractScreen implements Screen {
     protected void renderBackground() {
         batch.begin();
         batch.draw(background,gameModel.getBackgroundX(),-350);
-        batch.draw(animation.getKeyFrame(stateTime,true),200,157,120,120);
+        batch.draw(animation.getKeyFrame(stateTime,true),200,157);
         batch.end();
         stage.draw();
 

@@ -61,14 +61,14 @@ public class Player extends JumpableObject {
         * DEAD -> frames[7]
         * drop() -> frames[12]
         * */
-        TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE / 2, Constants.TILE_SIZE / 2);
+        TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE);
         animationMap = new HashMap<>();
         animationMap.put(State.STANDING, new Animation<>(0.166f, frames[0]));
         animationMap.put(State.WALKING, new Animation<>(0.166f, Arrays.copyOf(frames[1], 8)));
-        animationMap.put(State.JUMPING, new Animation<>(0.166f, Arrays.copyOf(frames[5], 6)));
-        animationMap.put(State.FALLING, new Animation<>(0.166f, frames[12][1]));
-        animationMap.put(State.SLIDING, new Animation<>(0.166f, Arrays.copyOf(frames[12], 5)));
-        animationMap.put(State.DEAD, new Animation<>(0.166f, Arrays.copyOf(frames[7], 7)));
+        animationMap.put(State.JUMPING, new Animation<>(0.166f, Arrays.copyOf(frames[2], 6)));
+        animationMap.put(State.FALLING, new Animation<>(0.166f, frames[5][1]));
+        animationMap.put(State.SLIDING, new Animation<>(0.166f, Arrays.copyOf(frames[5], 5)));
+        animationMap.put(State.DEAD, new Animation<>(0.166f, Arrays.copyOf(frames[4], 7)));
 
         stateTime = 0;
     }
