@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import launcher.Boot;
 import model.ControllableModel;
 import model.GameState;
 
@@ -20,19 +21,15 @@ public class GameController {
     }
 
     public void inputListener() {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && model.getCurrentState() == GameState.ACTIVE) {
-            // Use a helper so that a held-down button does not continuously switch between states with every tick
-            if (pauseHelper) {
-                if (model.isPaused()) {
-                    model.resumeGame();
-                } else {
-                    model.pauseGame();
-                }
-                pauseHelper = false;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && model.getCurrentState() == GameState.ACTIVE) {
+            if (model.isPaused()) {
+                model.resumeGame();
+            } else {
+                model.pauseGame();
             }
-        } else {
-            pauseHelper = true;
         }
+
         if (Gdx.input.isKeyPressed(Input.Keys.M) && model.getCurrentState() == GameState.ACTIVE && model.isPaused()) {
             model.setCurrentState(GameState.MAIN_MENU);
             model.changeScreen();
@@ -131,4 +128,17 @@ public class GameController {
         };
     }
 
+
+    public ChangeListener fullScreenListener() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(Gdx.graphics.isFullscreen()){
+                    Gdx.graphics.setWindowedMode(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight());
+                } else {
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                }
+            }
+        };
+    }
 }

@@ -39,6 +39,8 @@ public class SettingsScreen extends AbstractScreen {
         Slider soundEffectsVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
         soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsVolume());
 
+        TextButton fullScreen = new TextButton("FullScreen Toggle", skin);
+
         TextButton back = new TextButton("Back", skin);
 
         table.add(settings).center().colspan(2);
@@ -49,11 +51,14 @@ public class SettingsScreen extends AbstractScreen {
         table.add(soundEffectsVolumeLabel).padTop(20);
         table.add(soundEffectsVolumeSlider).padTop(20).minWidth(250).minHeight(50);
         table.row();
+        table.add(fullScreen).padTop(20).minWidth(150).minHeight(50).colspan(2);
+        table.row();
         table.add(back).padTop(20).minWidth(150).minHeight(50).colspan(2);
 
         musicVolumeSlider.addListener(Boot.INSTANCE.getGameController().volumeListener(musicVolumeSlider, true));
         soundEffectsVolumeSlider.addListener(Boot.INSTANCE.getGameController().volumeListener(soundEffectsVolumeSlider, false));
         back.addListener(Boot.INSTANCE.getGameController().goBackListener());
+        fullScreen.addListener(Boot.INSTANCE.getGameController().fullScreenListener());
 
 
     }
