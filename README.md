@@ -51,7 +51,7 @@ Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](http
 1. To run the project from the IDE, locate the file `src/main/java/launcher/DesktopLauncher.java`.
 2. Run DesktopLauncher to start the game.
 
-### Run from commandline:
+### Run from commandline
 1. To run the project from the commandline, you must first [build](#build-optional) the project as instructed above.
 2. Use the commandline to locate the `inf112.project` folder as above and navigate to the `target` folder.
 3. From that folder, use the `java -jar epic-game-app-1.0-SNAPSHOT-fat.jar` command in the commandline to run the project.
