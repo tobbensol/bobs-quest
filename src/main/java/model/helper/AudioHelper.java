@@ -25,9 +25,9 @@ public class AudioHelper {
         soundEffectsVolume = 0.5f;
 
         levelMusic = new HashMap<>(); // ADD level specific music here:
-        levelMusic.put("level-1", getMusic("Plains_Game_song"));
-        levelMusic.put("level-2", getMusic("Desert_Game_song"));
-        levelMusic.put("level-3", getMusic("Winter_Game_song"));
+        levelMusic.put("Grasslands", getMusic("Plains_Game_song"));
+        levelMusic.put("Sandlands", getMusic("Desert_Game_song"));
+        levelMusic.put("Snowlands", getMusic("Winter_Game_song"));
     }
 
     private void loadMusic() {

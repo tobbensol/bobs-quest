@@ -52,9 +52,9 @@ public class GameModel implements ControllableModel {
         numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
-        levels.add("level-1");
-        levels.add("level-2");
-        levels.add("level-3");
+        levels.add("Grasslands");
+        levels.add("Sandlands");
+        levels.add("Snowlands");
 
         availableLevels = new ArrayList<>();
 
