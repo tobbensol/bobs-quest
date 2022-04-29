@@ -18,17 +18,19 @@ public class Goomba extends MovableObject implements Enemy {
     private int numMoves;
     private boolean playerNearby = false;
     private Vector2 playerPosition;
-    private final TextureRegion[] frames;
+    private final TextureRegion[][] frames;
     private float stateTime;
     private final Animation<TextureRegion> walkingAnimation;
+    private final Animation<TextureRegion> attackAnimation;
     private boolean isDead;
 
     public Goomba(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Goomba.class).size() + 1), level, x, y, 1.1f, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
-        texture = new Texture("Multi_Platformer_Tileset_v2/Enemies/Goomba.png");
+        texture = new Texture("Multi_Platformer_Tileset_v2/Enemies/Rat_Sprite_Sheet.png");
 
-        frames = TextureRegion.split(texture, Constants.TILE_SIZE, Constants.TILE_SIZE)[0];
-        walkingAnimation = new Animation<>(0.5f, frames[1], frames[2]);
+        frames = TextureRegion.split(texture, Constants.TILE_SIZE, Constants.TILE_SIZE/2);
+        walkingAnimation = new Animation<>(0.166f, frames[0]);
+        attackAnimation = new Animation<>(166f, frames[1]);
 
         numMoves = 0;
     }
@@ -86,11 +88,20 @@ public class Goomba extends MovableObject implements Enemy {
 
     @Override
     protected TextureRegion getFrame() {
+        TextureRegion region;
         if (isDead) {
-            return frames[0];
+            return frames[2][0];
         }
+
         stateTime += Gdx.graphics.getDeltaTime();
-        return walkingAnimation.getKeyFrame(stateTime, true);
+        if (playerNearby) {
+            region = attackAnimation.getKeyFrame(stateTime, true);
+        } else {
+            region = walkingAnimation.getKeyFrame(stateTime, true);
+        }
+
+        flipRegionHorizontally(region);
+        return region;
     }
 
     @Override
