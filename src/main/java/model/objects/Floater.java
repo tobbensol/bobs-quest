@@ -35,17 +35,12 @@ public class Floater extends DynamicObject implements Enemy {
         }
         else{
             steps++;
-            //if (steps % 200 == 0){
-            //    direction *= -1;
-            //}
-            //setPosition(x, y + direction);
-            //alternate floater movement
             if (steps % 200 == 0 && Math.random() > 0.5f){
                 direction *= -1;
             }
             steps %= 200;
-            double nextpos  = direction * steps * Math.PI/100;
-            setPosition((float) (x+Math.sin(nextpos)), (float) (y + Math.cos(nextpos)));
+            double nextPos  = direction * steps * Math.PI/100;
+            setPosition((float) (x+Math.sin(nextPos)), (float) (y + Math.cos(nextPos)));
         }
     }
 

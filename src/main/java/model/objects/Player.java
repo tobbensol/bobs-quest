@@ -14,7 +14,6 @@ import model.helper.ContactType;
 
 public class Player extends JumpableObject {
     private static final float MAX_WALKING_VELOCITY = 4.2f;
-    //TODO tweek max velocities
     private static final float MAX_X_VELOCITY = 14f;
     private static final float MAX_Y_VELOCITY = 28f;
     private static final float X_MOVEMENT_IMPULSE = 15f;
@@ -234,7 +233,6 @@ public class Player extends JumpableObject {
         maskBits = Constants.DESTROYED_MASK_BITS;
         bit = Constants.DESTROYED_BIT;
         BodyHelper.changeFilterData(body, bit, maskBits);
-        // Death "animation"
         body.setLinearVelocity(0, 5);
         level.getAudioHelper().getSoundEffect("deathScream").play(level.getAudioHelper().getSoundEffectsVolume());
         Timer.schedule(new Timer.Task() {
@@ -246,7 +244,6 @@ public class Player extends JumpableObject {
     }
 
     public void takeDamage(int amount) {
-        // Player doesn't take damage if dead
         if (currentState == State.DEAD) {
             return;
         }

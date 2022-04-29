@@ -82,7 +82,6 @@ public class AudioHelper {
             return levelMusic.get(level);
         } else {
             return getMusic("Intro Theme"); // Default music if level does not have specified music.
-            //throw new IllegalArgumentException("This level does not have any music"); //TODO: empty music or standard music?
         }
     }
 

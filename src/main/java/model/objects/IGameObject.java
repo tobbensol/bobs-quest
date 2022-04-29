@@ -52,8 +52,7 @@ public interface IGameObject {
     void changeMaskBit(boolean filterAway, short bit);
 
     /**
-     *
-     * @return a bool saying if the object is destroyed.
+     * @return Returns true if the object is destroyed, false otherwise.
      */
     boolean isDestroyed();
 }
