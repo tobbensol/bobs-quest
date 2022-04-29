@@ -1,5 +1,6 @@
 package view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,10 +16,12 @@ public class SettingsScreen extends AbstractScreen {
         super(gameModel);
     }
 
+    TextButton fullScreen = new TextButton("", skin);
+    Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+
 
     @Override
     public void show() {
-        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
         table.center().top().padTop(viewport.getScreenHeight() / 4f);
@@ -39,7 +42,7 @@ public class SettingsScreen extends AbstractScreen {
         Slider soundEffectsVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
         soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsVolume());
 
-        TextButton fullScreen = new TextButton("FullScreen Toggle", skin);
+        Label FullScreenLabel = new Label("Full Screen toggle:", font);
 
         TextButton back = new TextButton("Back", skin);
 
@@ -51,6 +54,7 @@ public class SettingsScreen extends AbstractScreen {
         table.add(soundEffectsVolumeLabel).padTop(20);
         table.add(soundEffectsVolumeSlider).padTop(20).minWidth(250).minHeight(50);
         table.row();
+        table.add(FullScreenLabel).padTop(20);
         table.add(fullScreen).padTop(20).minWidth(150).minHeight(50).colspan(2);
         table.row();
         table.add(back).padTop(20).minWidth(150).minHeight(50).colspan(2);
@@ -65,6 +69,11 @@ public class SettingsScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        if(Gdx.graphics.isFullscreen()){
+            fullScreen.setLabel(new Label("Fullscreen", font));
+        } else {
+            fullScreen.setLabel(new Label("Windowed", font));
+        }
         super.render(delta);
         this.renderBackground();
     }
