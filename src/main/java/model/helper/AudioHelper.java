@@ -9,7 +9,7 @@ import java.util.Map;
 public class AudioHelper {
 
     private final AssetManager assetManager;
-    private Map<String, Music> levelMusic;
+    private final Map<String, Music> levelMusic;
     private float musicVolume;
     private float soundEffectsVolume;
 
@@ -27,8 +27,6 @@ public class AudioHelper {
         levelMusic.put("level-1", getMusic("Plains_Game_song"));
         levelMusic.put("level-2", getMusic("Desert_Game_song"));
         levelMusic.put("level-3", getMusic("Winter_Game_song"));
-//        levelMusic.put("level-3", getMusic("Desert Theme"));
-//        levelMusic.put("level-4", getMusic("Dungeon Theme"));
     }
 
     private void loadMusic() {
@@ -42,13 +40,10 @@ public class AudioHelper {
     private void loadSoundEffects() {
         assetManager.load("audio/sounds/gameOver.wav", Sound.class);
         assetManager.load("audio/sounds/coin.wav", Sound.class);
-        assetManager.load("audio/sounds/drop.wav", Sound.class);
         assetManager.load("audio/sounds/drop3.wav", Sound.class);
-        assetManager.load("audio/sounds/hit.wav", Sound.class);
         assetManager.load("audio/sounds/hit2.wav", Sound.class);
         assetManager.load("audio/sounds/jump.wav", Sound.class);
         assetManager.load("audio/sounds/jump2.wav", Sound.class);
-        assetManager.load("audio/sounds/chipQuest.wav", Sound.class);
         assetManager.load("audio/sounds/orchestra.wav", Sound.class);
         assetManager.load("audio/sounds/deathScream.wav", Sound.class);
         assetManager.load("audio/sounds/goombaDeath.wav", Sound.class);
