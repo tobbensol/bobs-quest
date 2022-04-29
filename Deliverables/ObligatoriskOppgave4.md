@@ -24,11 +24,11 @@
 
 - Lag korte referat fra team-møtene (ha med dato, hvem som var tilstede, hva dere diskuterte, hvilke avgjørelser dere tok, og hva dere ble enige om å gjøre til neste gang)
 
-- Link til [møte referater](src/main/resources/MeetingReports.md).
+Link til [møte referater](src/main/resources/MeetingReports.md).
 
 - Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt? (se spørsmål 2)
 
-Rollene fungerer bra. Fra forrige innlevering har vi brukt rollene mer enn før. Det har vært større behov for testing og game design, så nå har teammedlemmene fordelt seg mer på de forskjellige arbeidsområdene og jobbet på mer uavhengige deler av prosjektet.
+Rollene fungerer bra. Fra forrige innlevering har vi brukt rollene mer enn før. Det har vært større behov for testing, game og anna som ikke involverer koding(Assets, musikk, level design), så nå har teammedlemmene fordelt seg mer på de forskjellige arbeidsområdene og jobbet på mer uavhengige deler av prosjektet.
 
 - Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.
 
@@ -61,7 +61,7 @@ Testing - Tobias, Martin
 - Junit tester
 - .MD fil for å skrive hvordan man gjenskaper bugs
 
-Ansvarlig for game design - Tobias, Kristoffer
+Ansvarlig for game design - Tobias, Kristoffer, Espen
 
 - Tiled maps,
 - Hud og menyer
@@ -96,15 +96,13 @@ Ingen endring siden andre innlevering. Antall commits er litt mer jevnt fordelt 
 
 - Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint.
 
-// TODO
-
 Vi har forbedret alle punktene nedenfor fra forrige innlevering. Vi føler at vi ikke har så mye mer konkret å forbedre, så vi tenker å fortsette med de samme punktene og forbedre dem enda mer.
 
-1) Effektivisering av team programmering (diskutere, komme fram til løsning, implementere løsning). Bli enda flinkere på å jobbe i par og kommunisere arbeid til resten av teamet.
+1) Skrive manuelle tester.
 
 2) Mer jevn fordeling av arbeidsoppgaver.
 
-3) Utvide Junit testing og skrive brukerhistorier før man jobber med noe.
+3) Skrive brukerhistorier før man jobber med noe.
 
 ## Deloppgave 2: krav
 
@@ -118,9 +116,7 @@ Strech goalet lokal multiplayer har ikke vært et stort fokus til denne innlever
 
 - Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang. Er dere kommet forbi MVP? Forklar hvordan dere prioriterer ny funksjonalitet.
 
-// TODO
-
-I denne perioden har vi fokusert på generalisering, utvidbarhet og generell fiksing av små problemer mens vi holder fokuset på kodekvalitet og prosjekt struktur. Hva vi har gjort kommer fram av møtereferat. Framover tenker vi å prioritere å få et mer komplett spill. Vi har en god "grunnmur", men trenger mer spill å spille.
+I denne perioden har vi fokusert på å bli ferdig med spillet, gamedesign, testing, polishing og quality of life forbedringer. Hva vi har gjort kommer fram av møtereferat.
 
 - For hvert krav dere jobber med, må dere lage 1) ordentlige brukerhistorier, 2) akseptansekriterier og 3) arbeidsoppgaver. Husk at akseptansekriterier ofte skrives mer eller mindre som tester
 
@@ -135,18 +131,9 @@ Ingen nye endringer. Endringer fra MVP er forklart i andre innlevering.
 Evt. tekst / kommentarer til koden kan dere putte i en egen ## Kode-seksjon i Deliverables/obligX.md.
 
 - _Utbedring av feil:_ hvis dere har rettet / forbedret noe som dere har fått trekk for tidligere, lag en liste med «Dette har vi fikset siden sist», så det er lett for gruppelederne å få oversikt.
-
-    // TODO
-
-    - Commitmeldingene har blitt mer beskrivende/utfyllende
-
-    - Nytteverdien til brukerhistoriene har blitt oppdatert
-
-    - Lagt til flere [manuelle tester](src/main/resources/BugReplication.md)
-
     - Laget flere JUnit tester.
 
-    - Laget [README](README.md) som inneholder dokumentasjon om prosjektoppsett
+    - Oppdatert `Build Instructions` i [README](README.md) 
 
 - Lag og lever et klassediagram. (Hvis det er veldig mange klasser, lager dere for de viktigste.) Det er ikke nødvendig å ta med alle metoder og feltvariabler med mindre dere anser dem som viktige for helheten. (Eclipse har forskjellige verktøy for dette)
 
@@ -160,10 +147,10 @@ Har skrevet [manuelle tester](src/main/resources/BugReplication.md).
 
 - Statiske analyseverktøy som SpotBugs eller SonarQube kan hjelpe med å finne feil dere ikke tenker på. Hvis dere prøver det, skriv en kort oppsummering av hva dere fant / om det var nyttig.
 
-Vi har brukt spot-bugs, men noen bugs er litt vanskelige å fikse, vi må se på sonarQube.
+Vi har brukt spot-bugs, men noen bugs er litt vanskelige å fikse, vi fikk ikkje til å koble til sonarqube
 
 - Automatiske tester skal dekke forretningslogikken i systemet (unit-tester). _Coverage_ kan hjelpe med å se hvor mye av koden som dekkes av testene – i Eclipse kan dette gjøres ved å installere _EclEmma_ gjennom Eclipse Marketplace.
 
-Vi har gjort en god del enhetstesting. // TODO
+Vi har 62% line coverage i model, vi har hovedsakelig fokusert på å teste spill modellen fordi resultat fra view tester vil ikkje vere særlig hjelpsomme.
 
 Vi har startet enhetstesting. Nå som vi har fått dette til å fungere, skal det være lettere å skrive flere tester videre framover. Vi har foreløpig 28% line coverage i hele prosjektet. Det viktigste å teste er modellen (hvor logikken ligger). Her har vi 34% coverage. Diverse andre deler av koden kan fort bli vanskelig å teste automatisk.
