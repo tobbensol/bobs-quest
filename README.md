@@ -85,7 +85,6 @@ Additional credits:
 - Spritesheet:
   - Sprites from [GameDev Market](https://www.gamedevmarket.net/) with license: [gamedevmarket pro-licence](https://www.gamedevmarket.net/terms-conditions/#pro-licence).
 - Music:
-  - Music from [OpenGameArt.Org](https://opengameart.org/content/platformer-game-music-pack) by Manuel Bolaños Gómez "CodeManu" with license: (CC-BY 3.0).
   - Music by Henrik Hergerland Aga
 - Sound-effects:
   - Sound effects from [OpenGameArt.Org](https://opengameart.org/content/level-up-sound-effects) by Bart Kelsey "bart" with license: (CC-BY 3.0).
