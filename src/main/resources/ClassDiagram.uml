@@ -1,277 +1,548 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement />
+  <OriginalElement>C:/Users/Tobias Soltvedt/IdeaProjects/inf112.prosjekt/src</OriginalElement>
   <nodes>
-    <node x="380.3750000000002" y="963.0">model.objects.Jumpable</node>
-    <node x="1493.1379143960053" y="3322.0">launcher.DesktopLauncher</node>
-    <node x="2484.4712477293388" y="368.0">model.helper.BodyHelper</node>
-    <node x="1257.7500000000002" y="2320.5">controls.ArrowController</node>
-    <node x="369.82257606720236" y="1522.5">model.objects.StaticObject</node>
-    <node x="4123.898671662137" y="1855.0">view.GameCamera</node>
-    <node x="1075.7500000000002" y="2320.5">controls.CustomController</node>
-    <node x="1988.4712477293388" y="1356.0">model.objects.Player</node>
-    <node x="901.7500000000002" y="2320.5">controls.WASDController</node>
-    <node x="2065.3254143960053" y="1092.0">model.objects.Player.State</node>
-    <node x="3736.125" y="2297.0">model.helper.TiledMapHelper</node>
-    <node x="1084.8225760672024" y="1888.0">controls.Controller</node>
-    <node x="616.7500000000002" y="2275.0">model.GameContactListener</node>
-    <node x="1478.6379143960053" y="3128.0">launcher.Boot</node>
-    <node x="2556.5" y="2242.0">view.GameScreen</node>
-    <node x="2262.4712477293388" y="584.0">model.objects.GameObject</node>
-    <node x="2724.5" y="2308.0">model.objects.GameObjectFactory</node>
-    <node x="1523.3986716621366" y="2242.0">view.LevelCompletedScreen</node>
-    <node x="317.1250000000002" y="1170.0">model.objects.JumpableObject</node>
-    <node x="2065.7212477293388" y="1866.0">model.objects.Goal</node>
-    <node x="2730.25" y="1855.0">model.objects.Coin</node>
-    <node x="3340.697576067202" y="1832.0">model.GameState</node>
-    <node x="1437.6379143960053" y="2582.0">model.GameModel</node>
-    <node x="2058.8125" y="32.0">model.helper.ContactType</node>
-    <node x="3055.697576067202" y="1855.0">model.objects.Goomba</node>
-    <node x="1739.3986716621366" y="2242.0">view.GameOverScreen</node>
-    <node x="1920.3986716621366" y="2296.0">model.Hud</node>
-    <node x="358.3750000000002" y="812.0">model.objects.DynamicObject</node>
-    <node x="2996.5" y="2308.0">controls.GameController</node>
+    <node x="2548.999999999999" y="1794.0">model.helper.TiledMapHelper</node>
+    <node x="3704.249999999999" y="2797.0">model.objects.DynamicObject</node>
+    <node x="2898.499999999999" y="2236.0">model.objects.Enemy</node>
+    <node x="4458.249999999999" y="1148.0">view.GameCamera</node>
+    <node x="3270.624999999999" y="1328.0">model.Level</node>
+    <node x="2884.999999999999" y="2396.0">model.objects.IGameObject</node>
+    <node x="2764.999999999999" y="1988.0">model.objects.Goomba</node>
+    <node x="717.0" y="1148.0">view.MainMenuScreen</node>
+    <node x="2187.499999999999" y="1148.0">controls.CustomController</node>
+    <node x="473.0" y="1148.0">view.LevelCompletedScreen</node>
+    <node x="3024.999999999999" y="1988.0">model.objects.Floater</node>
+    <node x="3821.499999999999" y="1988.0">model.objects.Player.State</node>
+    <node x="1128.9999999999995" y="1148.0">view.GameCompletedScreen</node>
+    <node x="3941.249999999999" y="2891.0">model.objects.Movable</node>
+    <node x="3814.249999999999" y="2681.0">model.objects.JumpableObject</node>
+    <node x="1792.499999999999" y="1148.0">controls.ArrowController</node>
+    <node x="3262.374999999999" y="1148.0">model.GameContactListener</node>
+    <node x="1377.9999999999995" y="1148.0">view.NewGameScreen</node>
+    <node x="3545.499999999999" y="2126.0">model.objects.StaticObject</node>
+    <node x="-109.0" y="3176.0">model.helper.BodyHelper</node>
+    <node x="1582.9999999999995" y="1148.0">view.SettingsScreen</node>
+    <node x="82.0" y="1148.0">view.GameScreen</node>
+    <node x="3284.999999999999" y="1988.0">model.objects.MovingPlatform</node>
+    <node x="4186.249999999999" y="1148.0">model.helper.AudioHelper</node>
+    <node x="3532.749999999999" y="2215.0">model.objects.Coin</node>
+    <node x="1988.499999999999" y="1148.0">controls.WASDController</node>
+    <node x="-74.0" y="420.0">model.ControllableModel</node>
+    <node x="1991.249999999999" y="1257.0">controls.Controller</node>
+    <node x="3284.999999999999" y="2104.0">model.objects.KinematicObject</node>
+    <node x="3339.624999999999" y="1794.0">model.objects.GameObjectFactory</node>
+    <node x="-109.0" y="172.0">controls.GameController</node>
+    <node x="841.7499999999995" y="1344.0">view.AbstractScreen</node>
+    <node x="4140.249999999999" y="1794.0">model.Hud</node>
+    <node x="3310.249999999999" y="2240.0">model.objects.MapEndPoints</node>
+    <node x="263.0" y="1148.0">view.SelectLevelScreen</node>
+    <node x="3522.499999999999" y="1988.0">model.objects.Goal</node>
+    <node x="2162.625" y="-105.0">launcher.DesktopLauncher</node>
+    <node x="922.9999999999995" y="1148.0">view.GameOverScreen</node>
+    <node x="3993.249999999999" y="2797.0">model.objects.Jumpable</node>
+    <node x="2225.124999999999" y="172.0">model.GameModel</node>
+    <node x="3801.249999999999" y="2257.0">model.objects.Player</node>
+    <node x="2413.999999999999" y="1148.0">model.GameState</node>
+    <node x="2123.125" y="-11.0">launcher.Boot</node>
+    <node x="3661.249999999999" y="2891.0">model.objects.GameObject</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="model.objects.StaticObject" target="model.objects.GameObject" relationship="GENERALIZATION">
-      <point x="31.75" y="-14.5" />
-      <point x="465.07257606720236" y="1334.0" />
-      <point x="548.8750000000002" y="1334.0" />
-      <point x="548.8750000000002" y="790.0" />
-      <point x="521.1250000000002" y="790.0" />
-      <point x="521.1250000000002" y="770.0" />
-      <point x="2292.4712477293388" y="770.0" />
-      <point x="-60.0" y="82.0" />
+    <edge source="model.Level" target="model.helper.AudioHelper" relationship="TO_ONE">
+      <point x="135.0" y="-189.0" />
+      <point x="-116.0" y="90.0" />
     </edge>
     <edge source="model.objects.GameObjectFactory" target="model.objects.Player" relationship="CREATE">
-      <point x="-63.0" y="-27.0" />
-      <point x="2787.5" y="2220.0" />
-      <point x="2681.3159627611385" y="2220.0" />
-      <point x="2681.3159627611385" y="2020.0" />
-      <point x="2294.4712477293388" y="2020.0" />
-      <point x="2294.4712477293388" y="1800.0" />
-      <point x="2114.9712477293388" y="1800.0" />
-      <point x="0.0" y="181.0" />
+      <point x="98.79999999999998" y="27.0" />
+      <point x="3561.9249999999993" y="1868.0" />
+      <point x="4000.499999999999" y="1868.0" />
+      <point x="4000.499999999999" y="2237.0" />
+      <point x="3966.249999999999" y="2237.0" />
+      <point x="55.0" y="-192.0" />
+    </edge>
+    <edge source="view.GameOverScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="1005.9999999999995" y="1244.0" />
+      <point x="879.4999999999995" y="1244.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="model.Hud" target="model.objects.Player" relationship="TO_MANY">
+      <point x="0.0" y="60.5" />
+      <point x="4201.249999999999" y="2449.0" />
+      <point x="110.0" y="0.0" />
+    </edge>
+    <edge source="model.GameContactListener" target="model.Level" relationship="TO_ONE">
+      <point x="5.0" y="60.0" />
+      <point x="3400.374999999999" y="1293.0" />
+      <point x="3343.124999999999" y="1293.0" />
+      <point x="-62.5" y="-203.0" />
     </edge>
     <edge source="model.GameModel" target="view.GameOverScreen" relationship="CREATE">
-      <point x="0.0" y="-237.0" />
-      <point x="1574.1379143960053" y="2450.0" />
-      <point x="1819.8986716621366" y="2450.0" />
-      <point x="0.0" y="93.0" />
-    </edge>
-    <edge source="model.GameModel" target="model.GameState" relationship="TO_ONE">
-      <point x="91.0" y="-237.0" />
-      <point x="1665.137914396005" y="2560.0" />
-      <point x="3892.9712477293388" y="2560.0" />
-      <point x="3892.9712477293388" y="2460.0" />
-      <point x="4102.898671662137" y="2460.0" />
-      <point x="4102.898671662137" y="2130.0" />
-      <point x="3481.697576067202" y="2130.0" />
-      <point x="47.0" y="83.0" />
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1008.0" />
+      <point x="1005.9999999999995" y="1008.0" />
+      <point x="0.0" y="-38.0" />
     </edge>
     <edge source="launcher.Boot" target="model.GameModel" relationship="CREATE">
-      <point x="0.0" y="-72.0" />
-      <point x="0.0" y="237.0" />
+      <point x="66.25" y="71.5" />
+      <point x="2311.8749999999995" y="147.0" />
+      <point x="2346.124999999999" y="147.0" />
+      <point x="5.0" y="-368.0" />
     </edge>
     <edge source="model.objects.JumpableObject" target="model.objects.Jumpable" relationship="REALIZATION">
+      <point x="48.5" y="38.0" />
+      <point x="3959.749999999999" y="2777.0" />
+      <point x="4051.249999999999" y="2777.0" />
       <point x="0.0" y="-27.0" />
-      <point x="425.1250000000002" y="1060.0" />
-      <point x="448.3750000000002" y="1060.0" />
-      <point x="0.0" y="27.0" />
     </edge>
-    <edge source="model.objects.GameObjectFactory" target="model.objects.Coin" relationship="CREATE">
-      <point x="-63.0" y="-27.0" />
-      <point x="2787.5" y="2220.0" />
-      <point x="2681.3159627611385" y="2220.0" />
-      <point x="2681.3159627611385" y="2020.0" />
-      <point x="2820.25" y="2020.0" />
-      <point x="0.0" y="60.0" />
-    </edge>
-    <edge source="model.GameModel" target="view.GameScreen" relationship="CREATE">
-      <point x="0.0" y="-237.0" />
-      <point x="1574.1379143960053" y="2450.0" />
-      <point x="2630.5" y="2450.0" />
-      <point x="0.0" y="93.0" />
-    </edge>
-    <edge source="model.objects.GameObjectFactory" target="model.objects.Goal" relationship="CREATE">
-      <point x="-63.0" y="-27.0" />
-      <point x="2787.5" y="2220.0" />
-      <point x="2681.3159627611385" y="2220.0" />
-      <point x="2681.3159627611385" y="2020.0" />
-      <point x="2155.7212477293388" y="2020.0" />
-      <point x="0.0" y="49.0" />
+    <edge source="model.objects.Goomba" target="model.objects.Enemy" relationship="REALIZATION">
+      <point x="0.0" y="104.0" />
+      <point x="2874.999999999999" y="2216.0" />
+      <point x="3004.999999999999" y="2216.0" />
+      <point x="0.0" y="-60.0" />
     </edge>
     <edge source="controls.WASDController" target="controls.Controller" relationship="GENERALIZATION">
-      <point x="0.0" y="-14.5" />
-      <point x="978.7500000000002" y="2220.0" />
-      <point x="1176.8225760672024" y="2220.0" />
-      <point x="0.0" y="27.0" />
+      <point x="0.0" y="14.5" />
+      <point x="2067.999999999999" y="1197.0" />
+      <point x="2037.249999999999" y="1197.0" />
+      <point x="-46.0" y="-27.0" />
+    </edge>
+    <edge source="view.LevelCompletedScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="575.0" y="1284.0" />
+      <point x="879.4999999999995" y="1284.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="model.GameModel" target="view.GameCamera" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1008.0" />
+      <point x="4529.249999999999" y="1008.0" />
+      <point x="0.0" y="-38.0" />
     </edge>
     <edge source="model.GameModel" target="view.LevelCompletedScreen" relationship="CREATE">
-      <point x="0.0" y="-237.0" />
-      <point x="1574.1379143960053" y="2450.0" />
-      <point x="1621.3986716621366" y="2450.0" />
-      <point x="0.0" y="93.0" />
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="968.0" />
+      <point x="575.0" y="968.0" />
+      <point x="0.0" y="-38.0" />
     </edge>
-    <edge source="controls.ArrowController" target="controls.Controller" relationship="GENERALIZATION">
-      <point x="0.0" y="-14.5" />
-      <point x="1333.2500000000002" y="2220.0" />
-      <point x="1176.8225760672024" y="2220.0" />
-      <point x="0.0" y="27.0" />
+    <edge source="model.helper.TiledMapHelper" target="model.Level" relationship="TO_ONE">
+      <point x="-10.0" y="0.0" />
+      <point x="2681.999999999999" y="1744.0" />
+      <point x="3328.124999999999" y="1744.0" />
+      <point x="-77.5" y="203.0" />
+    </edge>
+    <edge source="model.Level" target="model.helper.TiledMapHelper" relationship="TO_ONE">
+      <point x="-67.5" y="203.0" />
+      <point x="3338.124999999999" y="1754.0" />
+      <point x="2691.999999999999" y="1754.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.GameModel" target="model.ControllableModel" relationship="REALIZATION">
+      <point x="-116.0" y="61.0" />
+      <point x="116.0" y="0.0" />
     </edge>
     <edge source="model.GameModel" target="controls.WASDController" relationship="CREATE">
-      <point x="0.0" y="-237.0" />
-      <point x="1574.1379143960053" y="2450.0" />
-      <point x="978.7500000000002" y="2450.0" />
-      <point x="0.0" y="14.5" />
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1128.0" />
+      <point x="2067.999999999999" y="1128.0" />
+      <point x="0.0" y="-14.5" />
     </edge>
-    <edge source="model.objects.GameObjectFactory" target="model.objects.Goomba" relationship="CREATE">
-      <point x="-63.0" y="-27.0" />
-      <point x="2787.5" y="2220.0" />
-      <point x="2681.3159627611385" y="2220.0" />
-      <point x="2681.3159627611385" y="2020.0" />
-      <point x="3182.197576067202" y="2020.0" />
-      <point x="0.0" y="60.0" />
+    <edge source="view.MainMenuScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="800.0" y="1264.0" />
+      <point x="879.4999999999995" y="1264.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="model.Level" target="model.objects.GameObjectFactory" relationship="CREATE">
+      <point x="67.5" y="203.0" />
+      <point x="3473.124999999999" y="1774.0" />
+      <point x="3463.124999999999" y="1774.0" />
+      <point x="0.0" y="-27.0" />
+    </edge>
+    <edge source="model.GameModel" target="view.GameCompletedScreen" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1028.0" />
+      <point x="1233.4999999999995" y="1028.0" />
+      <point x="0.0" y="-38.0" />
     </edge>
     <edge source="model.GameModel" target="controls.ArrowController" relationship="CREATE">
-      <point x="0.0" y="-237.0" />
-      <point x="1574.1379143960053" y="2450.0" />
-      <point x="1333.2500000000002" y="2450.0" />
-      <point x="0.0" y="14.5" />
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1108.0" />
+      <point x="1870.499999999999" y="1108.0" />
+      <point x="0.0" y="-14.5" />
     </edge>
-    <edge source="model.objects.Player.State" target="model.objects.Player" relationship="INNER_CLASS">
-      <point x="-52.333333333333485" y="105.0" />
-      <point x="2091.4920810626722" y="1334.0" />
-      <point x="2083.3462477293388" y="1334.0" />
-      <point x="-31.625" y="-181.0" />
+    <edge source="model.Level" target="model.helper.TiledMapHelper" relationship="CREATE">
+      <point x="-57.5" y="203.0" />
+      <point x="3348.124999999999" y="1764.0" />
+      <point x="2701.999999999999" y="1764.0" />
+      <point x="9.999999999999545" y="0.0" />
     </edge>
-    <edge source="view.LevelCompletedScreen" target="model.GameModel" relationship="TO_ONE">
-      <point x="65.33333333333326" y="93.0" />
-      <point x="1686.7320049954699" y="2460.0" />
-      <point x="3892.9712477293388" y="2460.0" />
-      <point x="3892.9712477293388" y="2560.0" />
-      <point x="1665.137914396005" y="2560.0" />
-      <point x="91.0" y="-237.0" />
+    <edge source="model.objects.Jumpable" target="model.objects.Movable" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="27.0" />
+      <point x="0.0" y="-27.0" />
     </edge>
     <edge source="model.objects.Goal" target="model.objects.StaticObject" relationship="GENERALIZATION">
-      <point x="45.0" y="-49.0" />
-      <point x="2200.7212477293388" y="1790.0" />
-      <point x="2463.4712477293388" y="1790.0" />
-      <point x="2463.4712477293388" y="1750.0" />
-      <point x="465.07257606720236" y="1750.0" />
-      <point x="31.75" y="14.5" />
+      <point x="0.0" y="49.0" />
+      <point x="0.0" y="-14.5" />
     </edge>
     <edge source="model.objects.Coin" target="model.objects.StaticObject" relationship="GENERALIZATION">
-      <point x="-45.0" y="-60.0" />
-      <point x="2775.25" y="1790.0" />
-      <point x="2463.4712477293388" y="1790.0" />
-      <point x="2463.4712477293388" y="1750.0" />
-      <point x="465.07257606720236" y="1750.0" />
-      <point x="31.75" y="14.5" />
-    </edge>
-    <edge source="view.GameCamera" target="model.GameModel" relationship="TO_ONE">
-      <point x="0.0" y="60.0" />
-      <point x="4217.398671662137" y="2030.0" />
-      <point x="3981.3159627611385" y="2030.0" />
-      <point x="3981.3159627611385" y="2190.0" />
-      <point x="4097.898671662137" y="2190.0" />
-      <point x="4097.898671662137" y="2460.0" />
-      <point x="3892.9712477293388" y="2460.0" />
-      <point x="3892.9712477293388" y="2560.0" />
-      <point x="1665.137914396005" y="2560.0" />
-      <point x="91.0" y="-237.0" />
-    </edge>
-    <edge source="view.GameOverScreen" target="model.GameModel" relationship="TO_ONE">
-      <point x="53.66666666666674" y="93.0" />
-      <point x="1873.5653383288034" y="2460.0" />
-      <point x="3892.9712477293388" y="2460.0" />
-      <point x="3892.9712477293388" y="2560.0" />
-      <point x="1665.137914396005" y="2560.0" />
-      <point x="91.0" y="-237.0" />
-    </edge>
-    <edge source="launcher.DesktopLauncher" target="launcher.Boot" relationship="CREATE">
-      <point x="0.0" y="-27.0" />
-      <point x="0.0" y="72.0" />
-    </edge>
-    <edge source="view.GameScreen" target="model.GameModel" relationship="TO_ONE">
-      <point x="49.33333333333303" y="93.0" />
-      <point x="2679.8333333333335" y="2460.0" />
-      <point x="3892.9712477293388" y="2460.0" />
-      <point x="3892.9712477293388" y="2560.0" />
-      <point x="1665.137914396005" y="2560.0" />
-      <point x="91.0" y="-237.0" />
-    </edge>
-    <edge source="launcher.Boot" target="model.GameModel" relationship="TO_ONE">
-      <point x="63.666666666666515" y="-72.0" />
-      <point x="1637.804581062672" y="3107.0" />
-      <point x="4342.898671662137" y="3107.0" />
-      <point x="4342.898671662137" y="3077.0" />
-      <point x="1665.137914396005" y="3077.0" />
-      <point x="91.0" y="237.0" />
-    </edge>
-    <edge source="view.GameScreen" target="view.GameCamera" relationship="TO_ONE">
-      <point x="37.0" y="-93.0" />
-      <point x="2667.5" y="2190.0" />
-      <point x="3981.3159627611385" y="2190.0" />
-      <point x="3981.3159627611385" y="2030.0" />
-      <point x="4217.398671662137" y="2030.0" />
-      <point x="0.0" y="60.0" />
-    </edge>
-    <edge source="model.objects.Player" target="model.objects.JumpableObject" relationship="GENERALIZATION">
-      <point x="-94.875" y="-181.0" />
-      <point x="2020.0962477293388" y="1324.0" />
-      <point x="479.1250000000002" y="1324.0" />
-      <point x="54.0" y="27.0" />
-    </edge>
-    <edge source="controls.CustomController" target="controls.Controller" relationship="GENERALIZATION">
-      <point x="0.0" y="-14.5" />
-      <point x="1156.7500000000002" y="2220.0" />
-      <point x="1176.8225760672024" y="2220.0" />
-      <point x="0.0" y="27.0" />
-    </edge>
-    <edge source="model.objects.DynamicObject" target="model.objects.GameObject" relationship="GENERALIZATION">
-      <point x="45.0" y="-38.0" />
-      <point x="493.3750000000002" y="790.0" />
-      <point x="521.1250000000002" y="790.0" />
-      <point x="521.1250000000002" y="770.0" />
-      <point x="2292.4712477293388" y="770.0" />
-      <point x="-60.0" y="82.0" />
-    </edge>
-    <edge source="model.GameModel" target="controls.CustomController" relationship="CREATE">
-      <point x="0.0" y="-237.0" />
-      <point x="1574.1379143960053" y="2450.0" />
-      <point x="1156.7500000000002" y="2450.0" />
+      <point x="-44.25" y="-49.0" />
+      <point x="3576.999999999999" y="2175.0" />
+      <point x="3610.999999999999" y="2175.0" />
       <point x="0.0" y="14.5" />
     </edge>
-    <edge source="model.GameModel" target="controls.Controller" relationship="TO_MANY">
-      <point x="91.0" y="-237.0" />
-      <point x="1665.137914396005" y="2560.0" />
-      <point x="3892.9712477293388" y="2560.0" />
-      <point x="3892.9712477293388" y="2460.0" />
-      <point x="4066.375" y="2460.0" />
-      <point x="4066.375" y="2170.0" />
-      <point x="1238.1559094005356" y="2170.0" />
-      <point x="61.33333333333326" y="27.0" />
+    <edge source="model.Level" target="model.GameContactListener" relationship="CREATE">
+      <point x="-72.5" y="0.0" />
+      <point x="3333.124999999999" y="1283.0" />
+      <point x="3390.374999999999" y="1283.0" />
+      <point x="-5.0" y="60.0" />
     </edge>
-    <edge source="model.objects.Player" target="model.objects.Player.State" relationship="TO_ONE">
-      <point x="31.625" y="-181.0" />
-      <point x="2146.5962477293388" y="1334.0" />
-      <point x="2143.8254143960053" y="1334.0" />
-      <point x="0.0" y="105.0" />
+    <edge source="view.GameCamera" target="model.GameModel" relationship="TO_ONE">
+      <point x="-9.0" y="0.0" />
+      <point x="4520.249999999999" y="1017.0" />
+      <point x="2235.4583333333326" y="1017.0" />
+      <point x="-105.66666666666652" y="368.0" />
+    </edge>
+    <edge source="model.GameModel" target="view.GameCamera" relationship="TO_ONE">
+      <point x="-87.66666666666606" y="368.0" />
+      <point x="2253.4583333333326" y="999.0" />
+      <point x="4538.249999999999" y="999.0" />
+      <point x="9.0" y="0.0" />
+    </edge>
+    <edge source="view.SelectLevelScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="348.0" y="1304.0" />
+      <point x="879.4999999999995" y="1304.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="model.objects.GameObject" target="model.Level" relationship="TO_ONE">
+      <point x="-120.0" y="56.0" />
+      <point x="3274.312499999999" y="3062.0" />
+      <point x="-131.3125" y="203.0" />
+    </edge>
+    <edge source="model.objects.KinematicObject" target="model.objects.GameObject" relationship="GENERALIZATION">
+      <point x="-79.375" y="38.0" />
+      <point x="3294.124999999999" y="2950.0" />
+      <point x="-120.0" y="-56.0" />
+    </edge>
+    <edge source="view.GameScreen" target="view.GameCamera" relationship="TO_ONE">
+      <point x="-45.0" y="38.0" />
+      <point x="107.5" y="3131.0" />
+      <point x="4529.249999999999" y="3131.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="view.AbstractScreen" target="model.GameModel" relationship="TO_ONE">
+      <point x="37.75" y="-93.0" />
+      <point x="954.9999999999995" y="1324.0" />
+      <point x="1751.9999999999995" y="1324.0" />
+      <point x="1751.9999999999995" y="1088.0" />
+      <point x="2283.124999999999" y="1088.0" />
+      <point x="-58.0" y="368.0" />
+    </edge>
+    <edge source="model.GameModel" target="view.SelectLevelScreen" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="948.0" />
+      <point x="348.0" y="948.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.GameModel" target="model.helper.AudioHelper" relationship="TO_ONE">
+      <point x="24.333333333333485" y="368.0" />
+      <point x="2365.4583333333326" y="1023.0" />
+      <point x="4307.249999999999" y="1023.0" />
+      <point x="5.0" y="-104.0" />
+    </edge>
+    <edge source="controls.CustomController" target="controls.Controller" relationship="GENERALIZATION">
+      <point x="0.0" y="14.5" />
+      <point x="2270.499999999999" y="1217.0" />
+      <point x="2037.249999999999" y="1217.0" />
+      <point x="-46.0" y="-27.0" />
+    </edge>
+    <edge source="model.objects.Enemy" target="model.objects.IGameObject" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="60.0" />
+      <point x="0.0" y="-104.0" />
+    </edge>
+    <edge source="model.Level" target="model.Hud" relationship="CREATE">
+      <point x="67.5" y="203.0" />
+      <point x="3473.124999999999" y="1774.0" />
+      <point x="4201.249999999999" y="1774.0" />
+      <point x="0.0" y="-60.5" />
+    </edge>
+    <edge source="model.GameModel" target="controls.CustomController" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1128.0" />
+      <point x="2270.499999999999" y="1128.0" />
+      <point x="0.0" y="-14.5" />
+    </edge>
+    <edge source="view.GameCompletedScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="1233.4999999999995" y="1264.0" />
+      <point x="879.4999999999995" y="1264.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="model.GameModel" target="controls.Controller" relationship="TO_MANY">
+      <point x="-19.33333333333333" y="368.0" />
+      <point x="2321.7916666666656" y="1108.0" />
+      <point x="2373.499999999999" y="1108.0" />
+      <point x="2373.499999999999" y="1237.0" />
+      <point x="2129.249999999999" y="1237.0" />
+      <point x="46.0" y="-27.0" />
+    </edge>
+    <edge source="model.objects.DynamicObject" target="model.objects.Movable" relationship="REALIZATION">
+      <point x="77.0" y="0.0" />
+      <point x="3963.749999999999" y="2824.0" />
+      <point x="-87.5" y="-27.0" />
+    </edge>
+    <edge source="model.objects.StaticObject" target="model.objects.GameObject" relationship="GENERALIZATION">
+      <point x="65.5" y="0.0" />
+      <point x="3750.374999999999" y="2140.5" />
+      <point x="3750.374999999999" y="2783.666666666667" />
+      <point x="3883.249999999999" y="2783.666666666667" />
+      <point x="102.0" y="-115.0" />
+    </edge>
+    <edge source="launcher.Boot" target="controls.GameController" relationship="CREATE">
+      <point x="-66.25" y="71.5" />
+      <point x="2179.375" y="147.0" />
+      <point x="37.0" y="147.0" />
+      <point x="-5.0" y="0.0" />
+    </edge>
+    <edge source="model.Level" target="model.Hud" relationship="TO_ONE">
+      <point x="77.5" y="203.0" />
+      <point x="3483.124999999999" y="1764.0" />
+      <point x="4211.249999999999" y="1764.0" />
+      <point x="10.0" y="0.0" />
+    </edge>
+    <edge source="model.Hud" target="model.Level" relationship="TO_ONE">
+      <point x="-10.0" y="0.0" />
+      <point x="4191.249999999999" y="1784.0" />
+      <point x="3463.124999999999" y="1784.0" />
+      <point x="57.5" y="203.0" />
+    </edge>
+    <edge source="model.GameModel" target="model.GameState" relationship="TO_ONE">
+      <point x="19.333333333333343" y="368.0" />
+      <point x="2360.4583333333326" y="1088.0" />
+      <point x="2508.999999999999" y="1088.0" />
+      <point x="0.0" y="-126.5" />
+    </edge>
+    <edge source="model.GameModel" target="view.NewGameScreen" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1048.0" />
+      <point x="1460.4999999999995" y="1048.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.objects.GameObjectFactory" target="model.objects.Goal" relationship="CREATE">
+      <point x="-98.8" y="27.0" />
+      <point x="3364.324999999999" y="1928.0" />
+      <point x="3610.999999999999" y="1928.0" />
+      <point x="0.0" y="-49.0" />
+    </edge>
+    <edge source="model.objects.GameObjectFactory" target="model.objects.Coin" relationship="CREATE">
+      <point x="0.0" y="27.0" />
+      <point x="3463.124999999999" y="1908.0" />
+      <point x="3719.499999999999" y="1908.0" />
+      <point x="3719.499999999999" y="2195.0" />
+      <point x="3665.499999999999" y="2195.0" />
+      <point x="44.25" y="-49.0" />
+    </edge>
+    <edge source="model.GameModel" target="view.GameScreen" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="928.0" />
+      <point x="152.5" y="928.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.GameModel" target="model.helper.AudioHelper" relationship="CREATE">
+      <point x="14.333333333333485" y="368.0" />
+      <point x="2355.4583333333326" y="1033.0000000000005" />
+      <point x="4297.249999999999" y="1033.0000000000005" />
+      <point x="-5.0" y="0.0" />
+    </edge>
+    <edge source="view.GameScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="152.5" y="1324.0" />
+      <point x="879.4999999999995" y="1324.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="controls.GameController" target="model.ControllableModel" relationship="TO_ONE">
+      <point x="0.0" y="104.0" />
+      <point x="0.0" y="-181.0" />
+    </edge>
+    <edge source="model.objects.Floater" target="model.objects.DynamicObject" relationship="GENERALIZATION">
+      <point x="71.33333333333303" y="93.0" />
+      <point x="3206.333333333332" y="2812.0" />
+      <point x="-77.0" y="-12.0" />
+    </edge>
+    <edge source="model.objects.MovingPlatform" target="model.objects.KinematicObject" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.objects.GameObject" target="model.objects.IGameObject" relationship="REALIZATION">
+      <point x="-102.0" y="-115.0" />
+      <point x="3679.249999999999" y="2500.0" />
+      <point x="120.0" y="0.0" />
+    </edge>
+    <edge source="model.objects.GameObjectFactory" target="model.objects.MovingPlatform" relationship="CREATE">
+      <point x="-98.8" y="27.0" />
+      <point x="3364.324999999999" y="1968.0" />
+      <point x="3373.499999999999" y="1968.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.objects.Floater" target="model.objects.Enemy" relationship="REALIZATION">
+      <point x="0.0" y="93.0" />
+      <point x="3134.999999999999" y="2216.0" />
+      <point x="3004.999999999999" y="2216.0" />
+      <point x="0.0" y="-60.0" />
+    </edge>
+    <edge source="view.NewGameScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="1460.4999999999995" y="1284.0" />
+      <point x="879.4999999999995" y="1284.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="controls.ArrowController" target="controls.Controller" relationship="GENERALIZATION">
+      <point x="0.0" y="14.5" />
+      <point x="1870.499999999999" y="1237.0" />
+      <point x="2037.249999999999" y="1237.0" />
+      <point x="-46.0" y="-27.0" />
+    </edge>
+    <edge source="model.GameModel" target="model.Level" relationship="TO_ONE">
+      <point x="105.66666666666652" y="368.0" />
+      <point x="2446.791666666665" y="1039.0" />
+      <point x="3557.375" y="1039.0000000000005" />
+      <point x="3557.374999999999" y="1317.0" />
+      <point x="3482.124999999999" y="1317.0" />
+      <point x="76.5" y="0.0" />
+    </edge>
+    <edge source="model.Level" target="model.GameModel" relationship="TO_ONE">
+      <point x="58.5" y="0.0" />
+      <point x="3464.124999999999" y="1299.0" />
+      <point x="3539.374999999999" y="1299.0" />
+      <point x="3539.375" y="1057.0000000000005" />
+      <point x="2428.791666666665" y="1056.9999999999995" />
+      <point x="87.66666666666652" y="367.99999999999955" />
+    </edge>
+    <edge source="model.objects.Goomba" target="model.objects.DynamicObject" relationship="GENERALIZATION">
+      <point x="-71.33333333333348" y="104.0" />
+      <point x="2803.6666666666656" y="2836.0" />
+      <point x="-77.0" y="12.0" />
+    </edge>
+    <edge source="model.objects.GameObjectFactory" target="model.objects.Goomba" relationship="CREATE">
+      <point x="-98.8" y="27.0" />
+      <point x="3364.324999999999" y="1868.0" />
+      <point x="2874.999999999999" y="1868.0" />
+      <point x="0.0" y="-104.0" />
+    </edge>
+    <edge source="model.objects.GameObjectFactory" target="model.objects.Floater" relationship="CREATE">
+      <point x="-98.8" y="27.0" />
+      <point x="3364.324999999999" y="1888.0" />
+      <point x="3134.999999999999" y="1888.0" />
+      <point x="0.0" y="-93.0" />
+    </edge>
+    <edge source="model.objects.Player.State" target="model.objects.Player" relationship="INNER_CLASS">
+      <point x="5.0" y="104.5" />
+      <point x="3905.999999999999" y="2222.0" />
+      <point x="3861.249999999999" y="2222.0" />
+      <point x="-50.0" y="-192.0" />
+    </edge>
+    <edge source="launcher.Boot" target="controls.GameController" relationship="TO_ONE">
+      <point x="-56.25" y="71.5" />
+      <point x="2189.375" y="157.0" />
+      <point x="47.0" y="157.0" />
+      <point x="5.0" y="-104.0" />
+    </edge>
+    <edge source="model.GameModel" target="model.Level" relationship="CREATE">
+      <point x="96.66666666666671" y="368.0" />
+      <point x="2437.7916666666656" y="1048.0" />
+      <point x="3548.374999999999" y="1048.0" />
+      <point x="3548.374999999999" y="1308.0" />
+      <point x="3473.124999999999" y="1308.0" />
+      <point x="67.5" y="-203.0" />
+    </edge>
+    <edge source="launcher.DesktopLauncher" target="launcher.Boot" relationship="CREATE">
+      <point x="0.0" y="27.0" />
+      <point x="0.0" y="-71.5" />
+    </edge>
+    <edge source="model.GameModel" target="view.MainMenuScreen" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="988.0" />
+      <point x="800.0" y="988.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.objects.Player" target="model.objects.Player.State" relationship="TO_MANY">
+      <point x="-60.0" y="0.0" />
+      <point x="3851.249999999999" y="2212.0" />
+      <point x="3895.999999999999" y="2212.0" />
+      <point x="-5.0" y="104.5" />
+    </edge>
+    <edge source="launcher.Boot" target="model.GameModel" relationship="TO_ONE">
+      <point x="56.25" y="71.5" />
+      <point x="2301.875" y="157.0" />
+      <point x="2336.124999999999" y="157.0" />
+      <point x="-5.000000000000455" y="0.0" />
+    </edge>
+    <edge source="view.SettingsScreen" target="view.AbstractScreen" relationship="GENERALIZATION">
+      <point x="0.0" y="38.0" />
+      <point x="1657.4999999999995" y="1304.0" />
+      <point x="879.4999999999995" y="1304.0" />
+      <point x="-37.75" y="-93.0" />
+    </edge>
+    <edge source="model.objects.JumpableObject" target="model.objects.DynamicObject" relationship="GENERALIZATION">
+      <point x="-48.5" y="38.0" />
+      <point x="3862.749999999999" y="2777.0" />
+      <point x="3781.249999999999" y="2777.0" />
+      <point x="0.0" y="-27.0" />
+    </edge>
+    <edge source="model.Level" target="model.objects.GameObjectFactory" relationship="TO_ONE">
+      <point x="77.5" y="203.0" />
+      <point x="3483.124999999999" y="1784.0" />
+      <point x="3473.124999999999" y="1784.0" />
+      <point x="10.0" y="0.0" />
+    </edge>
+    <edge source="model.objects.GameObjectFactory" target="model.Level" relationship="TO_ONE">
+      <point x="-10.0" y="0.0" />
+      <point x="3453.124999999999" y="1764.0" />
+      <point x="3463.124999999999" y="1764.0" />
+      <point x="57.5" y="203.0" />
+    </edge>
+    <edge source="model.objects.Player" target="model.objects.JumpableObject" relationship="GENERALIZATION">
+      <point x="0.0" y="192.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.GameModel" target="view.SettingsScreen" relationship="CREATE">
+      <point x="-96.66666666666667" y="368.0" />
+      <point x="2244.4583333333326" y="1068.0" />
+      <point x="1657.4999999999995" y="1068.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="model.objects.MapEndPoints" target="model.objects.KinematicObject" relationship="GENERALIZATION">
+      <point x="-36.75" y="-27.0" />
+      <point x="3346.999999999999" y="2200.0" />
+      <point x="3373.499999999999" y="2200.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="model.objects.DynamicObject" target="model.objects.GameObject" relationship="GENERALIZATION">
+      <point x="0.0" y="27.0" />
+      <point x="0.0" y="-115.0" />
+    </edge>
+    <edge source="model.objects.GameObjectFactory" target="model.objects.MapEndPoints" relationship="CREATE">
+      <point x="-49.400000000000006" y="27.0" />
+      <point x="3413.7249999999995" y="1948.0" />
+      <point x="3481.999999999999" y="1948.0" />
+      <point x="3481.999999999999" y="2220.0" />
+      <point x="3420.499999999999" y="2220.0" />
+      <point x="36.75" y="-27.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="0.5883648347442363" showDependencies="true" x="2679.54098702541" y="712.7652878923767" />
+  <settings layout="Series Parallel" zoom="0.3564213564213565" showDependencies="true" x="2196.0645056532453" y="1639.2537264660662" />
   <SelectedNodes>
-    <node>model.helper.ContactType</node>
+    <node>controls.WASDController</node>
   </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
     <Category>Inner Classes</Category>
     <Category>Methods</Category>
   </Categories>
-  <SCOPE>Project Files</SCOPE>
+  <SCOPE>All</SCOPE>
   <VISIBILITY>public</VISIBILITY>
 </Diagram>
 
