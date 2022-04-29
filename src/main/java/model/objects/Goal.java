@@ -35,7 +35,10 @@ public class Goal extends StaticObject {
     @Override
     protected TextureRegion getFrame() {
         stateTime += Gdx.graphics.getDeltaTime();
-        return idleAnimation.getKeyFrame(stateTime, true);
+        TextureRegion region = idleAnimation.getKeyFrame(stateTime, true);
+        facingRight = false;
+        flipRegionHorizontally(region);
+        return region;
     }
 
     public void onHit() {
