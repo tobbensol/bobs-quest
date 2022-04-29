@@ -102,30 +102,45 @@ føler at kommunikasjonen er god, bedre enn før.
   prosjektstruktur, ikke kode. Dere kan selvsagt diskutere kode, men dette handler ikke om feilretting, men om hvordan
   man jobber og kommuniserer.
 
-// TODO
+Vi har ofte jobbet på forskjellige deler av koden, så en utfordring har vært å koordinere og synkronisere arbeidet
+mellom oss. Til tider har enkelte deler av koden vært avhengig av andres arbeid, og dermed stopper arbeidet opp. Vi
+føler vi har klart å håndtere dette problemet ganske fint, men det er fortsatt en del forbedringspotensiale. Da er det
+viktig at alle prioriterer arbeidet slik at det viktigste, som andre gjerne er avhengig av, blir gjort først. Kanskje vi
+kunne lagt til viktighetsgrad på issues i Kanban brettet, slik at alle lettere får med seg hva som må prioriteres.
 
-Vi har klart å øke effektiviteten når vi arbeider sammen ved å begrense hvor mange som jobber sammen. Nå deler vi oss
-inn i grupper på to. Dette gjør det lettere å implementere løsninger og ulike grupper kan jobbe på forskjellige ting
-samtidig. Vi har minsket terskelen for å ta kontakt i Discord-kanalen, noe som gjør det lettere for alle å få oversikt
-over hva de andre teammedlemmene holder på med, og for å hjelpe hverandre når det trengs. Det er ikke alltid at en
-brukerhistorie blir skrevet før arbeidsoppgaven er påbegynt.
+Som nevnt, har kommunikasjonen vært viktig denne perioden, og vi har vært flinkere til å dele tanker, ideer og
+informasjon med teamet.
 
 - Under vurdering vil det vektlegges at alle bidrar til kodebasen. Hvis det er stor forskjell i hvem som committer, må
   dere legge ved en kort forklaring for hvorfor det er sånn. Husk å committe alt. (Også designfiler)
 
-Ingen endring siden andre innlevering. Antall commits er litt mer jevnt fordelt enn tidligere, men vil fortsatt variere
-litt etter forklaring i andre innlevering.
+Antall commits er mer jevnt fordelt enn tidligere, men vil fortsatt variere litt etter forklaring i andre innlevering.
+Alle har forskjellige commit stiler og kommitter forskjellige mengder, så dette annser vi ikke som ett problem.
 
 - Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint.
 
 Vi har forbedret alle punktene nedenfor fra forrige innlevering. Vi føler at vi ikke har så mye mer konkret å forbedre,
 så vi tenker å fortsette med de samme punktene og forbedre dem enda mer.
 
-1) Skrive manuelle tester.
+1) Oppdatere brettet jevnlig
 
 2) Mer jevn fordeling av arbeidsoppgaver.
 
 3) Skrive brukerhistorier før man jobber med noe.
+
+- For siste innlevering (Oblig 4): Gjør et retrospektiv hvor dere vurderer hvordan prosjektet har gått. Hva har dere
+  gjort bra, hva hadde dere gjort annerledes hvis dere begynte på nytt?
+
+Vi begynte tidlig, og har jobbet jevnt gjennom hele perioden. Vi har tidlig fokusert på høy kodekvalitet, utvidbarhet og
+god prosjektstruktur, noe som har gjort det lettere å utvikle prosjektet over en lengre periode. Dette er grunnen til at
+vi så vidt klarte å levere på alle MVP-kravene i den første og andre innlevering, men dette har gjort prosjektet lettere
+å utvide (f.eks. 5 linjer kode for å legge til et nytt spillobjekt, utenom objektlogikk naturligvis).
+
+Om vi skulle gjort prosjektet på nytt ville vi fokusert mer på strukturert samarbeid fra starten av. I starten jobbet vi
+gjerne sammen, men arbeidet var ikkje serlig effektivt. Over tid fikk alle bedre kunnskap om kodebasen slik at vi
+lettere kunne diskutere faglig om prosjektet, og dette ga høyere effektivitet. Dette kommer av erfaring med å jobbe med
+slike prosjekter. Vi burde også fokusert på å dele ut arbeid fra starten av, men det var vanskelig å fordele arbeid når
+vi ikke viste hvilken retning prosjektet skulle gå.
 
 ## Deloppgave 2: krav
 
@@ -162,7 +177,6 @@ Evt. tekst / kommentarer til koden kan dere putte i en egen ## Kode-seksjon i De
 - _Utbedring av feil:_ hvis dere har rettet / forbedret noe som dere har fått trekk for tidligere, lag en liste med
   «Dette har vi fikset siden sist», så det er lett for gruppelederne å få oversikt.
     - Laget flere JUnit tester.
-
     - Oppdatert `Build Instructions` i [README](README.md)
 
 - Lag og lever et klassediagram. (Hvis det er veldig mange klasser, lager dere for de viktigste.) Det er ikke nødvendig
@@ -171,7 +185,8 @@ Evt. tekst / kommentarer til koden kan dere putte i en egen ## Kode-seksjon i De
 
 NB: I IntelliJ må man zoome inn på klassediagrammet pga. størrelsen
 
-Link til [klassdiagram](src/main/resources/ClassDiagram.uml).
+Link til [klassediagram uml](src/main/resources/ClassDiagram.uml)
+og [klassediagram png](src/main/resources/ClassDiagram.png).
 
 - Kodekvalitet og testdekning vektlegges. Dersom dere ikke har automatiske tester for GUI-et, lager dere manuelle tester
   som gruppelederne kan kjøre basert på akseptansekriteriene.
@@ -181,14 +196,10 @@ Har skrevet [manuelle tester](src/main/resources/BugReplication.md).
 - Statiske analyseverktøy som SpotBugs eller SonarQube kan hjelpe med å finne feil dere ikke tenker på. Hvis dere prøver
   det, skriv en kort oppsummering av hva dere fant / om det var nyttig.
 
-Vi har brukt spot-bugs, men noen bugs er litt vanskelige å fikse, vi fikk ikkje til å koble til sonarqube
+Vi har brukt spot-bugs, men noen bugs er litt vanskelige å fikse, vi fikk ikkje til å koble til SonarQube.
 
 - Automatiske tester skal dekke forretningslogikken i systemet (unit-tester). _Coverage_ kan hjelpe med å se hvor mye av
   koden som dekkes av testene – i Eclipse kan dette gjøres ved å installere _EclEmma_ gjennom Eclipse Marketplace.
 
-Vi har 62% line coverage i model, vi har hovedsakelig fokusert på å teste spill modellen fordi resultat fra view tester
-vil ikkje vere særlig hjelpsomme.
-
-Vi har startet enhetstesting. Nå som vi har fått dette til å fungere, skal det være lettere å skrive flere tester videre
-framover. Vi har foreløpig 28% line coverage i hele prosjektet. Det viktigste å teste er modellen (hvor logikken ligger)
-. Her har vi 34% coverage. Diverse andre deler av koden kan fort bli vanskelig å teste automatisk.
+Vi har 46% line coverage totalt, 64% i controls, og 61% i model pakken. Vi har hovedsakelig fokusert på å teste modellen
+fordi det er der logikken ligger. Vi har ikke testet view siden dette kun er en grafisk framstilling av modellen.
