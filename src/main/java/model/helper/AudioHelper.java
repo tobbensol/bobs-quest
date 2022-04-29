@@ -24,7 +24,7 @@ public class AudioHelper {
         soundEffectsVolume = 0.5f;
 
         levelMusic = new HashMap<>(); // ADD level specific music here:
-        levelMusic.put("level-1", getMusic("Grasslands Theme"));
+        levelMusic.put("level-1", getMusic("Plains_Game_song"));
         levelMusic.put("level-2", getMusic("Desert_Game_song"));
         levelMusic.put("level-3", getMusic("Winter_Game_song"));
 //        levelMusic.put("level-3", getMusic("Desert Theme"));
@@ -32,14 +32,11 @@ public class AudioHelper {
     }
 
     private void loadMusic() {
-        assetManager.load("audio/music/Grasslands Theme.mp3", Music.class);
-        assetManager.load("audio/music/Dungeon Theme.mp3", Music.class);
-        assetManager.load("audio/music/Boss Theme.mp3", Music.class);
-        assetManager.load("audio/music/Iceland Theme.mp3", Music.class);
-        assetManager.load("audio/music/Intro Theme.mp3", Music.class);
-        assetManager.load("audio/music/Mushroom Theme.mp3", Music.class);
         assetManager.load("audio/music/Winter_Game_song.mp3", Music.class);
         assetManager.load("audio/music/Desert_Game_song.mp3", Music.class);
+        assetManager.load("audio/music/Menu_Game_song.mp3", Music.class);
+        assetManager.load("audio/music/Plains_Game_song.mp3", Music.class);
+
     }
 
     private void loadSoundEffects() {
@@ -81,7 +78,7 @@ public class AudioHelper {
         if (levelMusic.containsKey(level)) {
             return levelMusic.get(level);
         } else {
-            return getMusic("Intro Theme"); // Default music if level does not have specified music.
+            return getMusic("Menu_Game_song"); // Default music if level does not have specified music.
         }
     }
 
