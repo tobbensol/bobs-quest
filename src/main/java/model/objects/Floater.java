@@ -30,7 +30,7 @@ public class Floater extends MovableObject implements Enemy {
         body.setGravityScale(0);
         body.setLinearDamping(3);
 
-        TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE / 4, Constants.TILE_SIZE / 4);
+        TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE);
         idleAnimation = new Animation<>(0.166f/2f, frames[1]);
         attackAnimation = new Animation<>(0.166f/2f, frames[0]);
     }
