@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>inf112.grabbane</groupId>
-	<artifactId>epic-game-app</artifactId>
+	<artifactId>bob-quest-app</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Epic-Game-app</name>
-	<url>https://git.app.uib.no/grabbane/inf112.22v.libgdx-template</url>
+	<name>Bob-Quest-app</name>
+	<url>https://git.app.uib.no/grabbane/inf112.22v.bob-quest</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
