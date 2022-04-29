@@ -185,7 +185,7 @@ public class GameContactListener implements ContactListener {
 
             if (player.getCurrentState() == Player.State.FALLING || player.getCurrentState() == Player.State.SLIDING) {
                 enemy.onHit();
-                player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
+                player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 10);
                 player.changeMaskBit(false, Constants.ENEMY_BIT);
                 player.setCanDrop(false);
                 Timer.schedule(new Timer.Task() {
