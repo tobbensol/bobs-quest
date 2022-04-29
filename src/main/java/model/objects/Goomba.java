@@ -26,11 +26,11 @@ public class Goomba extends MovableObject implements Enemy {
 
     public Goomba(String name, Level level, float x, float y) {
         super(name + " " + (level.getGameObjects(Goomba.class).size() + 1), level, x, y, 1.1f, ContactType.ENEMY, Constants.ENEMY_BIT, Constants.ENEMY_MASK_BITS);
-        texture = new Texture("Multi_Platformer_Tileset_v2/Enemies/Rat_Sprite_Sheet.png");
+        texture = new Texture("Multi_Platformer_Tileset_v2/Enemies/Rat_Sprite_Tileset.png");
 
-        frames = TextureRegion.split(texture, Constants.TILE_SIZE, Constants.TILE_SIZE/2);
+        frames = TextureRegion.split(texture, Constants.TILE_SIZE, Constants.TILE_SIZE);
         walkingAnimation = new Animation<>(0.166f, frames[0]);
-        attackAnimation = new Animation<>(166f, frames[1]);
+        attackAnimation = new Animation<>(0.166f, frames[1]);
 
         numMoves = 0;
     }
