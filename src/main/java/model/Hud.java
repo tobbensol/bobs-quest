@@ -1,6 +1,5 @@
 package model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -16,10 +15,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.objects.Coin;
 import model.objects.Player;
-import org.lwjgl.system.CallbackI;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Hud {
     private final Viewport viewport;
@@ -60,18 +59,18 @@ public class Hud {
 
     private void updateHpLabels() {
         if (!level.getModel().isPaused()) {
-            for (Player player : playerLabelHashMap.keySet()) {
-                if (player.isDead()) {
-                    playerLabelHashMap.get(player).setColor(Color.DARK_GRAY);
+            for (Entry<Player, Label> PLEntry : playerLabelHashMap.entrySet()) {
+                if (PLEntry.getKey().isDead()) {
+                    PLEntry.getValue().setColor(Color.DARK_GRAY);
                 } else {
-                    playerLabelHashMap.get(player).setText(player.toString());
+                    PLEntry.getValue().setText(PLEntry.getKey().toString());
 
-                    if (player.getHp() > 80) {
-                        playerLabelHashMap.get(player).setColor(Color.GREEN);
-                    } else if (player.getHp() > 40) {
-                        playerLabelHashMap.get(player).setColor(Color.ORANGE);
+                    if (PLEntry.getKey().getHp() > 80) {
+                        PLEntry.getValue().setColor(Color.GREEN);
+                    } else if (PLEntry.getKey().getHp() > 40) {
+                        PLEntry.getValue().setColor(Color.ORANGE);
                     } else {
-                        playerLabelHashMap.get(player).setColor(Color.RED);
+                        PLEntry.getValue().setColor(Color.RED);
                     }
 
                 }
@@ -84,8 +83,8 @@ public class Hud {
         pauseInfoLabel.setText("Press ESC To Resume");
         mainMenuLabel.setText("Press M to Main Menu");
         stage.getActors().get(0).getColor().a = 0.4f;
-        for (Player player : playerLabelHashMap.keySet()) {
-            playerLabelHashMap.get(player).setText("");
+        for ( Entry<Player, Label> PLEntry : playerLabelHashMap.entrySet()) {
+            PLEntry.getValue().setText(PLEntry.getKey().toString());
         }
     }
 

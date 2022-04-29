@@ -14,14 +14,11 @@ import model.GameState;
 
 public class GameController {
     private final ControllableModel model;
-    private boolean pauseHelper = true; // If initialized with false, cannot pause on first iteration of inputListener()
-
     public GameController(ControllableModel model) {
         this.model = model;
     }
 
     public void inputListener() {
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && model.getCurrentState() == GameState.ACTIVE) {
             if (model.isPaused()) {
                 model.resumeGame();
