@@ -2,7 +2,7 @@
 In this epic 2022 adventure, join Bob in his quest against bats and mice!
 Bob's Quest is a 2D platformer game, where players can move around, collect coins and interact with bats and mice.
 Play through different levels and explore different terrains and encounter different obstacles.
-Play alone or play with your friends with couch co-op multiplayer with up to three different players.
+Play alone or play with up to two people with couch co-op multiplayer.
 
 
 
@@ -34,11 +34,11 @@ The computer must be able to run the game at 60 FPS (the game will feel slow if 
 
 ### Setup
 1. To run this project, you will need to install [Java](https://www.oracle.com/java/technologies/downloads/) (version 17 recommended. We cannot assure that older versions work).
-2. Clone the project from our [GitLab repository](https://git.app.uib.no/grabbane/inf112.22v.bob-quest) using either [SSH](git@git.app.uib.no:grabbane/inf112.22v.bob-quest.git) or [HTTPS](https://git.app.uib.no/grabbane/inf112.22v.bob-quest.git). 
+2. Clone the project from our [GitLab repository](https://git.app.uib.no/grabbane/inf112.22v.bob-quest) using either `SSH` or `HTTPS`. 
 Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](https://docs.gitlab.com/omnibus/settings/ssl.html) and [tutorial for cloning repository](https://docs.gitlab.com/ee/user/project/repository/#clone-a-repository). Alternatively you can download the source code with the button to the left of the clone button and unzip the source code at the desired location.
 3. Inside the IDE of your choice, open the project by 
-   - IntelliJ: navigate `File -> New -> Project from Version Control` and paste the link provided by step 2 (either with SSH or HTTPS).
-   - Eclipse: navigate `File -> Import -> Git -> Clone URI` and paste the link provided by step 2 (either with SSH or HTTPS).
+   - IntelliJ: navigate `File -> New -> Project from Version Control` and paste the link provided by step 2 (either with `SSH` or `HTTPS`).
+   - Eclipse: navigate `File -> Import -> Git -> Clone URI` and paste the link provided by step 2 (either with `SSH` or `HTTPS`).
    - Other IDEs have similar ways to import projects from version control systems.
    - If you are downloading the source code directly. Open the project by `File -> New -> Project from Existing Source...` (IntelliJ). Eclipse have similar procedure.
 
