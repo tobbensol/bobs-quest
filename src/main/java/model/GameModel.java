@@ -84,6 +84,7 @@ public class GameModel implements ControllableModel {
     protected void createCamera() {
         this.camera = new GameCamera(this);
         this.camera.setToOrtho(false, 1600, 900);
+        //this.camera.setToOrtho(false, Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight());
     }
 
     public void update() {

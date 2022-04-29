@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import launcher.Boot;
 import model.objects.Coin;
 import model.objects.Player;
+import org.lwjgl.system.CallbackI;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -156,7 +157,7 @@ public class Hud {
         pixmap.dispose();
 
         Image filter = new Image(texture);
-        filter.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        filter.setSize(Boot.INSTANCE.getScreenWidth(), Boot.INSTANCE.getScreenHeight());
         filter.getColor().a = 0f;
         return filter;
     }
