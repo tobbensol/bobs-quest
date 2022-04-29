@@ -45,15 +45,6 @@ public class Player extends JumpableObject {
         currentState = State.STANDING;
         previousState = State.STANDING;
 
-        /*
-         * Which row corresponds to which state in Adventurer_Sprite_Sheet:
-         * STANDING -> frames[0]
-         * WALKING -> frames[1]
-         * JUMPING -> frames[5]
-         * takeDamage() -> frames[6] // TODO: Animate getting hurt
-         * DEAD -> frames[7]
-         * drop() -> frames[12]
-         * */
         TextureRegion[][] frames = TextureRegion.split(getTexture(), Constants.TILE_SIZE, Constants.TILE_SIZE);
         animationMap = new HashMap<>();
         animationMap.put(State.STANDING, new Animation<>(0.384f, frames[0])); // 5s animation duration
@@ -210,12 +201,9 @@ public class Player extends JumpableObject {
     protected TextureRegion getFrame() {
         // Specify which texture region corresponding to which state.
         stateTime = currentState == previousState ? stateTime + Gdx.graphics.getDeltaTime() : 0;
-        TextureRegion region = switch (currentState) { // TODO: After deciding which states should animate, merge switch cases
-            case WALKING -> getKeyFrame(true);
-            case JUMPING -> getKeyFrame(false);
-            case FALLING, SLIDING -> getKeyFrame(true);
-            case DEAD -> getKeyFrame(false);
-            default -> getKeyFrame(true);
+        TextureRegion region = switch (currentState) {
+            case STANDING, WALKING, FALLING, SLIDING -> getKeyFrame(true);
+            case JUMPING, DEAD -> getKeyFrame(false);
         };
 
         flipRegionHorizontally(region);
