@@ -33,6 +33,7 @@ public class GameModel implements ControllableModel {
 
     private AudioHelper audioHelper;
     private Music music;
+    private Music menuMusic;
     private float backgroundX;
 
 
@@ -48,19 +49,9 @@ public class GameModel implements ControllableModel {
         numPlayers = 1;
 
         levels = new ArrayList<>(); // Remember Linux is case-sensitive. File names needs to be exact!
-        levels.add("level-1"); // 0
-        levels.add("level-2"); // 1
-        levels.add("level-3"); // 2
-        levels.add("TestMaps/platform-test"); // 3
-        levels.add("TestMaps/slope-test"); // 4
-        levels.add("TestMaps/camera-test"); // 5
-        levels.add("TestMaps/goomba-test"); // 6
-        levels.add("TestMaps/coin-test"); // 7
-        levels.add("TestMaps/valley-and-spike-test"); // 8
-        levels.add("TestMaps/size-test"); // 9
-        levels.add("TestMaps/goomba-collision-test"); // 10
-        levels.add("TestMaps/floater-test"); // 11
-        levels.add("TestMaps/moving-platform-test"); // 12
+        levels.add("level-1");
+        levels.add("level-2");
+        levels.add("level-3");
 
         availableLevels = new ArrayList<>();
 
@@ -69,6 +60,10 @@ public class GameModel implements ControllableModel {
         controllers.add(new WASDController());
         controllers.add(new CustomController(Input.Keys.J, Input.Keys.L, Input.Keys.I, Input.Keys.K));
         numControllers = controllers.size();
+
+        audioHelper = new AudioHelper();
+        menuMusic = audioHelper.getMusic("Menu_Game_song");
+        menuMusic.setLooping(true);
     }
 
     private boolean gameOver() {
@@ -91,8 +86,15 @@ public class GameModel implements ControllableModel {
     }
 
     public void update() {
+
+        if (currentState != GameState.ACTIVE) {
+            menuMusic.setVolume(audioHelper.getMusicVolume());
+            menuMusic.play();
+        } else {
+            menuMusic.pause();
+        }
+
         if (initializeLevel) {
-            audioHelper = new AudioHelper();
             level = createLevel();
             availableLevels.add(level.getLevelName());
             music = level.getLevelMusic();
