@@ -180,7 +180,7 @@ Videre i møte snakket vi om hva vi skal gjøre fremover. Siden fristen på pros
 
 ### Fredag 22. april 2022
 ####kl 13:00-13:30
-Digitalt møte
+Digitalt oppsummeringsmøte
 
 Oppmøte: Alle tilstede
 
@@ -201,3 +201,12 @@ Dette er det siste mandagsmøte før prosjektet skal leveres inn fredag 29. apri
 Hovedfokuset blir å gjør ferdig det vi holder på med og ikke begynne med noe helt nytt før innleveringen. 
 Arbeidsoppgavene denne uken blir da å gjøre ferdig så mange levler (3-4 totalt) som vi klarer, få byttet ut teksturene til de forskjellige objektene i spillet, 
 svare på spørsmålene knyttet til innleveringen og finpusse koden der det trengs.
+
+
+### Fredag 29. april 2022
+#### kl 13:00-13:30
+Digitalt oppsummeringsmøte
+
+Oppmøte: Alle tilstede
+
+Dette er det siste møte før innleveringen senere i dag. Vi brukte tiden på å gjøre ferdig prosjektet (skrive siste obligatorisk innlevering, finpusset koden osv). 
