@@ -1,5 +1,6 @@
 package model.objects;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import model.Level;
 import model.helper.Constants;
@@ -14,5 +15,10 @@ public class MapEndPoints extends KinematicObject {
 
     public float getWidth() {
         return width;
+    }
+
+    @Override
+    protected TextureRegion getFrame() {
+        return null;
     }
 }

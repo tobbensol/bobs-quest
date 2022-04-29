@@ -2,6 +2,7 @@ package model.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import model.Level;
 import model.helper.Constants;
@@ -33,7 +34,12 @@ public class MovingPlatform extends KinematicObject{
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x - Math.round((float) texture.getWidth()/2), y - Math.round((float) texture.getHeight()/2), texture.getWidth(), texture.getHeight());
+        batch.draw(getFrame(), x - Math.round((float) texture.getWidth()/2), y - Math.round((float) texture.getHeight()/2), texture.getWidth(), texture.getHeight());
+    }
+
+    @Override
+    protected TextureRegion getFrame() {
+        return new TextureRegion(texture);
     }
 
 }
