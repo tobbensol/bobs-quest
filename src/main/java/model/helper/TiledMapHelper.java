@@ -26,7 +26,6 @@ public class TiledMapHelper {
         this.level = level;
         tiledMap = new TmxMapLoader().load("Maps/" + levelID + ".tmx");
 
-        // TODO: Generalize parsing different objects and mapping to right ContactType (make function/HashMap etc.)
         parseMapEnvironment(getMapObjects("Ground"), ContactType.GROUND, Constants.DEFAULT_BIT, Constants.DEFAULT_MASK_BITS, false);
         parseMapEnvironment(getMapObjects("Platforms"), ContactType.PLATFORM, Constants.PLATFORM_BIT, Constants.DEFAULT_MASK_BITS, false);
         parseMapEnvironment(getMapObjects("Death"), ContactType.DEATH, Constants.DEFAULT_BIT, Constants.INTERACTIVE_MASK_BITS, true);

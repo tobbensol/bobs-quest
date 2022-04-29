@@ -20,7 +20,6 @@ public class Floater extends DynamicObject implements Enemy {
     private boolean playerNearby = false;
     private Vector2 playerPosition;
     private int steps = 0;
-    //TODO tweek idleVel and idleCircleSize
     private float idleVel = 3f;
     private float stateTime;
 
