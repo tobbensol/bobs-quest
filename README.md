@@ -60,9 +60,8 @@ Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](http
 ## Controls
 - Use `WASD`, `Arrow keys` and `IJKL` to control the different players.
 - Kill enemies by pressing `S`/`Down`/`K` when jumping on top of enemies.
-- Press `P` to pause/resume the game.
+- Press `Esc` to pause/resume the game.
 - Press `R` to restart current level.
-- Press `Esc` to quit application (alternatively quit from Main menu).
 
 ## Testing
 Known bugs in the game and manual tests can be found [here](src/main/resources/BugReplication.md).
