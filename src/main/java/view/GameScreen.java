@@ -42,7 +42,7 @@ public class GameScreen extends AbstractScreen {
     public void render(float v) {
         this.update();
 
-        Gdx.gl.glClearColor(0.2f, 0.2f, 0.8f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
