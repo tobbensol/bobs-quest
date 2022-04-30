@@ -12,19 +12,17 @@ import model.GameModel;
 
 public class SettingsScreen extends AbstractScreen {
 
+    TextButton fullScreen;
+
     public SettingsScreen(GameModel gameModel) {
         super(gameModel);
     }
 
-    TextButton fullScreen = new TextButton("", skin);
-    Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-
-
     @Override
     public void show() {
-
+        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         Table table = new Table();
-        table.center().top().padTop(viewport.getScreenHeight() / 4f);
+        table.center().top().padTop(Boot.INSTANCE.getScreenHeight() / 4f);
         table.setFillParent(true);
         stage.addActor(table);
 
@@ -42,9 +40,11 @@ public class SettingsScreen extends AbstractScreen {
         Slider soundEffectsVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
         soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsVolume());
 
-        Label FullScreenLabel = new Label("Full Screen toggle:", font);
+        Label fullScreenLabel = new Label("Full Screen toggle:", font);
+        fullScreenLabel.setFontScale(1.5f);
 
         TextButton back = new TextButton("Back", skin);
+        fullScreen = new TextButton("", skin);
 
         table.add(settings).center().colspan(2);
         table.row();
@@ -54,7 +54,7 @@ public class SettingsScreen extends AbstractScreen {
         table.add(soundEffectsVolumeLabel).padTop(20);
         table.add(soundEffectsVolumeSlider).padTop(20).minWidth(250).minHeight(50);
         table.row();
-        table.add(FullScreenLabel).padTop(20);
+        table.add(fullScreenLabel).padTop(20);
         table.add(fullScreen).padTop(20).minWidth(150).minHeight(50).colspan(2);
         table.row();
         table.add(back).padTop(20).minWidth(150).minHeight(50).colspan(2);
@@ -70,9 +70,9 @@ public class SettingsScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         if(Gdx.graphics.isFullscreen()){
-            fullScreen.setLabel(new Label("Fullscreen", font));
+            fullScreen.setText("Windowed");
         } else {
-            fullScreen.setLabel(new Label("Windowed", font));
+            fullScreen.setText("Fullscreen");
         }
         super.render(delta);
         this.renderBackground();
