@@ -49,7 +49,6 @@ public abstract class AbstractScreen implements Screen {
         this.player = new Texture("Multi_Platformer_Tileset_v2/Players/Adventurer_Sprite_Sheet.png");
         TextureRegion[][] frames = TextureRegion.split(player, Constants.TILE_SIZE, Constants.TILE_SIZE);
         this.animation = new Animation<>(0.0825f, Arrays.copyOf(frames[1], 8));
-        System.out.println(background.getHeight());
     }
 
     /**
@@ -83,11 +82,14 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        if(width / 16 == height / 9){
-            stage.getViewport().update(width, height, true);
+        if (viewport.getScreenWidth() == width && viewport.getScreenHeight() == height ) {
             return;
         }
 
+        if(width / 16 == height / 9 || Gdx.graphics.isFullscreen()){
+            stage.getViewport().update(width, height, true);
+            return;
+        }
         if(viewport.getScreenWidth() != width){
             Gdx.graphics.setWindowedMode(width , width/16*9);
         } else {
