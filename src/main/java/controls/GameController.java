@@ -61,13 +61,24 @@ public class GameController {
      *
      * @param slider - The slider to update from.
      * @param music  - True if music, false if sound effect.
-     * @return
+     * @return -
      */
     public DragListener volumeListener(Slider slider, boolean music) {
         return new DragListener() {
             @Override
-            public void dragStop(InputEvent event, float x, float y, int pointer) {
-                super.dragStop(event, x, y, pointer);
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                boolean result = super.touchDown(event, x,y, pointer,button);
+                if (music) {
+                    model.setMusicVolume(slider.getValue());
+                } else {
+                    model.setSoundEffectsVolume(slider.getValue());
+                }
+                return result;
+            }
+
+            @Override
+            public void drag(InputEvent event, float x, float y, int pointer) {
+                super.drag(event, x, y, pointer);
                 if (music) {
                     model.setMusicVolume(slider.getValue());
                 } else {
@@ -133,7 +144,7 @@ public class GameController {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(Gdx.graphics.isFullscreen()){
-                    Gdx.graphics.setWindowedMode(1600 , 900);
+                    Gdx.graphics.setWindowedMode((int)(Boot.INSTANCE.getScreenHeight()/9*16*0.7f) , (int)(Boot.INSTANCE.getScreenHeight()*0.7f));
                 } else {
                     Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                 }
