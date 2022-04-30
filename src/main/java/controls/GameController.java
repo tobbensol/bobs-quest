@@ -19,21 +19,23 @@ public class GameController {
     }
 
     public void inputListener() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && model.getCurrentState() == GameState.ACTIVE) {
-            if (model.isPaused()) {
-                model.resumeGame();
-            } else {
-                model.pauseGame();
+        if(model.getCurrentState() == GameState.ACTIVE){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                if (model.isPaused()) {
+                    model.resumeGame();
+                } else {
+                    model.pauseGame();
+                }
             }
-        }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.M) && model.getCurrentState() == GameState.ACTIVE && model.isPaused()) {
-            model.setCurrentState(GameState.MAIN_MENU);
-            model.changeScreen();
-        }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.M) && model.isPaused()) {
+                model.setCurrentState(GameState.MAIN_MENU);
+                model.changeScreen();
+            }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            model.restart();
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                model.restart();
+            }
         }
 
         if (model.getCurrentState() == GameState.MAIN_MENU) {
