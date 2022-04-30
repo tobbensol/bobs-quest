@@ -83,7 +83,16 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        if(width / 16 == height / 9){
+            stage.getViewport().update(width, height, true);
+            return;
+        }
+
+        if(viewport.getScreenWidth() != width){
+            Gdx.graphics.setWindowedMode(width , width/16*9);
+        } else {
+            Gdx.graphics.setWindowedMode(height/9*16, height);
+        }
     }
 
     @Override
