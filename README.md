@@ -43,10 +43,10 @@ Links to set up [SSH](https://git.app.uib.no/help/ssh/index.md) and [HTTPS](http
    - If you are downloading the source code directly. Open the project by `File -> New -> Project from Existing Source...` (IntelliJ). Eclipse have similar procedure.
 
 ### Build (optional)
-#### Note: make sure that you have [MAVEN](https://maven.apache.org/download.cgi) installed
-1. Open the terminal of your choice (Command Prompt, Terminal, Git Bash etc).
-2. Navigate to the project folder containing `src` using the `cd 'directory_name'` command.
-3. When the project folder is located, use the command `mvn package` to build the project.
+1. Install [maven](https://maven.apache.org/download.cgi).
+2. Open the terminal of your choice (Command Prompt, Terminal, Git Bash etc).
+3. Navigate to the project folder containing `src` using the `cd 'directory_name'` command.
+4. When the project folder is located, use the command `mvn package` to build the project.
 
 ### Run from IDE
 1. To run the project from the IDE, locate the file `src/main/java/launcher/DesktopLauncher.java`.

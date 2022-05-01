@@ -1,5 +1,6 @@
 package view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -11,17 +12,17 @@ import model.GameModel;
 
 public class SettingsScreen extends AbstractScreen {
 
+    TextButton fullScreen;
+
     public SettingsScreen(GameModel gameModel) {
         super(gameModel);
     }
 
-
     @Override
     public void show() {
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-
         Table table = new Table();
-        table.center().top().padTop(viewport.getScreenHeight() / 4f);
+        table.center().top().padTop(Boot.INSTANCE.getScreenHeight() / 4f);
         table.setFillParent(true);
         stage.addActor(table);
 
@@ -39,7 +40,11 @@ public class SettingsScreen extends AbstractScreen {
         Slider soundEffectsVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
         soundEffectsVolumeSlider.setValue(gameModel.getSoundEffectsVolume());
 
+        Label fullScreenLabel = new Label("Full Screen toggle:", font);
+        fullScreenLabel.setFontScale(1.5f);
+
         TextButton back = new TextButton("Back", skin);
+        fullScreen = new TextButton("", skin);
 
         table.add(settings).center().colspan(2);
         table.row();
@@ -49,17 +54,26 @@ public class SettingsScreen extends AbstractScreen {
         table.add(soundEffectsVolumeLabel).padTop(20);
         table.add(soundEffectsVolumeSlider).padTop(20).minWidth(250).minHeight(50);
         table.row();
+        table.add(fullScreenLabel).padTop(20);
+        table.add(fullScreen).padTop(20).minWidth(150).minHeight(50).colspan(2);
+        table.row();
         table.add(back).padTop(20).minWidth(150).minHeight(50).colspan(2);
 
         musicVolumeSlider.addListener(Boot.INSTANCE.getGameController().volumeListener(musicVolumeSlider, true));
         soundEffectsVolumeSlider.addListener(Boot.INSTANCE.getGameController().volumeListener(soundEffectsVolumeSlider, false));
         back.addListener(Boot.INSTANCE.getGameController().goBackListener());
+        fullScreen.addListener(Boot.INSTANCE.getGameController().fullScreenListener());
 
 
     }
 
     @Override
     public void render(float delta) {
+        if(Gdx.graphics.isFullscreen()){
+            fullScreen.setText("Windowed");
+        } else {
+            fullScreen.setText("Fullscreen");
+        }
         super.render(delta);
         this.renderBackground();
     }

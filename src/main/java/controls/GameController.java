@@ -8,38 +8,34 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import launcher.Boot;
 import model.ControllableModel;
 import model.GameState;
 
 public class GameController {
     private final ControllableModel model;
-    private boolean pauseHelper = true; // If initialized with false, cannot pause on first iteration of inputListener()
-
     public GameController(ControllableModel model) {
         this.model = model;
     }
 
     public void inputListener() {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && model.getCurrentState() == GameState.ACTIVE) {
-            // Use a helper so that a held-down button does not continuously switch between states with every tick
-            if (pauseHelper) {
+        if(model.getCurrentState() == GameState.ACTIVE){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 if (model.isPaused()) {
                     model.resumeGame();
                 } else {
                     model.pauseGame();
                 }
-                pauseHelper = false;
             }
-        } else {
-            pauseHelper = true;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.M) && model.getCurrentState() == GameState.ACTIVE && model.isPaused()) {
-            model.setCurrentState(GameState.MAIN_MENU);
-            model.changeScreen();
-        }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            model.restart();
+            if (Gdx.input.isKeyJustPressed(Input.Keys.M) && model.isPaused()) {
+                model.setCurrentState(GameState.MAIN_MENU);
+                model.changeScreen();
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                model.restart();
+            }
         }
 
         if (model.getCurrentState() == GameState.MAIN_MENU) {
@@ -65,13 +61,24 @@ public class GameController {
      *
      * @param slider - The slider to update from.
      * @param music  - True if music, false if sound effect.
-     * @return
+     * @return -
      */
     public DragListener volumeListener(Slider slider, boolean music) {
         return new DragListener() {
             @Override
-            public void dragStop(InputEvent event, float x, float y, int pointer) {
-                super.dragStop(event, x, y, pointer);
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                boolean result = super.touchDown(event, x,y, pointer,button);
+                if (music) {
+                    model.setMusicVolume(slider.getValue());
+                } else {
+                    model.setSoundEffectsVolume(slider.getValue());
+                }
+                return result;
+            }
+
+            @Override
+            public void drag(InputEvent event, float x, float y, int pointer) {
+                super.drag(event, x, y, pointer);
                 if (music) {
                     model.setMusicVolume(slider.getValue());
                 } else {
@@ -131,4 +138,17 @@ public class GameController {
         };
     }
 
+
+    public ChangeListener fullScreenListener() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(Gdx.graphics.isFullscreen()){
+                    Gdx.graphics.setWindowedMode((int)(Boot.INSTANCE.getScreenHeight()/9*16*0.7f) , (int)(Boot.INSTANCE.getScreenHeight()*0.7f));
+                } else {
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                }
+            }
+        };
+    }
 }
