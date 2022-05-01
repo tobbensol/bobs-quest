@@ -16,7 +16,7 @@ public class GameScreen extends AbstractScreen {
     private final GameCamera camera;
     private final Box2DDebugRenderer box2DDebugRenderer;
     private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private final boolean debug = false;
+    private static final boolean debug = false;
 
     public GameScreen(GameModel gameModel) {
         super(gameModel);
@@ -42,7 +42,7 @@ public class GameScreen extends AbstractScreen {
     public void render(float v) {
         this.update();
 
-        Gdx.gl.glClearColor(0.2f, 0.2f, 0.8f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();

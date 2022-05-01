@@ -57,8 +57,8 @@ public abstract class AbstractScreen implements Screen {
      */
     protected void renderBackground() {
         batch.begin();
-        batch.draw(background, gameModel.getBackgroundX(), -350);
-        batch.draw(animation.getKeyFrame(stateTime, true), 200, 162, 80, 80);
+        batch.draw(background, gameModel.getBackgroundX(), 0, background.getWidth(), Boot.INSTANCE.getScreenHeight());
+        batch.draw(animation.getKeyFrame(stateTime, true), 200, 0.333f*Boot.INSTANCE.getScreenHeight(), 80, 80);
         batch.end();
         stage.draw();
 
@@ -66,7 +66,6 @@ public abstract class AbstractScreen implements Screen {
         if (gameModel.getBackgroundX() < -background.getWidth() + Boot.INSTANCE.getScreenWidth()) {
             gameModel.setBackgroundX(0);
         }
-
         stateTime = stateTime + Gdx.graphics.getDeltaTime();
     }
 
@@ -83,7 +82,19 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (viewport.getScreenWidth() == width && viewport.getScreenHeight() == height ) {
+            return;
+        }
 
+        if(width / 16 == height / 9 || Gdx.graphics.isFullscreen()){
+            stage.getViewport().update(width, height, true);
+            return;
+        }
+        if(viewport.getScreenWidth() != width){
+            Gdx.graphics.setWindowedMode(width , width/16*9);
+        } else {
+            Gdx.graphics.setWindowedMode(height/9*16, height);
+        }
     }
 
     @Override

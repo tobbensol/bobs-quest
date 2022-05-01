@@ -21,7 +21,7 @@ public class NewGameScreen extends AbstractScreen {
 
         Table table = new Table();
         stage.addActor(table);
-        table.center().top().padTop(viewport.getScreenHeight() / 4f);
+        table.center().top().padTop(Boot.INSTANCE.getScreenHeight() / 4f);
 
         table.setFillParent(true);
         Label title = new Label("NEW GAME", font);
