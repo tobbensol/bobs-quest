@@ -16,7 +16,7 @@ public class GameScreen extends AbstractScreen {
     private final GameCamera camera;
     private final Box2DDebugRenderer box2DDebugRenderer;
     private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private final boolean debug = false;
+    private static final boolean debug = false;
 
     public GameScreen(GameModel gameModel) {
         super(gameModel);
