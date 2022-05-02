@@ -170,6 +170,7 @@ public class GameModelTest {
 
         assertEquals(1, model.getNumPlayers());
         model.setNumPlayers(3);
+        model.restart();
         assertEquals(3, model.getNumPlayers());
         assertEquals(3, model.getNumControllers());
     }
