@@ -1,5 +1,6 @@
 package controls;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,11 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import launcher.Boot;
 import model.ControllableModel;
+import model.GameModel;
 import model.GameState;
 
 public class GameController {
-    private final ControllableModel model;
-    public GameController(ControllableModel model) {
+    private final GameModel model;
+    public GameController(GameModel model) {
         this.model = model;
     }
 
@@ -148,6 +150,15 @@ public class GameController {
                 } else {
                     Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                 }
+            }
+        };
+    }
+
+    public ChangeListener speedListener() {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                model.setSpeedRun(!model.isSpeedRun());
             }
         };
     }

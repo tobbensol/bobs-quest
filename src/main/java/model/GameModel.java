@@ -13,6 +13,8 @@ import model.objects.IGameObject;
 import model.objects.Player;
 import view.*;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,10 @@ public class GameModel implements ControllableModel {
     private boolean pause = false;
     private boolean initializeLevel = true;
     private GameCamera camera;
+
+    private boolean timerCanStart = true;
+    private boolean speedRun = false;
+    private Instant start;
 
     private AudioHelper audioHelper;
     private Music music;
@@ -169,6 +175,9 @@ public class GameModel implements ControllableModel {
                 levelNR = 0;
             }
         }
+        if (levelNR == 0) {
+            timerCanStart = true;
+        }
         resetZoom();
         level = createLevel();
         if (!availableLevels.contains(level.getLevelName())) {
@@ -273,7 +282,6 @@ public class GameModel implements ControllableModel {
     @Override
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
-        restart();
     }
 
     @Override
@@ -290,6 +298,10 @@ public class GameModel implements ControllableModel {
         getLevel().getHud().resume();
         getMusic().play();
         getMusic().setVolume(getAudioHelper().getMusicVolume());
+        if(timerCanStart && levelNR == 0){
+            start = Instant.now();
+            timerCanStart = false;
+        }
     }
 
     @Override
@@ -385,6 +397,18 @@ public class GameModel implements ControllableModel {
 
     public void resetZoom() {
         camera.resetZoom();
+    }
+
+    public boolean isSpeedRun() {
+        return speedRun;
+    }
+
+    public void setSpeedRun(boolean speedRun) {
+        this.speedRun = speedRun;
+    }
+
+    public Duration getTime(){
+        return Duration.between(start, Instant.now());
     }
 
 }
