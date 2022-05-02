@@ -83,10 +83,10 @@ public class Player extends JumpableObject {
 
     @Override
     public void moveHorizontally(boolean isRight) {
-        if (!rightCollision && isRight && this.body.getLinearVelocity().x <= MAX_WALKING_VELOCITY) {
+        if ((!rightCollision || grounded) && isRight && this.body.getLinearVelocity().x <= MAX_WALKING_VELOCITY) {
             cumulativeForces.add(X_MOVEMENT_IMPULSE, 0);
             facingRight = true;
-        } else if (!leftCollision && !isRight && this.body.getLinearVelocity().x >= -MAX_WALKING_VELOCITY) {
+        } else if ((!leftCollision || grounded) && !isRight && this.body.getLinearVelocity().x >= -MAX_WALKING_VELOCITY) {
             cumulativeForces.add(-X_MOVEMENT_IMPULSE, 0);
             facingRight = false;
         }

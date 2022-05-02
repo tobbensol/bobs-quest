@@ -96,8 +96,8 @@ public class BodyHelper {
     private static void playerSensors(FixtureDef fixtureDef, Body body, float width, float height) {
         createSensor("foot", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 0.02f, 0, -height / 2 / Constants.PPM);
         createSensor("head", fixtureDef, body, (width / 2) * 0.4f / Constants.PPM, 0.02f, 0, height / 2 / Constants.PPM);
-        createSensor("right", fixtureDef, body, 0.02f, (width / 2) * 0.2f / Constants.PPM, width / 2 / Constants.PPM, 0);
-        createSensor("left", fixtureDef, body, 0.02f, (width / 2) * 0.2f / Constants.PPM, -width / 2 / Constants.PPM, 0);
+        createSensor("right", fixtureDef, body, 0.02f/3f, (width / 2) * 0.6f / Constants.PPM, width / 2 / Constants.PPM, 0);
+        createSensor("left", fixtureDef, body, 0.02f/3f, (width / 2) * 0.6f / Constants.PPM, -width / 2 / Constants.PPM, 0);
     }
 
     private static void enemySensors(FixtureDef fixtureDef, Body body, float width) {
