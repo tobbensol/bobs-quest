@@ -42,9 +42,13 @@ public class GameController {
 
         if (model.getCurrentState() == GameState.MAIN_MENU) {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                model.setCurrentState(GameState.ACTIVE);
-                model.changeScreen();
-                model.resumeGame();
+                if (model.isSpeedRun()){
+                    model.startSelectedLevel("Grasslands");
+                } else{
+                    model.setCurrentState(GameState.ACTIVE);
+                    model.changeScreen();
+                    model.resumeGame();
+                }
             }
         }
 
