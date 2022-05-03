@@ -408,6 +408,9 @@ public class GameModel implements ControllableModel {
     }
 
     public Duration getTime(){
+        if(start == null){
+            return null;
+        }
         return Duration.between(start, Instant.now());
     }
 

@@ -16,6 +16,7 @@ import launcher.Boot;
 import model.objects.Coin;
 import model.objects.Player;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -28,6 +29,7 @@ public class Hud {
     private Integer score;
     private Label scoreLabel;
     private Label levelLabel;
+    private Label speedLabel;
     private Label pausedLabel;
     private Label pauseInfoLabel;
     private Label mainMenuLabel;
@@ -42,12 +44,14 @@ public class Hud {
         Table levelInfoTable = createLevelInfoTab(level);
         Table playerHpTable = playerHpTab();
         Table gamePausedTable = createPauseTab();
+        Table playerSpeedTab = playerSpeedTab();
         Image filter = createFilter();
 
         stage.addActor(filter); // NB: filter must be added first!
         stage.addActor(levelInfoTable);
         stage.addActor(playerHpTable);
         stage.addActor(gamePausedTable);
+        stage.addActor(playerSpeedTab);
 
     }
 
@@ -55,6 +59,22 @@ public class Hud {
         score = level.getScore();
         scoreLabel.setText("Coins: " + score + "/" + level.getGameObjects(Coin.class).size());
         updateHpLabels();
+        updateSpeedLabel();
+    }
+
+    private void updateSpeedLabel(){
+        if(!level.getModel().isSpeedRun()){
+            return;
+        }
+        Duration d = level.getModel().getTime();
+        if (d == null){
+            return;
+        }
+        long MM = d.toMinutesPart();
+        long SS = d.toSecondsPart();
+        long MS = d.toMillisPart();
+        String time = String.format("%02d:%02d:%02d", MM, SS, MS);
+        speedLabel.setText(time);
     }
 
     private void updateHpLabels() {
@@ -128,6 +148,17 @@ public class Hud {
             playerHpTable.row();
         }
         return playerHpTable;
+    }
+
+    private Table playerSpeedTab() {
+        Table playerSpeedTable = new Table();
+        playerSpeedTable.center().top();
+        playerSpeedTable.setFillParent(true);
+        speedLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        speedLabel.setFontScale(2f);
+        playerSpeedTable.add(speedLabel);
+
+        return playerSpeedTable;
     }
 
     private Table createLevelInfoTab(Level level) {
